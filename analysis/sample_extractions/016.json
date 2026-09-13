@@ -1,0 +1,225 @@
+{
+  "file": "16.html",
+  "property_type": "Nhà riêng",
+  "fields": {
+    "province_city": {
+      "present": true,
+      "raw_value": "Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_district": {
+      "present": true,
+      "raw_value": "Huyện Nhà Bè",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_ward": {
+      "present": true,
+      "raw_value": "Xã Phú Xuân",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_district": {
+      "present": false
+    },
+    "new_ward": {
+      "present": true,
+      "raw_value": "Xã Nhà Bè",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high"
+    },
+    "old_address": {
+      "present": true,
+      "raw_value": "96/5/10A, Đường Đào Tông Nguyên, Xã Phú Xuân, Huyện Nhà Bè, Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_address": {
+      "present": true,
+      "raw_value": "Xã Nhà Bè, Hồ Chí Minh mới",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high",
+      "complete": false
+    },
+    "latitude": {
+      "present": true,
+      "raw_value": "10.671450286646",
+      "source": "json_script",
+      "selector": "product map initialization: latitude",
+      "confidence": "high"
+    },
+    "longitude": {
+      "present": true,
+      "raw_value": "106.742355658198",
+      "source": "json_script",
+      "selector": "product map initialization: longitude",
+      "confidence": "high"
+    },
+    "property_type": {
+      "present": true,
+      "raw_value": "Nhà riêng",
+      "source": "structured",
+      "selector": ".re__breadcrumb a[level=\"1\"]",
+      "confidence": "high"
+    },
+    "area": {
+      "present": true,
+      "raw_value": "155,3 m²",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Diện tích\")",
+      "confidence": "high"
+    },
+    "frontage": {
+      "present": true,
+      "raw_value": "8 m",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Mặt tiền\")",
+      "confidence": "high"
+    },
+    "bedrooms": {
+      "present": true,
+      "raw_value": "6 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng ngủ\")",
+      "confidence": "high"
+    },
+    "bathrooms": {
+      "present": true,
+      "raw_value": "6 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng tắm, vệ sinh\")",
+      "confidence": "high"
+    },
+    "road_width": {
+      "present": true,
+      "raw_value": "8 m",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Đường vào\")",
+      "confidence": "high"
+    },
+    "legal": {
+      "present": true,
+      "raw_value": "Sổ đỏ/ Sổ hồng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Pháp lý\")",
+      "confidence": "high"
+    },
+    "interior": {
+      "present": true,
+      "raw_value": "Cơ bản",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Nội thất\")",
+      "confidence": "high"
+    },
+    "floors": {
+      "present": true,
+      "raw_value": "2 tầng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số tầng\")",
+      "confidence": "high"
+    },
+    "price": {
+      "present": true,
+      "raw_value": "10,4 tỷ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Khoảng giá\")",
+      "confidence": "high"
+    },
+    "price_per_m2": {
+      "present": true,
+      "raw_value": "66,97 triệu/m²",
+      "source": "structured",
+      "selector": ".re__pr-short-info-item .ext",
+      "confidence": "high"
+    },
+    "posting_date": {
+      "present": true,
+      "raw_value": "08/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày đăng)",
+      "confidence": "high"
+    },
+    "expiration_date": {
+      "present": true,
+      "raw_value": "23/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày hết hạn)",
+      "confidence": "high"
+    },
+    "listing_id": {
+      "present": true,
+      "raw_value": "46154463",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Mã tin)",
+      "confidence": "high"
+    },
+    "listing_url": {
+      "present": true,
+      "raw_value": "https://batdongsan.com.vn/ban-nha-rieng-duong-dao-tong-nguyen-xa-phu-xuan-76/cuc-hiem-ban-cap-2-170m2-thuc-te-o-to-au-trong-dong-tien-18tr-th-gia-chi-10-4-ty-tl-pr46154463",
+      "source": "metadata",
+      "selector": "link[rel=\"canonical\"]",
+      "confidence": "high"
+    },
+    "title": {
+      "present": true,
+      "raw_value": "Cực hiếm! Bán cặp 2 nhà 170m2 thực tế - Ô tô đậu trong nhà - Dòng tiền 18tr/th - Giá chỉ 10,4 tỷ TL",
+      "source": "structured",
+      "selector": "h1.js__pr-title",
+      "confidence": "high"
+    },
+    "description": {
+      "present": true,
+      "raw_value": "- Địa chỉ: 96/5/10A Đào Tông Nguyên, Xã Phú Xuân, Huyện Nhà Bè (nay là TP. HCM).\n\nHạ tầng cực đỉnh: Đường vào nhà rộng 8m, 2 xe ô tô tránh nhau thoải mái, xe hơi ngủ trong nhà tiện lợi và an toàn. Khu dân cư văn minh, an ninh, sạch sẽ.\n\n- Thông tin chi tiết sản phẩm:\nChủ nhà cần bán cặp nhà nguyên sổ hồng riêng, thích hợp cho nhà đầu tư tích sản, giữ tiền hoặc gia đình nhiều thế hệ vừa ở vừa cho thuê:\n\nDiện tích trên sổ: 155,3m² (Công nhận đủ).\n\nDiện tích thực tế sử dụng: 170m² (Phần chênh lệch là hành lang/lô gia chữa cháy thoáng mát, nhà xây cực kỳ vuông vức, rộng rãi).\n\n+ Căn 1 (bán lẻ hoặc bán gộp):\n\nDiện tích: 110,6m² (Ngang 5m x Dài 22,13m - Mặt tiền rộng, sân để ô tô thoải mái).\n\nKết cấu: 2 tầng kiên cố, thiết kế hiện đại, tràn ngập ánh sáng.\n\nCông năng: Phòng khách rộng, Bếp tủ gỗ tự nhiên cao cấp, 3 Phòng ngủ, 3 WC, khoảng sân & hành lang cực kỳ thoáng.\n\nHướng: Tây Bắc.\n\nĐang cho thuê: 11 triệu/tháng (HĐ còn khoảng 1 năm).\n\nGiá bán lẻ căn 1: 7 tỷ (thương lượng chính chủ - Chủ giữ sổ gốc).\n\n+ Căn 2 (bán kèm căn 1):\n\nDiện tích: 60m² (ngang 5m x Dài 12m).\n\nKết cấu: 3 tầng hoành tráng, thiết kế mái Thái/Tân cổ điển cực đẹp, ban công thoáng mát.\n\nCông năng: Phòng khách, Bếp gỗ, 3 Phòng ngủ, 3 WC.\n\nHướng: Đông Nam (Đón gió mát mẻ quanh năm).\n\nĐang cho thuê: 7 triệu/tháng.\n\n- Tổng giá đặc biệt mua trọn bộ cả 2 căn (155,3m² sổ / 170m² thực tế):\nChỉ 10,4 tỷ (còn thương lượng sâu cho khách thiện chí quyết định nhanh).\n\nDòng tiền sẵn có: 18 triệu/tháng Mua xong có ngay nguồn thu nhập thụ động ổn định hàng tháng mà không tốn công tìm khách thuê.\n\n- Ưu điểm vượt trội - đáng đầu tư bậc nhất Nhà Bè:\n\nHẻm nhựa 8m thông thoáng: 2 ô tô tránh nhau, ô tô vào tận nhà, không lo ngập nước.\n\nNội thất & Kết cấu chất lượng: Sàn gạch bóng kính, trần thạch cao đèn chùm sang trọng, bếp gỗ tự nhiên cao cấp, nhà vuông vức đẹp mắt.\n\nPháp lý minh bạch: Sổ hồng chính chủ, sẵn sàng giao dịch ngay.\n\nHiệu suất sinh lời kép: Vừa hưởng dòng tiền 18tr/tháng vừa chờ biên độ tăng giá đất cực cao theo hạ tầng Nhà Bè.\n\nLiên hệ xem nhà thực tế & chốt giá tốt:\n\nHotline / Zalo: 0935 235 *** (Hỗ trợ xem nhà 24/7).\n\nRõ ràng thông tin & hình ảnh thật 100% - Làm việc trực tiếp chính chủ - Hỗ trợ thương lượng giá tốt!",
+      "source": "structured",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "high"
+    }
+  },
+  "hidden_data": {
+    "tracking_product": {
+      "intent": "Sale",
+      "pageType": "LDP",
+      "productId": 46154463,
+      "projectId": 0,
+      "vipType": 1,
+      "verified": true,
+      "expired": false,
+      "cateId": 41,
+      "cityCode": "SG",
+      "districtId": 76,
+      "wardId": 190,
+      "streetId": 6503,
+      "pageId": 227,
+      "createByUser": 1652736,
+      "productType": 38
+    },
+    "recommendation_location": {
+      "cityCode": "SG",
+      "districtId": 76,
+      "projectId": null,
+      "streetId": 6503,
+      "wardId": 190,
+      "isNewLocation": false
+    },
+    "recommendation_text": "Xã Nhà Bè, Hồ Chí Minh mới",
+    "isDisplayNewAddress": false,
+    "canonical_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-dao-tong-nguyen-xa-phu-xuan-76/cuc-hiem-ban-cap-2-170m2-thuc-te-o-to-au-trong-dong-tien-18tr-th-gia-chi-10-4-ty-tl-pr46154463",
+    "json_ld_types": [
+      "BreadcrumbList",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "RealEstateListing"
+    ],
+    "product_detail_attributes": {}
+  }
+}

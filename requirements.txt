@@ -1,0 +1,6 @@
+beautifulsoup4
+psutil
+selenium
+setuptools  # Provides distutils compatibility required by UC on Python 3.12+
+undetected-chromedriver
+webdriver-manager

@@ -1,0 +1,221 @@
+{
+  "file": "9.html",
+  "property_type": "Nhà riêng",
+  "fields": {
+    "province_city": {
+      "present": true,
+      "raw_value": "Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_district": {
+      "present": true,
+      "raw_value": "Quận Gò Vấp",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_ward": {
+      "present": true,
+      "raw_value": "Phường 12",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_district": {
+      "present": false
+    },
+    "new_ward": {
+      "present": true,
+      "raw_value": "Phường An Hội Tây",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high"
+    },
+    "old_address": {
+      "present": true,
+      "raw_value": "Đường Phan Huy Ích, Phường 12, Quận Gò Vấp, Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_address": {
+      "present": true,
+      "raw_value": "Phường An Hội Tây, Hồ Chí Minh mới",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high",
+      "complete": false
+    },
+    "latitude": {
+      "present": true,
+      "raw_value": "10.8380785298286",
+      "source": "json_script",
+      "selector": "product map initialization: latitude",
+      "confidence": "high"
+    },
+    "longitude": {
+      "present": true,
+      "raw_value": "106.63674295049",
+      "source": "json_script",
+      "selector": "product map initialization: longitude",
+      "confidence": "high"
+    },
+    "property_type": {
+      "present": true,
+      "raw_value": "Nhà riêng",
+      "source": "structured",
+      "selector": ".re__breadcrumb a[level=\"1\"]",
+      "confidence": "high"
+    },
+    "area": {
+      "present": true,
+      "raw_value": "28 m²",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Diện tích\")",
+      "confidence": "high"
+    },
+    "frontage": {
+      "present": false
+    },
+    "bedrooms": {
+      "present": true,
+      "raw_value": "2 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng ngủ\")",
+      "confidence": "high"
+    },
+    "bathrooms": {
+      "present": true,
+      "raw_value": "3 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng tắm, vệ sinh\")",
+      "confidence": "high"
+    },
+    "road_width": {
+      "present": true,
+      "raw_value": "Hẻm 3m",
+      "source": "description",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "medium"
+    },
+    "legal": {
+      "present": true,
+      "raw_value": "Pháp lý",
+      "source": "description",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "medium"
+    },
+    "interior": {
+      "present": true,
+      "raw_value": "nội thất cao cấp",
+      "source": "description",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "medium"
+    },
+    "floors": {
+      "present": true,
+      "raw_value": "1 tầng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số tầng\")",
+      "confidence": "high"
+    },
+    "price": {
+      "present": true,
+      "raw_value": "4,39 tỷ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Khoảng giá\")",
+      "confidence": "high"
+    },
+    "price_per_m2": {
+      "present": true,
+      "raw_value": "156,79 triệu/m²",
+      "source": "structured",
+      "selector": ".re__pr-short-info-item .ext",
+      "confidence": "high"
+    },
+    "posting_date": {
+      "present": true,
+      "raw_value": "09/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày đăng)",
+      "confidence": "high"
+    },
+    "expiration_date": {
+      "present": true,
+      "raw_value": "16/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày hết hạn)",
+      "confidence": "high"
+    },
+    "listing_id": {
+      "present": true,
+      "raw_value": "46158117",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Mã tin)",
+      "confidence": "high"
+    },
+    "listing_url": {
+      "present": true,
+      "raw_value": "https://batdongsan.com.vn/ban-nha-rieng-duong-phan-huy-ich-phuong-12-8-67/can-minihouse-smarthome-ieu-khien-tu-xa-full-noi-that-448-uong-p-12-go-vap-pr46158117",
+      "source": "metadata",
+      "selector": "link[rel=\"canonical\"]",
+      "confidence": "high"
+    },
+    "title": {
+      "present": true,
+      "raw_value": "Căn mini house - smart home điều khiển từ xa Full nội thất 448/ Đường Phan Huy Ích - P.12 Gò Vấp",
+      "source": "structured",
+      "selector": "h1.js__pr-title",
+      "confidence": "high"
+    },
+    "description": {
+      "present": true,
+      "raw_value": "LÊN SÓNG CĂN MINIHOUSE - CÓ SMARTHOME\n 448/65/7G Đường Phan Huy Ích - P.AHT (P.12 Gò Vấp cũ) - HCM\n____________________________\nGiá 4.39 tỷ BỚT LỘC NHẸ \nDiện tích: 3.10m x 9m\nXây dựng: 1 trệt 1 lầu\n Công năng gồm: PK, bếp, 2PN, 3 toilet.\nVị trí đẹp, Hẻm 3m, gần Emart2, xung quanh tiện ích đầy đủ,...\nHướng Đông Bắc\nPháp lý: Sổ hồng riêng\nTặng full nội thất cao cấp\n Bàn Ăn Thông Minh Bếp Điện \n__________________________\n Liên hệ: 0909 677 *** Thanh Hiền",
+      "source": "structured",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "high"
+    }
+  },
+  "hidden_data": {
+    "tracking_product": {
+      "intent": "Sale",
+      "pageType": "LDP",
+      "productId": 46158117,
+      "projectId": 0,
+      "vipType": 0,
+      "verified": false,
+      "expired": false,
+      "cateId": 41,
+      "cityCode": "SG",
+      "districtId": 67,
+      "wardId": 8945,
+      "streetId": 727,
+      "pageId": 227,
+      "createByUser": 201783,
+      "productType": 38
+    },
+    "recommendation_location": {
+      "cityCode": "SG",
+      "districtId": 67,
+      "projectId": null,
+      "streetId": 727,
+      "wardId": 8945,
+      "isNewLocation": false
+    },
+    "recommendation_text": "Phường An Hội Tây, Hồ Chí Minh mới",
+    "isDisplayNewAddress": false,
+    "canonical_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-phan-huy-ich-phuong-12-8-67/can-minihouse-smarthome-ieu-khien-tu-xa-full-noi-that-448-uong-p-12-go-vap-pr46158117",
+    "json_ld_types": [
+      "BreadcrumbList",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "RealEstateListing"
+    ],
+    "product_detail_attributes": {}
+  }
+}

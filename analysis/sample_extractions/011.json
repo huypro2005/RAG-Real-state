@@ -1,0 +1,209 @@
+{
+  "file": "11.html",
+  "property_type": "Nhà biệt thự, liền kề",
+  "fields": {
+    "province_city": {
+      "present": true,
+      "raw_value": "Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_district": {
+      "present": true,
+      "raw_value": "Quận 7",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_ward": {
+      "present": true,
+      "raw_value": "Phường Tân Thuận Tây",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_district": {
+      "present": false
+    },
+    "new_ward": {
+      "present": true,
+      "raw_value": "Phường Tân Thuận",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high"
+    },
+    "old_address": {
+      "present": true,
+      "raw_value": "Đường Nguyễn Văn Linh, Phường Tân Thuận Tây, Quận 7, Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_address": {
+      "present": true,
+      "raw_value": "Phường Tân Thuận, Hồ Chí Minh mới",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high",
+      "complete": false
+    },
+    "latitude": {
+      "present": true,
+      "raw_value": "10.7502466745232",
+      "source": "json_script",
+      "selector": "product map initialization: latitude",
+      "confidence": "high"
+    },
+    "longitude": {
+      "present": true,
+      "raw_value": "106.723009708459",
+      "source": "json_script",
+      "selector": "product map initialization: longitude",
+      "confidence": "high"
+    },
+    "property_type": {
+      "present": true,
+      "raw_value": "Nhà biệt thự, liền kề",
+      "source": "structured",
+      "selector": ".re__breadcrumb a[level=\"1\"]",
+      "confidence": "high"
+    },
+    "area": {
+      "present": true,
+      "raw_value": "195,3 m²",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Diện tích\")",
+      "confidence": "high"
+    },
+    "frontage": {
+      "present": true,
+      "raw_value": "mặt tiền 9m",
+      "source": "description",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "medium"
+    },
+    "bedrooms": {
+      "present": false
+    },
+    "bathrooms": {
+      "present": false
+    },
+    "road_width": {
+      "present": true,
+      "raw_value": "đường rộng 6m",
+      "source": "description",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "medium"
+    },
+    "legal": {
+      "present": true,
+      "raw_value": "Sổ đỏ/ Sổ hồng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Pháp lý\")",
+      "confidence": "high"
+    },
+    "interior": {
+      "present": false
+    },
+    "floors": {
+      "present": false
+    },
+    "price": {
+      "present": true,
+      "raw_value": "20,5 tỷ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Khoảng giá\")",
+      "confidence": "high"
+    },
+    "price_per_m2": {
+      "present": true,
+      "raw_value": "104,97 triệu/m²",
+      "source": "structured",
+      "selector": ".re__pr-short-info-item .ext",
+      "confidence": "high"
+    },
+    "posting_date": {
+      "present": true,
+      "raw_value": "27/07/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày đăng)",
+      "confidence": "high"
+    },
+    "expiration_date": {
+      "present": true,
+      "raw_value": "11/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày hết hạn)",
+      "confidence": "high"
+    },
+    "listing_id": {
+      "present": true,
+      "raw_value": "46019695",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Mã tin)",
+      "confidence": "high"
+    },
+    "listing_url": {
+      "present": true,
+      "raw_value": "https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-duong-nguyen-van-linh-phuong-tan-thuan-tay-1-59/ban-ep-quan-7-195-3m2-gia-20-5-ti-pr46019695",
+      "source": "metadata",
+      "selector": "link[rel=\"canonical\"]",
+      "confidence": "high"
+    },
+    "title": {
+      "present": true,
+      "raw_value": "Bán nhà biệt thự đẹp Nguyễn Văn Linh, Quận 7, 195,3m2 giá 20.5 tỉ",
+      "source": "structured",
+      "selector": "h1.js__pr-title",
+      "confidence": "high"
+    },
+    "description": {
+      "present": true,
+      "raw_value": "Biệt thự đường Nguyễn Văn Linh, Quận 7.\nBiệt thự 193,5m² mặt tiền 9m, cơ hội vàng dành cho người tìm kiếm không gian sống đẹp.\nDiện tích đất: 193,5m².\nMặt tiền rộng 9m, đường rộng 6m, giao thông thuận lợi.\nBiệt thự xây đẹp, thiết kế hiện đại, chất lượng cao.\nTổng diện tích sàn sử dụng: 441,7m².\nVị trí thuận tiện đi lại, kết nối dễ dàng với các khu vực xung quanh.",
+      "source": "structured",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "high"
+    }
+  },
+  "hidden_data": {
+    "tracking_product": {
+      "intent": "Sale",
+      "pageType": "LDP",
+      "productId": 46019695,
+      "projectId": 0,
+      "vipType": 0,
+      "verified": false,
+      "expired": false,
+      "cateId": 325,
+      "cityCode": "SG",
+      "districtId": 59,
+      "wardId": 8778,
+      "streetId": 278,
+      "pageId": 227,
+      "createByUser": 1050979,
+      "productType": 38
+    },
+    "recommendation_location": {
+      "cityCode": "SG",
+      "districtId": 59,
+      "projectId": null,
+      "streetId": 278,
+      "wardId": 8778,
+      "isNewLocation": false
+    },
+    "recommendation_text": "Phường Tân Thuận, Hồ Chí Minh mới",
+    "isDisplayNewAddress": false,
+    "canonical_url": "https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-duong-nguyen-van-linh-phuong-tan-thuan-tay-1-59/ban-ep-quan-7-195-3m2-gia-20-5-ti-pr46019695",
+    "json_ld_types": [
+      "BreadcrumbList",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "RealEstateListing"
+    ],
+    "product_detail_attributes": {}
+  }
+}

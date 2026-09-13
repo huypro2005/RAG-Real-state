@@ -1,0 +1,220 @@
+{
+  "sample_count": 17,
+  "classification_thresholds": {
+    "ALWAYS_PRESENT": "100%",
+    "MOSTLY_PRESENT": "80-<100%",
+    "OPTIONAL": "20-<80%",
+    "RARE": ">0-<20%",
+    "NEVER_FOUND": "0%"
+  },
+  "fields": {
+    "province_city": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 17,
+      "description_fallback_found": 0
+    },
+    "old_district": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 17,
+      "description_fallback_found": 0
+    },
+    "old_ward": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 17,
+      "description_fallback_found": 0
+    },
+    "new_district": {
+      "found": 0,
+      "total": 17,
+      "coverage_percent": 0.0,
+      "classification": "NEVER_FOUND",
+      "structured_found": 0,
+      "description_fallback_found": 0
+    },
+    "new_ward": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 17,
+      "description_fallback_found": 0
+    },
+    "old_address": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 17,
+      "description_fallback_found": 0
+    },
+    "new_address": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 17,
+      "description_fallback_found": 0
+    },
+    "latitude": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 0,
+      "description_fallback_found": 0
+    },
+    "longitude": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 0,
+      "description_fallback_found": 0
+    },
+    "property_type": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 17,
+      "description_fallback_found": 0
+    },
+    "area": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 17,
+      "description_fallback_found": 0
+    },
+    "frontage": {
+      "found": 6,
+      "total": 17,
+      "coverage_percent": 35.29,
+      "classification": "OPTIONAL",
+      "structured_found": 5,
+      "description_fallback_found": 1
+    },
+    "bedrooms": {
+      "found": 15,
+      "total": 17,
+      "coverage_percent": 88.24,
+      "classification": "MOSTLY_PRESENT",
+      "structured_found": 15,
+      "description_fallback_found": 0
+    },
+    "bathrooms": {
+      "found": 15,
+      "total": 17,
+      "coverage_percent": 88.24,
+      "classification": "MOSTLY_PRESENT",
+      "structured_found": 15,
+      "description_fallback_found": 0
+    },
+    "road_width": {
+      "found": 9,
+      "total": 17,
+      "coverage_percent": 52.94,
+      "classification": "OPTIONAL",
+      "structured_found": 6,
+      "description_fallback_found": 3
+    },
+    "legal": {
+      "found": 16,
+      "total": 17,
+      "coverage_percent": 94.12,
+      "classification": "MOSTLY_PRESENT",
+      "structured_found": 15,
+      "description_fallback_found": 1
+    },
+    "interior": {
+      "found": 10,
+      "total": 17,
+      "coverage_percent": 58.82,
+      "classification": "OPTIONAL",
+      "structured_found": 9,
+      "description_fallback_found": 1
+    },
+    "floors": {
+      "found": 12,
+      "total": 17,
+      "coverage_percent": 70.59,
+      "classification": "OPTIONAL",
+      "structured_found": 10,
+      "description_fallback_found": 2
+    },
+    "price": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 17,
+      "description_fallback_found": 0
+    },
+    "price_per_m2": {
+      "found": 14,
+      "total": 17,
+      "coverage_percent": 82.35,
+      "classification": "MOSTLY_PRESENT",
+      "structured_found": 14,
+      "description_fallback_found": 0
+    },
+    "posting_date": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 17,
+      "description_fallback_found": 0
+    },
+    "expiration_date": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 17,
+      "description_fallback_found": 0
+    },
+    "listing_id": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 17,
+      "description_fallback_found": 0
+    },
+    "listing_url": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 0,
+      "description_fallback_found": 0
+    },
+    "title": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 17,
+      "description_fallback_found": 0
+    },
+    "description": {
+      "found": 17,
+      "total": 17,
+      "coverage_percent": 100.0,
+      "classification": "ALWAYS_PRESENT",
+      "structured_found": 17,
+      "description_fallback_found": 0
+    }
+  }
+}

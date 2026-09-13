@@ -1,0 +1,213 @@
+{
+  "file": "15.html",
+  "property_type": "Căn hộ chung cư",
+  "fields": {
+    "province_city": {
+      "present": true,
+      "raw_value": "Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_district": {
+      "present": true,
+      "raw_value": "Quận 2",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_ward": {
+      "present": true,
+      "raw_value": "Phường Thạnh Mỹ Lợi",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_district": {
+      "present": false
+    },
+    "new_ward": {
+      "present": true,
+      "raw_value": "Phường Cát Lái",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high"
+    },
+    "old_address": {
+      "present": true,
+      "raw_value": "Feliz En Vista, Đường Phan Văn Đáng, Phường Thạnh Mỹ Lợi, Quận 2, Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_address": {
+      "present": true,
+      "raw_value": "Phường Cát Lái, Hồ Chí Minh mới",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high",
+      "complete": false
+    },
+    "latitude": {
+      "present": true,
+      "raw_value": "10.77689",
+      "source": "json_script",
+      "selector": "product map initialization: latitude",
+      "confidence": "high"
+    },
+    "longitude": {
+      "present": true,
+      "raw_value": "106.7562",
+      "source": "json_script",
+      "selector": "product map initialization: longitude",
+      "confidence": "high"
+    },
+    "property_type": {
+      "present": true,
+      "raw_value": "Căn hộ chung cư",
+      "source": "structured",
+      "selector": ".re__breadcrumb a[level=\"1\"]",
+      "confidence": "high"
+    },
+    "area": {
+      "present": true,
+      "raw_value": "173 m²",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Diện tích\")",
+      "confidence": "high"
+    },
+    "frontage": {
+      "present": false
+    },
+    "bedrooms": {
+      "present": true,
+      "raw_value": "5 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng ngủ\")",
+      "confidence": "high"
+    },
+    "bathrooms": {
+      "present": true,
+      "raw_value": "4 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng tắm, vệ sinh\")",
+      "confidence": "high"
+    },
+    "road_width": {
+      "present": false
+    },
+    "legal": {
+      "present": true,
+      "raw_value": "Sổ đỏ/ Sổ hồng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Pháp lý\")",
+      "confidence": "high"
+    },
+    "interior": {
+      "present": true,
+      "raw_value": "Đầy đủ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Nội thất\")",
+      "confidence": "high"
+    },
+    "floors": {
+      "present": false
+    },
+    "price": {
+      "present": true,
+      "raw_value": "24,3 tỷ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Khoảng giá\")",
+      "confidence": "high"
+    },
+    "price_per_m2": {
+      "present": true,
+      "raw_value": "140,46 triệu/m²",
+      "source": "structured",
+      "selector": ".re__pr-short-info-item .ext",
+      "confidence": "high"
+    },
+    "posting_date": {
+      "present": true,
+      "raw_value": "09/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày đăng)",
+      "confidence": "high"
+    },
+    "expiration_date": {
+      "present": true,
+      "raw_value": "19/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày hết hạn)",
+      "confidence": "high"
+    },
+    "listing_id": {
+      "present": true,
+      "raw_value": "46159042",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Mã tin)",
+      "confidence": "high"
+    },
+    "listing_url": {
+      "present": true,
+      "raw_value": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-phan-van-dang-phuong-thanh-my-loi-feliz-en-vista/24t3-cho-4pn-1-tai-gia-au-tu-xem-nha-24-7-pr46159042",
+      "source": "metadata",
+      "selector": "link[rel=\"canonical\"]",
+      "confidence": "high"
+    },
+    "title": {
+      "present": true,
+      "raw_value": "24t3 cho căn hộ 4pn+1 tại Feliz en Vista, giá đầu tư. Xem nhà 24/7",
+      "source": "structured",
+      "selector": "h1.js__pr-title",
+      "confidence": "high"
+    },
+    "description": {
+      "present": true,
+      "raw_value": "Giá sốc căn 4pn tại Feliz en Vista cần bán\n\nCăn hộ 173m² với thiết kế sang trọng, Full nội thất chỉ cần xách vali vào ở chắc chắn sẽ khiến bạn hài lòng!\nĐiểm nổi bật của căn hộ\n\n4 phòng ngủ + 1 (thiết kế tối ưu không gian)\n2 phòng master rộng rãi cực hiếm!\nBan công siêu rộng view sông thoáng mát, chill hết nấc\nFull nội thất\nGiá bán chỉ: 24,3 ( bao thuế phí ) sổ hồng.\nMức giá cực kỳ tốt cho căn hộ diện tích lớn và đầy đủ tiện nghi như thế này!\nLiên hệ ngay Thuận 0909 011 *** \nĐể xem nhà trực tiếp và nhận thêm thông tin chi tiết.",
+      "source": "structured",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "high"
+    }
+  },
+  "hidden_data": {
+    "tracking_product": {
+      "intent": "Sale",
+      "pageType": "LDP",
+      "productId": 46159042,
+      "projectId": 2532,
+      "vipType": 1,
+      "verified": false,
+      "expired": false,
+      "cateId": 324,
+      "cityCode": "SG",
+      "districtId": 54,
+      "wardId": 121,
+      "streetId": 3584,
+      "pageId": 227,
+      "createByUser": 1609597,
+      "productType": 38
+    },
+    "recommendation_location": {
+      "cityCode": "SG",
+      "districtId": 54,
+      "projectId": 2532,
+      "streetId": 3584,
+      "wardId": 121,
+      "isNewLocation": false
+    },
+    "recommendation_text": "Feliz En Vista, Phường Cát Lái, Hồ Chí Minh mới",
+    "isDisplayNewAddress": false,
+    "canonical_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-phan-van-dang-phuong-thanh-my-loi-feliz-en-vista/24t3-cho-4pn-1-tai-gia-au-tu-xem-nha-24-7-pr46159042",
+    "json_ld_types": [
+      "BreadcrumbList",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "RealEstateListing"
+    ],
+    "product_detail_attributes": {}
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "file": "13.html",
+  "property_type": "Nhà riêng",
+  "fields": {
+    "province_city": {
+      "present": true,
+      "raw_value": "Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_district": {
+      "present": true,
+      "raw_value": "Quận Tân Bình",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_ward": {
+      "present": true,
+      "raw_value": "Phường 2",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_district": {
+      "present": false
+    },
+    "new_ward": {
+      "present": true,
+      "raw_value": "Phường Tân Sơn Hòa",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high"
+    },
+    "old_address": {
+      "present": true,
+      "raw_value": "hẻm 86, Đường Phổ Quang, Phường 2, Quận Tân Bình, Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_address": {
+      "present": true,
+      "raw_value": "Phường Tân Sơn Hòa, Hồ Chí Minh mới",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high",
+      "complete": false
+    },
+    "latitude": {
+      "present": true,
+      "raw_value": "10.8078153993461",
+      "source": "json_script",
+      "selector": "product map initialization: latitude",
+      "confidence": "high"
+    },
+    "longitude": {
+      "present": true,
+      "raw_value": "106.666529431459",
+      "source": "json_script",
+      "selector": "product map initialization: longitude",
+      "confidence": "high"
+    },
+    "property_type": {
+      "present": true,
+      "raw_value": "Nhà riêng",
+      "source": "structured",
+      "selector": ".re__breadcrumb a[level=\"1\"]",
+      "confidence": "high"
+    },
+    "area": {
+      "present": true,
+      "raw_value": "87 m²",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Diện tích\")",
+      "confidence": "high"
+    },
+    "frontage": {
+      "present": true,
+      "raw_value": "5,2 m",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Mặt tiền\")",
+      "confidence": "high"
+    },
+    "bedrooms": {
+      "present": true,
+      "raw_value": "3 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng ngủ\")",
+      "confidence": "high"
+    },
+    "bathrooms": {
+      "present": true,
+      "raw_value": "3 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng tắm, vệ sinh\")",
+      "confidence": "high"
+    },
+    "road_width": {
+      "present": true,
+      "raw_value": "4 m",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Đường vào\")",
+      "confidence": "high"
+    },
+    "legal": {
+      "present": true,
+      "raw_value": "Sổ đỏ/ Sổ hồng.",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Pháp lý\")",
+      "confidence": "high"
+    },
+    "interior": {
+      "present": false
+    },
+    "floors": {
+      "present": true,
+      "raw_value": "4 tầng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số tầng\")",
+      "confidence": "high"
+    },
+    "price": {
+      "present": true,
+      "raw_value": "20,7 tỷ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Khoảng giá\")",
+      "confidence": "high"
+    },
+    "price_per_m2": {
+      "present": true,
+      "raw_value": "237,93 triệu/m²",
+      "source": "structured",
+      "selector": ".re__pr-short-info-item .ext",
+      "confidence": "high"
+    },
+    "posting_date": {
+      "present": true,
+      "raw_value": "08/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày đăng)",
+      "confidence": "high"
+    },
+    "expiration_date": {
+      "present": true,
+      "raw_value": "18/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày hết hạn)",
+      "confidence": "high"
+    },
+    "listing_id": {
+      "present": true,
+      "raw_value": "45815077",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Mã tin)",
+      "confidence": "high"
+    },
+    "listing_url": {
+      "present": true,
+      "raw_value": "https://batdongsan.com.vn/ban-nha-rieng-duong-pho-quang-phuong-2-22-69/ban-vi-tri-tot-cho-nguoi-huu-duyen-pr45815077",
+      "source": "metadata",
+      "selector": "link[rel=\"canonical\"]",
+      "confidence": "high"
+    },
+    "title": {
+      "present": true,
+      "raw_value": "Bán nhà khu BT, chính chủ, miễn trung gian",
+      "source": "structured",
+      "selector": "h1.js__pr-title",
+      "confidence": "high"
+    },
+    "description": {
+      "present": true,
+      "raw_value": "Bán nhà hẻm 86 Phổ Quang. Lộ trung tâm giữa các tuyến đường Hồng Hà, Đào Duy Anh, Trường Sơn, Phạm Văn Đồng. Di chuyển về các tỉnh Bắc Nam thuận lợi.\nBán kính 1km, sân bay Tân Sơn Nhất, công viên Hoàng Văn Thụ, công viên Gia Định, bệnh viện Tâm Anh, bệnh viện 175, trường cấp 1, cấp 3.\nVị trí nhà có minh đường rộng, diện tích 5,00 x 16,7m. Đối diện không có nhà.\nKết cấu 1 trệt 3 lầu 1 tum (40m²) có thể trồng rau sạch hoặc cải tạo thêm phòng sinh hoạt.\nHẻm xe hơi 4m, xe ôtô đậu thoải mái và quay đầu thuận lợi, hẻm thoát hiểm 1,5m (có lối ra đường lớn).\nKhu ở tốt, yên tĩnh mát mẻ, hàng xóm thân thiện, không ngập nước.\nSổ chính chủ, thương lượng mạnh. Chủ nhà 0903 611 *** .",
+      "source": "structured",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "high"
+    }
+  },
+  "hidden_data": {
+    "tracking_product": {
+      "intent": "Sale",
+      "pageType": "LDP",
+      "productId": 45815077,
+      "projectId": 0,
+      "vipType": 1,
+      "verified": true,
+      "expired": false,
+      "cateId": 41,
+      "cityCode": "SG",
+      "districtId": 69,
+      "wardId": 8976,
+      "streetId": 4831,
+      "pageId": 227,
+      "createByUser": 5190122,
+      "productType": 38
+    },
+    "recommendation_location": {
+      "cityCode": "SG",
+      "districtId": 69,
+      "projectId": null,
+      "streetId": 4831,
+      "wardId": 8976,
+      "isNewLocation": false
+    },
+    "recommendation_text": "Phường Tân Sơn Hòa, Hồ Chí Minh mới",
+    "isDisplayNewAddress": false,
+    "canonical_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-pho-quang-phuong-2-22-69/ban-vi-tri-tot-cho-nguoi-huu-duyen-pr45815077",
+    "json_ld_types": [
+      "BreadcrumbList",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "RealEstateListing"
+    ],
+    "product_detail_attributes": {}
+  }
+}

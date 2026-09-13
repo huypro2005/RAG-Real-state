@@ -1,0 +1,213 @@
+{
+  "file": "8.html",
+  "property_type": "Căn hộ chung cư",
+  "fields": {
+    "province_city": {
+      "present": true,
+      "raw_value": "Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_district": {
+      "present": true,
+      "raw_value": "Quận Tân Phú",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_ward": {
+      "present": true,
+      "raw_value": "Phường Sơn Kỳ",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_district": {
+      "present": false
+    },
+    "new_ward": {
+      "present": true,
+      "raw_value": "Phường Tân Sơn Nhì",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high"
+    },
+    "old_address": {
+      "present": true,
+      "raw_value": "The Glen - Celadon City, Đường N1, Phường Sơn Kỳ, Quận Tân Phú, Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_address": {
+      "present": true,
+      "raw_value": "Phường Tân Sơn Nhì, Hồ Chí Minh mới",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high",
+      "complete": false
+    },
+    "latitude": {
+      "present": true,
+      "raw_value": "10.8046004639752",
+      "source": "json_script",
+      "selector": "product map initialization: latitude",
+      "confidence": "high"
+    },
+    "longitude": {
+      "present": true,
+      "raw_value": "106.617929377976",
+      "source": "json_script",
+      "selector": "product map initialization: longitude",
+      "confidence": "high"
+    },
+    "property_type": {
+      "present": true,
+      "raw_value": "Căn hộ chung cư",
+      "source": "structured",
+      "selector": ".re__breadcrumb a[level=\"1\"]",
+      "confidence": "high"
+    },
+    "area": {
+      "present": true,
+      "raw_value": "299,9 m²",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Diện tích\")",
+      "confidence": "high"
+    },
+    "frontage": {
+      "present": false
+    },
+    "bedrooms": {
+      "present": true,
+      "raw_value": "5 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng ngủ\")",
+      "confidence": "high"
+    },
+    "bathrooms": {
+      "present": true,
+      "raw_value": "7 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng tắm, vệ sinh\")",
+      "confidence": "high"
+    },
+    "road_width": {
+      "present": false
+    },
+    "legal": {
+      "present": true,
+      "raw_value": "HĐMB",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Pháp lý\")",
+      "confidence": "high"
+    },
+    "interior": {
+      "present": false
+    },
+    "floors": {
+      "present": true,
+      "raw_value": "4 lầu",
+      "source": "description",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "medium"
+    },
+    "price": {
+      "present": true,
+      "raw_value": "33 tỷ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Khoảng giá\")",
+      "confidence": "high"
+    },
+    "price_per_m2": {
+      "present": true,
+      "raw_value": "110,04 triệu/m²",
+      "source": "structured",
+      "selector": ".re__pr-short-info-item .ext",
+      "confidence": "high"
+    },
+    "posting_date": {
+      "present": true,
+      "raw_value": "05/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày đăng)",
+      "confidence": "high"
+    },
+    "expiration_date": {
+      "present": true,
+      "raw_value": "12/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày hết hạn)",
+      "confidence": "high"
+    },
+    "listing_id": {
+      "present": true,
+      "raw_value": "45227596",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Mã tin)",
+      "confidence": "high"
+    },
+    "listing_url": {
+      "present": true,
+      "raw_value": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-n1-phuong-son-ky-the-glen-celadon-city/nhan-nha-o-ngay-van-thanh-toan-36-thang-cho-oto-rieng-tung-mien-phi-3-nam-phi-quan-ly-pr45227596",
+      "source": "metadata",
+      "selector": "link[rel=\"canonical\"]",
+      "confidence": "high"
+    },
+    "title": {
+      "present": true,
+      "raw_value": "Căn góc The Glen đã hoàn thiện giá chỉ 33 tỷ có sẵn hợp đồng thuê - Liên hệ em Hằng CĐT để xem nhà",
+      "source": "structured",
+      "selector": "h1.js__pr-title",
+      "confidence": "high"
+    },
+    "description": {
+      "present": true,
+      "raw_value": "Celadon City cực hot chương trình ưu đãi cuối năm khu Glen - Celadon City.\n* The Glen - Celadon City | 20% nhận nhà | trực tiếp CĐT.\n- Chiết khấu lên đến 27% cơ hội đầu tư và an cư cực tốt.\n\n- Kế bên Aeon Mall Tân Phú.\n- 3km đến sân bay Tân Sơn Nhất.\n- 7km đến trung tâm TP.HCM, Đại lộ Đông Tây.\n\n* The Glen còn được hưởng nhiều tiện ích đặc quyền như lối đi riêng, hầm để xe riêng, hệ thống an ninh, bảo mật 5 lớp, đảm bảo sự tiện nghi và riêng tư tối đa.\n\n* Quy mô: 5,5ha | 98 căn Condo Villa giới hạn.\n* Mật độ xây dựng: 28% | Cây Xanh: 12m/người.\n* Thiết kế: 1 hầm oto, 1 trệt, 4 lầu.\n* Diện tích đất: 5x19m.\n* Diện tích sàn: 299,9m².\n* Pháp lý: Sở hữu lâu dài.\n* Sống biệt lập - Không gian xanh chuẩn nghỉ dưỡng - Giá trị bền vững.\n\n* Có 3 phương thức thanh toán:\nPhương thức 1: Chỉ 20% ~ 5t nhận nhà, số còn lại thanh toán giãn đến 36 tháng.\nPhương thức 2: Chỉ 30% ~ 6t nhận nhà, số còn lại bank giải ngân, CĐT trả lãi 7% lên đến 24 tháng.\nPhương thức 3: Chỉ 20% nhận nhà sau 1 tháng bổ sung 75% để nhận chiết khấu khủng.\n\nƯu đãi booking hôm nay:\nChiết khấu tân gia: 15%.\nChiết khấu theo PTTT: 1% đến 3%.\nChiết khấu đặc biệt: 10%.\nMiễn phí hội viên CLB thể thao 1 năm.\nTặng thẻ phòng chờ sân bay 2 năm.\n\nMiễn phí quản lý đến 3 năm.",
+      "source": "structured",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "high"
+    }
+  },
+  "hidden_data": {
+    "tracking_product": {
+      "intent": "Sale",
+      "pageType": "LDP",
+      "productId": 45227596,
+      "projectId": 5522,
+      "vipType": 0,
+      "verified": false,
+      "expired": false,
+      "cateId": 324,
+      "cityCode": "SG",
+      "districtId": 70,
+      "wardId": 194,
+      "streetId": 3599,
+      "pageId": 227,
+      "createByUser": 1010554,
+      "productType": 38
+    },
+    "recommendation_location": {
+      "cityCode": "SG",
+      "districtId": 70,
+      "projectId": 5522,
+      "streetId": 3599,
+      "wardId": 194,
+      "isNewLocation": false
+    },
+    "recommendation_text": "The Glen - Celadon City, Phường Tân Sơn Nhì, Hồ Chí Minh mới",
+    "isDisplayNewAddress": false,
+    "canonical_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-n1-phuong-son-ky-the-glen-celadon-city/nhan-nha-o-ngay-van-thanh-toan-36-thang-cho-oto-rieng-tung-mien-phi-3-nam-phi-quan-ly-pr45227596",
+    "json_ld_types": [
+      "BreadcrumbList",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "RealEstateListing"
+    ],
+    "product_detail_attributes": {}
+  }
+}

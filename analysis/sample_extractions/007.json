@@ -1,0 +1,225 @@
+{
+  "file": "7.html",
+  "property_type": "Nhà riêng",
+  "fields": {
+    "province_city": {
+      "present": true,
+      "raw_value": "Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_district": {
+      "present": true,
+      "raw_value": "Huyện Bình Chánh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_ward": {
+      "present": true,
+      "raw_value": "Thị trấn Tân Túc",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_district": {
+      "present": false
+    },
+    "new_ward": {
+      "present": true,
+      "raw_value": "Xã Tân Nhựt",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high"
+    },
+    "old_address": {
+      "present": true,
+      "raw_value": "Đường Tân Túc, Thị trấn Tân Túc, Huyện Bình Chánh, Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_address": {
+      "present": true,
+      "raw_value": "Xã Tân Nhựt, Hồ Chí Minh mới",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high",
+      "complete": false
+    },
+    "latitude": {
+      "present": true,
+      "raw_value": "10.6845370593328",
+      "source": "json_script",
+      "selector": "product map initialization: latitude",
+      "confidence": "high"
+    },
+    "longitude": {
+      "present": true,
+      "raw_value": "106.573122169658",
+      "source": "json_script",
+      "selector": "product map initialization: longitude",
+      "confidence": "high"
+    },
+    "property_type": {
+      "present": true,
+      "raw_value": "Nhà riêng",
+      "source": "structured",
+      "selector": ".re__breadcrumb a[level=\"1\"]",
+      "confidence": "high"
+    },
+    "area": {
+      "present": true,
+      "raw_value": "175,4 m²",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Diện tích\")",
+      "confidence": "high"
+    },
+    "frontage": {
+      "present": true,
+      "raw_value": "4 m",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Mặt tiền\")",
+      "confidence": "high"
+    },
+    "bedrooms": {
+      "present": true,
+      "raw_value": "2 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng ngủ\")",
+      "confidence": "high"
+    },
+    "bathrooms": {
+      "present": true,
+      "raw_value": "2 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng tắm, vệ sinh\")",
+      "confidence": "high"
+    },
+    "road_width": {
+      "present": true,
+      "raw_value": "4 m",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Đường vào\")",
+      "confidence": "high"
+    },
+    "legal": {
+      "present": true,
+      "raw_value": "Sổ đỏ/ Sổ hồng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Pháp lý\")",
+      "confidence": "high"
+    },
+    "interior": {
+      "present": true,
+      "raw_value": "Đầy đủ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Nội thất\")",
+      "confidence": "high"
+    },
+    "floors": {
+      "present": true,
+      "raw_value": "1 tầng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số tầng\")",
+      "confidence": "high"
+    },
+    "price": {
+      "present": true,
+      "raw_value": "6 tỷ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Khoảng giá\")",
+      "confidence": "high"
+    },
+    "price_per_m2": {
+      "present": true,
+      "raw_value": "34,21 triệu/m²",
+      "source": "structured",
+      "selector": ".re__pr-short-info-item .ext",
+      "confidence": "high"
+    },
+    "posting_date": {
+      "present": true,
+      "raw_value": "05/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày đăng)",
+      "confidence": "high"
+    },
+    "expiration_date": {
+      "present": true,
+      "raw_value": "20/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày hết hạn)",
+      "confidence": "high"
+    },
+    "listing_id": {
+      "present": true,
+      "raw_value": "42928915",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Mã tin)",
+      "confidence": "high"
+    },
+    "listing_url": {
+      "present": true,
+      "raw_value": "https://batdongsan.com.vn/ban-nha-rieng-duong-tan-tuc-thi-tran-tan-tuc-72/ket-tien-ban-gap-dep-dt-dat-175m2-ngay-ubnd-huyen-binh-chanh-gia-8-ty-pr42928915",
+      "source": "metadata",
+      "selector": "link[rel=\"canonical\"]",
+      "confidence": "high"
+    },
+    "title": {
+      "present": true,
+      "raw_value": "Cần bán gấp căn nhà cấp 3 (DT: 175,4m2) ngay Thị trấn Tân Túc - UBND Huyện Bình Chánh. Giá: 6 tỷ",
+      "source": "structured",
+      "selector": "h1.js__pr-title",
+      "confidence": "high"
+    },
+    "description": {
+      "present": true,
+      "raw_value": "Chính chủ kẹt tiền cần bán gấp nhà riêng (còn khá mới vì để trống) có đầy đủ nội thất (tặng kèm). Diện tích đất: 175,4m² (ODT). Ngang 4m x 30m (nở hậu 8m). DTXD: 118m². Gồm: Sân trước để xe, phòng khách, 2 phòng ngủ, 2 wc, bếp, sân giặt phơi,... SHR chính chủ bán tại Thị trấn Tân Túc - Bình Chánh. HXH 4m (LG: 8m) cách đường Tân Túc chỉ 30m. Cách trung tâm hành chính, UBND Huyện Bình Chánh chỉ 200m. Thuận tiện di chuyển vào trung tâm TP.HCM theo tuyến đường Nguyễn Hữu Trí - QL1A hoặc đường Nguyễn Văn Linh - Cao tốc Trung Lương. Cạnh khu y tế kỹ thuật cao Tân Kiên quy mô 74ha đang triển khai. Giá bán: 6 tỷ (bớt lộc cho khách thiện chí mua nhanh).\n* Liên hệ xem nhà: 0783 655 ***",
+      "source": "structured",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "high"
+    }
+  },
+  "hidden_data": {
+    "tracking_product": {
+      "intent": "Sale",
+      "pageType": "LDP",
+      "productId": 42928915,
+      "projectId": 0,
+      "vipType": 0,
+      "verified": false,
+      "expired": false,
+      "cateId": 41,
+      "cityCode": "SG",
+      "districtId": 72,
+      "wardId": 11847,
+      "streetId": 9430,
+      "pageId": 227,
+      "createByUser": 4386806,
+      "productType": 38
+    },
+    "recommendation_location": {
+      "cityCode": "SG",
+      "districtId": 72,
+      "projectId": null,
+      "streetId": 9430,
+      "wardId": 11847,
+      "isNewLocation": false
+    },
+    "recommendation_text": "Xã Tân Nhựt, Hồ Chí Minh mới",
+    "isDisplayNewAddress": false,
+    "canonical_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-tan-tuc-thi-tran-tan-tuc-72/ket-tien-ban-gap-dep-dt-dat-175m2-ngay-ubnd-huyen-binh-chanh-gia-8-ty-pr42928915",
+    "json_ld_types": [
+      "BreadcrumbList",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "RealEstateListing"
+    ],
+    "product_detail_attributes": {}
+  }
+}

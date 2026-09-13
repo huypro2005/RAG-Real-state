@@ -1,0 +1,221 @@
+{
+  "file": "6.html",
+  "property_type": "Nhà riêng",
+  "fields": {
+    "province_city": {
+      "present": true,
+      "raw_value": "Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_district": {
+      "present": true,
+      "raw_value": "Quận Bình Thạnh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_ward": {
+      "present": true,
+      "raw_value": "Phường 15",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_district": {
+      "present": false
+    },
+    "new_ward": {
+      "present": true,
+      "raw_value": "Phường Gia Định",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high"
+    },
+    "old_address": {
+      "present": true,
+      "raw_value": "Đường Điện Biên Phủ, Phường 15, Quận Bình Thạnh, Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_address": {
+      "present": true,
+      "raw_value": "Phường Gia Định, Hồ Chí Minh mới",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high",
+      "complete": false
+    },
+    "latitude": {
+      "present": true,
+      "raw_value": "10.7976734104809",
+      "source": "json_script",
+      "selector": "product map initialization: latitude",
+      "confidence": "high"
+    },
+    "longitude": {
+      "present": true,
+      "raw_value": "106.704944938262",
+      "source": "json_script",
+      "selector": "product map initialization: longitude",
+      "confidence": "high"
+    },
+    "property_type": {
+      "present": true,
+      "raw_value": "Nhà riêng",
+      "source": "structured",
+      "selector": ".re__breadcrumb a[level=\"1\"]",
+      "confidence": "high"
+    },
+    "area": {
+      "present": true,
+      "raw_value": "47 m²",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Diện tích\")",
+      "confidence": "high"
+    },
+    "frontage": {
+      "present": false
+    },
+    "bedrooms": {
+      "present": true,
+      "raw_value": "3 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng ngủ\")",
+      "confidence": "high"
+    },
+    "bathrooms": {
+      "present": true,
+      "raw_value": "4 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng tắm, vệ sinh\")",
+      "confidence": "high"
+    },
+    "road_width": {
+      "present": true,
+      "raw_value": "5 m",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Đường vào\")",
+      "confidence": "high"
+    },
+    "legal": {
+      "present": true,
+      "raw_value": "Sổ đỏ/ Sổ hồng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Pháp lý\")",
+      "confidence": "high"
+    },
+    "interior": {
+      "present": true,
+      "raw_value": "Đầy đủ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Nội thất\")",
+      "confidence": "high"
+    },
+    "floors": {
+      "present": true,
+      "raw_value": "3 tầng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số tầng\")",
+      "confidence": "high"
+    },
+    "price": {
+      "present": true,
+      "raw_value": "3,86 tỷ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Khoảng giá\")",
+      "confidence": "high"
+    },
+    "price_per_m2": {
+      "present": true,
+      "raw_value": "82,13 triệu/m²",
+      "source": "structured",
+      "selector": ".re__pr-short-info-item .ext",
+      "confidence": "high"
+    },
+    "posting_date": {
+      "present": true,
+      "raw_value": "05/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày đăng)",
+      "confidence": "high"
+    },
+    "expiration_date": {
+      "present": true,
+      "raw_value": "12/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày hết hạn)",
+      "confidence": "high"
+    },
+    "listing_id": {
+      "present": true,
+      "raw_value": "46142547",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Mã tin)",
+      "confidence": "high"
+    },
+    "listing_url": {
+      "present": true,
+      "raw_value": "https://batdongsan.com.vn/ban-nha-rieng-duong-dien-bien-phu-phuong-15-5-66/ban-ien-q-binh-thanh-gia-3ty860-47m2-so-chinh-chu-dong-tien-cho-thue-22tr-thang-pr46142547",
+      "source": "metadata",
+      "selector": "link[rel=\"canonical\"]",
+      "confidence": "high"
+    },
+    "title": {
+      "present": true,
+      "raw_value": "Bán nhà Điện Biên Phủ, Quận Bình Thạnh, Giá 3Tỷ860, 47m2, sổ chính chủ, cho thuê 22tr/tháng",
+      "source": "structured",
+      "selector": "h1.js__pr-title",
+      "confidence": "high"
+    },
+    "description": {
+      "present": true,
+      "raw_value": "Tôi cần bán gấp căn nhà đường Điện Biên Phủ Q. Bình Thạnh, gần ngã tư Hàng Xanh (nay thuộc phường Gia Định). Đang cho thuê 22tr/tháng.\n- Diện tích: 47m².\n- Nhà có kết cấu: 1 trệt 2 lầu + sân thượng. Bên trong có 4 phòng ngủ, 4 nhà vệ sinh.\n- Nhà tôi đang cho thuê với giá 22tr/ tháng.\n- Sổ hồng riêng chính chủ tên tôi.\n- Hẻm trước nhà rộng 5m xe hơi đi thoải mái, hẻm cao ráo không ngập, hàng xóm thân thiện, khu vực yên tĩnh.\n- Vị trí nhà thuận tiện di chuyển ra các quận trung tâm Quận 1, Quận 2, Quận 3, Phú Nhuận. Gần các Trường Đại Học Hồng Bàng, Hutech, Kinh Tế Tài Chính, khu du lịch Văn Thánh, Landmark 81.\n- Rất thích hợp mua để cho thuê, kinh doanh, làm tài sản cho con cháu.\nGiá 3Tỷ860, Tôi cần bán gấp trong tháng 8, anh chị thiện chí mua tôi có bớt.\nGọi trực tiếp tôi để xem nhà: 0939 510 *** .",
+      "source": "structured",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "high"
+    }
+  },
+  "hidden_data": {
+    "tracking_product": {
+      "intent": "Sale",
+      "pageType": "LDP",
+      "productId": 46142547,
+      "projectId": 0,
+      "vipType": 0,
+      "verified": false,
+      "expired": false,
+      "cateId": 41,
+      "cityCode": "SG",
+      "districtId": 66,
+      "wardId": 8893,
+      "streetId": 256,
+      "pageId": 227,
+      "createByUser": 1488138,
+      "productType": 38
+    },
+    "recommendation_location": {
+      "cityCode": "SG",
+      "districtId": 66,
+      "projectId": null,
+      "streetId": 256,
+      "wardId": 8893,
+      "isNewLocation": false
+    },
+    "recommendation_text": "Phường Gia Định, Hồ Chí Minh mới",
+    "isDisplayNewAddress": false,
+    "canonical_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-dien-bien-phu-phuong-15-5-66/ban-ien-q-binh-thanh-gia-3ty860-47m2-so-chinh-chu-dong-tien-cho-thue-22tr-thang-pr46142547",
+    "json_ld_types": [
+      "BreadcrumbList",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "RealEstateListing"
+    ],
+    "product_detail_attributes": {}
+  }
+}

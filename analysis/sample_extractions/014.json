@@ -1,0 +1,221 @@
+{
+  "file": "14.html",
+  "property_type": "Nhà mặt phố",
+  "fields": {
+    "province_city": {
+      "present": true,
+      "raw_value": "Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_district": {
+      "present": true,
+      "raw_value": "Quận Tân Bình",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_ward": {
+      "present": true,
+      "raw_value": "Phường 2",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_district": {
+      "present": false
+    },
+    "new_ward": {
+      "present": true,
+      "raw_value": "Phường Tân Sơn Hòa",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high"
+    },
+    "old_address": {
+      "present": true,
+      "raw_value": "Phường 2, Quận Tân Bình, Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_address": {
+      "present": true,
+      "raw_value": "Phường Tân Sơn Hòa, Hồ Chí Minh mới",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high",
+      "complete": false
+    },
+    "latitude": {
+      "present": true,
+      "raw_value": "10.8077749325036",
+      "source": "json_script",
+      "selector": "product map initialization: latitude",
+      "confidence": "high"
+    },
+    "longitude": {
+      "present": true,
+      "raw_value": "106.666595168654",
+      "source": "json_script",
+      "selector": "product map initialization: longitude",
+      "confidence": "high"
+    },
+    "property_type": {
+      "present": true,
+      "raw_value": "Nhà mặt phố",
+      "source": "structured",
+      "selector": ".re__breadcrumb a[level=\"1\"]",
+      "confidence": "high"
+    },
+    "area": {
+      "present": true,
+      "raw_value": "90 m²",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Diện tích\")",
+      "confidence": "high"
+    },
+    "frontage": {
+      "present": true,
+      "raw_value": "5.400 m",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Mặt tiền\")",
+      "confidence": "high"
+    },
+    "bedrooms": {
+      "present": true,
+      "raw_value": "10 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng ngủ\")",
+      "confidence": "high"
+    },
+    "bathrooms": {
+      "present": true,
+      "raw_value": "10 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng tắm, vệ sinh\")",
+      "confidence": "high"
+    },
+    "road_width": {
+      "present": true,
+      "raw_value": "16 m",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Đường vào\")",
+      "confidence": "high"
+    },
+    "legal": {
+      "present": true,
+      "raw_value": "Sổ đỏ/ Sổ hồng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Pháp lý\")",
+      "confidence": "high"
+    },
+    "interior": {
+      "present": false
+    },
+    "floors": {
+      "present": true,
+      "raw_value": "7 tầng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số tầng\")",
+      "confidence": "high"
+    },
+    "price": {
+      "present": true,
+      "raw_value": "27,5 tỷ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Khoảng giá\")",
+      "confidence": "high"
+    },
+    "price_per_m2": {
+      "present": true,
+      "raw_value": "305,56 triệu/m²",
+      "source": "structured",
+      "selector": ".re__pr-short-info-item .ext",
+      "confidence": "high"
+    },
+    "posting_date": {
+      "present": true,
+      "raw_value": "09/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày đăng)",
+      "confidence": "high"
+    },
+    "expiration_date": {
+      "present": true,
+      "raw_value": "16/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày hết hạn)",
+      "confidence": "high"
+    },
+    "listing_id": {
+      "present": true,
+      "raw_value": "46159128",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Mã tin)",
+      "confidence": "high"
+    },
+    "listing_url": {
+      "present": true,
+      "raw_value": "https://batdongsan.com.vn/ban-nha-mat-pho-phuong-2-22/can-ban-tien-san-bay-tan-son-nhat-lo-goc-90m2-5-4x16-5m-7tang-thang-may-moi-gia-27-5-ty-pr46159128",
+      "source": "metadata",
+      "selector": "link[rel=\"canonical\"]",
+      "confidence": "high"
+    },
+    "title": {
+      "present": true,
+      "raw_value": "Cần bán nhà Mặt tiền sân bay Tân Sơn Nhất,Lô góc 90m2(5.4x16.5m), 7 tầng thang máy mới. Giá 27.5 tỷ",
+      "source": "structured",
+      "selector": "h1.js__pr-title",
+      "confidence": "high"
+    },
+    "description": {
+      "present": true,
+      "raw_value": "Chính chủ cần bán nhà mặt tiền ngay sân bay Tân Sơn Nhất.\n\n- Lô góc thoáng 5.4m (90m²) 7 tầng, thang máy\n\n- Giá bán nhanh: 27.5 tỷ\n\n- Vị trí: Mặt tiền đối diện sân bay, Phường 2, Tân Bình.\n\n- Diện tích đất: 90m² (5.4 x 16.5m).\n\n- Kết cấu: 7 tầng BTCT xây mới, có thang máy.\n\n- Phù hợp ở, mở văn phòng, spa, showroom, kinh doanh đa ngành\n\n- Vị trí đắc địa, giáp Phú Nhuận, 5 phút vào trung tâm.\n\n- Sổ riêng pháp lý chuẩn, hoàn công đầy đủ.\n\n* Ngoài ra em còn có nhiều căn giá tốt chuyên khu vực Quận Tân Bình.\n\n* Liên hệ: 0939 833 *** Gọi Tuấn xem nhà, làm việc chính chủ, Tư vấn pháp lý, Hỗ trợ 24/24.",
+      "source": "structured",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "high"
+    }
+  },
+  "hidden_data": {
+    "tracking_product": {
+      "intent": "Sale",
+      "pageType": "LDP",
+      "productId": 46159128,
+      "projectId": 0,
+      "vipType": 1,
+      "verified": false,
+      "expired": false,
+      "cateId": 163,
+      "cityCode": "SG",
+      "districtId": 69,
+      "wardId": 8976,
+      "streetId": 0,
+      "pageId": 227,
+      "createByUser": 376019,
+      "productType": 38
+    },
+    "recommendation_location": {
+      "cityCode": "SG",
+      "districtId": 69,
+      "projectId": null,
+      "streetId": null,
+      "wardId": 8976,
+      "isNewLocation": false
+    },
+    "recommendation_text": "Phường Tân Sơn Hòa, Hồ Chí Minh mới",
+    "isDisplayNewAddress": false,
+    "canonical_url": "https://batdongsan.com.vn/ban-nha-mat-pho-phuong-2-22/can-ban-tien-san-bay-tan-son-nhat-lo-goc-90m2-5-4x16-5m-7tang-thang-may-moi-gia-27-5-ty-pr46159128",
+    "json_ld_types": [
+      "BreadcrumbList",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "RealEstateListing"
+    ],
+    "product_detail_attributes": {}
+  }
+}

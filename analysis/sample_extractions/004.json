@@ -1,0 +1,213 @@
+{
+  "file": "4.html",
+  "property_type": "Căn hộ chung cư",
+  "fields": {
+    "province_city": {
+      "present": true,
+      "raw_value": "Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_district": {
+      "present": true,
+      "raw_value": "Quận 2",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_ward": {
+      "present": true,
+      "raw_value": "Phường An Phú",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_district": {
+      "present": false
+    },
+    "new_ward": {
+      "present": true,
+      "raw_value": "Phường Bình Trưng",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high"
+    },
+    "old_address": {
+      "present": true,
+      "raw_value": "Eaton Park, Đường Mai Chí Thọ, Phường An Phú, Quận 2, Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_address": {
+      "present": true,
+      "raw_value": "Phường Bình Trưng, Hồ Chí Minh mới",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high",
+      "complete": false
+    },
+    "latitude": {
+      "present": true,
+      "raw_value": "10.7947663221806",
+      "source": "json_script",
+      "selector": "product map initialization: latitude",
+      "confidence": "high"
+    },
+    "longitude": {
+      "present": true,
+      "raw_value": "106.753583675088",
+      "source": "json_script",
+      "selector": "product map initialization: longitude",
+      "confidence": "high"
+    },
+    "property_type": {
+      "present": true,
+      "raw_value": "Căn hộ chung cư",
+      "source": "structured",
+      "selector": ".re__breadcrumb a[level=\"1\"]",
+      "confidence": "high"
+    },
+    "area": {
+      "present": true,
+      "raw_value": "75 m²",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Diện tích\")",
+      "confidence": "high"
+    },
+    "frontage": {
+      "present": false
+    },
+    "bedrooms": {
+      "present": true,
+      "raw_value": "2 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng ngủ\")",
+      "confidence": "high"
+    },
+    "bathrooms": {
+      "present": true,
+      "raw_value": "2 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng tắm, vệ sinh\")",
+      "confidence": "high"
+    },
+    "road_width": {
+      "present": false
+    },
+    "legal": {
+      "present": true,
+      "raw_value": "Hợp đồng mua bán.",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Pháp lý\")",
+      "confidence": "high"
+    },
+    "interior": {
+      "present": true,
+      "raw_value": "Đầy đủ.",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Nội thất\")",
+      "confidence": "high"
+    },
+    "floors": {
+      "present": false
+    },
+    "price": {
+      "present": true,
+      "raw_value": "9,7 tỷ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Khoảng giá\")",
+      "confidence": "high"
+    },
+    "price_per_m2": {
+      "present": true,
+      "raw_value": "129,33 triệu/m²",
+      "source": "structured",
+      "selector": ".re__pr-short-info-item .ext",
+      "confidence": "high"
+    },
+    "posting_date": {
+      "present": true,
+      "raw_value": "27/07/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày đăng)",
+      "confidence": "high"
+    },
+    "expiration_date": {
+      "present": true,
+      "raw_value": "11/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày hết hạn)",
+      "confidence": "high"
+    },
+    "listing_id": {
+      "present": true,
+      "raw_value": "45318848",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Mã tin)",
+      "confidence": "high"
+    },
+    "listing_url": {
+      "present": true,
+      "raw_value": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-mai-chi-tho-phuong-an-phu-eaton-park/gio-hang-oc-quyen-thang-3-2-duplex-hoa-hau-tai-thap-a2-gia-goc-tu-c-t-pr45318848",
+      "source": "metadata",
+      "selector": "link[rel=\"canonical\"]",
+      "confidence": "high"
+    },
+    "title": {
+      "present": true,
+      "raw_value": "Eaton Park Quận 2 rổ hàng đẹp cập nhật T8/2026, giá tốt thị trường 2PN 8.7 tỷ, còn hàng giá gốc CDT",
+      "source": "structured",
+      "selector": "h1.js__pr-title",
+      "confidence": "high"
+    },
+    "description": {
+      "present": true,
+      "raw_value": "Eaton Park Quận 2 rổ hàng đẹp cập nhật T8/2026, giá tốt hơn thị trường, còn hàng giá gốc CDT.\n\nTop các căn chuyển nhượng giá tốt tại Eaton Park tháng 08/2026. Đa dạng 1PN, 2PN, 3PN căn góc và Duplex. Nhiều căn tầng đẹp, view thoáng, giá tốt hơn mặt bằng thị trường. Vị trí trung tâm TP. Thủ Đức liền kề Xa lộ Hà Nội & Metro tốt.\n\nLiên hệ ngay trong tuần này em Trung Hiếu chuyên giỏ hàng mã căn đẹp giá tốt tại Eaton Park: 0837 977 *** (Trung Hiếu Eaton Park).\n\nEaton Park top các căn giá tốt tháng 08/2026.\nRổ hàng chuyển nhượng đẹp | căn góc | duplex | Penhouse giá tốt thị trường.\nVị trí trung tâm TP. Thủ Đức liền kề Xa lộ Hà Nội, Metro và khu đô thị phía Đông TP. HCM.\nDự án được phát triển theo phong cách sống hiện đại với mật độ xây dựng thấp, không gian xanh và hệ tiện ích cao cấp chuẩn quốc tế.\n\nĐiểm nổi bật của Eaton Park.\nVị trí chiến lược khu Đông TP. HCM.\nKết nối nhanh Thảo Điền An Phú Thủ Thiêm.\nQuy hoạch hiện đại theo tiêu chuẩn đô thị xanh.\nChủ đầu tư Gamuda Land với thế mạnh phát triển khu đô thị cao cấp.\nTiềm năng gia tăng giá trị theo hạ tầng Metro & khu Đông.\n\nTop căn 1PN giá tốt.\nA6.0x. 0x | 51m² | giá 6.6 tỷ all in.\nA5.13.0x | 54.9m² | Đông Bắc.\nGiá: 7.1 tỷ (all in).\nHot deal giá tốt hiện tại.\n\nA2.2x. 05 | 54.9m².\nGiá: 7.7 tỷ (all in).\n\nA6.04.0x | 50.6m² | Tây Nam.\nGiá: 7.25 tỷ (all in).\n\nA1.11.0x | 55.5m² | Tây Nam.\nGiá: 7.543 tỷ (Thu Net).\nChủ nhà cần bán nhanh.\n\nTop căn 2PN giá tốt.\nA5.3x. 0x | 72.2m² | Tây Bắc.\nGiá: 8.7 tỷ (All in).\nMột trong những căn 2PN giá tốt hiện tại.\n\nA6.06. X | 74.9m² | Tây Nam.\nGiá: 9.7 tỷ (all in).\n\nA5.16. X | 75.9m² | Tây Nam.\nGiá: 10.4 tỷ (all in).\n\nA5.10. X | 71.7m² | Đông Bắc.\nGiá: 10.6 tỷ (all in).\n\nCăn góc & hàng.\nA6.03.07 | 79.5m² | Đông Bắc.\n2PN căn góc.\nGiá: 10.666 tỷ (Thu Net).\n\nA2.15.11 | 74.1m² | Đông Bắc.\nGiá: 11 tỷ (all in).\n\nTop căn 3pn & duplex số lượng giới hạn đẳng cấp.\nA1.12 - 08 | 103.7m² | Đông Bắc.\nGiá: 16.5 tỷ all in.\n\nMặt bằng giá đang thuộc nhóm cạnh tranh khu đông.\nEaton Park hiện là một trong những dự án được quan tâm mạnh tại TP. Thủ Đức nhờ:\nVị trí kết nối thuận tiện.\nChủ đầu tư quốc tế.\nQuy hoạch bài bản.\nThiết kế hiện đại.\nTiềm năng tăng trưởng theo hạ tầng khu Đông.\n\nLiên hệ 0837 977 *** em Trung Hiếu (chuyên hàng Eaton Park) để nhận:\nFull rổ hàng cập nhật mới.\nDanh sách căn giá tốt chưa public toàn bộ.\nVideo thực tế & layout từng line căn.\nSo sánh giá với các dự án cùng phân khúc khu Đông.\nHỗ trợ chọn căn phù hợp nhu cầu ở hoặc đầu tư.\n\nĐặc biệt: Ưu tiên khách hàng quan tâm các line căn góc, tầng đẹp và hàng số lượng giới hạn.",
+      "source": "structured",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "high"
+    }
+  },
+  "hidden_data": {
+    "tracking_product": {
+      "intent": "Sale",
+      "pageType": "LDP",
+      "productId": 45318848,
+      "projectId": 5738,
+      "vipType": 0,
+      "verified": false,
+      "expired": false,
+      "cateId": 324,
+      "cityCode": "SG",
+      "districtId": 54,
+      "wardId": 118,
+      "streetId": 4163,
+      "pageId": 227,
+      "createByUser": 4315538,
+      "productType": 38
+    },
+    "recommendation_location": {
+      "cityCode": "SG",
+      "districtId": 54,
+      "projectId": 5738,
+      "streetId": 4163,
+      "wardId": 118,
+      "isNewLocation": false
+    },
+    "recommendation_text": "Eaton Park, Phường Bình Trưng, Hồ Chí Minh mới",
+    "isDisplayNewAddress": false,
+    "canonical_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-mai-chi-tho-phuong-an-phu-eaton-park/gio-hang-oc-quyen-thang-3-2-duplex-hoa-hau-tai-thap-a2-gia-goc-tu-c-t-pr45318848",
+    "json_ld_types": [
+      "BreadcrumbList",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "RealEstateListing"
+    ],
+    "product_detail_attributes": {}
+  }
+}

@@ -1,0 +1,58 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Python virtual environments
+venv/
+.venv/
+env/
+
+# Python bytecode and tool caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# IDE and operating-system files
+.vscode/
+.idea/
+*.code-workspace
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+tmp/
+
+# Local helper and scratch artifacts
+shutdown/
+tool/
+/a.py
+/visualization.html
+
+# Generated crawler datasets and error logs
+/CrawlData/linkNhaDat.txt
+/CrawlData/data.json
+/CrawlData/data_errors.json
+/CrawlData/raw_html/
+/CrawlData/html/
+/CrawlData/screenshots/
+
+# Browser profiles accidentally created inside the repository
+**/bds-crawler-*/
+**/profile-*/
+
+# Rebuildable intermediate analysis data; keep final reports and samples
+/analysis/extracted_listings.json
+
+
+

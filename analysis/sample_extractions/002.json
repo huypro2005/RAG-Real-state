@@ -1,0 +1,197 @@
+{
+  "file": "2.html",
+  "property_type": "Nhà biệt thự, liền kề",
+  "fields": {
+    "province_city": {
+      "present": true,
+      "raw_value": "Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_district": {
+      "present": true,
+      "raw_value": "Huyện Cần Giờ",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_ward": {
+      "present": true,
+      "raw_value": "Xã Long Hòa",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_district": {
+      "present": false
+    },
+    "new_ward": {
+      "present": true,
+      "raw_value": "Xã Cần Giờ",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high"
+    },
+    "old_address": {
+      "present": true,
+      "raw_value": "Vinhomes Green Paradise , Xã Long Hòa, Huyện Cần Giờ, Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_address": {
+      "present": true,
+      "raw_value": "Xã Cần Giờ, Hồ Chí Minh mới",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high",
+      "complete": false
+    },
+    "latitude": {
+      "present": true,
+      "raw_value": "10.4567235628544",
+      "source": "json_script",
+      "selector": "product map initialization: latitude",
+      "confidence": "high"
+    },
+    "longitude": {
+      "present": true,
+      "raw_value": "106.907440914324",
+      "source": "json_script",
+      "selector": "product map initialization: longitude",
+      "confidence": "high"
+    },
+    "property_type": {
+      "present": true,
+      "raw_value": "Nhà biệt thự, liền kề",
+      "source": "structured",
+      "selector": ".re__breadcrumb a[level=\"1\"]",
+      "confidence": "high"
+    },
+    "area": {
+      "present": true,
+      "raw_value": "100 m²",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Diện tích\")",
+      "confidence": "high"
+    },
+    "frontage": {
+      "present": false
+    },
+    "bedrooms": {
+      "present": false
+    },
+    "bathrooms": {
+      "present": false
+    },
+    "road_width": {
+      "present": true,
+      "raw_value": "đường 26 m",
+      "source": "description",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "medium"
+    },
+    "legal": {
+      "present": false
+    },
+    "interior": {
+      "present": false
+    },
+    "floors": {
+      "present": false
+    },
+    "price": {
+      "present": true,
+      "raw_value": "Thỏa thuận",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Khoảng giá\")",
+      "confidence": "high"
+    },
+    "price_per_m2": {
+      "present": false
+    },
+    "posting_date": {
+      "present": true,
+      "raw_value": "06/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày đăng)",
+      "confidence": "high"
+    },
+    "expiration_date": {
+      "present": true,
+      "raw_value": "13/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày hết hạn)",
+      "confidence": "high"
+    },
+    "listing_id": {
+      "present": true,
+      "raw_value": "45753117",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Mã tin)",
+      "confidence": "high"
+    },
+    "listing_url": {
+      "present": true,
+      "raw_value": "https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-xa-long-hoa-vinhomes-green-paradise/gio-hang-bien-ang-mua-nhat-t5-2026-paradise-pr45753117",
+      "source": "metadata",
+      "selector": "link[rel=\"canonical\"]",
+      "confidence": "high"
+    },
+    "title": {
+      "present": true,
+      "raw_value": "CK 30% - Giỏ hàng biệt thự - liền kề biển Vinhomes Cần Giờ đáng mua nhất T7- 2026 - 0938 703 ***",
+      "source": "structured",
+      "selector": "h1.js__pr-title",
+      "confidence": "high"
+    },
+    "description": {
+      "present": true,
+      "raw_value": "Anh Chị đã và đang quan tâm Vinhomes Green Paradise thì tham khảo những căn sau đây ạ!\nGiỏ hàng biệt thự - liền kề biển đáng mua nhất T7- 2026 tại Vinhomes Green Paradise.\n1. Biệt thự đơn lập trục VN59 (đường 26 m).\n- Ưu điểm: Đường lớn, nằm gần bên 2 cụm công viên tiện ích, Biển sau nhà, compound.\n- Giá chỉ: 27.1 tỷ full.\n2. Biệt thự song lập trục VN73 (đường 15 m).\n- Ưu điểm: Gần ngã tư đường lớn, thoáng, gần công viên văn hoá, giáo dục sau nhà có biển riêng.\n- Giá chỉ: 17.7 tỷ full.\nLH 0938 703 *** em Khoa để có thông tin chi tiết.\n3. Nhà phố liền kề 75 m.\n- AS26 (đường 14 m).\nGiá 11.9 tỷ full rẻ.\n- AS17(đường 17m), đường lớn, kế góc, đối diện khu TMDV, tiện ích.\nGiá 12.68 tỷ full.\n- AS29 (đường 26 m) vị trí nằm ngay đường ra của khu Biệt thự, đường lớn thoáng đẹp, trục này rất hiếm chỉ 10 căn, em đang có 2 căn liền kề nhau.\nGiá: 13.1 tỷ/ căn Full.\n* Tất cả các căn trên đều là giá full thanh toán chuẩn theo tiến độ.\n- Anh Chị có nhu cầu vay HTLS 18 tháng vẫn áp dụng giá trên không tăng giá.\n- Anh Chị thanh toán sớm trong 30 ngày thì giảm thêm 9% vào giá.\n- Ngoài ra còn áp dụng Vinclub, và các chính sách chung của CĐT.\n- Giảm đến 30% khi khách hàng có Voucher tri ân của Vinhomes\nLH 0938 703 *** em Khoa để có thông tin chi tiết.\n4. Clarke Quay rõ ràng tiền thuê.\n- AS4 - 173 LK xẻ khe siêu đẹp.\nDiện tích: 187,8m.\nXẻ khe thoáng khí, tối ưu ánh sáng và công năng sử dụng.\nGiá TTS: 29.7 tỷ.\n- AS4 - 189 LK xẻ khe diện tích to.\nDiện tích: 227,2m.\nQuỹ đất rộng, dễ thiết kế công năng đẳng cấp.\nTTS chỉ: 35,1 tỷ.\nNgoài ra bên em có full giỏ hàng đa dạng sản phẩm.\nLH 0938 703 *** em Khoa PKD Vinhomes Cần Giờ để có thông tin chi tiết.\nVì sao khách đang mua mạnh Vinhomes Green Paradise?\n* Đại đô thị biển hiếm hoi còn lại của TP.HCM.\n* Hạ tầng Cần Giờ chuẩn bị bứt phá mạnh.\n* Vingroup triển khai thực tế, niềm tin thị trường tăng cao.\n* Tiềm năng tăng giá dài hạn nhờ quỹ đất ven biển khan hiếm.\n* Xu hướng sở hữu second home nghỉ dưỡng lên ngôi.\n* Nhiều nhà đầu tư lớn đã bắt đầu đón đầu thị trường.",
+      "source": "structured",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "high"
+    }
+  },
+  "hidden_data": {
+    "tracking_product": {
+      "intent": "Sale",
+      "pageType": "LDP",
+      "productId": 45753117,
+      "projectId": 5789,
+      "vipType": 0,
+      "verified": false,
+      "expired": false,
+      "cateId": 325,
+      "cityCode": "SG",
+      "districtId": 73,
+      "wardId": 149,
+      "streetId": 0,
+      "pageId": 227,
+      "createByUser": 582089,
+      "productType": 38
+    },
+    "recommendation_location": {
+      "cityCode": "SG",
+      "districtId": 73,
+      "projectId": 5789,
+      "streetId": null,
+      "wardId": 149,
+      "isNewLocation": false
+    },
+    "recommendation_text": "Vinhomes Green Paradise , Xã Cần Giờ, Hồ Chí Minh mới",
+    "isDisplayNewAddress": false,
+    "canonical_url": "https://batdongsan.com.vn/ban-nha-biet-thu-lien-ke-xa-long-hoa-vinhomes-green-paradise/gio-hang-bien-ang-mua-nhat-t5-2026-paradise-pr45753117",
+    "json_ld_types": [
+      "BreadcrumbList",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "RealEstateListing"
+    ],
+    "product_detail_attributes": {}
+  }
+}

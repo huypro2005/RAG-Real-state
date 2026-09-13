@@ -1,0 +1,225 @@
+{
+  "file": "17.html",
+  "property_type": "Nhà mặt phố",
+  "fields": {
+    "province_city": {
+      "present": true,
+      "raw_value": "Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_district": {
+      "present": true,
+      "raw_value": "Quận 7",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_ward": {
+      "present": true,
+      "raw_value": "Phường Tân Quy",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_district": {
+      "present": false
+    },
+    "new_ward": {
+      "present": true,
+      "raw_value": "Phường Tân Hưng",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high"
+    },
+    "old_address": {
+      "present": true,
+      "raw_value": "Khu phố 1, Số nhà 42, Đường Số 36, Phường Tân Quy, Quận 7, Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_address": {
+      "present": true,
+      "raw_value": "Phường Tân Hưng, Hồ Chí Minh mới",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high",
+      "complete": false
+    },
+    "latitude": {
+      "present": true,
+      "raw_value": "10.7402685431113",
+      "source": "json_script",
+      "selector": "product map initialization: latitude",
+      "confidence": "high"
+    },
+    "longitude": {
+      "present": true,
+      "raw_value": "106.708552359892",
+      "source": "json_script",
+      "selector": "product map initialization: longitude",
+      "confidence": "high"
+    },
+    "property_type": {
+      "present": true,
+      "raw_value": "Nhà mặt phố",
+      "source": "structured",
+      "selector": ".re__breadcrumb a[level=\"1\"]",
+      "confidence": "high"
+    },
+    "area": {
+      "present": true,
+      "raw_value": "82,6 m²",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Diện tích\")",
+      "confidence": "high"
+    },
+    "frontage": {
+      "present": true,
+      "raw_value": "4 m",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Mặt tiền\")",
+      "confidence": "high"
+    },
+    "bedrooms": {
+      "present": true,
+      "raw_value": "4 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng ngủ\")",
+      "confidence": "high"
+    },
+    "bathrooms": {
+      "present": true,
+      "raw_value": "3 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng tắm, vệ sinh\")",
+      "confidence": "high"
+    },
+    "road_width": {
+      "present": true,
+      "raw_value": "12 m",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Đường vào\")",
+      "confidence": "high"
+    },
+    "legal": {
+      "present": true,
+      "raw_value": "Sổ đỏ/ Sổ hồng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Pháp lý\")",
+      "confidence": "high"
+    },
+    "interior": {
+      "present": true,
+      "raw_value": "Đầy đủ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Nội thất\")",
+      "confidence": "high"
+    },
+    "floors": {
+      "present": true,
+      "raw_value": "4 tầng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số tầng\")",
+      "confidence": "high"
+    },
+    "price": {
+      "present": true,
+      "raw_value": "17,5 tỷ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Khoảng giá\")",
+      "confidence": "high"
+    },
+    "price_per_m2": {
+      "present": true,
+      "raw_value": "211,86 triệu/m²",
+      "source": "structured",
+      "selector": ".re__pr-short-info-item .ext",
+      "confidence": "high"
+    },
+    "posting_date": {
+      "present": true,
+      "raw_value": "08/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày đăng)",
+      "confidence": "high"
+    },
+    "expiration_date": {
+      "present": true,
+      "raw_value": "15/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày hết hạn)",
+      "confidence": "high"
+    },
+    "listing_id": {
+      "present": true,
+      "raw_value": "46153671",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Mã tin)",
+      "confidence": "high"
+    },
+    "listing_url": {
+      "present": true,
+      "raw_value": "https://batdongsan.com.vn/ban-nha-mat-pho-duong-so-36-phuong-tan-quy-59/ban-4-tang-uong-36-dien-tich-82-6m2-15m-ra-uong-nguyen-thi-thap-pr46153671",
+      "source": "metadata",
+      "selector": "link[rel=\"canonical\"]",
+      "confidence": "high"
+    },
+    "title": {
+      "present": true,
+      "raw_value": "Bán nhà phố 4 tầng đường số 36 diện tích 82.6m2, 15m ra mặt đường Nguyễn Thị Thập",
+      "source": "structured",
+      "selector": "h1.js__pr-title",
+      "confidence": "high"
+    },
+    "description": {
+      "present": true,
+      "raw_value": "Căn nhà này nằm ở Số nhà 42, đường số 36, khu phố 1, đường số 36, Phường Tân Hưng, TP HCM (địa chỉ cũ: Quận 7, Hồ Chí Minh), với diện tích 82,6m², 4PN, 3WC, và 4 tầng.\n\nGiáp vách với KingFood Mart Nguyễn Thị Thập, đứng ngoài đường Nguyễn Thị Thập vẫn có thể nhìn thấy. Nội thất đầy đủ, sổ đỏ pháp lý đầy đủ, phù hợp cho gia đình hoặc để kinh doanh. Đang cho thuê kinh doanh tầng 1 và ở các tầng trên.\n\nMặt tiền rộng 4m, đường trước nhà 12m, thoải mái 3 ôtô tránh nhau, trước nhà đỗ 3 - 4 xe ôtô thoải mái. Hướng cửa chính và ban công đều Đông Nam, đón gió mát quanh năm. Giá đang cực mềm.",
+      "source": "structured",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "high"
+    }
+  },
+  "hidden_data": {
+    "tracking_product": {
+      "intent": "Sale",
+      "pageType": "LDP",
+      "productId": 46153671,
+      "projectId": 0,
+      "vipType": 1,
+      "verified": true,
+      "expired": false,
+      "cateId": 163,
+      "cityCode": "SG",
+      "districtId": 59,
+      "wardId": 11902,
+      "streetId": 9396,
+      "pageId": 227,
+      "createByUser": 1132220,
+      "productType": 38
+    },
+    "recommendation_location": {
+      "cityCode": "SG",
+      "districtId": 59,
+      "projectId": null,
+      "streetId": 9396,
+      "wardId": 11902,
+      "isNewLocation": false
+    },
+    "recommendation_text": "Phường Tân Hưng, Hồ Chí Minh mới",
+    "isDisplayNewAddress": false,
+    "canonical_url": "https://batdongsan.com.vn/ban-nha-mat-pho-duong-so-36-phuong-tan-quy-59/ban-4-tang-uong-36-dien-tich-82-6m2-15m-ra-uong-nguyen-thi-thap-pr46153671",
+    "json_ld_types": [
+      "BreadcrumbList",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "RealEstateListing"
+    ],
+    "product_detail_attributes": {}
+  }
+}

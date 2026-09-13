@@ -1,0 +1,213 @@
+{
+  "file": "10.html",
+  "property_type": "Nhà mặt phố",
+  "fields": {
+    "province_city": {
+      "present": true,
+      "raw_value": "Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_district": {
+      "present": true,
+      "raw_value": "Quận Tân Bình",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_ward": {
+      "present": true,
+      "raw_value": "Phường 12",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_district": {
+      "present": false
+    },
+    "new_ward": {
+      "present": true,
+      "raw_value": "Phường Bảy Hiền",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high"
+    },
+    "old_address": {
+      "present": true,
+      "raw_value": "Đường Trần Mai Ninh, Phường 12, Quận Tân Bình, Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_address": {
+      "present": true,
+      "raw_value": "Phường Bảy Hiền, Hồ Chí Minh mới",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high",
+      "complete": false
+    },
+    "latitude": {
+      "present": true,
+      "raw_value": "10.7930135848783",
+      "source": "json_script",
+      "selector": "product map initialization: latitude",
+      "confidence": "high"
+    },
+    "longitude": {
+      "present": true,
+      "raw_value": "106.647889612783",
+      "source": "json_script",
+      "selector": "product map initialization: longitude",
+      "confidence": "high"
+    },
+    "property_type": {
+      "present": true,
+      "raw_value": "Nhà mặt phố",
+      "source": "structured",
+      "selector": ".re__breadcrumb a[level=\"1\"]",
+      "confidence": "high"
+    },
+    "area": {
+      "present": true,
+      "raw_value": "80 m²",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Diện tích\")",
+      "confidence": "high"
+    },
+    "frontage": {
+      "present": false
+    },
+    "bedrooms": {
+      "present": true,
+      "raw_value": "3 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng ngủ\")",
+      "confidence": "high"
+    },
+    "bathrooms": {
+      "present": true,
+      "raw_value": "4 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng tắm, vệ sinh\")",
+      "confidence": "high"
+    },
+    "road_width": {
+      "present": false
+    },
+    "legal": {
+      "present": true,
+      "raw_value": "Sổ đỏ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Pháp lý\")",
+      "confidence": "high"
+    },
+    "interior": {
+      "present": false
+    },
+    "floors": {
+      "present": true,
+      "raw_value": "4 tầng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số tầng\")",
+      "confidence": "high"
+    },
+    "price": {
+      "present": true,
+      "raw_value": "19,2 tỷ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Khoảng giá\")",
+      "confidence": "high"
+    },
+    "price_per_m2": {
+      "present": true,
+      "raw_value": "240 triệu/m²",
+      "source": "structured",
+      "selector": ".re__pr-short-info-item .ext",
+      "confidence": "high"
+    },
+    "posting_date": {
+      "present": true,
+      "raw_value": "28/07/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày đăng)",
+      "confidence": "high"
+    },
+    "expiration_date": {
+      "present": true,
+      "raw_value": "12/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày hết hạn)",
+      "confidence": "high"
+    },
+    "listing_id": {
+      "present": true,
+      "raw_value": "46107806",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Mã tin)",
+      "confidence": "high"
+    },
+    "listing_url": {
+      "present": true,
+      "raw_value": "https://batdongsan.com.vn/ban-nha-mat-pho-duong-tran-mai-ninh-phuong-12-10-69/chinh-chu-ban-mt-bay-hien-tan-binh-4-tang-moi-xay-thang-may-gia-19-2-ty-pr46107806",
+      "source": "metadata",
+      "selector": "link[rel=\"canonical\"]",
+      "confidence": "high"
+    },
+    "title": {
+      "present": true,
+      "raw_value": "Chính chủ bán nhà MT 126 Trần Mai Ninh, Bảy Hiền, Tân Bình - 4 tầng mới xây, thang máy, Giá 19.2 tỷ",
+      "source": "structured",
+      "selector": "h1.js__pr-title",
+      "confidence": "high"
+    },
+    "description": {
+      "present": true,
+      "raw_value": "Chính chủ cần bán nhà mặt tiền đường Trần Mai Ninh, P.12, khu Bảy Hiền, Quận Tân Bình.\n- Nhà mới xây hiện đại, vị trí đẹp, đối diện chợ, phù hợp để ở kết hợp kinh doanh, mở văn phòng hoặc cho thuê.\n\n- Địa chỉ: 126 Trần Mai Ninh, phường Bảy Hiền (phường 12, Quận Tân Bình cũ), TP.HCM.\n- Giá bán: 19,2 tỷ.\n- Diện tích đất: 4m x 20m.\n- Diện tích xây dựng: 4 x 16m.\n- Kết cấu: 4 tầng, nhà mới xây.\n- Trang bị thang máy hiện đại.\n+ 03 phòng ngủ rộng rãi.\n+ 01 phòng bếp.\n+ 01 phòng thờ.\n+ 04 toilet.\n- Sổ đỏ chính chủ, pháp lý rõ ràng, sang tên nhanh.\n- Vị trí đắc địa:\n+ Mặt tiền đường Trần Mai Ninh, khu dân cư sầm uất.\n+ Đối diện chợ, thuận tiện kinh doanh nhiều ngành nghề.\n+ Gần trường học các cấp, bệnh viện, công viên và đầy đủ tiện ích.\n+ Kết nối nhanh các tuyến đường lớn khu vực Tân Bình và trung tâm TP.HCM.\n- Ưu điểm nổi bật:\n+ Nhà mới xây, thiết kế hiện đại, chỉ việc vào ở.\n+ Có thang máy, phù hợp gia đình nhiều thế hệ hoặc làm văn phòng.\n+ Mặt tiền đẹp, thích hợp kinh doanh, mở showroom, spa, phòng khám hoặc cho thuê giá cao.\n+ Khu vực đông dân cư, tiềm năng tăng giá tốt.\n\n- Liên hệ chính chủ: Sơn - 0989 888 *** \n\n- Lưu ý: Không tiếp môi giới, xin cảm ơn.",
+      "source": "structured",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "high"
+    }
+  },
+  "hidden_data": {
+    "tracking_product": {
+      "intent": "Sale",
+      "pageType": "LDP",
+      "productId": 46107806,
+      "projectId": 0,
+      "vipType": 0,
+      "verified": false,
+      "expired": false,
+      "cateId": 163,
+      "cityCode": "SG",
+      "districtId": 69,
+      "wardId": 8987,
+      "streetId": 4974,
+      "pageId": 227,
+      "createByUser": 825928,
+      "productType": 38
+    },
+    "recommendation_location": {
+      "cityCode": "SG",
+      "districtId": 69,
+      "projectId": null,
+      "streetId": 4974,
+      "wardId": 8987,
+      "isNewLocation": false
+    },
+    "recommendation_text": "Phường Bảy Hiền, Hồ Chí Minh mới",
+    "isDisplayNewAddress": false,
+    "canonical_url": "https://batdongsan.com.vn/ban-nha-mat-pho-duong-tran-mai-ninh-phuong-12-10-69/chinh-chu-ban-mt-bay-hien-tan-binh-4-tang-moi-xay-thang-may-gia-19-2-ty-pr46107806",
+    "json_ld_types": [
+      "BreadcrumbList",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "RealEstateListing"
+    ],
+    "product_detail_attributes": {}
+  }
+}

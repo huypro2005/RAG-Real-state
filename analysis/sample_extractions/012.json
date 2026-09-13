@@ -1,0 +1,213 @@
+{
+  "file": "12.html",
+  "property_type": "Căn hộ chung cư",
+  "fields": {
+    "province_city": {
+      "present": true,
+      "raw_value": "Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_district": {
+      "present": true,
+      "raw_value": "Quận 2",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "old_ward": {
+      "present": true,
+      "raw_value": "Phường Bình Trưng Đông",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_district": {
+      "present": false
+    },
+    "new_ward": {
+      "present": true,
+      "raw_value": "Phường Bình Trưng",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high"
+    },
+    "old_address": {
+      "present": true,
+      "raw_value": "Gladia Heights, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh",
+      "source": "structured",
+      "selector": ".re__address-line-1",
+      "confidence": "high"
+    },
+    "new_address": {
+      "present": true,
+      "raw_value": "Phường Bình Trưng, Hồ Chí Minh mới",
+      "source": "structured",
+      "selector": ".re__address-line-2",
+      "confidence": "high",
+      "complete": false
+    },
+    "latitude": {
+      "present": true,
+      "raw_value": "10.777834",
+      "source": "json_script",
+      "selector": "product map initialization: latitude",
+      "confidence": "high"
+    },
+    "longitude": {
+      "present": true,
+      "raw_value": "106.78446",
+      "source": "json_script",
+      "selector": "product map initialization: longitude",
+      "confidence": "high"
+    },
+    "property_type": {
+      "present": true,
+      "raw_value": "Căn hộ chung cư",
+      "source": "structured",
+      "selector": ".re__breadcrumb a[level=\"1\"]",
+      "confidence": "high"
+    },
+    "area": {
+      "present": true,
+      "raw_value": "85 m²",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Diện tích\")",
+      "confidence": "high"
+    },
+    "frontage": {
+      "present": false
+    },
+    "bedrooms": {
+      "present": true,
+      "raw_value": "2 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng ngủ\")",
+      "confidence": "high"
+    },
+    "bathrooms": {
+      "present": true,
+      "raw_value": "2 phòng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Số phòng tắm, vệ sinh\")",
+      "confidence": "high"
+    },
+    "road_width": {
+      "present": false
+    },
+    "legal": {
+      "present": true,
+      "raw_value": "Sổ đỏ/ Sổ hồng",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Pháp lý\")",
+      "confidence": "high"
+    },
+    "interior": {
+      "present": true,
+      "raw_value": "Cơ bản",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Nội thất\")",
+      "confidence": "high"
+    },
+    "floors": {
+      "present": true,
+      "raw_value": "15 tầng",
+      "source": "description",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "medium"
+    },
+    "price": {
+      "present": true,
+      "raw_value": "6,8 tỷ",
+      "source": "structured",
+      "selector": ".re__pr-specs-content-item (title=\"Khoảng giá\")",
+      "confidence": "high"
+    },
+    "price_per_m2": {
+      "present": false
+    },
+    "posting_date": {
+      "present": true,
+      "raw_value": "27/07/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày đăng)",
+      "confidence": "high"
+    },
+    "expiration_date": {
+      "present": true,
+      "raw_value": "11/08/2026",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Ngày hết hạn)",
+      "confidence": "high"
+    },
+    "listing_id": {
+      "present": true,
+      "raw_value": "45911556",
+      "source": "structured",
+      "selector": ".js__pr-config-item (title=Mã tin)",
+      "confidence": "high"
+    },
+    "listing_url": {
+      "present": true,
+      "raw_value": "https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-binh-trung-dong-gladia-heights/mo-ban-c-t-keppel-va-khang-ien-gia-du-kien-tu-6-8-ty-2pn-85m2-ang-booking-pr45911556",
+      "source": "metadata",
+      "selector": "link[rel=\"canonical\"]",
+      "confidence": "high"
+    },
+    "title": {
+      "present": true,
+      "raw_value": "Mở bán căn hộ Gladia Heights CĐT Keppel và Khang Điền giá dự kiến từ 6.8 tỷ 2PN 85m2 [Đang Booking]",
+      "source": "structured",
+      "selector": "h1.js__pr-title",
+      "confidence": "high"
+    },
+    "description": {
+      "present": true,
+      "raw_value": "Chính thức nhận giữ chỗ và công bố thông tin dự án Gladia Heights siêu phẩm căn hộ cao cấp vừa được kick-off ra mắt thị trường, đánh dấu sự hợp tác chiến lược giữa hai chủ đầu tư danh tiếng là Tập đoàn Keppel (Singapore) và Công ty Cổ phần Đầu tư và Kinh doanh Nhà Khang Điền. Dự án hứa hẹn sẽ trở thành tâm điểm an cư và đầu tư nổi bật tại khu Đông thành phố.\n\nThông tin chi tiết về sản phẩm đang mở bán:\n\nChủ đầu tư: Liên doanh Keppel và Khang Điền.\n\nTên dự án: Gladia Heights.\n\nGồm 3 tháp cao 15 tầng\nTổng cộng 639 căn hộ (bao gồm 26 căn shophouse khối đế)\n\nThời gian bàn giao dự kiến: Tháng 12/2027\n\n1PN: 51 - 53 m2\n2PN nhỏ: 71 72 m² - lớn: 85 m2\n3PN - nhỏ: 114 116 m² - lớn: 125 m2\n4PN: 145 m2\nShop kinh doanh khối đế\n\nVị trí chiến lược và liên kết vùng hoàn hảo:\nGladia Heights tọa lạc tại vị trí kết nối đa tầng trong cụm đô thị tích hợp đa kết nối tại khu Đông. Dự án sở hữu hạ tầng giao thông đồng bộ xung quanh giúp cư dân dễ dàng di chuyển:\n\nKết nối nhanh chóng đến các trục đường huyết mạch như Võ Chí Công, Nguyễn Trinh, Nguyễn Thị Định, đường Liên Phường và Vành Đai 2, Vành Đai 3.\n\nTiếp cận dễ dàng Cao tốc TP.HCM - Long Thành - Dầu Giây để đi về trung tâm hoặc hướng đi Sân bay Quốc tế Long Thành.\n\nThuận tiện kết nối tới Trung tâm Quốc tế Thủ Thiêm, Phú Mỹ Hưng, Chợ Bến Thành và Sân bay Quốc tế Tân Sơn Nhất.\n\nThừa hưởng hệ thống tiện ích dịch vụ cao cấp liền kề trong vòng 10 - 20 phút di chuyển bao gồm: Trung tâm mua sắm (Saigon Centre, Thiso Mall, TTTM Estella Place, Crescent Mall); Hệ thống giáo dục quốc tế (Trường Quốc tế Úc AIS, Trường Quốc tế Mỹ TAS, Trường Quốc tế Việt Úc VAS, Đại học FPT, Đại học RMIT); Cơ sở y tế (Bệnh viện Quốc tế Mỹ AIH, Bệnh viện FV, Bệnh viện Tim Tâm Đức, Bệnh viện Phương Nam, Bệnh viện Vinmec); Khu vui chơi giải trí (Công viên City Park, Vietnam Golf and Country Club).\n\nPhương thức thanh toán vô cùng linh hoạt (Đã có lịch chính thức):\nKhách hàng giữ chỗ đăng ký sớm sẽ được lựa chọn các phương thức thanh toán phù hợp với dòng tiền, thời gian bàn giao nhà dự kiến vào tháng 12/2027 và cấp Giấy chứng nhận vào năm 2028:\n\nThanh toán ưu đãi đặc biệt (Hỗ trợ ngân hàng):\n\nKhách hàng chỉ cần thanh toán đúng 10% vốn tự có cho đến khi nhận nhà.\n\nHỗ trợ chính sách đặc quyền: Không trả gốc lẫn lãi trong vòng 24 tháng kể từ ngày giải ngân đầu tiên.\n\nKhi nhận bàn giao nhà Khách hàng cần thanh toán thêm 10% + 2% Kinh phí bảo trì\n\nDự án hiện đang trong giai đoạn đầu tiên sắp mở bán, mang lại cơ hội sinh lời và chọn căn đẹp cho những khách hàng đi đầu.\n\nMọi thông tin chi tiết về bảng giá, chính sách ưu đãi ngày mở bán và đăng ký tham quan sa bàn dự án, xin vui lòng liên hệ trực tiếp:\nĐiện thoại/Zalo: 0934 021 *** Cao Xuân Đức\nHỗ trợ tư vấn thông tin trực tiếp chính thống từ chủ đầu tư 24/7.",
+      "source": "structured",
+      "selector": ".re__detail-content.js__pr-description",
+      "confidence": "high"
+    }
+  },
+  "hidden_data": {
+    "tracking_product": {
+      "intent": "Sale",
+      "pageType": "LDP",
+      "productId": 45911556,
+      "projectId": 6742,
+      "vipType": 0,
+      "verified": false,
+      "expired": false,
+      "cateId": 324,
+      "cityCode": "SG",
+      "districtId": 54,
+      "wardId": 115,
+      "streetId": 0,
+      "pageId": 227,
+      "createByUser": 5213184,
+      "productType": 38
+    },
+    "recommendation_location": {
+      "cityCode": "SG",
+      "districtId": 54,
+      "projectId": 6742,
+      "streetId": null,
+      "wardId": 115,
+      "isNewLocation": false
+    },
+    "recommendation_text": "Gladia Heights, Phường Bình Trưng, Hồ Chí Minh mới",
+    "isDisplayNewAddress": false,
+    "canonical_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-binh-trung-dong-gladia-heights/mo-ban-c-t-keppel-va-khang-ien-gia-du-kien-tu-6-8-ty-2pn-85m2-ang-booking-pr45911556",
+    "json_ld_types": [
+      "BreadcrumbList",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "ListItem",
+      "RealEstateListing"
+    ],
+    "product_detail_attributes": {}
+  }
+}
