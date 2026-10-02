@@ -41,11 +41,12 @@ tool/
 
 # Generated crawler datasets and error logs
 /CrawlData/linkNhaDat.txt
-/CrawlData/data.json
+# /CrawlData/data.json
 /CrawlData/data_errors.json
 /CrawlData/raw_html/
 /CrawlData/html/
 /CrawlData/screenshots/
+/data/listings/*.jsonl
 
 # Browser profiles accidentally created inside the repository
 **/bds-crawler-*/
@@ -54,5 +55,5 @@ tool/
 # Rebuildable intermediate analysis data; keep final reports and samples
 /analysis/extracted_listings.json
 
-
-
+# codex
+.codex_tmp/

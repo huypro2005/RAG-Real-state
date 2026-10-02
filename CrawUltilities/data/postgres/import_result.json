@@ -1,0 +1,57 @@
+{
+  "database": "housing",
+  "host": "localhost",
+  "port": "5432",
+  "administrative_units": {
+    "legacy_2025:province": 1,
+    "legacy_2025:district": 22,
+    "legacy_2025:ward": 273,
+    "from_2025:province": 1,
+    "from_2025:ward": 168
+  },
+  "transition_source_rows": 308,
+  "files": {
+    "poi_schools.csv": {
+      "rows": 4660,
+      "sha256": "cd21eeaa1e70caa5e6015ac7a856957b39c898c6722375d6f8caa0fcf8da2d8f",
+      "mapping_counts": {
+        "old_province:matched": 4660,
+        "old_district:matched": 4660,
+        "old_ward:matched": 4510,
+        "new_province:matched": 4660,
+        "new_ward:matched_code_and_name": 4660,
+        "old_ward:unmatched": 150
+      }
+    },
+    "poi_hospitals.csv": {
+      "rows": 376,
+      "sha256": "3051dc36f3adb34db85a110021f02b2d2daf1692929252ba71fdcc5cd8e5f950",
+      "mapping_counts": {
+        "old_province:matched": 376,
+        "old_district:matched": 376,
+        "old_ward:matched": 375,
+        "new_province:matched": 376,
+        "new_ward:matched_code_and_name": 376,
+        "old_ward:unmatched": 1
+      }
+    },
+    "poi_markets.csv": {
+      "rows": 231,
+      "sha256": "4c66ece2c711c3cb0522815b1298f8e924f5ff3d9632804771e501d14bba02ea",
+      "mapping_counts": {
+        "old_province:matched": 231,
+        "old_district:matched": 231,
+        "old_ward:matched": 204,
+        "new_province:matched": 231,
+        "new_ward:matched_code_and_name": 231,
+        "old_ward:unmatched": 27
+      }
+    }
+  },
+  "postgis_enabled": true,
+  "poi_count": 5267,
+  "model_labels": {
+    "ambiguous_pre_2021_district": 847,
+    "matched_district_name": 4420
+  }
+}

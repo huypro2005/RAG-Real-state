@@ -1,0 +1,499 @@
+﻿Issue Type,Issue Key,Summary,Epic Name,Epic Link,Description,Labels,Components,Sprint,Story Points,Priority
+Epic,BDS-E1,Hạ tầng dữ liệu & Database,Hạ tầng dữ liệu & Database,,"Mục tiêu: Dựng PostgreSQL + PostGIS + pgvector, migration đủ bảng theo Bảng 4.1, nạp dữ liệu thô hiện có.
+Đầu ra: DB chạy được, migration up/down sạch, ERD, 5.267 POI + 3.993 tin thô đã nằm trong DB.",owner-rag,Hạ tầng dữ liệu & Database,,,High
+Epic,BDS-E2,Crawler định kỳ & vòng đời tin đăng,Crawler định kỳ & vòng đời tin đăng,,"Mục tiêu: Tách raw khỏi parse, crawl incremental, deduplicate, theo dõi tin mới/đổi giá/hết hạn.
+Đầu ra: Crawler chạy theo lịch, có crawl_runs + raw snapshots + listing_history, báo cáo mỗi lượt.",owner-rag,Crawler định kỳ & vòng đời tin đăng,,,High
+Epic,BDS-E3,"Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding","Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding",,"Mục tiêu: Làm sạch trường số và phân loại, giữ raw_address, mapping hành chính cũ–mới, geocode + confidence.
+Đầu ra: Bảng property_locations, bảng mapping cũ–mới, báo cáo chất lượng tọa độ.",owner-prediction,"Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding",,,High
+Epic,BDS-E4,Spatial features,Spatial features,,"Mục tiêu: Spatial index, khoảng cách tới trung tâm Quận 1, 6 biến đếm POI trong 1 km/3 km.
+Đầu ra: Bảng listing_spatial_features + job cập nhật + test truy vấn khoảng cách.",owner-prediction,Spatial features,,,High
+Epic,BDS-E5,Model dự đoán giá & A/B Testing,Model dự đoán giá & A/B Testing,,"Mục tiêu: EDA, dataset versioned, Model A baseline vs Model B (+6 spatial), quyết định kích hoạt.
+Đầu ra: Báo cáo MAE/RMSE/R², feature importance, model_activation ghi model đang active.",owner-prediction,Model dự đoán giá & A/B Testing,,,High
+Epic,BDS-E6,RAG corpus & embedding pipeline,RAG corpus & embedding pipeline,,"Mục tiêu: Định nghĩa document RAG, làm sạch mô tả, sinh embedding, lưu pgvector, cập nhật incremental.
+Đầu ra: Bảng listing_embeddings có index vector, pipeline cập nhật khi tin mới/đổi/hết hạn.",owner-rag,RAG corpus & embedding pipeline,,,High
+Epic,BDS-E7,Hybrid Search (SQL + PostGIS + vector + rerank),Hybrid Search (SQL + PostGIS + vector + rerank),,"Mục tiêu: Trích điều kiện thành JSON có schema, lọc cứng, vector search, reranking, trả Top 5 tin active.
+Đầu ra: API search trả Top 5 đúng điều kiện + bộ câu hỏi kiểm thử có số đo.",owner-rag,Hybrid Search (SQL + PostGIS + vector + rerank),,,High
+Epic,BDS-E8,API & tool nền (FastAPI),API & tool nền (FastAPI),,"Mục tiêu: 5 tool theo §5.9 và endpoint chat(mode, message, conversation_id), mỗi tool có schema và unit test.
+Đầu ra: OpenAPI schema đầy đủ, unit test từng tool xanh trước khi nối LLM.",owner-both,API & tool nền (FastAPI),,,High
+Epic,BDS-E9,Chatbot multi-agent & giao diện,Chatbot multi-agent & giao diện,,"Mục tiêu: Mode Controller và các agent theo Bảng 5.1, React 2 mode, Map View Leaflet + Goong.
+Đầu ra: Web chạy được hai luồng prediction/recommendation, không rò state giữa hai mode.",owner-both,Chatbot multi-agent & giao diện,,,High
+Epic,BDS-E10,"Kiểm thử end-to-end, đánh giá & bàn giao","Kiểm thử end-to-end, đánh giá & bàn giao",,"Mục tiêu: Test e2e crawl→DB→embedding→search/predict→chatbot→map, tổng hợp kết quả, báo cáo/slide/demo.
+Đầu ra: Test report, báo cáo đồ án, slide, video demo, hướng dẫn vận hành.",owner-both,"Kiểm thử end-to-end, đánh giá & bàn giao",,,High
+Story,BDS-1,Dựng PostgreSQL + PostGIS + pgvector bằng Docker Compose,,Hạ tầng dữ liệu & Database,"Dựng PostgreSQL + PostGIS + pgvector bằng Docker Compose
+
+Acceptance Criteria:
+- `docker compose up` dựng được DB local, có script init và hướng dẫn trong README.
+- `SELECT postgis_version()` và `SELECT extname FROM pg_extension` trả về cả postgis và vector.
+- Cấu hình kết nối đọc từ .env, không hardcode mật khẩu trong code.",owner-rag,Hạ tầng dữ liệu & Database,Sprint 1,3,High
+Story,BDS-2,Thiết kế ERD và viết migration cho toàn bộ bảng theo Bảng 4.1,,Hạ tầng dữ liệu & Database,"Thiết kế ERD và viết migration cho toàn bộ bảng theo Bảng 4.1
+
+Acceptance Criteria:
+- Đủ nhóm bảng: crawl_runs, raw_listing_snapshots, listings, listing_history, property_locations, pois, listing_spatial_features, listing_embeddings, model_runs/model_metrics/model_activation, search_logs/chat_sessions/user_feedback.
+- Migration (Alembic hoặc SQL tuần tự) chạy up và down sạch trên DB trống.
+- ERD export ra file ảnh và commit vào docs/.
+
+Phụ thuộc: BDS-1",owner-rag,Hạ tầng dữ liệu & Database,Sprint 1,8,High
+Story,BDS-3,Gộp ba bảng POI hiện có về bảng `pois` chuẩn và nạp 5.267 điểm,,Hạ tầng dữ liệu & Database,"Gộp ba bảng POI hiện có về bảng `pois` chuẩn và nạp 5.267 điểm
+
+Acceptance Criteria:
+- Nạp từ data/poi_schools.csv, poi_hospitals.csv, poi_markets.csv; giữ nguyên poi_id, source, updated_at.
+- Số bản ghi theo poi_type khớp poi_master_quality_report.json (4.660 / 376 / 231).
+- Có GIST index trên cột geography; truy vấn ST_DWithin bán kính 1 km trả kết quả dưới 100 ms.
+
+Phụ thuộc: BDS-2",owner-rag,Hạ tầng dữ liệu & Database,Sprint 1,5,High
+Story,BDS-4,Nạp 3.993 tin đăng thô hiện có vào raw_listing_snapshots và listings v0,,Hạ tầng dữ liệu & Database,"Nạp 3.993 tin đăng thô hiện có vào raw_listing_snapshots và listings v0
+
+Acceptance Criteria:
+- Mỗi dòng của CrawlData/data1.json lưu nguyên payload vào raw_listing_snapshots.
+- Sinh bản ghi listings v0 theo listing_id nguồn, không mất bản ghi nào.
+- Ghi một crawl_run tương ứng cho lần nạp lịch sử này.
+
+Phụ thuộc: BDS-2",owner-rag,Hạ tầng dữ liệu & Database,Sprint 1,5,High
+Story,BDS-5,Data dictionary và data contract cho bảng listings,,Hạ tầng dữ liệu & Database,"Data dictionary và data contract cho bảng listings
+
+Acceptance Criteria:
+- Mỗi trường có kiểu dữ liệu, đơn vị, nguồn (structured/description/metadata), quy tắc null và ví dụ.
+- Ghi rõ đơn vị của `price` và `price_per_m2` sau khi có kết luận của BDS-6.
+- Tài liệu nằm ở docs/data-contract.md và được cả hai thành viên review.
+
+Phụ thuộc: BDS-4",owner-both,Hạ tầng dữ liệu & Database,Sprint 1,3,High
+Spike,BDS-6,SPIKE: xác nhận đơn vị và độ tin cậy của price / price_per_m2 trong dump hiện có,,Hạ tầng dữ liệu & Database,"SPIKE: xác nhận đơn vị và độ tin cậy của price / price_per_m2 trong dump hiện có
+
+Acceptance Criteria:
+- Kiểm tra trên mẫu ít nhất 50 tin: đối chiếu price, area, price_per_m2 với text trong title/description.
+- Kết luận đơn vị (triệu VND hay tỷ) và tỷ lệ bản ghi không nhất quán.
+- Ghi kết luận vào data dictionary; nếu sai lệch trên 5% thì mở bug cho parser.
+
+Phụ thuộc: BDS-4",owner-prediction,Hạ tầng dữ liệu & Database,Sprint 1,2,High
+Story,BDS-7,Tách bước thu thập raw khỏi bước parse trong crawler,,Crawler định kỳ & vòng đời tin đăng,"Tách bước thu thập raw khỏi bước parse trong crawler
+
+Acceptance Criteria:
+- Crawler ghi HTML/payload thô trước, parser chạy trên raw và có thể chạy lại độc lập.
+- Parse lỗi không làm mất raw snapshot.
+- Có thể re-parse toàn bộ raw cũ bằng một lệnh.
+
+Phụ thuộc: BDS-4",owner-rag,Crawler định kỳ & vòng đời tin đăng,Sprint 2,5,High
+Story,BDS-8,Crawl trang danh sách để phát hiện URL/ID tin mới (incremental),,Crawler định kỳ & vòng đời tin đăng,"Crawl trang danh sách để phát hiện URL/ID tin mới (incremental)
+
+Acceptance Criteria:
+- Chỉ crawl trang chi tiết với URL/ID chưa có hoặc cần refresh.
+- Ghi crawl_runs: thời gian chạy, số tin mới, số lỗi, trạng thái job.
+- Chạy lại hai lần liên tiếp không tạo bản ghi trùng (tiêu chí §7.1).
+
+Phụ thuộc: BDS-7",owner-rag,Crawler định kỳ & vòng đời tin đăng,Sprint 2,5,High
+Story,BDS-9,Deduplicate theo source_id và canonical URL,,Crawler định kỳ & vòng đời tin đăng,"Deduplicate theo source_id và canonical URL
+
+Acceptance Criteria:
+- Unique constraint trên (source, source_listing_id); URL được chuẩn hóa trước khi so sánh.
+- Báo cáo số bản ghi gần trùng phát hiện được trên dump hiện có.
+
+Phụ thuộc: BDS-8",owner-rag,Crawler định kỳ & vòng đời tin đăng,Sprint 2,3,High
+Story,BDS-10,"Theo dõi vòng đời tin: first_seen_at, last_seen_at, posted_at, expired_at",,Crawler định kỳ & vòng đời tin đăng,"Theo dõi vòng đời tin: first_seen_at, last_seen_at, posted_at, expired_at
+
+Acceptance Criteria:
+- Lưu đủ bốn mốc thời gian khi nguồn cung cấp.
+- Khi nguồn không có ngày hết hạn: đánh inactive sau N lần kiểm tra liên tiếp không thấy tin (N cấu hình được), không xóa lịch sử.
+- Phân biệt được tin mới / tin cập nhật / tin inactive (tiêu chí §7.1).
+
+Phụ thuộc: BDS-9",owner-rag,Crawler định kỳ & vòng đời tin đăng,Sprint 2,5,High
+Story,BDS-11,Ghi listing_history mỗi lần quan sát có thay đổi giá hoặc trạng thái,,Crawler định kỳ & vòng đời tin đăng,"Ghi listing_history mỗi lần quan sát có thay đổi giá hoặc trạng thái
+
+Acceptance Criteria:
+- Chỉ ghi dòng mới khi giá hoặc trạng thái khác lần quan sát trước.
+- Truy vấn được lịch sử giá của một tin theo thời gian.
+
+Phụ thuộc: BDS-10",owner-rag,Crawler định kỳ & vòng đời tin đăng,Sprint 2,3,High
+Story,BDS-12,Bật lịch crawl định kỳ sớm để tích lũy lịch sử quan sát,,Crawler định kỳ & vòng đời tin đăng,"Bật lịch crawl định kỳ sớm để tích lũy lịch sử quan sát
+
+Acceptance Criteria:
+- Job chạy tự động hằng ngày (cron hoặc Task Scheduler) ngay từ Sprint 2, không chờ các epic khác.
+- Lý do: listing_history và quy tắc hết hạn cần thời gian thực tế trôi qua mới có dữ liệu demo tháng 12.
+- Mỗi lượt sinh báo cáo: tin mới, tin cập nhật, tin hết hạn, lỗi.
+
+Phụ thuộc: BDS-10",owner-rag,Crawler định kỳ & vòng đời tin đăng,Sprint 2,3,High
+Story,BDS-13,"Retry, rate limit, logging và giám sát lỗi crawler",,Crawler định kỳ & vòng đời tin đăng,"Retry, rate limit, logging và giám sát lỗi crawler
+
+Acceptance Criteria:
+- Có rate limit cấu hình được và exponential backoff khi lỗi mạng.
+- Log theo từng link, phân loại lỗi, có báo cáo tỷ lệ lỗi crawl (tiêu chí §7.1).
+- Selector thay đổi thì parser báo lỗi rõ ràng thay vì ghi dữ liệu rỗng.
+
+Phụ thuộc: BDS-12",owner-rag,Crawler định kỳ & vòng đời tin đăng,Sprint 3,5,High
+Story,BDS-14,"Rule làm sạch giá, diện tích, giá/m², phòng ngủ, số tầng, loại BĐS, pháp lý",,"Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding","Rule làm sạch giá, diện tích, giá/m², phòng ngủ, số tầng, loại BĐS, pháp lý
+
+Acceptance Criteria:
+- Mỗi rule có unit test với ca biên (giá thỏa thuận, diện tích 0, số tầng dạng chữ).
+- Giữ nguyên giá trị raw song song với giá trị đã chuẩn hóa.
+- Báo cáo phân bố giá trị sau khi làm sạch.
+
+Phụ thuộc: BDS-6",owner-prediction,"Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding",Sprint 1,8,High
+Story,BDS-15,"Phát hiện và loại bản ghi sai đơn vị, thiếu trường bắt buộc, trùng lặp hoặc outlier",,"Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding","Phát hiện và loại bản ghi sai đơn vị, thiếu trường bắt buộc, trùng lặp hoặc outlier
+
+Acceptance Criteria:
+- Quy tắc loại được viết thành tài liệu, không loại ngầm trong code.
+- Báo cáo số lượng và tỷ lệ bị loại theo từng lý do.
+- Bản ghi bị loại được đánh cờ, không xóa khỏi DB.
+
+Phụ thuộc: BDS-14",owner-prediction,"Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding",Sprint 1,5,High
+Story,BDS-16,Giữ raw_address và sinh normalized_address,,"Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding","Giữ raw_address và sinh normalized_address
+
+Acceptance Criteria:
+- raw_address luôn được lưu nguyên văn, không mã hóa thành số khi crawl.
+- normalized_address dùng chung cho tìm kiếm, geocoding và hiển thị.
+- Ghi vào bảng property_locations.
+
+Phụ thuộc: BDS-2",owner-prediction,"Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding",Sprint 1,5,High
+Story,BDS-17,Bảng mapping địa chỉ hành chính cũ – mới,,"Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding","Bảng mapping địa chỉ hành chính cũ – mới
+
+Acceptance Criteria:
+- Dùng bộ vietnamadminunits đã có trong repo làm nguồn, ghi rõ phiên bản dữ liệu.
+- Người dùng nhập địa chỉ cũ thì hệ thống chuyển sang tên hiện hành rồi mới geocode hoặc truy vấn.
+- Không suy luận địa chỉ mới nếu nguồn không cung cấp; có cờ đánh dấu trường hợp không map được.
+
+Phụ thuộc: BDS-16",owner-prediction,"Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding",Sprint 2,8,High
+Story,BDS-18,Geocoding fallback và geocode_confidence,,"Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding","Geocoding fallback và geocode_confidence
+
+Acceptance Criteria:
+- Tin có tọa độ chính xác thì dùng trực tiếp, thiếu thì geocode từ normalized_address (Goong).
+- Lưu geocode_confidence; tọa độ confidence thấp không được dùng cho spatial feature.
+- Có cache để không gọi lại API cho cùng một địa chỉ.
+
+Phụ thuộc: BDS-17",owner-prediction,"Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding",Sprint 2,5,High
+Story,BDS-19,Báo cáo chất lượng vị trí,,"Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding","Báo cáo chất lượng vị trí
+
+Acceptance Criteria:
+- Báo cáo tỷ lệ tin có tọa độ gốc, tỷ lệ geocode thành công, phân bố confidence, phân bố theo quận cũ.
+- Đáp ứng tiêu chí §7.1 về tỷ lệ geocode thành công.
+
+Phụ thuộc: BDS-18",owner-prediction,"Chuẩn hóa dữ liệu, địa chỉ cũ–mới & geocoding",Sprint 2,3,High
+Story,BDS-20,Spatial index và hàm truy vấn đếm POI theo bán kính,,Spatial features,"Spatial index và hàm truy vấn đếm POI theo bán kính
+
+Acceptance Criteria:
+- Hàm SQL hoặc Python nhận (lat, lon, radius, poi_type) và trả về số POI.
+- Kiểm chứng với ít nhất 10 điểm tính tay bằng haversine, sai khác bằng 0.
+
+Phụ thuộc: BDS-3, BDS-18",owner-prediction,Spatial features,Sprint 3,5,High
+Story,BDS-21,Tính 6 spatial feature đếm POI trong 1 km và 3 km,,Spatial features,"Tính 6 spatial feature đếm POI trong 1 km và 3 km
+
+Acceptance Criteria:
+- Đúng 6 biến: school_count_1km, hospital_count_1km, market_count_1km, school_count_3km, hospital_count_3km, market_count_3km.
+- Chỉ tính cho tin có tọa độ đạt ngưỡng confidence.
+- Lưu vào listing_spatial_features kèm phiên bản bộ POI đã dùng.
+
+Phụ thuộc: BDS-20",owner-prediction,Spatial features,Sprint 3,5,High
+Story,BDS-22,Tính khoảng cách tới trung tâm Quận 1,,Spatial features,"Tính khoảng cách tới trung tâm Quận 1
+
+Acceptance Criteria:
+- Chốt và ghi tài liệu tọa độ điểm mốc trung tâm Quận 1.
+- Giá trị khớp với dataset Đồ án 1 trên mẫu đối chiếu.
+
+Phụ thuộc: BDS-20",owner-prediction,Spatial features,Sprint 3,3,High
+Story,BDS-23,Job cập nhật lại spatial feature khi tọa độ BĐS hoặc POI thay đổi,,Spatial features,"Job cập nhật lại spatial feature khi tọa độ BĐS hoặc POI thay đổi
+
+Acceptance Criteria:
+- Chỉ tính lại những bản ghi bị ảnh hưởng, không tính lại toàn bộ.
+- Có log số bản ghi được cập nhật mỗi lượt.
+
+Phụ thuộc: BDS-21",owner-prediction,Spatial features,Sprint 4,3,Medium
+Story,BDS-24,Thí nghiệm phụ: khoảng cách tới POI gần nhất theo từng loại,,Spatial features,"Thí nghiệm phụ: khoảng cách tới POI gần nhất theo từng loại
+
+Acceptance Criteria:
+- Tính distance_to_nearest cho ba loại POI, lưu riêng, không đưa vào Model B chính thức.
+- Ghi rõ đây là thí nghiệm phụ để giữ đúng cam kết Model B chỉ thêm 6 biến.
+
+Phụ thuộc: BDS-21",owner-prediction,Spatial features,Sprint 4,3,Medium
+Story,BDS-25,"EDA: phân phối giá, diện tích, giá/m², thiếu dữ liệu, outlier, loại BĐS, khu vực",,Model dự đoán giá & A/B Testing,"EDA: phân phối giá, diện tích, giá/m², thiếu dữ liệu, outlier, loại BĐS, khu vực
+
+Acceptance Criteria:
+- Notebook hoặc report có biểu đồ và nhận xét cho từng nhóm.
+- Chỉ ra rủi ro dữ liệu ảnh hưởng tới model (mất cân bằng quận, loại BĐS hiếm).
+
+Phụ thuộc: BDS-15, BDS-21",owner-prediction,Model dự đoán giá & A/B Testing,Sprint 4,5,Medium
+Story,BDS-26,Tạo dataset ML versioned và feature schema,,Model dự đoán giá & A/B Testing,"Tạo dataset ML versioned và feature schema
+
+Acceptance Criteria:
+- `price` là target; `price_per_m2` bị loại khỏi feature để tránh target leakage nhưng vẫn giữ để EDA.
+- Feature schema có version, lưu cùng dataset; tọa độ x/y chuẩn hóa thành longitude/latitude.
+- Dataset và schema được lưu tham chiếu trong model_runs.
+
+Phụ thuộc: BDS-25",owner-prediction,Model dự đoán giá & A/B Testing,Sprint 4,5,Medium
+Story,BDS-27,Chia train/test theo thời gian,,Model dự đoán giá & A/B Testing,"Chia train/test theo thời gian
+
+Acceptance Criteria:
+- Split theo posted_at hoặc first_seen_at để mô phỏng dự đoán dữ liệu tương lai.
+- Cùng một split dùng cho cả Model A và Model B.
+
+Phụ thuộc: BDS-26",owner-prediction,Model dự đoán giá & A/B Testing,Sprint 4,3,Medium
+Story,BDS-28,Huấn luyện và tuning Model A (baseline),,Model dự đoán giá & A/B Testing,"Huấn luyện và tuning Model A (baseline)
+
+Acceptance Criteria:
+- Feature gồm loại nhà đất, đặc trưng vị trí từ địa chỉ, diện tích, mặt tiền, phòng ngủ, longitude, latitude, số tầng và khoảng cách tới trung tâm Quận 1.
+- Random Forest có hyperparameter tuning trên train set, quy trình tuning được ghi lại.
+
+Phụ thuộc: BDS-27",owner-prediction,Model dự đoán giá & A/B Testing,Sprint 5,8,Medium
+Story,BDS-29,Huấn luyện Model B = Model A + đúng 6 spatial feature,,Model dự đoán giá & A/B Testing,"Huấn luyện Model B = Model A + đúng 6 spatial feature
+
+Acceptance Criteria:
+- Cùng train/test split, cùng tiền xử lý, cùng quy trình tuning, cùng thời điểm đánh giá.
+- Khác biệt có chủ đích duy nhất là 6 biến đếm POI.
+
+Phụ thuộc: BDS-28",owner-prediction,Model dự đoán giá & A/B Testing,Sprint 5,5,Medium
+Story,BDS-30,"Báo cáo A/B Testing: MAE, RMSE, R² và phân tích chi tiết",,Model dự đoán giá & A/B Testing,"Báo cáo A/B Testing: MAE, RMSE, R² và phân tích chi tiết
+
+Acceptance Criteria:
+- Báo cáo cả hai model, phân tích thêm theo quận/huyện, loại BĐS và phân khúc giá.
+- Giải thích feature importance của cả hai model.
+
+Phụ thuộc: BDS-29",owner-prediction,Model dự đoán giá & A/B Testing,Sprint 5,5,Medium
+Story,BDS-31,Quy tắc kích hoạt model và bảng model_activation,,Model dự đoán giá & A/B Testing,"Quy tắc kích hoạt model và bảng model_activation
+
+Acceptance Criteria:
+- Chỉ kích hoạt Model B nếu MAE hoặc RMSE cải thiện tối thiểu 2%, tiêu chí công bố trước khi chạy.
+- Nếu không đạt thì giữ Model A làm model active và báo cáo trung thực.
+- model_runs/model_metrics/model_activation ghi đủ version dataset, tham số và file model.
+
+Phụ thuộc: BDS-30",owner-prediction,Model dự đoán giá & A/B Testing,Sprint 5,3,Medium
+Story,BDS-32,Định nghĩa cấu trúc document RAG,,RAG corpus & embedding pipeline,"Định nghĩa cấu trúc document RAG
+
+Acceptance Criteria:
+- Document gồm tiêu đề, mô tả, giá, diện tích, loại BĐS, vị trí, thông tin POI, ngày cập nhật, URL nguồn.
+- Chốt phần nào đưa vào embedding, phần nào chỉ là metadata dùng để lọc.
+
+Phụ thuộc: BDS-4",owner-rag,RAG corpus & embedding pipeline,Sprint 3,3,High
+Story,BDS-33,Làm sạch mô tả phục vụ embedding,,RAG corpus & embedding pipeline,"Làm sạch mô tả phục vụ embedding
+
+Acceptance Criteria:
+- Bỏ số điện thoại, ký tự rác, emoji lặp; giữ nguyên mô tả gốc trong listings.
+- Có unit test trên mẫu mô tả thật lấy từ dump hiện có.
+
+Phụ thuộc: BDS-32",owner-rag,RAG corpus & embedding pipeline,Sprint 3,5,High
+Spike,BDS-34,SPIKE: chọn embedding model tiếng Việt,,RAG corpus & embedding pipeline,"SPIKE: chọn embedding model tiếng Việt
+
+Acceptance Criteria:
+- So sánh ít nhất hai lựa chọn trên khoảng 20 truy vấn mẫu về chi phí, tốc độ và chất lượng retrieve.
+- Chốt model và số chiều vector, ghi vào docs/ trước khi tạo cột vector.
+
+Phụ thuộc: BDS-33",owner-rag,RAG corpus & embedding pipeline,Sprint 3,5,High
+Story,BDS-35,Sinh embedding và lưu vào pgvector kèm index,,RAG corpus & embedding pipeline,"Sinh embedding và lưu vào pgvector kèm index
+
+Acceptance Criteria:
+- Bảng listing_embeddings có index vector (HNSW hoặc IVFFlat) và lưu version của embedding model.
+- Chạy xong cho toàn bộ tin active hiện có.
+
+Phụ thuộc: BDS-34, BDS-2",owner-rag,RAG corpus & embedding pipeline,Sprint 4,5,Medium
+Story,BDS-36,Pipeline cập nhật incremental khi tin mới hoặc mô tả thay đổi,,RAG corpus & embedding pipeline,"Pipeline cập nhật incremental khi tin mới hoặc mô tả thay đổi
+
+Acceptance Criteria:
+- Luồng chuẩn hóa → geocode → tính spatial feature → embedding → cập nhật pgvector.
+- Tin hết hạn giữ lịch sử nhưng bị loại khỏi tập retrieve mặc định (tiêu chí §7.1).
+- Chỉ sinh lại embedding khi nội dung ngữ nghĩa thực sự thay đổi.
+
+Phụ thuộc: BDS-35, BDS-11",owner-rag,RAG corpus & embedding pipeline,Sprint 4,5,Medium
+Story,BDS-37,Schema JSON điều kiện truy vấn và validator,,Hybrid Search (SQL + PostGIS + vector + rerank),"Schema JSON điều kiện truy vấn và validator
+
+Acceptance Criteria:
+- Schema phân biệt điều kiện cứng (ngân sách, khu vực, khoảng cách) và sở thích mềm.
+- Validator từ chối JSON sai schema, LLM không được tự chế field mới.
+
+Phụ thuộc: BDS-5",owner-rag,Hybrid Search (SQL + PostGIS + vector + rerank),Sprint 5,5,Medium
+Story,BDS-38,"Lọc cứng bằng SQL: giá, loại BĐS, diện tích, khu vực, trạng thái active",,Hybrid Search (SQL + PostGIS + vector + rerank),"Lọc cứng bằng SQL: giá, loại BĐS, diện tích, khu vực, trạng thái active
+
+Acceptance Criteria:
+- Query dùng tham số hóa, không ghép chuỗi SQL từ output của LLM.
+- Kết quả chỉ gồm tin active.
+
+Phụ thuộc: BDS-37",owner-rag,Hybrid Search (SQL + PostGIS + vector + rerank),Sprint 5,5,Medium
+Story,BDS-39,"Lọc khoảng cách bằng PostGIS tới bệnh viện, chợ, trường học",,Hybrid Search (SQL + PostGIS + vector + rerank),"Lọc khoảng cách bằng PostGIS tới bệnh viện, chợ, trường học
+
+Acceptance Criteria:
+- Hỗ trợ truy vấn kiểu ""cách bệnh viện dưới 2 km"".
+- Kết quả trả về kèm khoảng cách thực tế để hiển thị.
+
+Phụ thuộc: BDS-38, BDS-3",owner-rag,Hybrid Search (SQL + PostGIS + vector + rerank),Sprint 5,5,Medium
+Story,BDS-40,Vector search trên tập ứng viên còn lại,,Hybrid Search (SQL + PostGIS + vector + rerank),"Vector search trên tập ứng viên còn lại
+
+Acceptance Criteria:
+- Vector search chỉ chạy sau khi đã lọc cứng, không quét toàn bảng.
+- Có ngưỡng số ứng viên tối đa đưa vào bước rerank.
+
+Phụ thuộc: BDS-39, BDS-35",owner-rag,Hybrid Search (SQL + PostGIS + vector + rerank),Sprint 5,5,Medium
+Story,BDS-41,Reranking và trả về Top 5,,Hybrid Search (SQL + PostGIS + vector + rerank),"Reranking và trả về Top 5
+
+Acceptance Criteria:
+- Trả tối đa 5 tin active, mỗi tin kèm giá, diện tích, địa chỉ, khoảng cách liên quan, lý do phù hợp, thời gian cập nhật và URL nguồn.
+- Tiêu chí rerank được ghi tài liệu, không phải hộp đen.
+
+Phụ thuộc: BDS-40",owner-rag,Hybrid Search (SQL + PostGIS + vector + rerank),Sprint 5,5,Medium
+Story,BDS-42,Bộ câu hỏi kiểm thử RAG và đo precision,,Hybrid Search (SQL + PostGIS + vector + rerank),"Bộ câu hỏi kiểm thử RAG và đo precision
+
+Acceptance Criteria:
+- Ít nhất 30 truy vấn tiếng Việt phủ các kiểu điều kiện: ngân sách, khu vực, khoảng cách POI, loại BĐS.
+- Có nhãn kỳ vọng và báo cáo Precision hoặc tỷ lệ kết quả phù hợp (tiêu chí §7.3).
+
+Phụ thuộc: BDS-41",owner-rag,Hybrid Search (SQL + PostGIS + vector + rerank),Sprint 6,5,Medium
+Story,BDS-43,"Khung FastAPI: cấu hình, logging, health check, cấu trúc thư mục",,API & tool nền (FastAPI),"Khung FastAPI: cấu hình, logging, health check, cấu trúc thư mục
+
+Acceptance Criteria:
+- Chạy được bằng một lệnh, có /health và log request.
+- Cấu trúc tách rõ router / service / tool.
+
+Phụ thuộc: BDS-2",owner-both,API & tool nền (FastAPI),Sprint 6,3,Medium
+Story,BDS-44,"Endpoint chat(mode, message, conversation_id) và quản lý state",,API & tool nền (FastAPI),"Endpoint chat(mode, message, conversation_id) và quản lý state
+
+Acceptance Criteria:
+- mode là đầu vào được kiểm tra bằng schema, backend không để LLM tự đoán mode.
+- State của hai mode tách riêng, đổi mode thì reset hoặc tách state.
+- Lưu chat_sessions và search_logs.
+
+Phụ thuộc: BDS-43",owner-prediction,API & tool nền (FastAPI),Sprint 6,5,Medium
+Story,BDS-45,Tool predict_price(property_features),,API & tool nền (FastAPI),"Tool predict_price(property_features)
+
+Acceptance Criteria:
+- Gọi đúng model đang active theo feature schema đúng version.
+- Có schema đầu vào/đầu ra rõ ràng và unit test độc lập trước khi tích hợp LLM.
+
+Phụ thuộc: BDS-31, BDS-43",owner-prediction,API & tool nền (FastAPI),Sprint 6,5,Medium
+Story,BDS-46,Tool normalize_address(address),,API & tool nền (FastAPI),"Tool normalize_address(address)
+
+Acceptance Criteria:
+- Xử lý được cả địa chỉ cũ và địa chỉ mới, trả về normalized_address, tọa độ và confidence.
+- Unit test phủ ca địa chỉ cũ, địa chỉ mới và địa chỉ không map được.
+
+Phụ thuộc: BDS-17, BDS-43",owner-prediction,API & tool nền (FastAPI),Sprint 6,3,Medium
+Story,BDS-47,Tool search_listings(filters),,API & tool nền (FastAPI),"Tool search_listings(filters)
+
+Acceptance Criteria:
+- Bọc toàn bộ luồng Hybrid Search, trả Top 5 kèm metadata hiển thị.
+- Unit test chạy độc lập với LLM.
+
+Phụ thuộc: BDS-41, BDS-43",owner-rag,API & tool nền (FastAPI),Sprint 6,5,Medium
+Story,BDS-48,"Tool get_nearby_pois(location, radius)",,API & tool nền (FastAPI),"Tool get_nearby_pois(location, radius)
+
+Acceptance Criteria:
+- Trả POI theo loại và bán kính, kèm khoảng cách.
+- Unit test đối chiếu với truy vấn PostGIS trực tiếp.
+
+Phụ thuộc: BDS-3, BDS-43",owner-rag,API & tool nền (FastAPI),Sprint 6,3,Medium
+Story,BDS-49,Tool get_map_results(listing_ids),,API & tool nền (FastAPI),"Tool get_map_results(listing_ids)
+
+Acceptance Criteria:
+- Trả marker/GeoJSON cho BĐS và POI liên quan.
+- Output validate được bằng schema GeoJSON.
+
+Phụ thuộc: BDS-47",owner-rag,API & tool nền (FastAPI),Sprint 6,3,Medium
+Story,BDS-50,Mode Controller: kiểm tra mode và điều phối workflow,,Chatbot multi-agent & giao diện,"Mode Controller: kiểm tra mode và điều phối workflow
+
+Acceptance Criteria:
+- Chỉ nhận đúng hai giá trị prediction hoặc recommendation.
+- Đổi mode không làm rò state hoặc field giữa hai workflow (tiêu chí §7.4).
+
+Phụ thuộc: BDS-44",owner-prediction,Chatbot multi-agent & giao diện,Sprint 7,5,Medium
+Story,BDS-51,Feature Extractor cho mode prediction,,Chatbot multi-agent & giao diện,"Feature Extractor cho mode prediction
+
+Acceptance Criteria:
+- Thu thập loại nhà đất, diện tích, địa chỉ, mặt tiền, phòng ngủ, số tầng và hỏi bổ sung field bắt buộc còn thiếu.
+- Nếu Model B đang active thì backend tự tính 6 biến POI, người dùng không phải nhập.
+
+Phụ thuộc: BDS-50, BDS-45",owner-prediction,Chatbot multi-agent & giao diện,Sprint 7,5,Medium
+Story,BDS-52,Constraint Extractor cho mode recommendation,,Chatbot multi-agent & giao diện,"Constraint Extractor cho mode recommendation
+
+Acceptance Criteria:
+- Trích ngân sách, loại BĐS, khu vực, khoảng diện tích, POI muốn ở gần và khoảng cách tối đa thành JSON đúng schema.
+- Phân biệt điều kiện cứng với sở thích mềm, hỏi bổ sung khi thiếu điều kiện cần thiết.
+
+Phụ thuộc: BDS-50, BDS-37",owner-rag,Chatbot multi-agent & giao diện,Sprint 7,5,Medium
+Story,BDS-53,Geo Agent: chuẩn hóa địa chỉ và gọi truy vấn không gian,,Chatbot multi-agent & giao diện,"Geo Agent: chuẩn hóa địa chỉ và gọi truy vấn không gian
+
+Acceptance Criteria:
+- Xử lý được địa chỉ cũ và mới do người dùng nhập.
+- Thông báo rõ khi dữ liệu vị trí có độ tin cậy thấp.
+
+Phụ thuộc: BDS-46",owner-prediction,Chatbot multi-agent & giao diện,Sprint 7,3,Medium
+Story,BDS-54,"Price Agent: geocode, tính feature và gọi model active",,Chatbot multi-agent & giao diện,"Price Agent: geocode, tính feature và gọi model active
+
+Acceptance Criteria:
+- Trả giá rao dự đoán kèm cảnh báo đây là giá tham khảo, không phải giá giao dịch thực tế.
+- Không trả kết quả nếu thiếu feature bắt buộc.
+
+Phụ thuộc: BDS-51, BDS-53",owner-prediction,Chatbot multi-agent & giao diện,Sprint 7,5,Medium
+Story,BDS-55,Search Agent: gọi Hybrid Search và lấy Top 5,,Chatbot multi-agent & giao diện,"Search Agent: gọi Hybrid Search và lấy Top 5
+
+Acceptance Criteria:
+- Chỉ gọi tool đã định nghĩa, không tự sinh SQL.
+- Hỗ trợ hỏi thêm và so sánh các tin đã trả về trong cùng mode.
+
+Phụ thuộc: BDS-52, BDS-47",owner-rag,Chatbot multi-agent & giao diện,Sprint 7,3,Medium
+Story,BDS-56,Response Agent: tổng hợp câu trả lời có căn cứ từ tool output,,Chatbot multi-agent & giao diện,"Response Agent: tổng hợp câu trả lời có căn cứ từ tool output
+
+Acceptance Criteria:
+- Câu trả lời chỉ dựa trên Top 5 đã retrieve, có giá, vị trí, khoảng cách, thời gian cập nhật và link gốc.
+- Test đối kháng: hỏi thông tin không có trong DB thì bot phải nói không có, không được bịa.
+
+Phụ thuộc: BDS-55",owner-rag,Chatbot multi-agent & giao diện,Sprint 7,5,Medium
+Story,BDS-57,Map Formatter: sinh marker/GeoJSON cho Top 5 và POI liên quan,,Chatbot multi-agent & giao diện,"Map Formatter: sinh marker/GeoJSON cho Top 5 và POI liên quan
+
+Acceptance Criteria:
+- Output khớp với dữ liệu Top 5 trả về, không lệch bản ghi.
+
+Phụ thuộc: BDS-49, BDS-55",owner-rag,Chatbot multi-agent & giao diện,Sprint 7,3,Medium
+Story,BDS-58,"React: khung chat, bộ chọn mode và form nhập liệu theo mode",,Chatbot multi-agent & giao diện,"React: khung chat, bộ chọn mode và form nhập liệu theo mode
+
+Acceptance Criteria:
+- Client gửi đúng một trong hai mode cho backend.
+- Form hoặc gợi ý nhập liệu thay đổi theo mode đang chọn.
+
+Phụ thuộc: BDS-50",owner-prediction,Chatbot multi-agent & giao diện,Sprint 7,8,Medium
+Story,BDS-59,React: danh sách Top 5 dạng card,,Chatbot multi-agent & giao diện,"React: danh sách Top 5 dạng card
+
+Acceptance Criteria:
+- Mỗi card hiển thị giá, diện tích, địa chỉ, khoảng cách POI, thời gian cập nhật và link gốc.
+
+Phụ thuộc: BDS-56",owner-rag,Chatbot multi-agent & giao diện,Sprint 8,5,Medium
+Story,BDS-60,Map View bằng Leaflet + Goong đặt cạnh chatbot,,Chatbot multi-agent & giao diện,"Map View bằng Leaflet + Goong đặt cạnh chatbot
+
+Acceptance Criteria:
+- Hiển thị marker BĐS và POI liên quan cho Top 5, click marker đồng bộ với card.
+- Map View hiển thị đúng Top 5 (tiêu chí §7.4).
+
+Phụ thuộc: BDS-57, BDS-59",owner-rag,Chatbot multi-agent & giao diện,Sprint 8,8,Medium
+Story,BDS-61,Cảnh báo tin cũ/hết hạn và cảnh báo tọa độ thiếu tin cậy trên UI,,Chatbot multi-agent & giao diện,"Cảnh báo tin cũ/hết hạn và cảnh báo tọa độ thiếu tin cậy trên UI
+
+Acceptance Criteria:
+- Tin quá N ngày chưa cập nhật hiển thị badge cảnh báo.
+- Kết quả dựa trên tọa độ confidence thấp có cảnh báo riêng.
+
+Phụ thuộc: BDS-59",owner-prediction,Chatbot multi-agent & giao diện,Sprint 8,3,Medium
+Story,BDS-62,Kiểm thử end-to-end: crawl → DB → embedding → search/predict → chatbot → map,,"Kiểm thử end-to-end, đánh giá & bàn giao","Kiểm thử end-to-end: crawl → DB → embedding → search/predict → chatbot → map
+
+Acceptance Criteria:
+- Kịch bản chạy được từ đầu đến cuối trên môi trường sạch.
+- Có test report ghi lại từng bước và lỗi phát hiện.
+
+Phụ thuộc: BDS-60, BDS-54",owner-both,"Kiểm thử end-to-end, đánh giá & bàn giao",Sprint 8,8,Medium
+Story,BDS-63,Bộ test chatbot hai mode và kiểm tra rò state,,"Kiểm thử end-to-end, đánh giá & bàn giao","Bộ test chatbot hai mode và kiểm tra rò state
+
+Acceptance Criteria:
+- Kịch bản đổi mode giữa phiên không làm lẫn dữ liệu giữa hai workflow.
+- Mode prediction gọi đúng model active, mode recommendation chỉ trả tin active.
+
+Phụ thuộc: BDS-62",owner-both,"Kiểm thử end-to-end, đánh giá & bàn giao",Sprint 8,5,Medium
+Story,BDS-64,Tổng hợp báo cáo kết quả theo §7 đề cương,,"Kiểm thử end-to-end, đánh giá & bàn giao","Tổng hợp báo cáo kết quả theo §7 đề cương
+
+Acceptance Criteria:
+- Gộp đủ báo cáo crawler (trùng lặp, lỗi, geocode), báo cáo A/B model và báo cáo precision RAG.
+- Nêu rõ model nào được kích hoạt và vì sao.
+
+Phụ thuộc: BDS-63",owner-both,"Kiểm thử end-to-end, đánh giá & bàn giao",Sprint 8,5,Medium
+Story,BDS-65,"Báo cáo đồ án, slide và video demo",,"Kiểm thử end-to-end, đánh giá & bàn giao","Báo cáo đồ án, slide và video demo
+
+Acceptance Criteria:
+- Báo cáo bám đúng cấu trúc đề cương, slide và video demo thể hiện cả hai mode và Map View.
+
+Phụ thuộc: BDS-64",owner-both,"Kiểm thử end-to-end, đánh giá & bàn giao",Sprint 8,8,Medium
+Story,BDS-66,Hướng dẫn cài đặt và vận hành hệ thống,,"Kiểm thử end-to-end, đánh giá & bàn giao","Hướng dẫn cài đặt và vận hành hệ thống
+
+Acceptance Criteria:
+- Người ngoài nhóm dựng lại được hệ thống từ README trong một buổi.
+- Ghi rõ biến môi trường, API key cần có và cách chạy crawler định kỳ.
+
+Phụ thuộc: BDS-65",owner-both,"Kiểm thử end-to-end, đánh giá & bàn giao",Sprint 8,3,Medium

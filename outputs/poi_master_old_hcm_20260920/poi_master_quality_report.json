@@ -1,0 +1,98 @@
+{
+  "generated_at": "2026-09-20T14:14:17+07:00",
+  "scope": "Thành phố Hồ Chí Minh (địa giới trước sáp nhập 2025)",
+  "record_count": 5267,
+  "poi_type_counts": {
+    "benh_vien": 376,
+    "cho": 231,
+    "truong_hoc": 4660
+  },
+  "poi_subtype_counts": {
+    "Bệnh viện": 156,
+    "Chợ truyền thống": 231,
+    "Cơ sở y tế": 22,
+    "Giáo dục thường xuyên": 39,
+    "Mầm non": 3435,
+    "Mầm non/Tiểu học": 2,
+    "Phòng khám": 140,
+    "Phòng khám chuyên khoa": 57,
+    "Phòng khám đa khoa": 1,
+    "THCS": 297,
+    "THCS/THPT": 55,
+    "THPT": 125,
+    "Tiểu học": 618,
+    "Tiểu học/THCS": 29,
+    "Tiểu học/THCS/THPT": 60
+  },
+  "geocode_confidence_counts": {
+    "high": 5220,
+    "low": 3,
+    "medium": 44
+  },
+  "source_counts": {
+    "Danh mục chợ TP.HCM + Goong": 231,
+    "OpenStreetMap": 294,
+    "gis.hcm.edu.vn": 4660,
+    "vi.wikipedia.org + Goong": 82
+  },
+  "completeness_pct": {
+    "name": 100.0,
+    "address_new": 100.0,
+    "address_old": 100.0,
+    "old_district": 100.0,
+    "geocode_confidence": 100.0
+  },
+  "school_ownership_counts": {
+    "Công lập": 1613,
+    "Ngoài công lập": 3047
+  },
+  "id_collisions_fixed": 0,
+  "spatial_feature_preview": {
+    "note": "Mẫu là toàn bộ điểm trường học; school_count đã trừ chính nó.",
+    "sample_size": 4660,
+    "features": {
+      "school_count_1km": {
+        "mean": 30.155,
+        "median": 30,
+        "p90": 55,
+        "max": 83,
+        "zero_share_pct": 1.12
+      },
+      "hospital_count_1km": {
+        "mean": 3.161,
+        "median": 1,
+        "p90": 8,
+        "max": 59,
+        "zero_share_pct": 36.7
+      },
+      "market_count_1km": {
+        "mean": 1.514,
+        "median": 1,
+        "p90": 4,
+        "max": 12,
+        "zero_share_pct": 29.42
+      },
+      "school_count_3km": {
+        "mean": 229.946,
+        "median": 221,
+        "p90": 429,
+        "max": 513,
+        "zero_share_pct": 0.02
+      },
+      "hospital_count_3km": {
+        "mean": 25.04,
+        "median": 9,
+        "p90": 83,
+        "max": 160,
+        "zero_share_pct": 7.1
+      },
+      "market_count_3km": {
+        "mean": 11.161,
+        "median": 7,
+        "p90": 28,
+        "max": 42,
+        "zero_share_pct": 1.87
+      }
+    }
+  }
+}

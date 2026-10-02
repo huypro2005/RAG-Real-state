@@ -107,9 +107,8 @@ Ví dụ cấu hình đầy đủ:
 python .\1_GetLinkNhaDat.py `
   --start-page 100 `
   --end-page 200 `
-  --workers 6 `
+  --workers 5 `
   --retries 3 `
-  --timeout 20 `
   --launch-delay 0.3
 ```
 
@@ -120,9 +119,8 @@ python .\1_GetLinkNhaDat.py `
 | `--start-page` | `1` | Trang đầu tiên cần crawl |
 | `--end-page` | `25` | Trang cuối cùng cần crawl |
 | `--output` | `linkNhaDat.txt` | File lưu link |
-| `--workers` | `6` | Số Chrome chạy đồng thời tối đa |
+| `--workers` | `5` | Số Chrome chạy đồng thời tối đa |
 | `--retries` | `3` | Số lần thử lại cho mỗi trang |
-| `--timeout` | `20` | Timeout tải trang, tính bằng giây |
 | `--launch-delay` | `0.3` | Khoảng cách tối thiểu giữa hai lần mở Chrome, tính bằng giây |
 
 Kết quả được append vào `linkNhaDat.txt`. Link đã tồn tại trong file sẽ không được ghi lại.
@@ -168,9 +166,8 @@ Ví dụ cấu hình đầy đủ:
 ```powershell
 python .\2_LocDataLink.py `
   --start-index 501 `
-  --workers 6 `
+  --workers 5 `
   --retries 3 `
-  --timeout 20 `
   --launch-delay 0.3
 ```
 
@@ -180,9 +177,8 @@ python .\2_LocDataLink.py `
 | `--limit` | Không giới hạn | Số link tối đa cần xử lý |
 | `--input` | `linkNhaDat.txt` | File link đầu vào |
 | `--output` | `data.json` | File dữ liệu đầu ra |
-| `--workers` | `6` | Số Chrome chạy đồng thời tối đa |
+| `--workers` | `5` | Số Chrome chạy đồng thời tối đa |
 | `--retries` | `3` | Số lần thử lại cho mỗi link |
-| `--timeout` | `20` | Timeout tải bài đăng, tính bằng giây |
 | `--launch-delay` | `0.3` | Khoảng cách tối thiểu giữa hai lần mở Chrome, tính bằng giây |
 
 Kết quả:
@@ -198,6 +194,12 @@ Lưu ý: `data.json` dùng chế độ append. Chạy lại cùng một phạm v
 
 `crawl_data.py` chạy bước lấy link trước, sau đó chạy bước extract.
 
+Chạy từ đầu đến cuối với toàn bộ cấu hình mặc định (trang 1–25, bắt đầu extract từ link đầu tiên, 5 Chrome chạy đồng thời, thử lại 3 lần và giãn cách mở Chrome 0,3 giây):
+
+```powershell
+python .\crawl_data.py --skip-links
+```
+
 Ví dụ crawl trang 100–200 rồi extract từ link thứ 501:
 
 ```powershell
@@ -205,7 +207,7 @@ python .\crawl_data.py `
   --start-page 100 `
   --end-page 200 `
   --start-index 501 `
-  --workers 6 `
+  --workers 5 `
   --launch-delay 0.3
 ```
 

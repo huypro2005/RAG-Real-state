@@ -165,7 +165,7 @@ def parse_args() -> argparse.Namespace:
         help="1-based position of the first unique link to process",
     )
     parser.add_argument("--limit", type=int, help="Maximum number of links to process")
-    parser.add_argument("--workers", type=int, default=6, help="Concurrent browsers")
+    parser.add_argument("--workers", type=int, default=5, help="Concurrent browsers")
     parser.add_argument("--retries", type=int, default=3, help="Retries per link")
     parser.add_argument(
         "--launch-delay",

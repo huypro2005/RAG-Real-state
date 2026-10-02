@@ -152,7 +152,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--start-page", type=int, default=1, help="First page, inclusive")
     parser.add_argument("--end-page", type=int, default=25, help="Last page, inclusive")
     parser.add_argument("--output", type=Path, default=BASE_DIR / "linkNhaDat.txt")
-    parser.add_argument("--workers", type=int, default=6, help="Concurrent browsers")
+    parser.add_argument("--workers", type=int, default=5, help="Concurrent browsers")
     parser.add_argument("--retries", type=int, default=3, help="Retries per page")
     parser.add_argument(
         "--launch-delay",

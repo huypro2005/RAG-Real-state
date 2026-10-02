@@ -24,10 +24,9 @@ def main() -> None:
     parser.add_argument("--end-page", type=int, default=25)
     parser.add_argument("--start-index", type=int, default=1)
     parser.add_argument("--limit", type=int)
-    parser.add_argument("--workers", type=int, default=6)
+    parser.add_argument("--workers", type=int, default=5)
     parser.add_argument("--retries", type=int, default=3)
-    parser.add_argument("--timeout", type=int, default=60)
-    parser.add_argument("--launch-delay", type=float, default=2.0)
+    parser.add_argument("--launch-delay", type=float, default=0.3)
     parser.add_argument("--skip-links", action="store_true", help="Skip phase 1")
     parser.add_argument("--skip-details", action="store_true", help="Skip phase 2")
     args = parser.parse_args()
@@ -36,7 +35,6 @@ def main() -> None:
     common = [
         "--workers", str(args.workers),
         "--retries", str(args.retries),
-        "--timeout", str(args.timeout),
         "--launch-delay", str(args.launch_delay),
     ]
     if not args.skip_links:

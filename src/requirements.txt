@@ -1,0 +1,9 @@
+# Pipeline làm sạch → PostgreSQL → embedding RAG (python -m src.pipeline)
+# Model embedding chạy trên Kaggle (src/kaggle/embedding_server.ipynb); máy cá nhân chỉ gọi API,
+# nên không cần torch hay sentence-transformers ở đây.
+pandas>=3.0
+numpy>=2.0
+python-dotenv
+psycopg[binary]>=3.2,<4
+pgvector>=0.4
+requests>=2.31

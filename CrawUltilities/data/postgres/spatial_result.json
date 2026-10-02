@@ -1,0 +1,11 @@
+{
+  "database": "housing",
+  "host": "localhost",
+  "port": "5432",
+  "postgis_enabled": true,
+  "poi_count": 5267,
+  "model_labels": {
+    "matched_district_name": 4420,
+    "ambiguous_pre_2021_district": 847
+  }
+}
