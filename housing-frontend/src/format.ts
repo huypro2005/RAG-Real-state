@@ -23,6 +23,14 @@ export function formatPrice(millionVnd: number): string {
   return `${trimNumber(millionVnd, 3)} triệu`;
 }
 
+/** Đơn giá triệu VND/m², làm tròn 1 chữ số: 19.3133 -> "19,3 triệu/m²", 125 -> "125 triệu/m²". */
+export function formatPricePerM2(millionVnd: number): string {
+  if (millionVnd >= 1000) {
+    return `${trimNumber(millionVnd / 1000, 2)} tỷ/m²`;
+  }
+  return `${trimNumber(millionVnd, 1)} triệu/m²`;
+}
+
 /** 166 -> "166 m", 1600 -> "1,6 km", 2000 -> "2 km". */
 export function formatDistance(meters: number): string {
   if (meters < 1000) {
@@ -72,4 +80,31 @@ export function nearestPoi(
     }
   }
   return best;
+}
+
+/** Nhãn các trường của mode dự đoán giá (khóa như `PredictionTurn.fields` của backend). */
+export const FIELD_LABELS: Record<string, string> = {
+  property_type: "Loại nhà đất",
+  district: "Quận/huyện",
+  address: "Địa chỉ",
+  area: "Diện tích",
+  bedrooms: "Phòng ngủ",
+  frontage: "Mặt tiền",
+  floors: "Số tầng",
+};
+
+/** Giá trị một trường dự đoán để hiển thị: diện tích "60 m²", mặt tiền "4,5 m", còn lại giữ nguyên. */
+export function formatField(key: string, value: string | number): string {
+  if (typeof value !== "number") return value;
+  if (key === "area") return formatArea(value);
+  if (key === "frontage") return `${trimNumber(value, 1)} m`;
+  return trimNumber(value, 1);
+}
+
+/** Khoảng giá tổng từ khoảng giá/m²: (55, 70, 60m²) -> "3,3 – 4,2 tỷ"; thiếu biên thì null. */
+export function formatPriceRange(low: number | undefined, high: number | undefined, area: number): string | null {
+  if (low === undefined || high === undefined || area <= 0) return null;
+  const [from, to] = [formatPrice(low * area), formatPrice(high * area)];
+  const sameUnit = from.endsWith(" tỷ") && to.endsWith(" tỷ");
+  return sameUnit ? `${from.replace(" tỷ", "")} – ${to}` : `${from} – ${to}`;
 }
