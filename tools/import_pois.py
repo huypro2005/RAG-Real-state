@@ -1,4 +1,6 @@
-"""Import existing POI CSVs and independent administrative snapshots.
+"""LỖI THỜI: dùng housing-backend/scripts/migrate_legacy_data.py
+
+Import existing POI CSVs and independent administrative snapshots.
 
 Credentials: standard PGHOST/PGPORT/PGDATABASE/PGUSER/PGPASSWORD variables.
 No address conversion, geocoding, model training, or crawler changes.

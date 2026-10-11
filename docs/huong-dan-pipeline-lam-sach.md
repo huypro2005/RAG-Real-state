@@ -107,9 +107,9 @@ thức là một bước nghiệp vụ. Đọc `clean()` từ trên xuống là 
 Chạy tại thư mục gốc dự án:
 
 ```powershell
-python -m src.pipeline.listing_cleaner               # chỉ làm sạch: đọc CrawlData/data.json, ghi data/listings/
-python -m src.pipeline.listing_cleaner --input khac.json --output-dir data/listings_test
-python -m src.pipeline                               # làm sạch + nạp PostgreSQL + embedding (mục 6)
+python -m src.pipeline                               # làm sạch + nạp housing_dev + FK địa chỉ + POI (README: src/pipeline/README.md)
+python -m src.pipeline --embed                       # thêm embedding qua API Kaggle (mục 6)
+python -m src.pipeline --input khac.json --output-dir data/listings_test
 python -m unittest discover -s src/tests -t .
 ```
 
@@ -133,7 +133,7 @@ clean, rejected = ListingCleaner().clean(records)    # records: list[dict] đọ
 | **Bật lọc tin hết hạn** | Trong `_reject_reasons`, bỏ comment dòng `'expired': ...` và đặt `as_of` là ngày chạy dạng `'yyyy-mm-dd'`. Nhớ sửa test `test_expired_listing_is_kept` |
 
 Nguyên tắc khi sửa: **không suy đoán dữ liệu**. Giá trị sai thì đặt `None` và gắn cờ, hoặc loại
-tin, chứ không tự điền. Bản gốc luôn nằm trong `raw_record` để đối chiếu.
+tin, chứ không tự điền. Không lưu bản ghi gốc; bản gốc nằm ở `CrawlData/data.json`, còn `quality_flags` cho biết ô nào đã bị đặt `None`.
 
 ## 6. Pipeline đầy đủ: đưa tin vào database cho RAG
 
@@ -141,17 +141,17 @@ tin, chứ không tự điền. Bản gốc luôn nằm trong `raw_record` để
 CrawlData/data.json
    │  ListingCleaner     src/pipeline/listing_cleaner.py   làm sạch, bỏ trùng, loại tin lỗi
    ▼
-listing.listings         ListingLoader  (listing_loader.py) upsert theo listing_id
-listing.listing_spatial_features        6 biến đếm POI 1 km/3 km + POI gần nhất (hàm SQL)
+listings                 ListingLoader  (listing_loader.py) upsert theo listing_id
+listing_spatial_features                6 biến đếm POI 1 km/3 km + POI gần nhất (hàm SQL)
    │  ListingEmbedder    listing_embedder.py               dựng document, gọi API embedding
    │        ▲ HTTPS
    │        └── Kaggle GPU: src/kaggle/embedding_server.ipynb (BAAI/bge-m3 + Cloudflare Tunnel)
    ▼
-rag.listing_embeddings   embedding_text, rag_document, vector(1024)
+listing_embeddings       embedding_text, rag_document, vector(1024)
 ```
 
 Mỗi bước là một class, cùng tinh thần với `ListingCleaner`. `src/pipeline/__main__.py` chỉ nối
-các bước lại với nhau. Schema nằm ở [src/pipeline/schema.sql](../src/pipeline/schema.sql).
+các bước lại với nhau. Schema do Alembic quản lý: [0001_baseline.py](../housing-backend/housing-backend/migrations/versions/0001_baseline.py) (giải thích bảng: [database.md](database.md)).
 
 **Model không chạy trên máy cá nhân.** Notebook Kaggle nạp `BAAI/bge-m3` lên GPU và mở API qua
 Cloudflare Tunnel. Máy cá nhân chỉ gửi text và nhận vector về.
@@ -177,8 +177,8 @@ python -m pip install -r src/requirements.txt
 3. Chạy pipeline, rồi *Stop session* trên Kaggle khi xong:
 
    ```powershell
-   python -m src.pipeline                 # làm sạch + nạp DB + tính POI + embed qua API Kaggle
-   python -m src.pipeline --skip-embed    # không cần Kaggle: chỉ làm sạch + nạp DB + tính POI
+   python -m src.pipeline --embed         # làm sạch + nạp DB + tính POI + embed qua API Kaggle
+   python -m src.pipeline                 # không cần Kaggle: chỉ làm sạch + nạp DB + tính POI
    ```
 
 URL tunnel đổi mỗi lần chạy lại notebook, nên phải cập nhật `EMBEDDING_API_URL`. Nếu tunnel đứt

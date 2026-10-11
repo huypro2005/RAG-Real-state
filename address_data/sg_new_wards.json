@@ -1,0 +1,1692 @@
+[
+    {
+        "wardId": 18956,
+        "wardName": "An Đông",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-an-dong",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 25356,
+        "wardName": "An Hội Đông",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-an-hoi-dong",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 25100,
+        "wardName": "An Hội Tây",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-an-hoi-tay",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 11020,
+        "wardName": "An Khánh",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-an-khanh",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 23820,
+        "wardName": "An Lạc",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-an-lac",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 40972,
+        "wardName": "An Long",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-an-long-sg",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 24332,
+        "wardName": "An Nhơn",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-an-nhon-sg",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 27404,
+        "wardName": "An Nhơn Tây",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-an-nhon-tay-sg",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 12556,
+        "wardName": "An Phú",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-an-phu-sg",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 22284,
+        "wardName": "An Phú Đông",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-an-phu-dong",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 2060,
+        "wardName": "An Thới Đông",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-an-thoi-dong",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 30220,
+        "wardName": "Bà Điểm",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-ba-diem",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 34060,
+        "wardName": "Bà Rịa",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-ba-ria",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 40716,
+        "wardName": "Bắc Tân Uyên",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-bac-tan-uyen",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 2572,
+        "wardName": "Bàn Cờ",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-ban-co",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 33292,
+        "wardName": "Bàu Bàng",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-bau-bang",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 38412,
+        "wardName": "Bàu Lâm",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-bau-lam",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 26636,
+        "wardName": "Bảy Hiền",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-bay-hien",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 14348,
+        "wardName": "Bến Cát",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-ben-cat",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 7948,
+        "wardName": "Bến Thành",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-ben-thanh",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 1292,
+        "wardName": "Bình Chánh",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-binh-chanh",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 39948,
+        "wardName": "Bình Châu",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-binh-chau",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 40460,
+        "wardName": "Bình Cơ",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-co",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 3084,
+        "wardName": "Bình Đông",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-dong",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 41484,
+        "wardName": "Bình Dương",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-duong",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 36364,
+        "wardName": "Bình Giã",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-binh-gia-sg",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 11788,
+        "wardName": "Bình Hòa",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-hoa",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 5644,
+        "wardName": "Bình Hưng",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-binh-hung",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 18188,
+        "wardName": "Bình Hưng Hòa",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-hung-hoa",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 2316,
+        "wardName": "Bình Khánh",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-binh-khanh",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 26892,
+        "wardName": "Bình Lợi",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-binh-loi",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 23052,
+        "wardName": "Bình Lợi Trung",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-loi-trung",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 28940,
+        "wardName": "Bình Mỹ",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-binh-my-sg",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 9228,
+        "wardName": "Bình Phú",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-phu",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 23564,
+        "wardName": "Bình Quới",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-quoi",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 4876,
+        "wardName": "Bình Tân",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-tan",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 32268,
+        "wardName": "Bình Tây",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-tay",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 22796,
+        "wardName": "Bình Thạnh",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-thanh",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 8716,
+        "wardName": "Bình Thới",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-thoi",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 19468,
+        "wardName": "Bình Tiên",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-tien",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 5132,
+        "wardName": "Bình Trị Đông",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-tri-dong",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 10764,
+        "wardName": "Bình Trưng",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-binh-trung",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 29196,
+        "wardName": "Cần Giờ",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-can-gio",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 32012,
+        "wardName": "Cát Lái",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-cat-lai",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 6412,
+        "wardName": "Cầu Kiệu",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-cau-kieu",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 7436,
+        "wardName": "Cầu Ông Lãnh",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-cau-ong-lanh",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 15628,
+        "wardName": "Chánh Hiệp",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-chanh-hiep",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 4108,
+        "wardName": "Chánh Hưng",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-chanh-hung",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 42252,
+        "wardName": "Chánh Phú Hòa",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-chanh-phu-hoa",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 36876,
+        "wardName": "Châu Đức",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-chau-duc",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 35852,
+        "wardName": "Châu Pha",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-chau-pha",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 19212,
+        "wardName": "Chợ Lớn",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-cho-lon",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 18700,
+        "wardName": "Chợ Quán",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-cho-quan",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 17676,
+        "wardName": "Côn Đảo",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "dac-khu-con-dao",
+        "wardPrefix": "Đặc Khu",
+        "otherNames": null
+    },
+    {
+        "wardId": 28428,
+        "wardName": "Củ Chi",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-cu-chi",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 38668,
+        "wardName": "Đất Đỏ",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-dat-do",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 14604,
+        "wardName": "Dầu Tiếng",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-dau-tieng",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 16908,
+        "wardName": "Dĩ An",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-di-an",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 8204,
+        "wardName": "Diên Hồng",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-dien-hong-sg",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 42764,
+        "wardName": "Đông Hòa",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-dong-hoa-sg",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 21260,
+        "wardName": "Đông Hưng Thuận",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-dong-hung-thuan",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 29452,
+        "wardName": "Đông Thạnh",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-dong-thanh-sg",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 25612,
+        "wardName": "Đức Nhuận",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-duc-nhuan",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 22540,
+        "wardName": "Gia Định",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-gia-dinh",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 24588,
+        "wardName": "Gò Vấp",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-go-vap",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 24076,
+        "wardName": "Hạnh Thông",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-hanh-thong",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 10252,
+        "wardName": "Hiệp Bình",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-hiep-binh",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 30732,
+        "wardName": "Hiệp Phước",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-hiep-phuoc",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 37644,
+        "wardName": "Hồ Tràm",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-ho-tram",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 21004,
+        "wardName": "Hòa Bình",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-hoa-binh-sg",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 39692,
+        "wardName": "Hòa Hiệp",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-hoa-hiep",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 38156,
+        "wardName": "Hòa Hội",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-hoa-hoi-sg",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 8460,
+        "wardName": "Hòa Hưng",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-hoa-hung",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 41996,
+        "wardName": "Hòa Lợi",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-hoa-loi",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 29708,
+        "wardName": "Hóc Môn",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-hoc-mon",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 27148,
+        "wardName": "Hưng Long",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-hung-long",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 1036,
+        "wardName": "Khánh Hội",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-khanh-hoi",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 36620,
+        "wardName": "Kim Long",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-kim-long",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 12300,
+        "wardName": "Lái Thiêu",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-lai-thieu",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 10508,
+        "wardName": "Linh Xuân",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-linh-xuan",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 4364,
+        "wardName": "Long Bình",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-long-binh-sg",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 17932,
+        "wardName": "Long Điền",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-long-dien-sg",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 38924,
+        "wardName": "Long Hải",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-long-hai",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 13068,
+        "wardName": "Long Hòa",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-long-hoa",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 34316,
+        "wardName": "Long Hương",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-long-huong",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 13836,
+        "wardName": "Long Nguyên",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-long-nguyen",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 31500,
+        "wardName": "Long Phước",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-long-phuoc",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 39436,
+        "wardName": "Long Sơn",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-long-son",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 31756,
+        "wardName": "Long Trường",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-long-truong",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 20748,
+        "wardName": "Minh Phụng",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-minh-phung",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 13324,
+        "wardName": "Minh Thạnh",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-minh-thanh",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 36108,
+        "wardName": "Ngãi Giao",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-ngai-giao",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 37388,
+        "wardName": "Nghĩa Thành",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-nghia-thanh",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 1001,
+        "wardName": "Ngọc Hà",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-ngoc-ha",
+        "wardPrefix": "Phường",
+        "otherNames": ""
+    },
+    {
+        "wardId": 30476,
+        "wardName": "Nhà Bè",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-nha-be",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 18444,
+        "wardName": "Nhiêu Lộc",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-nhieu-loc",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 27916,
+        "wardName": "Nhuận Đức",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-nhuan-duc",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 11276,
+        "wardName": "Phú An",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-phu-an",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 3852,
+        "wardName": "Phú Định",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-phu-dinh",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 5388,
+        "wardName": "Phú Giáo",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-phu-giao",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 28684,
+        "wardName": "Phú Hòa Đông",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-phu-hoa-dong",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 19724,
+        "wardName": "Phú Lâm",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-phu-lam",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 17420,
+        "wardName": "Phú Lợi",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-phu-loi-sg",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 34828,
+        "wardName": "Phú Mỹ",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-phu-my",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 6156,
+        "wardName": "Phú Nhuận",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-phu-nhuan",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 6924,
+        "wardName": "Phú Thạnh",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-phu-thanh",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 8972,
+        "wardName": "Phú Thọ",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-phu-tho-sg",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 32780,
+        "wardName": "Phú Thọ Hòa",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-phu-tho-hoa",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 3340,
+        "wardName": "Phú Thuận",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-phu-thuan",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 39180,
+        "wardName": "Phước Hải",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-phuoc-hai",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 15372,
+        "wardName": "Phước Hòa",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-phuoc-hoa",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 31244,
+        "wardName": "Phước Long",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-phuoc-long-sg",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 33804,
+        "wardName": "Phước Thắng",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-phuoc-thang",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 41228,
+        "wardName": "Phước Thành",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-phuoc-thanh-sg",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 12812,
+        "wardName": "Rạch Dừa",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-rach-dua",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 7692,
+        "wardName": "Sài Gòn",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-sai-gon",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 30988,
+        "wardName": "Tam Bình",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tam-binh",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 34572,
+        "wardName": "Tam Long",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tam-long",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 33548,
+        "wardName": "Tam Thắng",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tam-thang",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 28172,
+        "wardName": "Tân An Hội",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-tan-an-hoi",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 6668,
+        "wardName": "Tân Bình",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-binh",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 7180,
+        "wardName": "Tân Định",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-dinh",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 17164,
+        "wardName": "Tân Đông Hiệp",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-dong-hiep",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 35596,
+        "wardName": "Tân Hải",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-hai",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 41740,
+        "wardName": "Tân Hiệp",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-hiep",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 26380,
+        "wardName": "Tân Hòa",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-hoa-sg",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 19980,
+        "wardName": "Tân Hưng",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-hung-sg",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 14860,
+        "wardName": "Tân Khánh",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-khanh",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 3596,
+        "wardName": "Tân Mỹ",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-my",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 16652,
+        "wardName": "Tân Nhựt",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-tan-nhut",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 33036,
+        "wardName": "Tân Phú",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-phu",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 35340,
+        "wardName": "Tân Phước",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-phuoc",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 32524,
+        "wardName": "Tân Sơn",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-son",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 25868,
+        "wardName": "Tân Sơn Hòa",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-son-hoa",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 26124,
+        "wardName": "Tân Sơn Nhất",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-son-nhat",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 9484,
+        "wardName": "Tân Sơn Nhì",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-son-nhi",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 13580,
+        "wardName": "Tân Tạo",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-tao",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 35084,
+        "wardName": "Tân Thành",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-thanh-sg",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 21772,
+        "wardName": "Tân Thới Hiệp",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-thoi-hiep",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 20236,
+        "wardName": "Tân Thuận",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-thuan",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 15116,
+        "wardName": "Tân Uyên",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tan-uyen",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 1804,
+        "wardName": "Tân Vĩnh Lộc",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-tan-vinh-loc",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 4620,
+        "wardName": "Tăng Nhơn Phú",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tang-nhon-phu",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 16140,
+        "wardName": "Tây Nam",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tay-nam",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 9740,
+        "wardName": "Tây Thạnh",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-tay-thanh",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 27660,
+        "wardName": "Thái Mỹ",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-thai-my",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 268,
+        "wardName": "Thạnh An",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-thanh-an",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 16396,
+        "wardName": "Thanh An",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-thanh-an-sg",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 23308,
+        "wardName": "Thạnh Mỹ Tây",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-thanh-my-tay",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 22028,
+        "wardName": "Thới An",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-thoi-an",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 15884,
+        "wardName": "Thới Hòa",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-thoi-hoa",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 24844,
+        "wardName": "Thông Tây Hội",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-thong-tay-hoi",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 12044,
+        "wardName": "Thủ Dầu Một",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-thu-dau-mot",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 9996,
+        "wardName": "Thủ Đức",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-thu-duc",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 43020,
+        "wardName": "Thuận An",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-thuan-an",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 11532,
+        "wardName": "Thuận Giao",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-thuan-giao",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 5900,
+        "wardName": "Thường Tân",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-thuong-tan",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 14092,
+        "wardName": "Trừ Văn Thố",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-tru-van-tho",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 21516,
+        "wardName": "Trung Mỹ Tây",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-trung-my-tay",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 780,
+        "wardName": "Vĩnh Hội",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-vinh-hoi",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 1548,
+        "wardName": "Vĩnh Lộc",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-vinh-loc-sg",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 42508,
+        "wardName": "Vĩnh Tân",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-vinh-tan",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 40204,
+        "wardName": "Vũng Tàu",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-vung-tau",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 20492,
+        "wardName": "Vườn Lài",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-vuon-lai",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 524,
+        "wardName": "Xóm Chiếu",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-xom-chieu",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 2828,
+        "wardName": "Xuân Hòa",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "phuong-xuan-hoa-sg",
+        "wardPrefix": "Phường",
+        "otherNames": null
+    },
+    {
+        "wardId": 37132,
+        "wardName": "Xuân Sơn",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-xuan-son",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 29964,
+        "wardName": "Xuân Thới Sơn",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-xuan-thoi-son",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    },
+    {
+        "wardId": 37900,
+        "wardName": "Xuyên Mộc",
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "cityAlias": "tp-ho-chi-minh",
+        "wardAlias": "xa-xuyen-moc",
+        "wardPrefix": "Xã",
+        "otherNames": null
+    }
+]

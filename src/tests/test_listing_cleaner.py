@@ -1,4 +1,7 @@
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
 import pandas as pd
 
@@ -6,19 +9,19 @@ from src.pipeline.listing_cleaner import ListingCleaner
 
 
 def raw_listing(**overrides):
-    raw = dict(
-        transaction_type='Bán', province_old='Hồ Chí Minh', district_old='Tân Bình',
-        old_ward='Phường 15', new_ward='Phường Tân Sơn', new_city='Hồ Chí Minh',
-        old_address='34A , Đường Tống Văn Hên, Phường 15, Quận Tân Bình, Hồ Chí Minh',
-        old_address_detail='34A, Đường Tống Văn Hên, Phường 15',
-        new_address='Phường Tân Sơn, Hồ Chí Minh mới',
-        latitude='10.8213708107892', longitude='106.631550023485',
-        property_type='Nhà mặt phố', area=150.5, frontage=5.77, bedrooms=14, bathrooms=14,
-        road_width=8, legal='Sổ hồng riêng', interior='Đầy đủ tiện nghi.', floors=6,
-        price=24900, price_per_m2=165.45, posting_date='27/08/2026',
-        expiration_date='11/09/2026', listing_id='46168511',
-        listing_url='https://batdongsan.com.vn/x-pr46168511', title='Bán nhà', description='Mô tả',
-    )
+    raw = {
+        'transaction_type': 'Bán', 'province_old': 'Hồ Chí Minh', 'district_old': 'Tân Bình',
+        'old_ward': 'Phường 15', 'new_ward': 'Phường Tân Sơn', 'new_city': 'Hồ Chí Minh',
+        'old_address': '34A , Đường Tống Văn Hên, Phường 15, Quận Tân Bình, Hồ Chí Minh',
+        'old_address_detail': '34A, Đường Tống Văn Hên, Phường 15',
+        'new_address': 'Phường Tân Sơn, Hồ Chí Minh mới',
+        'latitude': '10.8213708107892', 'longitude': '106.631550023485',
+        'property_type': 'Nhà mặt phố', 'area': 150.5, 'frontage': 5.77, 'bedrooms': 14, 'bathrooms': 14,
+        'road_width': 8, 'legal': 'Sổ hồng riêng', 'interior': 'Đầy đủ tiện nghi.', 'floors': 6,
+        'price': 24900, 'price_per_m2': 165.45, 'posting_date': '27/08/2026',
+        'expiration_date': '11/09/2026', 'listing_id': '46168511',
+        'listing_url': 'https://batdongsan.com.vn/x-pr46168511', 'title': 'Bán nhà', 'description': 'Mô tả',
+    }
     raw.update(overrides)
     return raw
 
@@ -38,7 +41,7 @@ class NormalizeTests(unittest.TestCase):
         self.assertEqual(row['old_address'], '34A, Đường A, Phường 1')
         self.assertEqual(row['description'], 'a b\n\nc')
         self.assertEqual(row['interior'], 'Đầy đủ')
-        self.assertEqual(row['raw_record']['interior'], 'Đầy đủ.')
+        self.assertNotIn('raw_record', row)
         self.assertEqual(row['new_address'], 'Phường Tân Sơn, Hồ Chí Minh mới')
 
     def test_legal_group(self):
@@ -69,7 +72,6 @@ class FlagTests(unittest.TestCase):
         self.assertIsNone(reason)
         for field in ('floors', 'road_width', 'frontage', 'latitude', 'longitude'):
             self.assertTrue(pd.isna(row[field]), field)
-        self.assertEqual(row['raw_record']['floors'], 3335)
         self.assertEqual(set(row['quality_flags']), {
             'floors_out_of_range', 'road_width_out_of_range', 'frontage_out_of_range',
             'coords_outside_hcm'})
@@ -86,12 +88,12 @@ class FlagTests(unittest.TestCase):
 class RejectTests(unittest.TestCase):
     def test_reject_reasons(self):
         cases = {
-            'missing_price': dict(price=None),
-            'area_too_small': dict(area=1),
-            'price_equals_price_per_m2': dict(price=66, price_per_m2=66, area=182),
-            'price_per_m2_out_of_range': dict(price=13.9, price_per_m2=115.83, area=120),
-            'district_outside_old_hcm': dict(district_old='Dĩ An'),
-            'missing_listing_id': dict(listing_id=''),
+            'missing_price': {'price': None},
+            'area_too_small': {'area': 1},
+            'price_equals_price_per_m2': {'price': 66, 'price_per_m2': 66, 'area': 182},
+            'price_per_m2_out_of_range': {'price': 13.9, 'price_per_m2': 115.83, 'area': 120},
+            'district_outside_old_hcm': {'district_old': 'Dĩ An'},
+            'missing_listing_id': {'listing_id': ''},
         }
         for expected, overrides in cases.items():
             with self.subTest(expected):
@@ -107,6 +109,34 @@ class RejectTests(unittest.TestCase):
         clean, rejected = ListingCleaner().clean(records)
         self.assertEqual((len(clean), len(rejected)), (1, 0))
         self.assertEqual(clean.loc[0, 'title'], 'mới')
+
+
+class RunTests(unittest.TestCase):
+    def test_run_writes_clean_rejected_and_report(self):
+        """Hai file đầu vào: tin trùng gộp, tin lỗi vào file loại kèm lý do, đủ ba file đầu ra."""
+        files = [[raw_listing(), raw_listing(listing_id='2', price=None)],
+                 [raw_listing(posting_date='01/09/2026', title='mới hơn'),
+                  raw_listing(listing_id='3', area=1)]]
+        with tempfile.TemporaryDirectory() as folder:
+            paths = []
+            for number, records in enumerate(files):
+                paths.append(Path(folder, f'in{number}.json'))
+                lines = [json.dumps(record) for record in records] + ['không phải json']
+                paths[-1].write_text('\n'.join(lines) + '\n', encoding='utf-8')
+            clean, rejected, report = ListingCleaner().run(paths, Path(folder, 'out'))
+
+            self.assertEqual((len(clean), len(rejected)), (1, 2))
+            self.assertEqual(clean.loc[0, 'title'], 'mới hơn')
+            self.assertNotIn('raw_record', clean.columns)
+            self.assertEqual(list(rejected.columns), ['reason', 'listing_id', 'listing_url', 'title'])
+            self.assertEqual(report['input_lines'], 6)
+            self.assertEqual(report['malformed_lines'], ['in0.json:3', 'in1.json:3'])
+            self.assertEqual(report['duplicates_removed'], 1)
+            self.assertEqual(report['reject_reasons'], {'missing_price': 1, 'area_too_small': 1})
+            lines = Path(folder, 'out/listings_rejected.jsonl').read_text(encoding='utf-8').splitlines()
+            self.assertEqual({json.loads(line)['reason'] for line in lines},
+                             {'missing_price', 'area_too_small'})
+            self.assertTrue(Path(folder, 'out/cleaning_report.json').exists())
 
 
 if __name__ == '__main__':

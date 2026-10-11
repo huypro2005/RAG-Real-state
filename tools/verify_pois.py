@@ -1,4 +1,6 @@
-"""Read-only integration checks against imported CSVs; optionally require PostGIS."""
+"""LỖI THỜI: dùng housing-backend/scripts/migrate_legacy_data.py
+
+Read-only integration checks against imported CSVs; optionally require PostGIS."""
 import argparse
 import hashlib
 import json

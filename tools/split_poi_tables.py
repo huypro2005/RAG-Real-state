@@ -1,4 +1,6 @@
-"""One-time transactional migration from the shared POI table to three tables.
+"""LỖI THỜI: dùng housing-backend/scripts/migrate_legacy_data.py
+
+One-time transactional migration from the shared POI table to three tables.
 
 Back up housing with pg_dump before running. Uses standard PG* credentials.
 Existing unknown dependencies block the migration rather than being cascaded.

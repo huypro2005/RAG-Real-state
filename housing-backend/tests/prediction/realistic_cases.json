@@ -1,0 +1,277 @@
+{
+  "_doc": "20 ca khách hàng thật. Mỗi lượt: user, status mong đợi, fields = TOÀN BỘ trường khác null mong đợi (trường không liệt kê phải null; giá trị là danh sách = chấp nhận một trong các giá trị, null = chưa có), warn = giá trị gây cảnh báo (mơ hồ ngôn ngữ) chứ không FAIL, asks = trường hệ thống phải hỏi, address_has = chuỗi (không dấu) phải nằm trong địa chỉ, answer_has/answer_hasnt = chuỗi trong câu trả lời, same_prediction = giá không đổi so với lượt trước. Lượt status=predicted được chấm giá/m2 theo district/type/area của fields lượt đó: nằm trong [P10,P90] của tin đăng DB housing_dev cùng quận + loại + diện tích 0.6x-1.6x (nhóm <10 mẫu thì nới ra cả quận+loại, rồi data.csv, rồi cả quận; ghi chú).",
+  "changes": [
+    {"id": "R17", "what": "Lượt 1 bỏ kỳ vọng status=ready/loại=căn hộ; thay bằng collecting + hỏi loại, thêm lượt 'chung cư'",
+     "why": "Khách chỉ nói 'căn 2pn' (không có 'hộ'/'chung cư'), loại thật sự mơ hồ (căn có thể là villa/shophouse) nên hệ thống hỏi lại loại là hợp lý; kỳ vọng ban đầu của test quá chặt"},
+    {"id": "R16", "what": "answer_has lượt 2 đổi từ 'Goong' thành 'Cách trung tâm'",
+     "why": "Theo main: Goong hết hạn mức (429) nên nguồn tọa độ không phải yêu cầu của hệ thống; báo cáo ghi riêng ca nào chưa xác nhận bằng Goong"},
+    {"id": "tiêu chí", "what": "Thêm PASS-biên (giá lệch <=3% ngoài [P10,P90]) và KNOWN-LIMIT (R12: giá ngoài oracle nhưng câu trả lời có 'Lưu ý')",
+     "why": "Theo main: dung sai 3% cho sai số lấy mẫu của oracle; R12 là giới hạn dữ liệu/model đã biết, ghi 'FAIL giá / PASS cảnh báo', không che"}
+  ],
+  "cases": [
+    {
+      "id": "R01",
+      "persona": "Anh Nam, 34 tuổi, nhân viên văn phòng, hỏi từng bước về căn hộ Phú Mỹ Hưng Q7",
+      "tags": ["chung cư", "Quận 7", "từng bước", "tầm 70 mét vuông", "pn", "địa chỉ khu"],
+      "turns": [
+        {"user": "chào, mình đang tính mua căn hộ ở khu Phú Mỹ Hưng q7, không biết giá khoảng bao nhiêu", "status": "collecting",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Quận 7"}, "asks": "area", "address_has": "phu my hung"},
+        {"user": "tầm 70 mét vuông", "status": "ready",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Quận 7", "area": 70}},
+        {"user": "2pn", "status": "ready",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Quận 7", "area": 70, "bedrooms": 2}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Quận 7", "area": 70, "bedrooms": 2}}
+      ]
+    },
+    {
+      "id": "R02",
+      "persona": "Chị Lan, chủ nhà ở Nguyễn Trãi Q5, nhập một lần đủ rồi thắc mắc giá cao",
+      "tags": ["nhà riêng", "Quận 5", "nhập một lần", "ngang 4m", "đường cụ thể", "hỏi sao giá cao"],
+      "turns": [
+        {"user": "nhà riêng ở Nguyễn Trãi Q5 khoảng 60m2, ngang 4m, 3 tầng", "status": "ready",
+         "fields": {"property_type": "nhà riêng", "district": "Quận 5", "area": 60, "frontage": 4, "floors": 3}, "address_has": "nguyen trai"},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "nhà riêng", "district": "Quận 5", "area": 60, "frontage": 4, "floors": 3}},
+        {"user": "sao giá này cao vậy", "status": "predicted", "same_prediction": true, "answer_has": ["median"],
+         "fields": {"property_type": "nhà riêng", "district": "Quận 5", "area": 60, "frontage": 4, "floors": 3}}
+      ]
+    },
+    {
+      "id": "R03",
+      "persona": "Khách gõ không dấu, hỏi biệt thự Thảo Điền Q2",
+      "tags": ["biệt thự", "Quận 2", "không dấu", "bổ sung rải rác"],
+      "turns": [
+        {"user": "toi can dinh gia biet thu thao dien quan 2 dien tich 250 met vuong", "status": "ready",
+         "fields": {"property_type": "nhà biệt thự, liền kề", "district": "Quận 2", "area": 250}, "address_has": "thao dien"},
+        {"user": "4 tang, 5 phong ngu", "status": "ready",
+         "fields": {"property_type": "nhà biệt thự, liền kề", "district": "Quận 2", "area": 250, "floors": 4, "bedrooms": 5}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "nhà biệt thự, liền kề", "district": "Quận 2", "area": 250, "floors": 4, "bedrooms": 5}}
+      ]
+    },
+    {
+      "id": "R04",
+      "persona": "Chú Hải, nói kích thước ngang x dài nhưng không nói diện tích, đường 3/2 Q10",
+      "tags": ["mặt phố", "Quận 10", "không bịa diện tích", "số trong tên đường"],
+      "turns": [
+        {"user": "e có cái nhà mặt tiền đường 3/2 q10 ngang 5m dài 20m, định bán", "status": "collecting",
+         "fields": {"property_type": "nhà mặt phố", "district": "Quận 10", "frontage": 5}, "asks": "area"},
+        {"user": "diện tích 100m2", "status": "ready",
+         "fields": {"property_type": "nhà mặt phố", "district": "Quận 10", "area": 100, "frontage": 5}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "nhà mặt phố", "district": "Quận 10", "area": 100, "frontage": 5}}
+      ]
+    },
+    {
+      "id": "R05",
+      "persona": "Anh Tùng, nhà đầu tư đất vườn Củ Chi, thử nhiều kịch bản",
+      "tags": ["đất", "Củ Chi", "ngoại thành", "sửa sau dự đoán", "không dấu"],
+      "turns": [
+        {"user": "dat nen cu chi 500m2", "status": "ready",
+         "fields": {"property_type": "bán đất", "district": "Củ Chi", "area": 500}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "bán đất", "district": "Củ Chi", "area": 500}},
+        {"user": "neu mat tien 10m thi gia sao", "status": "predicted",
+         "fields": {"property_type": "bán đất", "district": "Củ Chi", "area": 500, "frontage": 10}},
+        {"user": "còn nếu 1000m2 thì sao", "status": "predicted",
+         "fields": {"property_type": "bán đất", "district": "Củ Chi", "area": 1000, "frontage": 10}}
+      ]
+    },
+    {
+      "id": "R06",
+      "persona": "Chị Mai, đang phân vân Q7 hay Nhà Bè, nói số bằng chữ",
+      "tags": ["nhà riêng", "Nhà Bè", "đổi ý quận trước dự đoán", "số viết chữ", "nhà trong hẻm"],
+      "turns": [
+        {"user": "nhà trong hẻm Q7 80m2 hai tầng", "status": "ready",
+         "fields": {"property_type": "nhà riêng", "district": "Quận 7", "area": 80, "floors": 2}},
+        {"user": "à thôi, mình định mua bên Nhà Bè", "status": "ready",
+         "fields": {"property_type": "nhà riêng", "district": "Nhà Bè", "area": 80, "floors": 2}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "nhà riêng", "district": "Nhà Bè", "area": 80, "floors": 2}}
+      ]
+    },
+    {
+      "id": "R07",
+      "persona": "Anh Phát hỏi chung cư Bình Tân rồi so với Q7 sau khi có kết quả",
+      "tags": ["chung cư", "Bình Tân", "Quận 7", "đổi quận sau dự đoán", "pn"],
+      "turns": [
+        {"user": "chung cư bình tân 65m2 2pn", "status": "ready",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Bình Tân", "area": 65, "bedrooms": 2}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Bình Tân", "area": 65, "bedrooms": 2}},
+        {"user": "nếu ở quận 7 thì giá bao nhiêu", "status": "predicted", "answer_has": ["Quận 7"],
+         "fields": {"property_type": "căn hộ chung cư", "district": "Quận 7", "area": 65, "bedrooms": 2}}
+      ]
+    },
+    {
+      "id": "R08",
+      "persona": "Khách vội, gõ ok trước khi cung cấp thông tin, căn hộ Bình Thạnh",
+      "tags": ["chung cư", "Bình Thạnh", "ok sớm", "thiếu trường bắt buộc"],
+      "turns": [
+        {"user": "ok", "status": "collecting", "fields": {}, "asks": "property_type"},
+        {"user": "căn hộ", "status": "collecting", "fields": {"property_type": "căn hộ chung cư"}, "asks": "district"},
+        {"user": "ok", "status": "collecting", "fields": {"property_type": "căn hộ chung cư"}, "asks": "district"},
+        {"user": "bình thạnh, 80m2", "status": "ready",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Bình Thạnh", "area": 80}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Bình Thạnh", "area": 80}}
+      ]
+    },
+    {
+      "id": "R09",
+      "persona": "Khách hỏi thuê căn hộ Q2 (ngoài phạm vi) rồi quay lại hỏi giá mua",
+      "tags": ["chung cư", "Quận 2", "ngoài phạm vi: thuê nhà"],
+      "turns": [
+        {"user": "mình muốn thuê căn hộ q2, giá thuê bao nhiêu một tháng", "status": "out_of_scope", "fields_free": true},
+        {"user": "vậy cho mình hỏi giá mua căn hộ q2 diện tích 90m2", "status": "ready",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Quận 2", "area": 90}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Quận 2", "area": 90}}
+      ]
+    },
+    {
+      "id": "R10",
+      "persona": "Khách hỏi nhà ở Đà Nẵng (tỉnh khác) rồi chuyển sang Gò Vấp",
+      "tags": ["nhà riêng", "Gò Vấp", "ngoài phạm vi: tỉnh khác"],
+      "turns": [
+        {"user": "nhà riêng 100m2 ở Đà Nẵng bao nhiêu", "status": "out_of_scope", "fields_free": true},
+        {"user": "thôi vậy hỏi nhà riêng ở Gò Vấp 100m2", "status": "ready",
+         "fields": {"property_type": "nhà riêng", "district": "Gò Vấp", "area": 100}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "nhà riêng", "district": "Gò Vấp", "area": 100}}
+      ]
+    },
+    {
+      "id": "R11",
+      "persona": "Bác Sáu có miếng đất Hóc Môn, gõ không dấu, nói 'mặt tiền 8m' cho đất, sau đó hỏi nếu xây nhà",
+      "tags": ["đất", "nhà riêng", "Hóc Môn", "ven", "không dấu", "đổi loại"],
+      "turns": [
+        {"user": "ban dat hoc mon 200m2 mat tien 8m", "status": "ready",
+         "fields": {"property_type": "bán đất", "district": "Hóc Môn", "area": 200, "frontage": 8}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "bán đất", "district": "Hóc Môn", "area": 200, "frontage": 8}},
+        {"user": "nếu xây nhà riêng 3 tầng trên đó thì sao", "status": "predicted",
+         "fields": {"property_type": "nhà riêng", "district": "Hóc Môn", "area": 200, "frontage": 8, "floors": 3}}
+      ]
+    },
+    {
+      "id": "R12",
+      "persona": "Anh Khoa hỏi biệt thự nghỉ dưỡng Cần Giờ (xa trung tâm, dữ liệu thưa)",
+      "tags": ["biệt thự", "Cần Giờ", "ngoại thành", "dữ liệu thưa"],
+      "turns": [
+        {"user": "cần giờ có cái biệt thự nghỉ dưỡng 400m2, bán khoảng bao nhiêu", "status": "ready",
+         "fields": {"property_type": "nhà biệt thự, liền kề", "district": "Cần Giờ", "area": 400}},
+        {"user": "ok", "status": "predicted", "known_limit": true,
+         "fields": {"property_type": "nhà biệt thự, liền kề", "district": "Cần Giờ", "area": 400}}
+      ]
+    },
+    {
+      "id": "R13",
+      "persona": "Chủ nhà mặt phố Nguyễn Huệ Q1, ngạc nhiên vì giá cao",
+      "tags": ["mặt phố", "Quận 1", "trung tâm", "đường cụ thể", "hỏi sao giá cao"],
+      "turns": [
+        {"user": "nhà mặt phố Nguyễn Huệ quận 1, 5 tầng, ngang 6m, 120m2", "status": "ready",
+         "fields": {"property_type": "nhà mặt phố", "district": "Quận 1", "area": 120, "frontage": 6, "floors": 5}, "address_has": "nguyen hue"},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "nhà mặt phố", "district": "Quận 1", "area": 120, "frontage": 6, "floors": 5}},
+        {"user": "sao giá này cao vậy", "status": "predicted", "same_prediction": true, "answer_has": ["median"],
+         "fields": {"property_type": "nhà mặt phố", "district": "Quận 1", "area": 120, "frontage": 6, "floors": 5}}
+      ]
+    },
+    {
+      "id": "R14",
+      "persona": "Cô Hạnh nhà hẻm xe hơi Q3, sửa diện tích giữa chừng, gõ 'ok luôn' ngay khi bổ sung",
+      "tags": ["nhà riêng", "Quận 3", "viết tắt dt", "2 lầu", "sửa giữa chừng", "ok kèm thông tin"],
+      "turns": [
+        {"user": "cần định giá nhà hẻm xe hơi q3 dt khoảng 48m2", "status": "ready",
+         "fields": {"property_type": "nhà riêng", "district": "Quận 3", "area": 48}},
+        {"user": "à nhầm, 52m2 chứ", "status": "ready",
+         "fields": {"property_type": "nhà riêng", "district": "Quận 3", "area": 52}},
+        {"user": "2 lầu 3pn, ok luôn", "status": "predicted",
+         "fields": {"property_type": "nhà riêng", "district": "Quận 3", "area": 52, "floors": [2, 3], "bedrooms": 3}}
+      ]
+    },
+    {
+      "id": "R15",
+      "persona": "Anh Đạt nói 'nhà' chung chung, đường Tên Lửa Bình Tân, '1 trệt 2 lầu'",
+      "tags": ["nhà riêng", "Bình Tân", "thiếu loại", "1 trệt 2 lầu", "đường cụ thể", "m vuông"],
+      "turns": [
+        {"user": "nhà đường Tên Lửa bình tân, 64 m vuông, 1 trệt 2 lầu", "status": "collecting",
+         "fields": {"district": "Bình Tân", "area": 64, "floors": [null, 3]}, "warn": {"floors": [2]}, "asks": "property_type", "address_has": "ten lua"},
+        {"user": "nhà riêng trong hẻm", "status": "ready",
+         "fields": {"property_type": "nhà riêng", "district": "Bình Tân", "area": 64, "floors": [null, 3]}, "warn": {"floors": [2]}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "nhà riêng", "district": "Bình Tân", "area": 64, "floors": [null, 3]}, "warn": {"floors": [2]}}
+      ]
+    },
+    {
+      "id": "R16",
+      "persona": "Chị Thu hỏi căn Botanica Tân Bình, kèm giá chủ chào '5 tỷ 2' (số không phải trường nào)",
+      "tags": ["chung cư", "Tân Bình", "dự án cụ thể", "số gây nhiễu", "không dấu"],
+      "turns": [
+        {"user": "can ho Botanica Premier, Tan Binh, 3pn, 95m2, chu dang chao 5 ty 2 co hop ly khong", "status": "ready",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Tân Bình", "area": 95, "bedrooms": 3}, "address_has": "botanica"},
+        {"user": "ok", "status": "predicted", "answer_has": ["Cách trung tâm"],
+         "fields": {"property_type": "căn hộ chung cư", "district": "Tân Bình", "area": 95, "bedrooms": 3}},
+        {"user": "vậy 5 tỷ 2 có hợp lý không", "status": "predicted", "same_prediction": true,
+         "fields": {"property_type": "căn hộ chung cư", "district": "Tân Bình", "area": 95, "bedrooms": 3}}
+      ]
+    },
+    {
+      "id": "R17",
+      "persona": "Anh Long mua căn Vinhomes Grand Park (Q9 cũ, rìa dữ liệu train)",
+      "tags": ["chung cư", "Quận 9", "ven", "dự án cụ thể", "ngoại suy"],
+      "turns": [
+        {"user": "vinhomes grand park q9 căn 2pn 59m2", "status": "collecting",
+         "fields": {"district": "Quận 9", "area": 59, "bedrooms": 2}, "asks": "property_type", "address_has": "grand park"},
+        {"user": "chung cư", "status": "ready",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Quận 9", "area": 59, "bedrooms": 2}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Quận 9", "area": 59, "bedrooms": 2}}
+      ]
+    },
+    {
+      "id": "R18",
+      "persona": "Anh Vỹ hỏi liền kề Vạn Phúc City Thủ Đức rồi đổi diện tích",
+      "tags": ["liền kề", "Thủ Đức", "ven", "sửa sau dự đoán", "dự án cụ thể"],
+      "turns": [
+        {"user": "liền kề Vạn Phúc City thủ đức 100m2 5 tầng", "status": "ready",
+         "fields": {"property_type": "nhà biệt thự, liền kề", "district": "Thủ Đức", "area": 100, "floors": 5}, "address_has": "van phuc"},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "nhà biệt thự, liền kề", "district": "Thủ Đức", "area": 100, "floors": 5}},
+        {"user": "còn nếu là 120m2", "status": "predicted",
+         "fields": {"property_type": "nhà biệt thự, liền kề", "district": "Thủ Đức", "area": 120, "floors": 5}}
+      ]
+    },
+    {
+      "id": "R19",
+      "persona": "Khách định giá hai BĐS liên tiếp, dùng reset giữa hai căn (Q12 rồi Q8)",
+      "tags": ["nhà riêng", "chung cư", "Quận 12", "Quận 8", "reset"],
+      "turns": [
+        {"user": "nhà riêng quận 12 80m2", "status": "ready",
+         "fields": {"property_type": "nhà riêng", "district": "Quận 12", "area": 80}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "nhà riêng", "district": "Quận 12", "area": 80}},
+        {"user": "reset", "status": "collecting", "fields": {}, "asks": "property_type"},
+        {"user": "chung cư quận 8 55m2", "status": "ready",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Quận 8", "area": 55}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "căn hộ chung cư", "district": "Quận 8", "area": 55}}
+      ]
+    },
+    {
+      "id": "R20",
+      "persona": "Khách hỏi nhà ở Thuận An Bình Dương (tỉnh khác), gõ ok, rồi hỏi nhà riêng Tân Phú",
+      "tags": ["nhà riêng", "Tân Phú", "ngoài phạm vi: tỉnh khác", "ok khi chưa có gì", "không dấu"],
+      "turns": [
+        {"user": "bán nhà ở Thuận An Bình Dương 100m2 giá bao nhiêu", "status": "out_of_scope", "fields_free": true},
+        {"user": "ok", "status": "collecting", "asks_any": true, "fields_free": true},
+        {"user": "nha rieng tan phu 90m2", "status": "ready",
+         "fields": {"property_type": "nhà riêng", "district": "Tân Phú", "area": 90}},
+        {"user": "ok", "status": "predicted",
+         "fields": {"property_type": "nhà riêng", "district": "Tân Phú", "area": 90}}
+      ]
+    }
+  ]
+}

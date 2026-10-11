@@ -9,22 +9,22 @@ from src.pipeline.listing_embedder import ListingEmbedder
 
 def source_row(**overrides):
     """Một dòng giống kết quả ListingEmbedder.SOURCE_QUERY."""
-    row = dict(
-        listing_id='46168511', listing_url='https://batdongsan.com.vn/x-pr46168511',
-        title='Bán CHDV Tân Bình. Liên hệ 0901 326 ***',
-        description='Nhà 6 tầng, 14 phòng.\nGọi 0912.345.678 để xem nhà.',
-        property_type='Nhà mặt phố', price=24900, price_per_m2=165.45, area=150.5,
-        frontage=5.77, bedrooms=14, bathrooms=14, road_width=8, floors=6,
-        legal='Sổ hồng riêng', interior='Đầy đủ tiện nghi', district_old='Tân Bình',
-        old_address='34A, Đường Tống Văn Hên, Phường 15, Quận Tân Bình, Hồ Chí Minh',
-        new_address='Phường Tân Sơn, Hồ Chí Minh mới',
-        posted_at=date(2026, 8, 27), expired_at=date(2026, 9, 11), has_geom=True,
-        school_count_1km=12, hospital_count_1km=2, market_count_1km=1,
-        school_count_3km=80, hospital_count_3km=15, market_count_3km=6,
-        nearest_school_name='THCS A', nearest_school_m=250.4,
-        nearest_hospital_name='BV B', nearest_hospital_m=1234.0,
-        nearest_market_name='Chợ C', nearest_market_m=640.0,
-    )
+    row = {
+        'listing_id': '46168511', 'listing_url': 'https://batdongsan.com.vn/x-pr46168511',
+        'title': 'Bán CHDV Tân Bình. Liên hệ 0901 326 ***',
+        'description': 'Nhà 6 tầng, 14 phòng.\nGọi 0912.345.678 để xem nhà.',
+        'property_type': 'Nhà mặt phố', 'price': 24900, 'price_per_m2': 165.45, 'area': 150.5,
+        'frontage': 5.77, 'bedrooms': 14, 'bathrooms': 14, 'road_width': 8, 'floors': 6,
+        'legal': 'Sổ hồng riêng', 'interior': 'Đầy đủ tiện nghi', 'district_old': 'Tân Bình',
+        'old_address': '34A, Đường Tống Văn Hên, Phường 15, Quận Tân Bình, Hồ Chí Minh',
+        'new_address': 'Phường Tân Sơn, Hồ Chí Minh mới',
+        'posted_at': date(2026, 8, 27), 'expired_at': date(2026, 9, 11), 'has_geom': True,
+        'school_count_1km': 12, 'hospital_count_1km': 2, 'market_count_1km': 1,
+        'school_count_3km': 80, 'hospital_count_3km': 15, 'market_count_3km': 6,
+        'nearest_school_name': 'THCS A', 'nearest_school_m': 250.4,
+        'nearest_hospital_name': 'BV B', 'nearest_hospital_m': 1234.0,
+        'nearest_market_name': 'Chợ C', 'nearest_market_m': 640.0,
+    }
     row.update(overrides)
     return row
 
@@ -104,17 +104,17 @@ class EncodeApiTests(unittest.TestCase):
         self.assertEqual(post.call_count, 3)
 
     def test_wrong_api_key_is_not_retried(self):
-        with mock.patch.object(self.embedder.session, 'post', return_value=api_response(401)) as post:
-            with self.assertRaises(requests.HTTPError):
-                self.embedder.encode(['a', 'b'])
+        with (mock.patch.object(self.embedder.session, 'post', return_value=api_response(401)) as post,
+              self.assertRaises(requests.HTTPError)):
+            self.embedder.encode(['a', 'b'])
         self.assertEqual(post.call_count, 1)
 
     def test_rejects_wrong_model_or_shape(self):
         for bad in (api_response(model='other'), api_response(count=1), api_response(dimension=768)):
-            with self.subTest(bad.json.return_value['model']):
-                with mock.patch.object(self.embedder.session, 'post', return_value=bad):
-                    with self.assertRaises(RuntimeError):
-                        self.embedder.encode(['a', 'b'])
+            with (self.subTest(bad.json.return_value['model']),
+                  mock.patch.object(self.embedder.session, 'post', return_value=bad),
+                  self.assertRaises(RuntimeError)):
+                self.embedder.encode(['a', 'b'])
 
 
 if __name__ == '__main__':

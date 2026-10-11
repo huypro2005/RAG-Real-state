@@ -1,0 +1,41 @@
+[
+    {
+        "id": 14,
+        "old_ward_code": "27439",
+        "old_ward_name": "Phường Bình Hưng Hoà A",
+        "old_district_name": "Quận Bình Tân",
+        "old_province_name": "Thành phố Hồ Chí Minh",
+        "new_ward_code": "27439",
+        "new_ward_name": "Phường Bình Hưng Hòa",
+        "new_province_name": "Thành phố Hồ Chí Minh",
+        "created_at": "2025-07-02 14:28:33",
+        "updated_at": "2025-07-02 14:28:33",
+        "reason": "phường cũ khớp 0 phường batdongsan"
+    },
+    {
+        "id": 17,
+        "old_ward_code": "27442",
+        "old_ward_name": "Phường Bình Hưng Hoà B",
+        "old_district_name": "Quận Bình Tân",
+        "old_province_name": "Thành phố Hồ Chí Minh",
+        "new_ward_code": "27442",
+        "new_ward_name": "Phường Bình Tân",
+        "new_province_name": "Thành phố Hồ Chí Minh",
+        "created_at": "2025-07-02 14:28:33",
+        "updated_at": "2025-07-02 14:28:33",
+        "reason": "phường cũ khớp 0 phường batdongsan"
+    },
+    {
+        "id": 4166,
+        "old_ward_code": "27640",
+        "old_ward_name": "Xã Quy Đức",
+        "old_district_name": "Huyện Bình Chánh",
+        "old_province_name": "Thành phố Hồ Chí Minh",
+        "new_ward_code": "27628",
+        "new_ward_name": "Xã Hưng Long",
+        "new_province_name": "Thành phố Hồ Chí Minh",
+        "created_at": "2025-07-02 14:41:04",
+        "updated_at": "2025-07-02 14:41:04",
+        "reason": "phường cũ khớp 0 phường batdongsan"
+    }
+]

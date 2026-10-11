@@ -1,0 +1,2781 @@
+[
+ {
+  "id": "C01",
+  "category": "progressive",
+  "turn": 1,
+  "user": "Mình muốn mua nhà cho gia đình",
+  "expect": {
+   "user": "Mình muốn mua nhà cho gia đình",
+   "expect_status": "need_clarification"
+  },
+  "result": {
+   "conversation_id": "d04451b6a179498da6361b024e851f33",
+   "status": "need_clarification",
+   "constraints": {
+    "price_min": null,
+    "price_max": null,
+    "property_types": [],
+    "district_ids": [],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Bạn cho mình biết ngân sách (ví dụ: dưới 3 tỷ) hoặc khu vực muốn mua (quận/huyện ở TP.HCM) để mình tìm tin phù hợp nhé.",
+   "summary": "Bạn cho mình biết ngân sách (ví dụ: dưới 3 tỷ) hoặc khu vực muốn mua (quận/huyện ở TP.HCM) để mình tìm tin phù hợp nhé."
+  },
+  "latency": 1.512399799998093,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ],
+   "S9": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "C01",
+  "category": "progressive",
+  "turn": 2,
+  "user": "Tầm 3 tỷ, khu Thủ Đức",
+  "expect": {
+   "user": "Tầm 3 tỷ, khu Thủ Đức",
+   "expect_status": "ok",
+   "expect_constraints": {
+    "price_max": 3150.0,
+    "district_names": [
+     "Quận 2",
+     "Quận 9",
+     "Thủ Đức"
+    ],
+    "price_min": 2400.0
+   },
+   "min_results": 5,
+   "note": "§9 #15: xấp xỉ ⇒ price_min = X×0,8, price_max = X×1,05"
+  },
+  "result": {
+   "conversation_id": "d04451b6a179498da6361b024e851f33",
+   "status": "ok",
+   "constraints": {
+    "price_min": 2400.0,
+    "price_max": 3150.0,
+    "property_types": [],
+    "district_ids": [
+     54,
+     61,
+     71
+    ],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [
+    {
+     "listing_id": "46158527",
+     "title": "Bán nhà Thủ Đức - Sổ hồng riêng - Giá 2.9 tỷ",
+     "price": 2900.0,
+     "area": 21.9,
+     "property_type": "Nhà riêng",
+     "bedrooms": 3,
+     "district_old": "Thủ Đức",
+     "old_address": "Hẻm 183, Đường Quốc lộ 1K, Phường Linh Xuân, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Linh Xuân, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-quoc-lo-1k-phuong-linh-xuan-71/ban-thu-uc-so-hong-gia-2-9-ty-pr46158527",
+     "posted_at": "2026-09-11",
+     "expired_at": "2026-09-26",
+     "poi_distances": {
+      "truong_hoc": 78.16421022,
+      "benh_vien": 636.77495593,
+      "cho": 426.43445278
+     },
+     "score": 0.64269740035803,
+     "similar_ids": [],
+     "latitude": 10.8829142805723,
+     "longitude": 106.77044162236,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 4
+    },
+    {
+     "listing_id": "44463322",
+     "title": "Hạ giá cực sâu, chỉ còn 2.99 tỷ nhà 2 tầng - 26m2 - ngang 3.9m nở hậu tài lộc - ngay sau ủy ban Q9",
+     "price": 2990.0,
+     "area": 26.0,
+     "property_type": "Nhà riêng",
+     "bedrooms": 2,
+     "district_old": "Thủ Đức",
+     "old_address": "Phường Phước Long B, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Phước Long, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-phuong-phuoc-long-b-1/ha-gia-cuc-sau-chi-con-2-85-ty-2-tang-26m2-ngang-3-9m-no-hau-tai-loc-ngay-sau-uy-ban-q9-pr44463322",
+     "posted_at": "2026-09-14",
+     "expired_at": "2026-09-29",
+     "poi_distances": {
+      "truong_hoc": 44.87568158,
+      "benh_vien": 750.36013264,
+      "cho": 868.92520173
+     },
+     "score": 0.6348554765304605,
+     "similar_ids": [],
+     "latitude": 10.8172942760103,
+     "longitude": 106.779994689385,
+     "coords_reliable": true,
+     "position": 2,
+     "days_left": 7
+    },
+    {
+     "listing_id": "45443884",
+     "title": "Cần bán căn hộ Sky9 vòng xoay Liên Phường, TP Thủ Đức DT 50m2, 2PN giá 2,7 tỷ",
+     "price": 2700.0,
+     "area": 50.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 9",
+     "old_address": "Sky 9, Đường Liên Phường, Phường Phú Hữu, Quận 9, Hồ Chí Minh",
+     "new_address": "Phường Long Trường, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-lien-phuong-phuong-phu-huu-2-sky-9/ban-sky9-vong-xoay-tp-thu-uc-dt-75m2-3pn-gia-3-6-ty-pr45443884",
+     "posted_at": "2026-09-12",
+     "expired_at": "2026-09-27",
+     "poi_distances": {
+      "truong_hoc": 56.0340977,
+      "benh_vien": 2383.76319263,
+      "cho": 1541.26307342
+     },
+     "score": 0.6068800174409015,
+     "similar_ids": [],
+     "latitude": 10.8045204294627,
+     "longitude": 106.791687432087,
+     "coords_reliable": true,
+     "position": 3,
+     "days_left": 5
+    },
+    {
+     "listing_id": "46221548",
+     "title": "Hiếm Đất thổ cư gần Vinhomes Q9 Long Bình Thủ Đức",
+     "price": 3000.0,
+     "area": 64.0,
+     "property_type": "Bán đất",
+     "bedrooms": null,
+     "district_old": "Thủ Đức",
+     "old_address": "Đường Số 6, Phường Long Bình, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Long Bình, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-dat-duong-so-6-phuong-long-binh-71/hiem-at-tho-cu-gan-vinhomes-q9-thu-uc-pr46221548",
+     "posted_at": "2026-09-17",
+     "expired_at": "2026-10-02",
+     "poi_distances": {
+      "truong_hoc": 227.34382523,
+      "benh_vien": 180.51528132,
+      "cho": 565.12832717
+     },
+     "score": 0.6048254687299295,
+     "similar_ids": [],
+     "latitude": 10.8547853091637,
+     "longitude": 106.753082146431,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 10
+    },
+    {
+     "listing_id": "46146964",
+     "title": "Căn hộ Thủ Đức chỉ 2 tỷ 570/căn 2PN 2WC SHR nhận nhà ngay giỏ hàng CĐT chỉ 50 căn",
+     "price": 2570.0,
+     "area": 52.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Thủ Đức",
+     "old_address": "Prosper Phố Đông, Đường Tô Ngọc Vân, Phường Tam Bình, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Tam Bình, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-to-ngoc-van-phuong-tam-binh-prosper-pho-dong/uu-ai-thang-8-thu-uc-gia-re-chi-2-ty-790-2pn-2wc-nhan-nha-full-noi-that-shr-lau-dai-pr46146964",
+     "posted_at": "2026-09-18",
+     "expired_at": "2026-10-03",
+     "poi_distances": {
+      "truong_hoc": 68.27070759,
+      "benh_vien": 316.00282519,
+      "cho": 680.44993259
+     },
+     "score": 0.6037093872104007,
+     "similar_ids": [],
+     "latitude": 10.8640182553598,
+     "longitude": 106.742885665223,
+     "coords_reliable": true,
+     "position": 5,
+     "days_left": 11
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Mình tìm được 5 tin phù hợp với điều kiện: khu vực Quận 2, Quận 9, Thành phố Thủ Đức; giá khoảng 2,4 tỷ – 3,15 tỷ.\n\n1. [Tin 46158527] Bán nhà Thủ Đức - Sổ hồng riêng - Giá 2.9 tỷ\n   2,9 tỷ · 21,9 m² · 3 phòng ngủ · Nhà riêng\n   Địa chỉ: Hẻm 183, Đường Quốc lộ 1K, Phường Linh Xuân, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Linh Xuân, Hồ Chí Minh mới)\n   Gần nhất: trường học 78 m, bệnh viện 637 m, chợ 426 m\n   Đăng 11/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-quoc-lo-1k-phuong-linh-xuan-71/ban-thu-uc-so-hong-gia-2-9-ty-pr46158527\n\n2. [Tin 44463322] Hạ giá cực sâu, chỉ còn 2.99 tỷ nhà 2 tầng - 26m2 - ngang 3.9m nở hậu tài lộc - ngay sau ủy ban Q9\n   2,99 tỷ · 26 m² · 2 phòng ngủ · Nhà riêng\n   Địa chỉ: Phường Phước Long B, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Phước Long, Hồ Chí Minh mới)\n   Gần nhất: trường học 45 m, bệnh viện 750 m, chợ 869 m\n   Đăng 14/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-phuong-phuoc-long-b-1/ha-gia-cuc-sau-chi-con-2-85-ty-2-tang-26m2-ngang-3-9m-no-hau-tai-loc-ngay-sau-uy-ban-q9-pr44463322\n\n3. [Tin 45443884] Cần bán căn hộ Sky9 vòng xoay Liên Phường, TP Thủ Đức DT 50m2, 2PN giá 2,7 tỷ\n   2,7 tỷ · 50 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Sky 9, Đường Liên Phường, Phường Phú Hữu, Quận 9, Hồ Chí Minh (địa chỉ mới: Phường Long Trường, Hồ Chí Minh mới)\n   Gần nhất: trường học 56 m, bệnh viện 2,4 km, chợ 1,5 km\n   Đăng 12/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-lien-phuong-phuong-phu-huu-2-sky-9/ban-sky9-vong-xoay-tp-thu-uc-dt-75m2-3pn-gia-3-6-ty-pr45443884\n\n4. [Tin 46221548] Hiếm Đất thổ cư gần Vinhomes Q9 Long Bình Thủ Đức\n   3 tỷ · 64 m² · Bán đất\n   Địa chỉ: Đường Số 6, Phường Long Bình, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Long Bình, Hồ Chí Minh mới)\n   Gần nhất: trường học 227 m, bệnh viện 181 m, chợ 565 m\n   Đăng 17/09/2026 · https://batdongsan.com.vn/ban-dat-duong-so-6-phuong-long-binh-71/hiem-at-tho-cu-gan-vinhomes-q9-thu-uc-pr46221548\n\n5. [Tin 46146964] Căn hộ Thủ Đức chỉ 2 tỷ 570/căn 2PN 2WC SHR nhận nhà ngay giỏ hàng CĐT chỉ 50 căn\n   2,57 tỷ · 52 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Prosper Phố Đông, Đường Tô Ngọc Vân, Phường Tam Bình, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Tam Bình, Hồ Chí Minh mới)\n   Gần nhất: trường học 68 m, bệnh viện 316 m, chợ 680 m\n   Đăng 18/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-to-ngoc-van-phuong-tam-binh-prosper-pho-dong/uu-ai-thang-8-thu-uc-gia-re-chi-2-ty-790-2pn-2wc-nhan-nha-full-noi-that-shr-lau-dai-pr46146964\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Mình tìm được 5 tin phù hợp với điều kiện: khu vực Quận 2, Quận 9, Thành phố Thủ Đức; giá khoảng 2,4 tỷ – 3,15 tỷ.\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 2.680763399999705,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    3,
+    3
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "C01",
+  "category": "progressive",
+  "turn": 3,
+  "user": "Ưu tiên căn hộ nhé, gần bệnh viện",
+  "expect": {
+   "user": "Ưu tiên căn hộ nhé, gần bệnh viện",
+   "expect_status": "ok",
+   "expect_constraints": {
+    "price_max": 3150.0,
+    "district_names": [
+     "Quận 2",
+     "Quận 9",
+     "Thủ Đức"
+    ],
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "near_pois": [
+     {
+      "poi_type": "benh_vien",
+      "max_distance_m": 2000
+     }
+    ],
+    "price_min": 2400.0
+   },
+   "min_results": 5,
+   "note": "§9 #10: 'ưu tiên căn hộ' là điều kiện cứng; #11: POI không nói khoảng cách = 2000 m"
+  },
+  "result": {
+   "conversation_id": "d04451b6a179498da6361b024e851f33",
+   "status": "ok",
+   "constraints": {
+    "price_min": 2400.0,
+    "price_max": 3150.0,
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_ids": [
+     54,
+     61,
+     71
+    ],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [
+     {
+      "poi_type": "benh_vien",
+      "max_distance_m": 2000
+     }
+    ],
+    "soft_query": null
+   },
+   "listings": [
+    {
+     "listing_id": "46146964",
+     "title": "Căn hộ Thủ Đức chỉ 2 tỷ 570/căn 2PN 2WC SHR nhận nhà ngay giỏ hàng CĐT chỉ 50 căn",
+     "price": 2570.0,
+     "area": 52.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Thủ Đức",
+     "old_address": "Prosper Phố Đông, Đường Tô Ngọc Vân, Phường Tam Bình, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Tam Bình, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-to-ngoc-van-phuong-tam-binh-prosper-pho-dong/uu-ai-thang-8-thu-uc-gia-re-chi-2-ty-790-2pn-2wc-nhan-nha-full-noi-that-shr-lau-dai-pr46146964",
+     "posted_at": "2026-09-18",
+     "expired_at": "2026-10-03",
+     "poi_distances": {
+      "truong_hoc": 68.27070759,
+      "benh_vien": 316.00282519,
+      "cho": 680.44993259
+     },
+     "score": 0.6711366040784476,
+     "similar_ids": [],
+     "latitude": 10.8640182553598,
+     "longitude": 106.742885665223,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 11
+    },
+    {
+     "listing_id": "45365804",
+     "title": "Bán căn hộ chung cư Sài Gòn Metro Park 2 phòng ngủ giá tốt",
+     "price": 2480.0,
+     "area": 51.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Thủ Đức",
+     "old_address": "Sài Gòn Metro Park, Phường Trường Thọ, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Thủ Đức, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-truong-tho-2-sai-gon-metro-park/ban-2-phong-ngu-gia-tot-pr45365804",
+     "posted_at": "2026-09-18",
+     "expired_at": "2026-10-03",
+     "poi_distances": {
+      "truong_hoc": 112.97713598,
+      "benh_vien": 1272.20573724,
+      "cho": 1259.41993574
+     },
+     "score": 0.640981884495164,
+     "similar_ids": [],
+     "latitude": 10.838311,
+     "longitude": 106.75314,
+     "coords_reliable": true,
+     "position": 2,
+     "days_left": 11
+    },
+    {
+     "listing_id": "46236183",
+     "title": "Chính chủ cần bán căn hộ tầng thấp (51m2) Chung Cư Saigon Metro Park, Thủ Đức, TP.HCM",
+     "price": 2600.0,
+     "area": 51.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Thủ Đức",
+     "old_address": "Sài Gòn Metro Park, Phường Trường Thọ, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Thủ Đức, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-truong-tho-2-sai-gon-metro-park/chinh-chu-ban-tang-thap-51m2-saigon-thu-uc-tp-hcm-pr46236183",
+     "posted_at": "2026-08-28",
+     "expired_at": "2026-09-27",
+     "poi_distances": {
+      "truong_hoc": 114.68417871,
+      "benh_vien": 1275.97827262,
+      "cho": 1259.6684773
+     },
+     "score": 0.6323259343183882,
+     "similar_ids": [],
+     "latitude": 10.83831,
+     "longitude": 106.7531,
+     "coords_reliable": true,
+     "position": 3,
+     "days_left": 5
+    },
+    {
+     "listing_id": "46225089",
+     "title": "Sở hữu ngay Căn hộ Thủ Đức 2PN 2WC chỉ với 800tr nhận nhà ở ngay chỉ 50 suất ngay Tô Ngọc Vân",
+     "price": 2500.0,
+     "area": 58.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Thủ Đức",
+     "old_address": "Đường Tô Ngọc Vân, Phường Tam Bình, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Tam Bình, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-to-ngoc-van-phuong-tam-binh-71/so-huu-ngay-thu-uc-2pn-2wc-chi-voi-800tr-nhan-nha-o-ngay-chi-50-suat-ngay-van-pr46225089",
+     "posted_at": "2026-09-10",
+     "expired_at": "2026-09-25",
+     "poi_distances": {
+      "truong_hoc": 100.16793154,
+      "benh_vien": 424.91364722,
+      "cho": 783.79116707
+     },
+     "score": 0.6180138454740419,
+     "similar_ids": [],
+     "latitude": 10.8643408630939,
+     "longitude": 106.741885130124,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 3
+    },
+    {
+     "listing_id": "45671382",
+     "title": "Em bán chung cư Stown Thủ Đức 64m² giá 2,6 tỷ - Tam Bình, Gò Dưa",
+     "price": 2600.0,
+     "area": 64.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Thủ Đức",
+     "old_address": "Stown Thủ Đức, Đường Bình Chiểu, Phường Bình Chiểu, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Tam Bình, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-binh-chieu-phuong-binh-chieu-stown-thu-duc/em-ban-uc-64m-gia-2-6ty-tam-go-dua-pr45671382",
+     "posted_at": "2026-08-27",
+     "expired_at": "2026-09-26",
+     "poi_distances": {
+      "truong_hoc": 273.70225372,
+      "benh_vien": 888.00383239,
+      "cho": 764.69854816
+     },
+     "score": 0.6164602180869099,
+     "similar_ids": [],
+     "latitude": 10.88304,
+     "longitude": 106.7264,
+     "coords_reliable": true,
+     "position": 5,
+     "days_left": 4
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Quận 2, Quận 9, Thành phố Thủ Đức; giá khoảng 2,4 tỷ – 3,15 tỷ; gần bệnh viện trong bán kính 2 km.\n\n1. [Tin 46146964] Căn hộ Thủ Đức chỉ 2 tỷ 570/căn 2PN 2WC SHR nhận nhà ngay giỏ hàng CĐT chỉ 50 căn\n   2,57 tỷ · 52 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Prosper Phố Đông, Đường Tô Ngọc Vân, Phường Tam Bình, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Tam Bình, Hồ Chí Minh mới)\n   Gần nhất: trường học 68 m, bệnh viện 316 m, chợ 680 m\n   Đăng 18/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-to-ngoc-van-phuong-tam-binh-prosper-pho-dong/uu-ai-thang-8-thu-uc-gia-re-chi-2-ty-790-2pn-2wc-nhan-nha-full-noi-that-shr-lau-dai-pr46146964\n\n2. [Tin 45365804] Bán căn hộ chung cư Sài Gòn Metro Park 2 phòng ngủ giá tốt\n   2,48 tỷ · 51 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Sài Gòn Metro Park, Phường Trường Thọ, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Thủ Đức, Hồ Chí Minh mới)\n   Gần nhất: trường học 113 m, bệnh viện 1,3 km, chợ 1,3 km\n   Đăng 18/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-truong-tho-2-sai-gon-metro-park/ban-2-phong-ngu-gia-tot-pr45365804\n\n3. [Tin 46236183] Chính chủ cần bán căn hộ tầng thấp (51m2) Chung Cư Saigon Metro Park, Thủ Đức, TP.HCM\n   2,6 tỷ · 51 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Sài Gòn Metro Park, Phường Trường Thọ, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Thủ Đức, Hồ Chí Minh mới)\n   Gần nhất: trường học 115 m, bệnh viện 1,3 km, chợ 1,3 km\n   Đăng 28/08/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-truong-tho-2-sai-gon-metro-park/chinh-chu-ban-tang-thap-51m2-saigon-thu-uc-tp-hcm-pr46236183\n\n4. [Tin 46225089] Sở hữu ngay Căn hộ Thủ Đức 2PN 2WC chỉ với 800tr nhận nhà ở ngay chỉ 50 suất ngay Tô Ngọc Vân\n   2,5 tỷ · 58 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Đường Tô Ngọc Vân, Phường Tam Bình, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Tam Bình, Hồ Chí Minh mới)\n   Gần nhất: trường học 100 m, bệnh viện 425 m, chợ 784 m\n   Đăng 10/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-to-ngoc-van-phuong-tam-binh-71/so-huu-ngay-thu-uc-2pn-2wc-chi-voi-800tr-nhan-nha-o-ngay-chi-50-suat-ngay-van-pr46225089\n\n5. [Tin 45671382] Em bán chung cư Stown Thủ Đức 64m² giá 2,6 tỷ - Tam Bình, Gò Dưa\n   2,6 tỷ · 64 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Stown Thủ Đức, Đường Bình Chiểu, Phường Bình Chiểu, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Tam Bình, Hồ Chí Minh mới)\n   Gần nhất: trường học 274 m, bệnh viện 888 m, chợ 765 m\n   Đăng 27/08/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-binh-chieu-phuong-binh-chieu-stown-thu-duc/em-ban-uc-64m-gia-2-6ty-tam-go-dua-pr45671382\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Quận 2, Quận 9, Thành phố Thủ Đức; giá khoảng 2,4 tỷ – 3,15 tỷ; gần bệnh viện trong bán kính 2 km.\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 2.3519822000016575,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    5,
+    5
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "C01",
+  "category": "progressive",
+  "turn": 4,
+  "user": "Căn thứ 2 có mấy phòng ngủ, gần chợ nào?",
+  "expect": {
+   "user": "Căn thứ 2 có mấy phòng ngủ, gần chợ nào?",
+   "expect_status": "answered",
+   "expect_refs": [
+    2
+   ]
+  },
+  "result": {
+   "conversation_id": "d04451b6a179498da6361b024e851f33",
+   "status": "answered",
+   "constraints": {
+    "price_min": 2400.0,
+    "price_max": 3150.0,
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_ids": [
+     54,
+     61,
+     71
+    ],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [
+     {
+      "poi_type": "benh_vien",
+      "max_distance_m": 2000
+     }
+    ],
+    "soft_query": null
+   },
+   "listings": [],
+   "referenced_ids": [
+    "45365804"
+   ],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Căn 2 [Tin 45365804] Bán căn hộ chung cư Sài Gòn Metro Park 2 phòng ngủ giá tốt\n- địa chỉ cũ: Sài Gòn Metro Park, Phường Trường Thọ, Thành phố Thủ Đức, Hồ Chí Minh; địa chỉ mới: Phường Thủ Đức, Hồ Chí Minh mới\n- số phòng ngủ: 2 phòng ngủ\n- chợ gần nhất: Chợ Thủ Đức, cách 1,3 km\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Căn 2 [Tin 45365804] Bán căn hộ chung cư Sài Gòn Metro Park 2 phòng ngủ giá tốt\n- địa chỉ cũ: Sài Gòn Metro Park, Phường Trường Thọ, Thành phố Thủ Đức, Hồ Chí Minh; địa chỉ mới: Phường Thủ Đức, Hồ Chí Minh mới\n- số phòng ngủ: 2 phòng ngủ\n- chợ gần nhất: Chợ Thủ Đức, cách 1,3 km\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 2.344829599998775,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ],
+   "S8": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "C01",
+  "category": "progressive",
+  "turn": 5,
+  "user": "So sánh căn 1 và căn 3 giúp mình",
+  "expect": {
+   "user": "So sánh căn 1 và căn 3 giúp mình",
+   "expect_status": "answered",
+   "expect_refs": [
+    1,
+    3
+   ]
+  },
+  "result": {
+   "conversation_id": "d04451b6a179498da6361b024e851f33",
+   "status": "answered",
+   "constraints": {
+    "price_min": 2400.0,
+    "price_max": 3150.0,
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_ids": [
+     54,
+     61,
+     71
+    ],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [
+     {
+      "poi_type": "benh_vien",
+      "max_distance_m": 2000
+     }
+    ],
+    "soft_query": null
+   },
+   "listings": [],
+   "referenced_ids": [
+    "46146964",
+    "46236183"
+   ],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Căn 1 [Tin 46146964] Căn hộ Thủ Đức chỉ 2 tỷ 570/căn 2PN 2WC SHR nhận nhà ngay giỏ hàng CĐT chỉ 50 căn\n- địa chỉ cũ: Prosper Phố Đông, Đường Tô Ngọc Vân, Phường Tam Bình, Thành phố Thủ Đức, Hồ Chí Minh; địa chỉ mới: Phường Tam Bình, Hồ Chí Minh mới\n- giá: 2,57 tỷ\n- giá/m²: 49,42 triệu/m²\n- diện tích: 52 m²\n- số phòng ngủ: 2 phòng ngủ\n- pháp lý: Sổ đỏ/ Sổ hồng\n- trường học gần nhất: MN Mặt Trời, cách 68 m\n- bệnh viện gần nhất: Bệnh viện Đa khoa Thủ Đức, cách 316 m\n- chợ gần nhất: Chợ Tam Hà, cách 680 m\n\nCăn 3 [Tin 46236183] Chính chủ cần bán căn hộ tầng thấp (51m2) Chung Cư Saigon Metro Park, Thủ Đức, TP.HCM\n- địa chỉ cũ: Sài Gòn Metro Park, Phường Trường Thọ, Thành phố Thủ Đức, Hồ Chí Minh; địa chỉ mới: Phường Thủ Đức, Hồ Chí Minh mới\n- giá: 2,6 tỷ\n- giá/m²: 50,98 triệu/m²\n- diện tích: 51 m²\n- số phòng ngủ: 2 phòng ngủ\n- pháp lý: Sổ đỏ/ Sổ hồng\n- trường học gần nhất: LMG Thiên Thần Tý Hon, cách 115 m\n- bệnh viện gần nhất: VNVC Thủ Đức, cách 1,3 km\n- chợ gần nhất: Chợ Thủ Đức, cách 1,3 km\n\nSo sánh:\n- giá: Căn 3 (2,6 tỷ) đắt hơn Căn 1 (2,57 tỷ), chênh 30 triệu\n- giá/m²: Căn 3 (50,98 triệu/m²) đắt hơn Căn 1 (49,42 triệu/m²), chênh 1,56 triệu/m²\n- diện tích: Căn 1 (52 m²) lớn hơn Căn 3 (51 m²), chênh 1 m²\n- trường học gần nhất: Căn 3 (115 m) xa hơn Căn 1 (68 m), chênh 47 m\n- bệnh viện gần nhất: Căn 3 (1,3 km) xa hơn Căn 1 (316 m), chênh 984 m\n- chợ gần nhất: Căn 3 (1,3 km) xa hơn Căn 1 (680 m), chênh 620 m\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Căn 1 [Tin 46146964] Căn hộ Thủ Đức chỉ 2 tỷ 570/căn 2PN 2WC SHR nhận nhà ngay giỏ hàng CĐT chỉ 50 căn\n- địa chỉ cũ: Prosper Phố Đông, Đường Tô Ngọc Vân, Phường Tam Bình, Thành phố Thủ Đức, Hồ Chí Minh; địa chỉ mới: Phường Tam Bình, Hồ Chí Minh mới\n- giá: 2,57 tỷ\n- giá/m²: 49,42 triệu/m²\n- diện tích: 52 m²\n- số phòng ngủ: 2 phòng ngủ\n- pháp lý: Sổ đỏ/ Sổ hồng\n- trường học gần nhất: MN Mặt Trời, cách 68 m\n- bệnh viện gần nhất: Bệnh viện Đa khoa Thủ Đức, cách 316 m\n- chợ gần nhất: Chợ Tam Hà, cách 680 m\n\nCăn 3 [Tin 46236183] Chính chủ cần bán căn hộ tầng thấp (51m2) Chung Cư Saigon Metro Park, Thủ Đức, TP.HCM\n- địa chỉ cũ: Sài Gòn Metro Park, Phường Trường Thọ, Thành phố Thủ Đức, Hồ Chí Minh; địa chỉ mới: Phường Thủ Đức, Hồ Chí Minh mới\n- giá: 2,6 tỷ\n- giá/m²: 50,98 triệu/m²\n- diện tích: 51 m²\n- số phòng ngủ: 2 phòng ngủ\n- pháp lý: Sổ đỏ/ Sổ hồng\n- trường học gần nhất: LMG Thiên Thần Tý Hon, cách 115 m\n- bệnh viện gần nhất: VNVC Thủ Đức, cách 1,3 km\n- chợ gần nhất: Chợ Thủ Đức, cách 1,3 km\n\nSo sánh:\n- giá: Căn 3 (2,6 tỷ) đắt hơn Căn 1 (2,57 tỷ), chênh 30 triệu\n- giá/m²: Căn 3 (50,98 triệu/m²) đắt hơn Căn 1 (49,42 triệu/m²), chênh 1,56 triệu/m²\n- diện tích: Căn 1 (52 m²) lớn hơn Căn 3 (51 m²), chênh 1 m²\n- trường học gần nhất: Căn 3 (115 m) xa hơn Căn 1 (68 m), chênh 47 m\n- bệnh viện gần nhất: Căn 3 (1,3 km) xa hơn Căn 1 (316 m), chênh 984 m\n- chợ gần nhất: Căn 3 (1,3 km) xa hơn Căn 1 (680 m), chênh 620 m\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 1.9358340999970096,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ],
+   "S8": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": [
+   "30 triệu",
+   "1,56 triệu"
+  ]
+ },
+ {
+  "id": "C35",
+  "category": "new_address",
+  "turn": 1,
+  "user": "Căn hộ ở phường Bình Trưng dưới 6 tỷ",
+  "expect": {
+   "user": "Căn hộ ở phường Bình Trưng dưới 6 tỷ",
+   "expect_status": "ok",
+   "expect_constraints": {
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "new_ward_names": [
+     "Bình Trưng"
+    ],
+    "price_max": 6000
+   },
+   "min_results": 5
+  },
+  "result": {
+   "conversation_id": "d7155158ab79483aa9be1010a6aa2694",
+   "status": "ok",
+   "constraints": {
+    "price_min": null,
+    "price_max": 6000.0,
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_ids": [],
+    "new_ward_ids": [
+     10764
+    ],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [
+    {
+     "listing_id": "46190886",
+     "title": "Bán gấp căn hộ 3PN + 3WC tại Blue Sky Tower, 5,6 tỷ, 125m2",
+     "price": 5600.0,
+     "area": 125.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 3,
+     "district_old": "Quận 2",
+     "old_address": "Blue Sky Tower, Đường A4, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường Bình Trưng, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-a4-phuong-binh-trung-dong-blue-sky-tower/ban-gap-3pn-3wc-tai-5-6-ty-125m2-pr46190886",
+     "posted_at": "2026-09-16",
+     "expired_at": "2026-10-01",
+     "poi_distances": {
+      "truong_hoc": 46.77092498,
+      "benh_vien": 482.60268349,
+      "cho": 373.72209938
+     },
+     "score": 0.6311419153348538,
+     "similar_ids": [],
+     "latitude": 10.79146,
+     "longitude": 106.776,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 9
+    },
+    {
+     "listing_id": "38662464",
+     "title": "Chủ đầu tư bán căn đẹp giá 2,550 tỷ 56m2 tại Blue Sky Tower. LH 0909 456 ***",
+     "price": 2550.0,
+     "area": 56.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 2",
+     "old_address": "Blue Sky Tower, Đường A4, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường Bình Trưng, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-a4-phuong-binh-trung-dong-blue-sky-tower/chu-dau-tu-ban-2-suat-noxh-tai-blusky-hqc-gia-2-ty-tron-goi-l-h-pr38662464",
+     "posted_at": "2026-09-18",
+     "expired_at": "2026-10-03",
+     "poi_distances": {
+      "truong_hoc": 56.69031491,
+      "benh_vien": 434.47534883,
+      "cho": 380.77228826
+     },
+     "score": 0.6215562114672233,
+     "similar_ids": [],
+     "latitude": 10.791369610024,
+     "longitude": 106.775555030304,
+     "coords_reliable": true,
+     "position": 2,
+     "days_left": 11
+    },
+    {
+     "listing_id": "45456527",
+     "title": "Cần bán căn hộ La Astoria 1PN 1WC giá 2,950 tỷ LH: 0909 167 *** Nhung",
+     "price": 2950.0,
+     "area": 45.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 1,
+     "district_old": "Quận 2",
+     "old_address": "La Astoria, Đường Nguyễn Duy Trinh, Phường Bình Trưng Tây, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường Bình Trưng, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-duy-trinh-phuong-binh-trung-tay-la-astoria/ban-1pn-1wc-full-noi-that-gia-3ty-lh-nhung-pr45456527",
+     "posted_at": "2026-09-15",
+     "expired_at": "2026-09-30",
+     "poi_distances": {},
+     "score": 0.6143218182335811,
+     "similar_ids": [],
+     "latitude": null,
+     "longitude": null,
+     "coords_reliable": false,
+     "position": 3,
+     "days_left": 8
+    },
+    {
+     "listing_id": "45858514",
+     "title": "Bán căn hộ La Astoria 3PN, 3WC duplex ngay mặt tiền Nguyễn Duy Trinh full nội thất LH 0915 698 ***",
+     "price": 4500.0,
+     "area": 89.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 3,
+     "district_old": "Quận 2",
+     "old_address": "La Astoria, Đường Nguyễn Duy Trinh, Phường Bình Trưng Tây, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường Bình Trưng, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-duy-trinh-phuong-binh-trung-tay-la-astoria/ban-3pn3wc-duplex-ngay-mat-tien-full-noi-that-lh-pr45858514",
+     "posted_at": "2026-09-17",
+     "expired_at": "2026-10-02",
+     "poi_distances": {
+      "truong_hoc": 26.83716792,
+      "benh_vien": 687.16827816,
+      "cho": 756.14809589
+     },
+     "score": 0.6111590986318147,
+     "similar_ids": [],
+     "latitude": 10.7876375211998,
+     "longitude": 106.764147750019,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 10
+    },
+    {
+     "listing_id": "46208148",
+     "title": "Nhà thật giá chuẩn bán gấp chủ kẹt tiền 85m2 2PN 2WC tầng trung thoáng 4tỷ2 LH xem 24/7: 0988 662 ***",
+     "price": 4200.0,
+     "area": 85.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 2",
+     "old_address": "Homyland Riverside, Đường Nguyễn Duy Trinh, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường Bình Trưng, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-duy-trinh-phuong-binh-trung-dong-homyland-riverside/nha-that-gia-chuan-ban-gap-chu-ket-tien-85m2-2pn-2wc-tang-thoang-4ty250-lhxem-24-7-pr46208148",
+     "posted_at": "2026-09-20",
+     "expired_at": "2026-10-05",
+     "poi_distances": {
+      "truong_hoc": 43.56414979,
+      "benh_vien": 383.71544352,
+      "cho": 937.30336848
+     },
+     "score": 0.5816654559501094,
+     "similar_ids": [],
+     "latitude": 10.78967,
+     "longitude": 106.7685,
+     "coords_reliable": true,
+     "position": 5,
+     "days_left": 13
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Phường Bình Trưng; giá tối đa 6 tỷ.\n\n1. [Tin 46190886] Bán gấp căn hộ 3PN + 3WC tại Blue Sky Tower, 5,6 tỷ, 125m2\n   5,6 tỷ · 125 m² · 3 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Blue Sky Tower, Đường A4, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường Bình Trưng, Hồ Chí Minh mới)\n   Gần nhất: trường học 47 m, bệnh viện 483 m, chợ 374 m\n   Đăng 16/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-a4-phuong-binh-trung-dong-blue-sky-tower/ban-gap-3pn-3wc-tai-5-6-ty-125m2-pr46190886\n\n2. [Tin 38662464] Chủ đầu tư bán căn đẹp giá 2,550 tỷ 56m2 tại Blue Sky Tower. LH 0909 456 ***\n   2,55 tỷ · 56 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Blue Sky Tower, Đường A4, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường Bình Trưng, Hồ Chí Minh mới)\n   Gần nhất: trường học 57 m, bệnh viện 434 m, chợ 381 m\n   Đăng 18/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-a4-phuong-binh-trung-dong-blue-sky-tower/chu-dau-tu-ban-2-suat-noxh-tai-blusky-hqc-gia-2-ty-tron-goi-l-h-pr38662464\n\n3. [Tin 45456527] Cần bán căn hộ La Astoria 1PN 1WC giá 2,950 tỷ LH: 0909 167 *** Nhung\n   2,95 tỷ · 45 m² · 1 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: La Astoria, Đường Nguyễn Duy Trinh, Phường Bình Trưng Tây, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường Bình Trưng, Hồ Chí Minh mới)\n   Đăng 15/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-duy-trinh-phuong-binh-trung-tay-la-astoria/ban-1pn-1wc-full-noi-that-gia-3ty-lh-nhung-pr45456527\n\n4. [Tin 45858514] Bán căn hộ La Astoria 3PN, 3WC duplex ngay mặt tiền Nguyễn Duy Trinh full nội thất LH 0915 698 ***\n   4,5 tỷ · 89 m² · 3 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: La Astoria, Đường Nguyễn Duy Trinh, Phường Bình Trưng Tây, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường Bình Trưng, Hồ Chí Minh mới)\n   Gần nhất: trường học 27 m, bệnh viện 687 m, chợ 756 m\n   Đăng 17/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-duy-trinh-phuong-binh-trung-tay-la-astoria/ban-3pn3wc-duplex-ngay-mat-tien-full-noi-that-lh-pr45858514\n\n5. [Tin 46208148] Nhà thật giá chuẩn bán gấp chủ kẹt tiền 85m2 2PN 2WC tầng trung thoáng 4tỷ2 LH xem 24/7: 0988 662 ***\n   4,2 tỷ · 85 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Homyland Riverside, Đường Nguyễn Duy Trinh, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường Bình Trưng, Hồ Chí Minh mới)\n   Gần nhất: trường học 44 m, bệnh viện 384 m, chợ 937 m\n   Đăng 20/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-duy-trinh-phuong-binh-trung-dong-homyland-riverside/nha-that-gia-chuan-ban-gap-chu-ket-tien-85m2-2pn-2wc-tang-thoang-4ty250-lhxem-24-7-pr46208148\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Phường Bình Trưng; giá tối đa 6 tỷ.\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 2.208638800002518,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    3,
+    3
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ],
+   "S9": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "C35",
+  "category": "new_address",
+  "turn": 2,
+  "user": "2 phòng ngủ",
+  "expect": {
+   "user": "2 phòng ngủ",
+   "expect_status": "ok",
+   "expect_constraints": {
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "new_ward_names": [
+     "Bình Trưng"
+    ],
+    "price_max": 6000,
+    "bedrooms_min": 2
+   },
+   "min_results": 5
+  },
+  "result": {
+   "conversation_id": "d7155158ab79483aa9be1010a6aa2694",
+   "status": "ok",
+   "constraints": {
+    "price_min": null,
+    "price_max": 6000.0,
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_ids": [],
+    "new_ward_ids": [
+     10764
+    ],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": 2,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [
+    {
+     "listing_id": "46190886",
+     "title": "Bán gấp căn hộ 3PN + 3WC tại Blue Sky Tower, 5,6 tỷ, 125m2",
+     "price": 5600.0,
+     "area": 125.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 3,
+     "district_old": "Quận 2",
+     "old_address": "Blue Sky Tower, Đường A4, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường Bình Trưng, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-a4-phuong-binh-trung-dong-blue-sky-tower/ban-gap-3pn-3wc-tai-5-6-ty-125m2-pr46190886",
+     "posted_at": "2026-09-16",
+     "expired_at": "2026-10-01",
+     "poi_distances": {
+      "truong_hoc": 46.77092498,
+      "benh_vien": 482.60268349,
+      "cho": 373.72209938
+     },
+     "score": 0.6311419153348538,
+     "similar_ids": [],
+     "latitude": 10.79146,
+     "longitude": 106.776,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 9
+    },
+    {
+     "listing_id": "38662464",
+     "title": "Chủ đầu tư bán căn đẹp giá 2,550 tỷ 56m2 tại Blue Sky Tower. LH 0909 456 ***",
+     "price": 2550.0,
+     "area": 56.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 2",
+     "old_address": "Blue Sky Tower, Đường A4, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường Bình Trưng, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-a4-phuong-binh-trung-dong-blue-sky-tower/chu-dau-tu-ban-2-suat-noxh-tai-blusky-hqc-gia-2-ty-tron-goi-l-h-pr38662464",
+     "posted_at": "2026-09-18",
+     "expired_at": "2026-10-03",
+     "poi_distances": {
+      "truong_hoc": 56.69031491,
+      "benh_vien": 434.47534883,
+      "cho": 380.77228826
+     },
+     "score": 0.6215562114672233,
+     "similar_ids": [],
+     "latitude": 10.791369610024,
+     "longitude": 106.775555030304,
+     "coords_reliable": true,
+     "position": 2,
+     "days_left": 11
+    },
+    {
+     "listing_id": "45858514",
+     "title": "Bán căn hộ La Astoria 3PN, 3WC duplex ngay mặt tiền Nguyễn Duy Trinh full nội thất LH 0915 698 ***",
+     "price": 4500.0,
+     "area": 89.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 3,
+     "district_old": "Quận 2",
+     "old_address": "La Astoria, Đường Nguyễn Duy Trinh, Phường Bình Trưng Tây, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường Bình Trưng, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-duy-trinh-phuong-binh-trung-tay-la-astoria/ban-3pn3wc-duplex-ngay-mat-tien-full-noi-that-lh-pr45858514",
+     "posted_at": "2026-09-17",
+     "expired_at": "2026-10-02",
+     "poi_distances": {
+      "truong_hoc": 26.83716792,
+      "benh_vien": 687.16827816,
+      "cho": 756.14809589
+     },
+     "score": 0.6111590986318147,
+     "similar_ids": [],
+     "latitude": 10.7876375211998,
+     "longitude": 106.764147750019,
+     "coords_reliable": true,
+     "position": 3,
+     "days_left": 10
+    },
+    {
+     "listing_id": "46208148",
+     "title": "Nhà thật giá chuẩn bán gấp chủ kẹt tiền 85m2 2PN 2WC tầng trung thoáng 4tỷ2 LH xem 24/7: 0988 662 ***",
+     "price": 4200.0,
+     "area": 85.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 2",
+     "old_address": "Homyland Riverside, Đường Nguyễn Duy Trinh, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường Bình Trưng, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-duy-trinh-phuong-binh-trung-dong-homyland-riverside/nha-that-gia-chuan-ban-gap-chu-ket-tien-85m2-2pn-2wc-tang-thoang-4ty250-lhxem-24-7-pr46208148",
+     "posted_at": "2026-09-20",
+     "expired_at": "2026-10-05",
+     "poi_distances": {
+      "truong_hoc": 43.56414979,
+      "benh_vien": 383.71544352,
+      "cho": 937.30336848
+     },
+     "score": 0.5816654559501094,
+     "similar_ids": [],
+     "latitude": 10.78967,
+     "longitude": 106.7685,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 13
+    },
+    {
+     "listing_id": "45317517",
+     "title": "Cần bán gấp căn hộ PARCSpring 2PN 1WC giá chỉ 4,1 tỷ LH: 0909 167 *** Nhung",
+     "price": 4100.0,
+     "area": 69.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 2",
+     "old_address": "PARCSpring, Đường Nguyễn Duy Trinh, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường Bình Trưng, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-duy-trinh-phuong-binh-trung-dong-parcspring/ban-gap-2pn-1wc-gia-chi-4-190-ty-lh-0909167641-nhung-pr45317517",
+     "posted_at": "2026-09-21",
+     "expired_at": "2026-10-06",
+     "poi_distances": {
+      "truong_hoc": 89.80618791,
+      "benh_vien": 178.48839292,
+      "cho": 685.52906448
+     },
+     "score": 0.5629148357520891,
+     "similar_ids": [],
+     "latitude": 10.788649,
+     "longitude": 106.77069,
+     "coords_reliable": true,
+     "position": 5,
+     "days_left": 14
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Phường Bình Trưng; giá tối đa 6 tỷ; từ 2 phòng ngủ.\n\n1. [Tin 46190886] Bán gấp căn hộ 3PN + 3WC tại Blue Sky Tower, 5,6 tỷ, 125m2\n   5,6 tỷ · 125 m² · 3 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Blue Sky Tower, Đường A4, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường Bình Trưng, Hồ Chí Minh mới)\n   Gần nhất: trường học 47 m, bệnh viện 483 m, chợ 374 m\n   Đăng 16/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-a4-phuong-binh-trung-dong-blue-sky-tower/ban-gap-3pn-3wc-tai-5-6-ty-125m2-pr46190886\n\n2. [Tin 38662464] Chủ đầu tư bán căn đẹp giá 2,550 tỷ 56m2 tại Blue Sky Tower. LH 0909 456 ***\n   2,55 tỷ · 56 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Blue Sky Tower, Đường A4, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường Bình Trưng, Hồ Chí Minh mới)\n   Gần nhất: trường học 57 m, bệnh viện 434 m, chợ 381 m\n   Đăng 18/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-a4-phuong-binh-trung-dong-blue-sky-tower/chu-dau-tu-ban-2-suat-noxh-tai-blusky-hqc-gia-2-ty-tron-goi-l-h-pr38662464\n\n3. [Tin 45858514] Bán căn hộ La Astoria 3PN, 3WC duplex ngay mặt tiền Nguyễn Duy Trinh full nội thất LH 0915 698 ***\n   4,5 tỷ · 89 m² · 3 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: La Astoria, Đường Nguyễn Duy Trinh, Phường Bình Trưng Tây, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường Bình Trưng, Hồ Chí Minh mới)\n   Gần nhất: trường học 27 m, bệnh viện 687 m, chợ 756 m\n   Đăng 17/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-duy-trinh-phuong-binh-trung-tay-la-astoria/ban-3pn3wc-duplex-ngay-mat-tien-full-noi-that-lh-pr45858514\n\n4. [Tin 46208148] Nhà thật giá chuẩn bán gấp chủ kẹt tiền 85m2 2PN 2WC tầng trung thoáng 4tỷ2 LH xem 24/7: 0988 662 ***\n   4,2 tỷ · 85 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Homyland Riverside, Đường Nguyễn Duy Trinh, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường Bình Trưng, Hồ Chí Minh mới)\n   Gần nhất: trường học 44 m, bệnh viện 384 m, chợ 937 m\n   Đăng 20/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-duy-trinh-phuong-binh-trung-dong-homyland-riverside/nha-that-gia-chuan-ban-gap-chu-ket-tien-85m2-2pn-2wc-tang-thoang-4ty250-lhxem-24-7-pr46208148\n\n5. [Tin 45317517] Cần bán gấp căn hộ PARCSpring 2PN 1WC giá chỉ 4,1 tỷ LH: 0909 167 *** Nhung\n   4,1 tỷ · 69 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: PARCSpring, Đường Nguyễn Duy Trinh, Phường Bình Trưng Đông, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường Bình Trưng, Hồ Chí Minh mới)\n   Gần nhất: trường học 90 m, bệnh viện 178 m, chợ 686 m\n   Đăng 21/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-duy-trinh-phuong-binh-trung-dong-parcspring/ban-gap-2pn-1wc-gia-chi-4-190-ty-lh-0909167641-nhung-pr45317517\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Phường Bình Trưng; giá tối đa 6 tỷ; từ 2 phòng ngủ.\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 2.5146822999959113,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    4,
+    4
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "C35",
+  "category": "new_address",
+  "turn": 3,
+  "user": "Còn phường An Khánh thì sao",
+  "expect": {
+   "user": "Còn phường An Khánh thì sao",
+   "expect_status": "ok",
+   "expect_constraints": {
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "new_ward_names": [
+     "An Khánh"
+    ],
+    "price_max": 6000,
+    "bedrooms_min": 2
+   },
+   "min_results": 5
+  },
+  "result": {
+   "conversation_id": "d7155158ab79483aa9be1010a6aa2694",
+   "status": "ok",
+   "constraints": {
+    "price_min": null,
+    "price_max": 6000.0,
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_ids": [],
+    "new_ward_ids": [
+     11020
+    ],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": 2,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [
+    {
+     "listing_id": "46040296",
+     "title": "Sở hữu căn hộ TDC 3 phòng ngủ ngay trung tâm An Khánh, Quận 2 chỉ 4,8 tỷ giá siêu tốt",
+     "price": 4800.0,
+     "area": 84.4,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 3,
+     "district_old": "Quận 2",
+     "old_address": "Đường C, Phường An Khánh, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường An Khánh, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-c-phuong-an-khanh-54/so-huu-tdc-3-phong-ngu-ngay-trung-tam-quan-2-chi-tu-4-8-ty-gia-sieu-tot-pr46040296",
+     "posted_at": "2026-09-19",
+     "expired_at": "2026-10-04",
+     "poi_distances": {
+      "truong_hoc": 380.58434316,
+      "benh_vien": 664.45022405,
+      "cho": 597.055723
+     },
+     "score": 0.6572127866097708,
+     "similar_ids": [],
+     "latitude": 10.787027768366,
+     "longitude": 106.740895678105,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 12
+    },
+    {
+     "listing_id": "45782199",
+     "title": "Bán căn hộ chung cư 2PN, 2WC tại Chung cư Bộ Công An, 4,8 tỷ, 72 m2, giá tốt",
+     "price": 4800.0,
+     "area": 72.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 2",
+     "old_address": "Chung cư Bộ Công An, Đường 3, Phường Bình An, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường An Khánh, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-3-8-phuong-binh-an-chung-cu-bo-cong-an/ban-2pn-2wc-tai-4-8-ty-72-m2-gia-tot-pr45782199",
+     "posted_at": "2026-09-13",
+     "expired_at": "2026-09-28",
+     "poi_distances": {},
+     "score": 0.5377132289805013,
+     "similar_ids": [],
+     "latitude": null,
+     "longitude": null,
+     "coords_reliable": false,
+     "position": 2,
+     "days_left": 6
+    },
+    {
+     "listing_id": "45955589",
+     "title": "Chủ cần bán 2 PN diện tích lớn 78 m² block A CC Bộ Công An",
+     "price": 5300.0,
+     "area": 78.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 2",
+     "old_address": "Chung cư Bộ Công An, Đường 3, Phường Bình An, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường An Khánh, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-3-8-phuong-binh-an-chung-cu-bo-cong-an/chu-ban-2-pn-dien-tich-lon-78-m2-block-a-cc-an-pr45955589",
+     "posted_at": "2026-09-13",
+     "expired_at": "2026-09-28",
+     "poi_distances": {
+      "truong_hoc": 152.70616634,
+      "benh_vien": 444.13709056,
+      "cho": 1249.7792117
+     },
+     "score": 0.535419707586565,
+     "similar_ids": [],
+     "latitude": 10.79445,
+     "longitude": 106.7369,
+     "coords_reliable": true,
+     "position": 3,
+     "days_left": 6
+    },
+    {
+     "listing_id": "43753798",
+     "title": "Bán căn hộ 3 phòng ngủ Chung cư Bình Minh Q2 giá 5,95 tỷ thương lượng",
+     "price": 5950.0,
+     "area": 106.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 3,
+     "district_old": "Quận 2",
+     "old_address": "Chung cư Bình Minh, Phố Lương Định Của, Phường Bình An, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường An Khánh, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-pho-luong-dinh-cua-phuong-binh-an-chung-cu-binh-minh/ban-3-phong-ngu-q2-gia-6-3-ty-thuong-luong-pr43753798",
+     "posted_at": "2026-09-12",
+     "expired_at": "2026-09-27",
+     "poi_distances": {
+      "truong_hoc": 54.07642325,
+      "benh_vien": 577.75097565,
+      "cho": 652.47203557
+     },
+     "score": 0.5211380180417194,
+     "similar_ids": [],
+     "latitude": 10.7889361511891,
+     "longitude": 106.735920015433,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 5
+    },
+    {
+     "listing_id": "46238027",
+     "title": "Chốt nhanh trong tuần - Bán căn 2PN - 58m2 CC Đức Khải Quận 2 chốt nhanh 3ty8 sổ sẵn",
+     "price": 3900.0,
+     "area": 58.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 2",
+     "old_address": "Tái định cư Bình Khánh, Phường Bình Khánh, Quận 2, Hồ Chí Minh",
+     "new_address": "Phường An Khánh, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-binh-khanh-tai-dinh-cu-binh-khanh/chot-nhanh-truoc-le-ban-2pn-60m2-cc-uc-khai-quan-2-chot-nhanh-3ty9-so-san-pr46238027",
+     "posted_at": "2026-09-13",
+     "expired_at": "2026-09-28",
+     "poi_distances": {
+      "truong_hoc": 112.42007956,
+      "benh_vien": 734.96520833,
+      "cho": 213.36208548
+     },
+     "score": 0.4815266500671568,
+     "similar_ids": [],
+     "latitude": 10.7815649651337,
+     "longitude": 106.735987620318,
+     "coords_reliable": true,
+     "position": 5,
+     "days_left": 6
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Đã đổi khu vực sang Phường An Khánh. Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Phường An Khánh; giá tối đa 6 tỷ; từ 2 phòng ngủ.\n\n1. [Tin 46040296] Sở hữu căn hộ TDC 3 phòng ngủ ngay trung tâm An Khánh, Quận 2 chỉ 4,8 tỷ giá siêu tốt\n   4,8 tỷ · 84,4 m² · 3 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Đường C, Phường An Khánh, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường An Khánh, Hồ Chí Minh mới)\n   Gần nhất: trường học 381 m, bệnh viện 664 m, chợ 597 m\n   Đăng 19/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-c-phuong-an-khanh-54/so-huu-tdc-3-phong-ngu-ngay-trung-tam-quan-2-chi-tu-4-8-ty-gia-sieu-tot-pr46040296\n\n2. [Tin 45782199] Bán căn hộ chung cư 2PN, 2WC tại Chung cư Bộ Công An, 4,8 tỷ, 72 m2, giá tốt\n   4,8 tỷ · 72 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Chung cư Bộ Công An, Đường 3, Phường Bình An, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường An Khánh, Hồ Chí Minh mới)\n   Đăng 13/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-3-8-phuong-binh-an-chung-cu-bo-cong-an/ban-2pn-2wc-tai-4-8-ty-72-m2-gia-tot-pr45782199\n\n3. [Tin 45955589] Chủ cần bán 2 PN diện tích lớn 78 m² block A CC Bộ Công An\n   5,3 tỷ · 78 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Chung cư Bộ Công An, Đường 3, Phường Bình An, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường An Khánh, Hồ Chí Minh mới)\n   Gần nhất: trường học 153 m, bệnh viện 444 m, chợ 1,2 km\n   Đăng 13/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-3-8-phuong-binh-an-chung-cu-bo-cong-an/chu-ban-2-pn-dien-tich-lon-78-m2-block-a-cc-an-pr45955589\n\n4. [Tin 43753798] Bán căn hộ 3 phòng ngủ Chung cư Bình Minh Q2 giá 5,95 tỷ thương lượng\n   5,95 tỷ · 106 m² · 3 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Chung cư Bình Minh, Phố Lương Định Của, Phường Bình An, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường An Khánh, Hồ Chí Minh mới)\n   Gần nhất: trường học 54 m, bệnh viện 578 m, chợ 652 m\n   Đăng 12/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-pho-luong-dinh-cua-phuong-binh-an-chung-cu-binh-minh/ban-3-phong-ngu-q2-gia-6-3-ty-thuong-luong-pr43753798\n\n5. [Tin 46238027] Chốt nhanh trong tuần - Bán căn 2PN - 58m2 CC Đức Khải Quận 2 chốt nhanh 3ty8 sổ sẵn\n   3,9 tỷ · 58 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Tái định cư Bình Khánh, Phường Bình Khánh, Quận 2, Hồ Chí Minh (địa chỉ mới: Phường An Khánh, Hồ Chí Minh mới)\n   Gần nhất: trường học 112 m, bệnh viện 735 m, chợ 213 m\n   Đăng 13/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-binh-khanh-tai-dinh-cu-binh-khanh/chot-nhanh-truoc-le-ban-2pn-60m2-cc-uc-khai-quan-2-chot-nhanh-3ty9-so-san-pr46238027\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Đã đổi khu vực sang Phường An Khánh. Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Phường An Khánh; giá tối đa 6 tỷ; từ 2 phòng ngủ.\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 2.4991848999998183,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    4,
+    4
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "C35",
+  "category": "new_address",
+  "turn": 4,
+  "user": "Thử phường Thủ Đức xem",
+  "expect": {
+   "user": "Thử phường Thủ Đức xem",
+   "expect_status": "ok",
+   "expect_constraints": {
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "price_max": 6000,
+    "bedrooms_min": 2,
+    "new_ward_names": [
+     "Thủ Đức"
+    ],
+    "district_names": []
+   },
+   "note": "§9 #6: có chữ 'phường' ⇒ phường mới Thủ Đức, không phải 3 quận cũ",
+   "min_results": 4
+  },
+  "result": {
+   "conversation_id": "d7155158ab79483aa9be1010a6aa2694",
+   "status": "ok",
+   "constraints": {
+    "price_min": null,
+    "price_max": 6000.0,
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_ids": [],
+    "new_ward_ids": [
+     9996
+    ],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": 2,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [
+    {
+     "listing_id": "46236183",
+     "title": "Chính chủ cần bán căn hộ tầng thấp (51m2) Chung Cư Saigon Metro Park, Thủ Đức, TP.HCM",
+     "price": 2600.0,
+     "area": 51.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Thủ Đức",
+     "old_address": "Sài Gòn Metro Park, Phường Trường Thọ, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Thủ Đức, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-truong-tho-2-sai-gon-metro-park/chinh-chu-ban-tang-thap-51m2-saigon-thu-uc-tp-hcm-pr46236183",
+     "posted_at": "2026-08-28",
+     "expired_at": "2026-09-27",
+     "poi_distances": {
+      "truong_hoc": 114.68417871,
+      "benh_vien": 1275.97827262,
+      "cho": 1259.6684773
+     },
+     "score": 0.685342471255697,
+     "similar_ids": [],
+     "latitude": 10.83831,
+     "longitude": 106.7531,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 5
+    },
+    {
+     "listing_id": "45365804",
+     "title": "Bán căn hộ chung cư Sài Gòn Metro Park 2 phòng ngủ giá tốt",
+     "price": 2480.0,
+     "area": 51.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Thủ Đức",
+     "old_address": "Sài Gòn Metro Park, Phường Trường Thọ, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Thủ Đức, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-truong-tho-2-sai-gon-metro-park/ban-2-phong-ngu-gia-tot-pr45365804",
+     "posted_at": "2026-09-18",
+     "expired_at": "2026-10-03",
+     "poi_distances": {
+      "truong_hoc": 112.97713598,
+      "benh_vien": 1272.20573724,
+      "cho": 1259.41993574
+     },
+     "score": 0.6527488523746579,
+     "similar_ids": [],
+     "latitude": 10.838311,
+     "longitude": 106.75314,
+     "coords_reliable": true,
+     "position": 2,
+     "days_left": 11
+    },
+    {
+     "listing_id": "46229539",
+     "title": "Cắt lỗ gấp, Căn hộ cuối đường Phạm Văn Đồng, 55m2 2PN 1WC, Nhà mới 100%, Cuối năm nay nhận nhà",
+     "price": 2520.0,
+     "area": 55.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Thủ Đức",
+     "old_address": "Phường Linh Tây, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Thủ Đức, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-linh-tay/cat-lo-gap-cuoi-uong-pham-van-ong-55m2-2pn-1wc-nha-moi-100-cuoi-nam-nay-nhan-nha-pr46229539",
+     "posted_at": "2026-09-07",
+     "expired_at": "2026-09-22",
+     "poi_distances": {
+      "truong_hoc": 360.71603597,
+      "benh_vien": 552.92200355,
+      "cho": 1042.65579296
+     },
+     "score": 0.6488128322224337,
+     "similar_ids": [],
+     "latitude": 10.8589762401086,
+     "longitude": 106.756708477819,
+     "coords_reliable": true,
+     "position": 3,
+     "days_left": 0
+    },
+    {
+     "listing_id": "46219030",
+     "title": "Cắt lỗ bán gấp căn góc 2PN, Căn hộ cuối đường Phạm Văn Đồng, Căn góc 70m2 tầng cao view thoáng",
+     "price": 3400.0,
+     "area": 70.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Thủ Đức",
+     "old_address": "Phường Linh Tây, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Thủ Đức, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-linh-tay/cat-lo-ban-gap-goc-2pn-cuoi-uong-pham-van-ong-goc-70m2-tang-cao-view-thoang-pr46219030",
+     "posted_at": "2026-09-07",
+     "expired_at": "2026-10-07",
+     "poi_distances": {
+      "truong_hoc": 368.1485434,
+      "benh_vien": 563.5518641,
+      "cho": 1035.12127198
+     },
+     "score": 0.5843696205461661,
+     "similar_ids": [],
+     "latitude": 10.8591063924771,
+     "longitude": 106.75664698019,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 15
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Đã đổi khu vực sang Phường Thủ Đức. Mình tìm được 4 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Phường Thủ Đức; giá tối đa 6 tỷ; từ 2 phòng ngủ.\n\n1. [Tin 46236183] Chính chủ cần bán căn hộ tầng thấp (51m2) Chung Cư Saigon Metro Park, Thủ Đức, TP.HCM\n   2,6 tỷ · 51 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Sài Gòn Metro Park, Phường Trường Thọ, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Thủ Đức, Hồ Chí Minh mới)\n   Gần nhất: trường học 115 m, bệnh viện 1,3 km, chợ 1,3 km\n   Đăng 28/08/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-truong-tho-2-sai-gon-metro-park/chinh-chu-ban-tang-thap-51m2-saigon-thu-uc-tp-hcm-pr46236183\n\n2. [Tin 45365804] Bán căn hộ chung cư Sài Gòn Metro Park 2 phòng ngủ giá tốt\n   2,48 tỷ · 51 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Sài Gòn Metro Park, Phường Trường Thọ, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Thủ Đức, Hồ Chí Minh mới)\n   Gần nhất: trường học 113 m, bệnh viện 1,3 km, chợ 1,3 km\n   Đăng 18/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-truong-tho-2-sai-gon-metro-park/ban-2-phong-ngu-gia-tot-pr45365804\n\n3. [Tin 46229539] Cắt lỗ gấp, Căn hộ cuối đường Phạm Văn Đồng, 55m2 2PN 1WC, Nhà mới 100%, Cuối năm nay nhận nhà\n   2,52 tỷ · 55 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Phường Linh Tây, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Thủ Đức, Hồ Chí Minh mới)\n   Gần nhất: trường học 361 m, bệnh viện 553 m, chợ 1 km\n   Đăng 07/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-linh-tay/cat-lo-gap-cuoi-uong-pham-van-ong-55m2-2pn-1wc-nha-moi-100-cuoi-nam-nay-nhan-nha-pr46229539\n\n4. [Tin 46219030] Cắt lỗ bán gấp căn góc 2PN, Căn hộ cuối đường Phạm Văn Đồng, Căn góc 70m2 tầng cao view thoáng\n   3,4 tỷ · 70 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Phường Linh Tây, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Thủ Đức, Hồ Chí Minh mới)\n   Gần nhất: trường học 368 m, bệnh viện 564 m, chợ 1 km\n   Đăng 07/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-linh-tay/cat-lo-ban-gap-goc-2pn-cuoi-uong-pham-van-ong-goc-70m2-tang-cao-view-thoang-pr46219030\n\nBạn có thể nới điều kiện để có thêm tin:\n- Nếu bỏ điều kiện loại nhà đất: có 7 tin\n- Nếu mở rộng ra toàn TP.HCM: có 536 tin\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Đã đổi khu vực sang Phường Thủ Đức. Mình tìm được 4 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Phường Thủ Đức; giá tối đa 6 tỷ; từ 2 phòng ngủ.\n\nBạn có thể nới điều kiện để có thêm tin:\n- Nếu bỏ điều kiện loại nhà đất: có 7 tin\n- Nếu mở rộng ra toàn TP.HCM: có 536 tin\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 3.1098092999964138,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    5,
+    5
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "C35",
+  "category": "new_address",
+  "turn": 5,
+  "user": "Còn Thủ Đức thì sao, cả khu luôn",
+  "expect": {
+   "user": "Còn Thủ Đức thì sao, cả khu luôn",
+   "expect_status": "ok",
+   "expect_constraints": {
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "price_max": 6000,
+    "bedrooms_min": 2,
+    "district_names": [
+     "Quận 2",
+     "Quận 9",
+     "Thủ Đức"
+    ],
+    "new_ward_names": []
+   },
+   "note": "§9 #6: tên trần 'Thủ Đức' ⇒ 3 quận cũ; thay khu vực nên bỏ phường",
+   "min_results": 5
+  },
+  "result": {
+   "conversation_id": "d7155158ab79483aa9be1010a6aa2694",
+   "status": "ok",
+   "constraints": {
+    "price_min": null,
+    "price_max": 6000.0,
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_ids": [
+     54,
+     61,
+     71
+    ],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": 2,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [
+    {
+     "listing_id": "45496741",
+     "title": "Bán căn hộ chung cư Ehome 2, căn 56m2 1PK 2PN 1WC. TP Thủ Đức",
+     "price": 2060.0,
+     "area": 56.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 9",
+     "old_address": "Ehome 2, Đường Đỗ Xuân Hợp, Phường Phước Long B, Quận 9, Hồ Chí Minh",
+     "new_address": "Phường Phước Long, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-do-xuan-hop-phuong-phuoc-long-b-ehome-2/ban-2-53m2-1pk-1pn-1wc-tp-thu-uc-pr45496741",
+     "posted_at": "2026-09-14",
+     "expired_at": "2026-09-29",
+     "poi_distances": {
+      "truong_hoc": 166.34976981,
+      "benh_vien": 1561.34838569,
+      "cho": 1731.80637374
+     },
+     "score": 0.7255875183324422,
+     "similar_ids": [],
+     "latitude": 10.8100827647926,
+     "longitude": 106.786171696972,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 7
+    },
+    {
+     "listing_id": "46029394",
+     "title": "Cần bán căn hộ chung cư Kikyo Residence Phường Phú Hữu TP Thủ Đức",
+     "price": 4200.0,
+     "area": 68.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 9",
+     "old_address": "Kikyo Residence, Đường Đỗ Xuân Hợp, Phường Phú Hữu, Quận 9, Hồ Chí Minh",
+     "new_address": "Phường Long Trường, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-do-xuan-hop-phuong-phu-huu-2-kikyo-residence/ban-kykio-tp-thu-uc-pr46029394",
+     "posted_at": "2026-09-12",
+     "expired_at": "2026-09-27",
+     "poi_distances": {
+      "truong_hoc": 60.69134899,
+      "benh_vien": 1909.13657024,
+      "cho": 863.25285731
+     },
+     "score": 0.6894687029291042,
+     "similar_ids": [],
+     "latitude": 10.7981263026658,
+     "longitude": 106.787186435825,
+     "coords_reliable": true,
+     "position": 2,
+     "days_left": 5
+    },
+    {
+     "listing_id": "40141756",
+     "title": "Chính chủ ngộp cần ra hàng gấp lầu 12",
+     "price": 4000.0,
+     "area": 76.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Thủ Đức",
+     "old_address": "Urban Green, Đường Số 6, Phường Hiệp Bình Phước, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Hiệp Bình, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-so-6-phuong-hiep-binh-phuoc-urban-green/chinh-chu-ngop-ra-hang-gap-lau-12-gia-3ty5-pr40141756",
+     "posted_at": "2026-09-19",
+     "expired_at": "2026-10-04",
+     "poi_distances": {
+      "truong_hoc": 106.76004632,
+      "benh_vien": 742.35511379,
+      "cho": 921.3865471
+     },
+     "score": 0.6884700319414209,
+     "similar_ids": [],
+     "latitude": 10.8378126080418,
+     "longitude": 106.717245105894,
+     "coords_reliable": true,
+     "position": 3,
+     "days_left": 12
+    },
+    {
+     "listing_id": "45443884",
+     "title": "Cần bán căn hộ Sky9 vòng xoay Liên Phường, TP Thủ Đức DT 50m2, 2PN giá 2,7 tỷ",
+     "price": 2700.0,
+     "area": 50.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 9",
+     "old_address": "Sky 9, Đường Liên Phường, Phường Phú Hữu, Quận 9, Hồ Chí Minh",
+     "new_address": "Phường Long Trường, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-lien-phuong-phuong-phu-huu-2-sky-9/ban-sky9-vong-xoay-tp-thu-uc-dt-75m2-3pn-gia-3-6-ty-pr45443884",
+     "posted_at": "2026-09-12",
+     "expired_at": "2026-09-27",
+     "poi_distances": {
+      "truong_hoc": 56.0340977,
+      "benh_vien": 2383.76319263,
+      "cho": 1541.26307342
+     },
+     "score": 0.6839806686292053,
+     "similar_ids": [],
+     "latitude": 10.8045204294627,
+     "longitude": 106.791687432087,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 5
+    },
+    {
+     "listing_id": "46146964",
+     "title": "Căn hộ Thủ Đức chỉ 2 tỷ 570/căn 2PN 2WC SHR nhận nhà ngay giỏ hàng CĐT chỉ 50 căn",
+     "price": 2570.0,
+     "area": 52.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Thủ Đức",
+     "old_address": "Prosper Phố Đông, Đường Tô Ngọc Vân, Phường Tam Bình, Thành phố Thủ Đức, Hồ Chí Minh",
+     "new_address": "Phường Tam Bình, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-to-ngoc-van-phuong-tam-binh-prosper-pho-dong/uu-ai-thang-8-thu-uc-gia-re-chi-2-ty-790-2pn-2wc-nhan-nha-full-noi-that-shr-lau-dai-pr46146964",
+     "posted_at": "2026-09-18",
+     "expired_at": "2026-10-03",
+     "poi_distances": {
+      "truong_hoc": 68.27070759,
+      "benh_vien": 316.00282519,
+      "cho": 680.44993259
+     },
+     "score": 0.6711366040784476,
+     "similar_ids": [],
+     "latitude": 10.8640182553598,
+     "longitude": 106.742885665223,
+     "coords_reliable": true,
+     "position": 5,
+     "days_left": 11
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Đã đổi khu vực sang Quận 2, Quận 9, Thành phố Thủ Đức. Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Quận 2, Quận 9, Thành phố Thủ Đức; giá tối đa 6 tỷ; từ 2 phòng ngủ.\n\n1. [Tin 45496741] Bán căn hộ chung cư Ehome 2, căn 56m2 1PK 2PN 1WC. TP Thủ Đức\n   2,06 tỷ · 56 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Ehome 2, Đường Đỗ Xuân Hợp, Phường Phước Long B, Quận 9, Hồ Chí Minh (địa chỉ mới: Phường Phước Long, Hồ Chí Minh mới)\n   Gần nhất: trường học 166 m, bệnh viện 1,6 km, chợ 1,7 km\n   Đăng 14/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-do-xuan-hop-phuong-phuoc-long-b-ehome-2/ban-2-53m2-1pk-1pn-1wc-tp-thu-uc-pr45496741\n\n2. [Tin 46029394] Cần bán căn hộ chung cư Kikyo Residence Phường Phú Hữu TP Thủ Đức\n   4,2 tỷ · 68 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Kikyo Residence, Đường Đỗ Xuân Hợp, Phường Phú Hữu, Quận 9, Hồ Chí Minh (địa chỉ mới: Phường Long Trường, Hồ Chí Minh mới)\n   Gần nhất: trường học 61 m, bệnh viện 1,9 km, chợ 863 m\n   Đăng 12/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-do-xuan-hop-phuong-phu-huu-2-kikyo-residence/ban-kykio-tp-thu-uc-pr46029394\n\n3. [Tin 40141756] Chính chủ ngộp cần ra hàng gấp lầu 12\n   4 tỷ · 76 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Urban Green, Đường Số 6, Phường Hiệp Bình Phước, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Hiệp Bình, Hồ Chí Minh mới)\n   Gần nhất: trường học 107 m, bệnh viện 742 m, chợ 921 m\n   Đăng 19/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-so-6-phuong-hiep-binh-phuoc-urban-green/chinh-chu-ngop-ra-hang-gap-lau-12-gia-3ty5-pr40141756\n\n4. [Tin 45443884] Cần bán căn hộ Sky9 vòng xoay Liên Phường, TP Thủ Đức DT 50m2, 2PN giá 2,7 tỷ\n   2,7 tỷ · 50 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Sky 9, Đường Liên Phường, Phường Phú Hữu, Quận 9, Hồ Chí Minh (địa chỉ mới: Phường Long Trường, Hồ Chí Minh mới)\n   Gần nhất: trường học 56 m, bệnh viện 2,4 km, chợ 1,5 km\n   Đăng 12/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-lien-phuong-phuong-phu-huu-2-sky-9/ban-sky9-vong-xoay-tp-thu-uc-dt-75m2-3pn-gia-3-6-ty-pr45443884\n\n5. [Tin 46146964] Căn hộ Thủ Đức chỉ 2 tỷ 570/căn 2PN 2WC SHR nhận nhà ngay giỏ hàng CĐT chỉ 50 căn\n   2,57 tỷ · 52 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Prosper Phố Đông, Đường Tô Ngọc Vân, Phường Tam Bình, Thành phố Thủ Đức, Hồ Chí Minh (địa chỉ mới: Phường Tam Bình, Hồ Chí Minh mới)\n   Gần nhất: trường học 68 m, bệnh viện 316 m, chợ 680 m\n   Đăng 18/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-to-ngoc-van-phuong-tam-binh-prosper-pho-dong/uu-ai-thang-8-thu-uc-gia-re-chi-2-ty-790-2pn-2wc-nhan-nha-full-noi-that-shr-lau-dai-pr46146964\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Đã đổi khu vực sang Quận 2, Quận 9, Thành phố Thủ Đức. Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Quận 2, Quận 9, Thành phố Thủ Đức; giá tối đa 6 tỷ; từ 2 phòng ngủ.\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 2.498933800001396,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    5,
+    5
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "C38",
+  "category": "soft_semantic",
+  "turn": 1,
+  "user": "Nhà riêng Bình Thạnh dưới 8 tỷ",
+  "expect": {
+   "user": "Nhà riêng Bình Thạnh dưới 8 tỷ",
+   "expect_status": "ok",
+   "expect_constraints": {
+    "property_types": [
+     "Nhà riêng"
+    ],
+    "district_names": [
+     "Bình Thạnh"
+    ],
+    "price_max": 8000
+   },
+   "min_results": 5
+  },
+  "result": {
+   "conversation_id": "b36cdb7ba3fa4f98be9660c5c53b6b3f",
+   "status": "ok",
+   "constraints": {
+    "price_min": null,
+    "price_max": 8000.0,
+    "property_types": [
+     "Nhà riêng"
+    ],
+    "district_ids": [
+     66
+    ],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [
+    {
+     "listing_id": "46229103",
+     "title": "Nguyễn Văn Đậu, Bình Thạnh, 46.3m2 (4x11m nở hậu tài lộc 5m) x 2 tầng, hẻm ô tô sát mặt tiền",
+     "price": 6500.0,
+     "area": 46.3,
+     "property_type": "Nhà riêng",
+     "bedrooms": 2,
+     "district_old": "Bình Thạnh",
+     "old_address": "Đường Nguyễn Văn Đậu, Phường 11, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Bình Lợi Trung, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-nguyen-van-dau-phuong-11-7-66/au-binh-thanh-46-5m-4x11m-no-hau-tai-loc-5m-x-2-tang-hem-o-to-sat-mat-tien-l-pr46229103",
+     "posted_at": "2026-09-10",
+     "expired_at": "2026-09-25",
+     "poi_distances": {
+      "truong_hoc": 154.13916848,
+      "benh_vien": 541.55951971,
+      "cho": 393.74935577
+     },
+     "score": 0.6736944913559573,
+     "similar_ids": [],
+     "latitude": 10.8157750578453,
+     "longitude": 106.694262811642,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 3
+    },
+    {
+     "listing_id": "41906684",
+     "title": "Bình Thạnh, Vũ Huy Tấn, tặng toàn bộ nội thất, sát cầu Bông, lô góc hẻm ô tô, nhỉnh 4,x tỷ",
+     "price": 4980.0,
+     "area": 40.0,
+     "property_type": "Nhà riêng",
+     "bedrooms": 3,
+     "district_old": "Bình Thạnh",
+     "old_address": "Đường Vũ Huy Tấn, Phường 3, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Gia Định, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-vu-huy-tan-phuong-3-19-66/sieu-pham-dep-full-noi-that-sat-cau-bong-3-mat-tien-o-to-tai-tranh-nhinh-5-ty-pr41906684",
+     "posted_at": "2026-09-08",
+     "expired_at": "2026-09-23",
+     "poi_distances": {
+      "truong_hoc": 73.0371287,
+      "benh_vien": 400.0155903,
+      "cho": 461.96323945
+     },
+     "score": 0.6662735696940483,
+     "similar_ids": [],
+     "latitude": 10.7957216156543,
+     "longitude": 106.693855380207,
+     "coords_reliable": true,
+     "position": 2,
+     "days_left": 1
+    },
+    {
+     "listing_id": "46228694",
+     "title": "Hàng hiếm trung tâm Bình Thạnh - nhà nhỏ tiền diện tích sàn khủng 114.9m2",
+     "price": 5500.0,
+     "area": 38.2,
+     "property_type": "Nhà riêng",
+     "bedrooms": 4,
+     "district_old": "Bình Thạnh",
+     "old_address": "Đường Phan Văn Trị, Phường 11, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Bình Lợi Trung, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-phan-van-tri-phuong-11-7-66/hang-hiem-trung-tam-binh-thanh-nho-tien-dien-tich-san-khung-114-9m-pr46228694",
+     "posted_at": "2026-09-11",
+     "expired_at": "2026-09-26",
+     "poi_distances": {
+      "truong_hoc": 162.4617579,
+      "benh_vien": 547.66072199,
+      "cho": 389.66320004
+     },
+     "score": 0.6595927977950261,
+     "similar_ids": [],
+     "latitude": 10.8158485233512,
+     "longitude": 106.694939932436,
+     "coords_reliable": true,
+     "position": 3,
+     "days_left": 4
+    },
+    {
+     "listing_id": "46235220",
+     "title": "Chủ gấp bán nhà Nguyễn Xí - hẻm thông thoáng 4m - ngang 6,3m, 63,4m2 - GPXD cao 4 tầng - 7 tỷ",
+     "price": 7000.0,
+     "area": 63.4,
+     "property_type": "Nhà riêng",
+     "bedrooms": 3,
+     "district_old": "Bình Thạnh",
+     "old_address": "Phố Nguyễn Xí, Phường 13, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Bình Lợi Trung, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-pho-nguyen-xi-phuong-13-7-66/chu-gap-ban-hem-thong-thoang-4m-ngang-6-3m-64m2-gpxd-cao-4-tang-7ty-pr46235220",
+     "posted_at": "2026-09-12",
+     "expired_at": "2026-09-27",
+     "poi_distances": {
+      "truong_hoc": 161.27358784,
+      "benh_vien": 475.37364904,
+      "cho": 1275.42739911
+     },
+     "score": 0.658859355410147,
+     "similar_ids": [],
+     "latitude": 10.819967272534,
+     "longitude": 106.70392673946,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 5
+    },
+    {
+     "listing_id": "46236830",
+     "title": "Chính chủ bán nhà Nơ Trang Long, Bình Thạnh: 64m2 (5,3x13) - 3 tầng: 5PN, 3WC. Giá 7 tỷ",
+     "price": 7050.0,
+     "area": 64.0,
+     "property_type": "Nhà riêng",
+     "bedrooms": 5,
+     "district_old": "Bình Thạnh",
+     "old_address": "Đường Nơ Trang Long, Phường 12, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Bình Thạnh, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-no-trang-long-phuong-12-7-66/chinh-chu-ban-binh-thanh-64m2-5-3x13-3-tang-5pn-3wc-gia-7ty-pr46236830",
+     "posted_at": "2026-09-13",
+     "expired_at": "2026-09-28",
+     "poi_distances": {
+      "truong_hoc": 147.74745267,
+      "benh_vien": 281.60771875,
+      "cho": 162.50074404
+     },
+     "score": 0.6557878756820814,
+     "similar_ids": [],
+     "latitude": 10.8126108736686,
+     "longitude": 106.696644455686,
+     "coords_reliable": true,
+     "position": 5,
+     "days_left": 6
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Mình tìm được 5 tin phù hợp với điều kiện: Nhà riêng; khu vực Quận Bình Thạnh; giá tối đa 8 tỷ.\n\n1. [Tin 46229103] Nguyễn Văn Đậu, Bình Thạnh, 46.3m2 (4x11m nở hậu tài lộc 5m) x 2 tầng, hẻm ô tô sát mặt tiền\n   6,5 tỷ · 46,3 m² · 2 phòng ngủ · Nhà riêng\n   Địa chỉ: Đường Nguyễn Văn Đậu, Phường 11, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Bình Lợi Trung, Hồ Chí Minh mới)\n   Gần nhất: trường học 154 m, bệnh viện 542 m, chợ 394 m\n   Đăng 10/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-nguyen-van-dau-phuong-11-7-66/au-binh-thanh-46-5m-4x11m-no-hau-tai-loc-5m-x-2-tang-hem-o-to-sat-mat-tien-l-pr46229103\n\n2. [Tin 41906684] Bình Thạnh, Vũ Huy Tấn, tặng toàn bộ nội thất, sát cầu Bông, lô góc hẻm ô tô, nhỉnh 4,x tỷ\n   4,98 tỷ · 40 m² · 3 phòng ngủ · Nhà riêng\n   Địa chỉ: Đường Vũ Huy Tấn, Phường 3, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Gia Định, Hồ Chí Minh mới)\n   Gần nhất: trường học 73 m, bệnh viện 400 m, chợ 462 m\n   Đăng 08/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-vu-huy-tan-phuong-3-19-66/sieu-pham-dep-full-noi-that-sat-cau-bong-3-mat-tien-o-to-tai-tranh-nhinh-5-ty-pr41906684\n\n3. [Tin 46228694] Hàng hiếm trung tâm Bình Thạnh - nhà nhỏ tiền diện tích sàn khủng 114.9m2\n   5,5 tỷ · 38,2 m² · 4 phòng ngủ · Nhà riêng\n   Địa chỉ: Đường Phan Văn Trị, Phường 11, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Bình Lợi Trung, Hồ Chí Minh mới)\n   Gần nhất: trường học 162 m, bệnh viện 548 m, chợ 390 m\n   Đăng 11/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-phan-van-tri-phuong-11-7-66/hang-hiem-trung-tam-binh-thanh-nho-tien-dien-tich-san-khung-114-9m-pr46228694\n\n4. [Tin 46235220] Chủ gấp bán nhà Nguyễn Xí - hẻm thông thoáng 4m - ngang 6,3m, 63,4m2 - GPXD cao 4 tầng - 7 tỷ\n   7 tỷ · 63,4 m² · 3 phòng ngủ · Nhà riêng\n   Địa chỉ: Phố Nguyễn Xí, Phường 13, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Bình Lợi Trung, Hồ Chí Minh mới)\n   Gần nhất: trường học 161 m, bệnh viện 475 m, chợ 1,3 km\n   Đăng 12/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-pho-nguyen-xi-phuong-13-7-66/chu-gap-ban-hem-thong-thoang-4m-ngang-6-3m-64m2-gpxd-cao-4-tang-7ty-pr46235220\n\n5. [Tin 46236830] Chính chủ bán nhà Nơ Trang Long, Bình Thạnh: 64m2 (5,3x13) - 3 tầng: 5PN, 3WC. Giá 7 tỷ\n   7,05 tỷ · 64 m² · 5 phòng ngủ · Nhà riêng\n   Địa chỉ: Đường Nơ Trang Long, Phường 12, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Bình Thạnh, Hồ Chí Minh mới)\n   Gần nhất: trường học 148 m, bệnh viện 282 m, chợ 163 m\n   Đăng 13/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-no-trang-long-phuong-12-7-66/chinh-chu-ban-binh-thanh-64m2-5-3x13-3-tang-5pn-3wc-gia-7ty-pr46236830\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Mình tìm được 5 tin phù hợp với điều kiện: Nhà riêng; khu vực Quận Bình Thạnh; giá tối đa 8 tỷ.\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 2.1448214999982156,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    3,
+    3
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ],
+   "S9": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "C38",
+  "category": "soft_semantic",
+  "turn": 2,
+  "user": "Mình thích chỗ yên tĩnh, không ồn ào",
+  "expect": {
+   "user": "Mình thích chỗ yên tĩnh, không ồn ào",
+   "expect_status": "ok",
+   "expect_soft": true,
+   "expect_constraints": {
+    "property_types": [
+     "Nhà riêng"
+    ],
+    "district_names": [
+     "Bình Thạnh"
+    ],
+    "price_max": 8000
+   },
+   "min_results": 5
+  },
+  "result": {
+   "conversation_id": "b36cdb7ba3fa4f98be9660c5c53b6b3f",
+   "status": "ok",
+   "constraints": {
+    "price_min": null,
+    "price_max": 8000.0,
+    "property_types": [
+     "Nhà riêng"
+    ],
+    "district_ids": [
+     66
+    ],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [],
+    "soft_query": "yên tĩnh"
+   },
+   "listings": [
+    {
+     "listing_id": "46234317",
+     "title": "Không thể bỏ qua DT khủng 60m2 oto quay đầu - chỉ 7,1 tỷ - khu dân trí cao tầng Bùi Đình Túy",
+     "price": 7100.0,
+     "area": 60.0,
+     "property_type": "Nhà riêng",
+     "bedrooms": 3,
+     "district_old": "Bình Thạnh",
+     "old_address": "Đường Bùi Đình Túy, Phường 12, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Bình Thạnh, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-bui-dinh-tuy-phuong-12-7-66/khong-the-bo-qua-can-nay-60m2-oto-quay-au-khu-dan-tri-cao-tang-inh-7-1-ty-pr46234317",
+     "posted_at": "2026-09-12",
+     "expired_at": "2026-09-27",
+     "poi_distances": {
+      "truong_hoc": 88.07143119,
+      "benh_vien": 927.42109531,
+      "cho": 851.17913947
+     },
+     "score": 0.4085721790656196,
+     "similar_ids": [],
+     "latitude": 10.807437286793,
+     "longitude": 106.70269461917,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 5
+    },
+    {
+     "listing_id": "46206032",
+     "title": "Bán gấp - hẻm xe hơi - 4 tỷ 610 Đường Nguyễn Trung Trực, Bình Thạnh DT 48 m2",
+     "price": 4610.0,
+     "area": 48.0,
+     "property_type": "Nhà riêng",
+     "bedrooms": 3,
+     "district_old": "Bình Thạnh",
+     "old_address": "Đường Nguyễn Trung Trực, Phường 11, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Bình Lợi Trung, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-nguyen-trung-truc-phuong-11-7-66/ban-gap-hem-xe-hoi-4-ty-610-uong-binh-thanh-dt-48-m2-pr46206032",
+     "posted_at": "2026-09-07",
+     "expired_at": "2026-10-07",
+     "poi_distances": {
+      "truong_hoc": 140.0823488,
+      "benh_vien": 778.54139161,
+      "cho": 966.60136335
+     },
+     "score": 0.421710883574422,
+     "similar_ids": [],
+     "latitude": 10.8120915049545,
+     "longitude": 106.686349468794,
+     "coords_reliable": true,
+     "position": 2,
+     "days_left": 15
+    },
+    {
+     "listing_id": "45950918",
+     "title": "Thông ra Phan Chu Trinh, nhà 4 tầng x 48,6m2 - Xe hơi đậu cửa - Bán gấp",
+     "price": 6900.0,
+     "area": 48.6,
+     "property_type": "Nhà riêng",
+     "bedrooms": 4,
+     "district_old": "Bình Thạnh",
+     "old_address": "Đường Phan Chu Trinh, Phường 12, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Bình Thạnh, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-phan-chu-trinh-phuong-12-7-66/thong-ra-4tang-x-48-6m2-xe-hoi-au-cua-ban-gap-pr45950918",
+     "posted_at": "2026-09-03",
+     "expired_at": "2026-10-03",
+     "poi_distances": {
+      "truong_hoc": 151.5567076,
+      "benh_vien": 608.95489483,
+      "cho": 693.65517361
+     },
+     "score": 0.4162104021430666,
+     "similar_ids": [],
+     "latitude": 10.813729157317,
+     "longitude": 106.701369238813,
+     "coords_reliable": true,
+     "position": 3,
+     "days_left": 11
+    },
+    {
+     "listing_id": "46048063",
+     "title": "Gấp bán 8 tỷ giảm về 7,19 tỷ - Bán nhanh nhà 2 tầng 50m2 - lô góc hẻm xe hơi 6m Lê Văn Duyệt",
+     "price": 7190.0,
+     "area": 50.0,
+     "property_type": "Nhà riêng",
+     "bedrooms": 3,
+     "district_old": "Bình Thạnh",
+     "old_address": "Đường Lê Văn Duyệt, Phường 3, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Gia Định, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-le-van-duyet-phuong-3-19-66/gap-ban-8-ty-giam-ve-7-19-ty-ban-nhanh-2-tang-50m2-lo-goc-hem-xe-hoi-6m-duyet-pr46048063",
+     "posted_at": "2026-09-14",
+     "expired_at": "2026-09-29",
+     "poi_distances": {
+      "truong_hoc": 139.96271839,
+      "benh_vien": 422.9035007,
+      "cho": 754.42668078
+     },
+     "score": 0.41345717942748217,
+     "similar_ids": [],
+     "latitude": 10.7983523862966,
+     "longitude": 106.692726551305,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 7
+    },
+    {
+     "listing_id": "46152162",
+     "title": "Giảm sâu 500tr nhà H3G 40m2 ngang 3.5m Võ Duy Ninh, P22, Bình Thạnh - sổ chính chủ - chỉ 2.98 tỷ TL",
+     "price": 2980.0,
+     "area": 40.0,
+     "property_type": "Nhà riêng",
+     "bedrooms": null,
+     "district_old": "Bình Thạnh",
+     "old_address": "Đường Võ Duy Ninh, Phường 22, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Thạnh Mỹ Tây, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-vo-duy-ninh-phuong-22-66/giam-sau-500tr-h3g-40m2-ngang-3-5m-p22-binh-thanh-so-chinh-chu-chi-2-98-ty-tl-pr46152162",
+     "posted_at": "2026-09-15",
+     "expired_at": "2026-09-30",
+     "poi_distances": {
+      "truong_hoc": 97.97535809,
+      "benh_vien": 261.23264564,
+      "cho": 705.78970811
+     },
+     "score": 0.4124935829916301,
+     "similar_ids": [],
+     "latitude": 10.7919443036767,
+     "longitude": 106.716146058736,
+     "coords_reliable": true,
+     "position": 5,
+     "days_left": 8
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Mình tìm được 5 tin phù hợp với điều kiện: Nhà riêng; khu vực Quận Bình Thạnh; giá tối đa 8 tỷ. Tin được xếp ưu tiên theo mong muốn \"yên tĩnh\" (bạn xem mô tả từng tin để kiểm tra).\n\n1. [Tin 46234317] Không thể bỏ qua DT khủng 60m2 oto quay đầu - chỉ 7,1 tỷ - khu dân trí cao tầng Bùi Đình Túy\n   7,1 tỷ · 60 m² · 3 phòng ngủ · Nhà riêng\n   Địa chỉ: Đường Bùi Đình Túy, Phường 12, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Bình Thạnh, Hồ Chí Minh mới)\n   Gần nhất: trường học 88 m, bệnh viện 927 m, chợ 851 m\n   Đăng 12/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-bui-dinh-tuy-phuong-12-7-66/khong-the-bo-qua-can-nay-60m2-oto-quay-au-khu-dan-tri-cao-tang-inh-7-1-ty-pr46234317\n\n2. [Tin 46206032] Bán gấp - hẻm xe hơi - 4 tỷ 610 Đường Nguyễn Trung Trực, Bình Thạnh DT 48 m2\n   4,61 tỷ · 48 m² · 3 phòng ngủ · Nhà riêng\n   Địa chỉ: Đường Nguyễn Trung Trực, Phường 11, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Bình Lợi Trung, Hồ Chí Minh mới)\n   Gần nhất: trường học 140 m, bệnh viện 779 m, chợ 967 m\n   Đăng 07/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-nguyen-trung-truc-phuong-11-7-66/ban-gap-hem-xe-hoi-4-ty-610-uong-binh-thanh-dt-48-m2-pr46206032\n\n3. [Tin 45950918] Thông ra Phan Chu Trinh, nhà 4 tầng x 48,6m2 - Xe hơi đậu cửa - Bán gấp\n   6,9 tỷ · 48,6 m² · 4 phòng ngủ · Nhà riêng\n   Địa chỉ: Đường Phan Chu Trinh, Phường 12, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Bình Thạnh, Hồ Chí Minh mới)\n   Gần nhất: trường học 152 m, bệnh viện 609 m, chợ 694 m\n   Đăng 03/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-phan-chu-trinh-phuong-12-7-66/thong-ra-4tang-x-48-6m2-xe-hoi-au-cua-ban-gap-pr45950918\n\n4. [Tin 46048063] Gấp bán 8 tỷ giảm về 7,19 tỷ - Bán nhanh nhà 2 tầng 50m2 - lô góc hẻm xe hơi 6m Lê Văn Duyệt\n   7,19 tỷ · 50 m² · 3 phòng ngủ · Nhà riêng\n   Địa chỉ: Đường Lê Văn Duyệt, Phường 3, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Gia Định, Hồ Chí Minh mới)\n   Gần nhất: trường học 140 m, bệnh viện 423 m, chợ 754 m\n   Đăng 14/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-le-van-duyet-phuong-3-19-66/gap-ban-8-ty-giam-ve-7-19-ty-ban-nhanh-2-tang-50m2-lo-goc-hem-xe-hoi-6m-duyet-pr46048063\n\n5. [Tin 46152162] Giảm sâu 500tr nhà H3G 40m2 ngang 3.5m Võ Duy Ninh, P22, Bình Thạnh - sổ chính chủ - chỉ 2.98 tỷ TL\n   2,98 tỷ · 40 m² · Nhà riêng\n   Địa chỉ: Đường Võ Duy Ninh, Phường 22, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Thạnh Mỹ Tây, Hồ Chí Minh mới)\n   Gần nhất: trường học 98 m, bệnh viện 261 m, chợ 706 m\n   Đăng 15/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-vo-duy-ninh-phuong-22-66/giam-sau-500tr-h3g-40m2-ngang-3-5m-p22-binh-thanh-so-chinh-chu-chi-2-98-ty-tl-pr46152162\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Mình tìm được 5 tin phù hợp với điều kiện: Nhà riêng; khu vực Quận Bình Thạnh; giá tối đa 8 tỷ. Tin được xếp ưu tiên theo mong muốn \"yên tĩnh\" (bạn xem mô tả từng tin để kiểm tra).\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 2.435656800000288,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    4,
+    4
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "C38",
+  "category": "soft_semantic",
+  "turn": 3,
+  "user": "Thêm là hẻm xe hơi vào tận nhà",
+  "expect": {
+   "user": "Thêm là hẻm xe hơi vào tận nhà",
+   "expect_status": "ok",
+   "expect_soft": true,
+   "expect_constraints": {
+    "property_types": [
+     "Nhà riêng"
+    ],
+    "district_names": [
+     "Bình Thạnh"
+    ],
+    "price_max": 8000
+   },
+   "min_results": 5
+  },
+  "result": {
+   "conversation_id": "b36cdb7ba3fa4f98be9660c5c53b6b3f",
+   "status": "ok",
+   "constraints": {
+    "price_min": null,
+    "price_max": 8000.0,
+    "property_types": [
+     "Nhà riêng"
+    ],
+    "district_ids": [
+     66
+    ],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [],
+    "soft_query": "yên tĩnh, hẻm xe hơi"
+   },
+   "listings": [
+    {
+     "listing_id": "46234317",
+     "title": "Không thể bỏ qua DT khủng 60m2 oto quay đầu - chỉ 7,1 tỷ - khu dân trí cao tầng Bùi Đình Túy",
+     "price": 7100.0,
+     "area": 60.0,
+     "property_type": "Nhà riêng",
+     "bedrooms": 3,
+     "district_old": "Bình Thạnh",
+     "old_address": "Đường Bùi Đình Túy, Phường 12, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Bình Thạnh, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-bui-dinh-tuy-phuong-12-7-66/khong-the-bo-qua-can-nay-60m2-oto-quay-au-khu-dan-tri-cao-tang-inh-7-1-ty-pr46234317",
+     "posted_at": "2026-09-12",
+     "expired_at": "2026-09-27",
+     "poi_distances": {
+      "truong_hoc": 88.07143119,
+      "benh_vien": 927.42109531,
+      "cho": 851.17913947
+     },
+     "score": 0.480431149629039,
+     "similar_ids": [],
+     "latitude": 10.807437286793,
+     "longitude": 106.70269461917,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 5
+    },
+    {
+     "listing_id": "46205999",
+     "title": "Bán gấp hẻm xe hơi - 3 tỷ 290 Đ. Phan Văn Hân, Bình Thạnh - DT 32 m2",
+     "price": 3290.0,
+     "area": 32.0,
+     "property_type": "Nhà riêng",
+     "bedrooms": 3,
+     "district_old": "Bình Thạnh",
+     "old_address": "Đường Phan Văn Hân, Phường 1, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Gia Định, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-phan-van-han-phuong-1-20-66/ban-gap-hem-xe-hoi-3-ty-290-binh-thanh-dt-32-m2-pr46205999",
+     "posted_at": "2026-09-07",
+     "expired_at": "2026-10-07",
+     "poi_distances": {
+      "truong_hoc": 44.92068652,
+      "benh_vien": 623.00770563,
+      "cho": 263.93124901
+     },
+     "score": 0.5500979566715174,
+     "similar_ids": [],
+     "latitude": 10.7937358507115,
+     "longitude": 106.70587143874,
+     "coords_reliable": true,
+     "position": 2,
+     "days_left": 15
+    },
+    {
+     "listing_id": "45926598",
+     "title": "Cần bán gấp nhà hẻm xe hơi Chu Văn An. Mới xây 3 tầng full nội thất cao cấp. Có phòng ngủ tầng trệt",
+     "price": 7500.0,
+     "area": 47.0,
+     "property_type": "Nhà riêng",
+     "bedrooms": 4,
+     "district_old": "Bình Thạnh",
+     "old_address": "Đường Chu Văn An, Phường 12, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Bình Thạnh, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-chu-van-an-phuong-12-7-66/can-ban-gap-hem-xe-hoi-moi-xay-3-tang-full-noi-that-cao-cap-co-phong-ngu-tang-tret-pr45926598",
+     "posted_at": "2026-09-17",
+     "expired_at": "2026-10-02",
+     "poi_distances": {
+      "truong_hoc": 140.8171885,
+      "benh_vien": 749.79259327,
+      "cho": 780.36810343
+     },
+     "score": 0.539616805914017,
+     "similar_ids": [],
+     "latitude": 10.8109091324373,
+     "longitude": 106.702174009726,
+     "coords_reliable": true,
+     "position": 3,
+     "days_left": 10
+    },
+    {
+     "listing_id": "46206032",
+     "title": "Bán gấp - hẻm xe hơi - 4 tỷ 610 Đường Nguyễn Trung Trực, Bình Thạnh DT 48 m2",
+     "price": 4610.0,
+     "area": 48.0,
+     "property_type": "Nhà riêng",
+     "bedrooms": 3,
+     "district_old": "Bình Thạnh",
+     "old_address": "Đường Nguyễn Trung Trực, Phường 11, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Bình Lợi Trung, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-nguyen-trung-truc-phuong-11-7-66/ban-gap-hem-xe-hoi-4-ty-610-uong-binh-thanh-dt-48-m2-pr46206032",
+     "posted_at": "2026-09-07",
+     "expired_at": "2026-10-07",
+     "poi_distances": {
+      "truong_hoc": 140.0823488,
+      "benh_vien": 778.54139161,
+      "cho": 966.60136335
+     },
+     "score": 0.5016950457722049,
+     "similar_ids": [],
+     "latitude": 10.8120915049545,
+     "longitude": 106.686349468794,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 15
+    },
+    {
+     "listing_id": "46048063",
+     "title": "Gấp bán 8 tỷ giảm về 7,19 tỷ - Bán nhanh nhà 2 tầng 50m2 - lô góc hẻm xe hơi 6m Lê Văn Duyệt",
+     "price": 7190.0,
+     "area": 50.0,
+     "property_type": "Nhà riêng",
+     "bedrooms": 3,
+     "district_old": "Bình Thạnh",
+     "old_address": "Đường Lê Văn Duyệt, Phường 3, Quận Bình Thạnh, Hồ Chí Minh",
+     "new_address": "Phường Gia Định, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-nha-rieng-duong-le-van-duyet-phuong-3-19-66/gap-ban-8-ty-giam-ve-7-19-ty-ban-nhanh-2-tang-50m2-lo-goc-hem-xe-hoi-6m-duyet-pr46048063",
+     "posted_at": "2026-09-14",
+     "expired_at": "2026-09-29",
+     "poi_distances": {
+      "truong_hoc": 139.96271839,
+      "benh_vien": 422.9035007,
+      "cho": 754.42668078
+     },
+     "score": 0.4847871507556909,
+     "similar_ids": [],
+     "latitude": 10.7983523862966,
+     "longitude": 106.692726551305,
+     "coords_reliable": true,
+     "position": 5,
+     "days_left": 7
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Mình tìm được 5 tin phù hợp với điều kiện: Nhà riêng; khu vực Quận Bình Thạnh; giá tối đa 8 tỷ. Tin được xếp ưu tiên theo mong muốn \"yên tĩnh, hẻm xe hơi\" (bạn xem mô tả từng tin để kiểm tra).\n\n1. [Tin 46234317] Không thể bỏ qua DT khủng 60m2 oto quay đầu - chỉ 7,1 tỷ - khu dân trí cao tầng Bùi Đình Túy\n   7,1 tỷ · 60 m² · 3 phòng ngủ · Nhà riêng\n   Địa chỉ: Đường Bùi Đình Túy, Phường 12, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Bình Thạnh, Hồ Chí Minh mới)\n   Gần nhất: trường học 88 m, bệnh viện 927 m, chợ 851 m\n   Đăng 12/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-bui-dinh-tuy-phuong-12-7-66/khong-the-bo-qua-can-nay-60m2-oto-quay-au-khu-dan-tri-cao-tang-inh-7-1-ty-pr46234317\n\n2. [Tin 46205999] Bán gấp hẻm xe hơi - 3 tỷ 290 Đ. Phan Văn Hân, Bình Thạnh - DT 32 m2\n   3,29 tỷ · 32 m² · 3 phòng ngủ · Nhà riêng\n   Địa chỉ: Đường Phan Văn Hân, Phường 1, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Gia Định, Hồ Chí Minh mới)\n   Gần nhất: trường học 45 m, bệnh viện 623 m, chợ 264 m\n   Đăng 07/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-phan-van-han-phuong-1-20-66/ban-gap-hem-xe-hoi-3-ty-290-binh-thanh-dt-32-m2-pr46205999\n\n3. [Tin 45926598] Cần bán gấp nhà hẻm xe hơi Chu Văn An. Mới xây 3 tầng full nội thất cao cấp. Có phòng ngủ tầng trệt\n   7,5 tỷ · 47 m² · 4 phòng ngủ · Nhà riêng\n   Địa chỉ: Đường Chu Văn An, Phường 12, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Bình Thạnh, Hồ Chí Minh mới)\n   Gần nhất: trường học 141 m, bệnh viện 750 m, chợ 780 m\n   Đăng 17/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-chu-van-an-phuong-12-7-66/can-ban-gap-hem-xe-hoi-moi-xay-3-tang-full-noi-that-cao-cap-co-phong-ngu-tang-tret-pr45926598\n\n4. [Tin 46206032] Bán gấp - hẻm xe hơi - 4 tỷ 610 Đường Nguyễn Trung Trực, Bình Thạnh DT 48 m2\n   4,61 tỷ · 48 m² · 3 phòng ngủ · Nhà riêng\n   Địa chỉ: Đường Nguyễn Trung Trực, Phường 11, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Bình Lợi Trung, Hồ Chí Minh mới)\n   Gần nhất: trường học 140 m, bệnh viện 779 m, chợ 967 m\n   Đăng 07/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-nguyen-trung-truc-phuong-11-7-66/ban-gap-hem-xe-hoi-4-ty-610-uong-binh-thanh-dt-48-m2-pr46206032\n\n5. [Tin 46048063] Gấp bán 8 tỷ giảm về 7,19 tỷ - Bán nhanh nhà 2 tầng 50m2 - lô góc hẻm xe hơi 6m Lê Văn Duyệt\n   7,19 tỷ · 50 m² · 3 phòng ngủ · Nhà riêng\n   Địa chỉ: Đường Lê Văn Duyệt, Phường 3, Quận Bình Thạnh, Hồ Chí Minh (địa chỉ mới: Phường Gia Định, Hồ Chí Minh mới)\n   Gần nhất: trường học 140 m, bệnh viện 423 m, chợ 754 m\n   Đăng 14/09/2026 · https://batdongsan.com.vn/ban-nha-rieng-duong-le-van-duyet-phuong-3-19-66/gap-ban-8-ty-giam-ve-7-19-ty-ban-nhanh-2-tang-50m2-lo-goc-hem-xe-hoi-6m-duyet-pr46048063\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Mình tìm được 5 tin phù hợp với điều kiện: Nhà riêng; khu vực Quận Bình Thạnh; giá tối đa 8 tỷ. Tin được xếp ưu tiên theo mong muốn \"yên tĩnh, hẻm xe hơi\" (bạn xem mô tả từng tin để kiểm tra).\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 2.90408749999915,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    4,
+    4
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "C45",
+  "category": "reset",
+  "turn": 1,
+  "user": "Căn hộ Quận 7 dưới 4 tỷ, 2PN",
+  "expect": {
+   "user": "Căn hộ Quận 7 dưới 4 tỷ, 2PN",
+   "expect_status": "ok",
+   "expect_constraints": {
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_names": [
+     "Quận 7"
+    ],
+    "price_max": 4000,
+    "bedrooms_min": 2
+   },
+   "min_results": 5
+  },
+  "result": {
+   "conversation_id": "7a9e4a9d305c4f37a120eed699b60d6a",
+   "status": "ok",
+   "constraints": {
+    "price_min": null,
+    "price_max": 4000.0,
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_ids": [
+     59
+    ],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": 2,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [
+    {
+     "listing_id": "46226602",
+     "title": "Bán căn góc chung cư Hoàng Quốc Việt Quận 7, sổ hồng sẵn, vay được",
+     "price": 3100.0,
+     "area": 58.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 7",
+     "old_address": "Đường Hoàng Quốc Việt, Phường Phú Thuận, Quận 7, Hồ Chí Minh",
+     "new_address": "Phường Phú Thuận, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-hoang-quoc-viet-phuong-phu-thuan-3-59/ban-goc-c-quan-7-so-hong-san-vay-uoc-pr46226602",
+     "posted_at": "2026-09-14",
+     "expired_at": "2026-09-29",
+     "poi_distances": {
+      "truong_hoc": 152.15100279,
+      "benh_vien": 1304.69049423,
+      "cho": 1185.49182035
+     },
+     "score": 0.7070402635796207,
+     "similar_ids": [],
+     "latitude": 10.7141888640895,
+     "longitude": 106.737117311136,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 7
+    },
+    {
+     "listing_id": "44314997",
+     "title": "Bán CC 2PN 1WC Q7 Boulevard, 3,1 tỷ, 57m2, Phú Mỹ, Quận 7, HCM, Chính chủ giá ưu đãi",
+     "price": 3100.0,
+     "area": 57.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 7",
+     "old_address": "Q7 Boulevard, Đường Nguyễn Lương Bằng, Phường Phú Mỹ, Quận 7, Hồ Chí Minh",
+     "new_address": "Phường Tân Mỹ, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-luong-bang-1-phuong-phu-my-9-q7-boulevard/ban-cc-2pn-1wc-2-65-ty-57m2-quan-7-hcm-chinh-chu-gia-uu-dai-pr44314997",
+     "posted_at": "2026-08-06",
+     "expired_at": "2026-10-05",
+     "poi_distances": {
+      "truong_hoc": 141.08232437,
+      "benh_vien": 1635.40943151,
+      "cho": 590.9002129
+     },
+     "score": 0.7043417926445523,
+     "similar_ids": [],
+     "latitude": 10.7092687406084,
+     "longitude": 106.730186534958,
+     "coords_reliable": true,
+     "position": 2,
+     "days_left": 13
+    },
+    {
+     "listing_id": "45328037",
+     "title": "Bán căn hộ Luxgarden Quận 7. Diện tích 70m², 2PN, 2WC. Nội thất đầy đủ.",
+     "price": 3500.0,
+     "area": 70.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 7",
+     "old_address": "LuxGarden, Đường Nguyễn Văn Quỳ, Phường Phú Thuận, Quận 7, Hồ Chí Minh",
+     "new_address": "Phường Phú Thuận, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-van-quy-phuong-phu-thuan-3-luxgarden/ban-luxgden-quan-7-dien-tich-69m2-2pn-2wc-noi-that-ay-u-pr45328037",
+     "posted_at": "2026-09-18",
+     "expired_at": "2026-10-03",
+     "poi_distances": {
+      "truong_hoc": 316.95340628,
+      "benh_vien": 996.04424823,
+      "cho": 1152.49346956
+     },
+     "score": 0.6951268200589529,
+     "similar_ids": [],
+     "latitude": 10.739987,
+     "longitude": 106.735435,
+     "coords_reliable": true,
+     "position": 3,
+     "days_left": 11
+    },
+    {
+     "listing_id": "46058769",
+     "title": "Căn hộ có gác full sàn 70m2 có 2 PN, 1 WC ngay tại Quận 7, giá 3 tỷ 650",
+     "price": 3650.0,
+     "area": 38.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 7",
+     "old_address": "M-One Nam Sài Gòn, Đường Bế Văn Cấm, Phường Tân Kiểng, Quận 7, Hồ Chí Minh",
+     "new_address": "Phường Tân Hưng, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-be-van-cam-phuong-tan-kieng-m-one-nam-sai-gon/co-gac-full-san-70m2-co-2-pn-1wc-ngay-tai-quan-7-gia-3ty790-pr46058769",
+     "posted_at": "2026-09-14",
+     "expired_at": "2026-09-24",
+     "poi_distances": {
+      "truong_hoc": 113.43971156,
+      "benh_vien": 1078.30167523,
+      "cho": 474.94107662
+     },
+     "score": 0.688533030420837,
+     "similar_ids": [],
+     "latitude": 10.75083,
+     "longitude": 106.7096,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 2
+    },
+    {
+     "listing_id": "46219760",
+     "title": "Bán giá ngộp chỉ 2,650 tỷ sở hữu căn hộ 77m2 2PN2WC nhà trống sang tên HĐMB tại Đức Khải Quận 7",
+     "price": 2650.0,
+     "area": 77.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Quận 7",
+     "old_address": "The Era Town, Phường Phú Mỹ, Quận 7, Hồ Chí Minh",
+     "new_address": "Phường Tân Mỹ, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-phu-my-9-the-era-town/ban-gia-ngop-chi-2-650-ty-so-huu-77m2-2pn2wc-nha-trong-sang-ten-h-mb-tai-uc-khai-quan-7-pr46219760",
+     "posted_at": "2026-09-09",
+     "expired_at": "2026-09-24",
+     "poi_distances": {
+      "truong_hoc": 203.21180377,
+      "benh_vien": 761.67174199,
+      "cho": 499.30723413
+     },
+     "score": 0.6836462943671555,
+     "similar_ids": [],
+     "latitude": 10.69996,
+     "longitude": 106.7328,
+     "coords_reliable": true,
+     "position": 5,
+     "days_left": 2
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Quận 7; giá tối đa 4 tỷ; từ 2 phòng ngủ.\n\n1. [Tin 46226602] Bán căn góc chung cư Hoàng Quốc Việt Quận 7, sổ hồng sẵn, vay được\n   3,1 tỷ · 58 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Đường Hoàng Quốc Việt, Phường Phú Thuận, Quận 7, Hồ Chí Minh (địa chỉ mới: Phường Phú Thuận, Hồ Chí Minh mới)\n   Gần nhất: trường học 152 m, bệnh viện 1,3 km, chợ 1,2 km\n   Đăng 14/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-hoang-quoc-viet-phuong-phu-thuan-3-59/ban-goc-c-quan-7-so-hong-san-vay-uoc-pr46226602\n\n2. [Tin 44314997] Bán CC 2PN 1WC Q7 Boulevard, 3,1 tỷ, 57m2, Phú Mỹ, Quận 7, HCM, Chính chủ giá ưu đãi\n   3,1 tỷ · 57 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Q7 Boulevard, Đường Nguyễn Lương Bằng, Phường Phú Mỹ, Quận 7, Hồ Chí Minh (địa chỉ mới: Phường Tân Mỹ, Hồ Chí Minh mới)\n   Gần nhất: trường học 141 m, bệnh viện 1,6 km, chợ 591 m\n   Đăng 06/08/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-luong-bang-1-phuong-phu-my-9-q7-boulevard/ban-cc-2pn-1wc-2-65-ty-57m2-quan-7-hcm-chinh-chu-gia-uu-dai-pr44314997\n\n3. [Tin 45328037] Bán căn hộ Luxgarden Quận 7. Diện tích 70m², 2PN, 2WC. Nội thất đầy đủ.\n   3,5 tỷ · 70 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: LuxGarden, Đường Nguyễn Văn Quỳ, Phường Phú Thuận, Quận 7, Hồ Chí Minh (địa chỉ mới: Phường Phú Thuận, Hồ Chí Minh mới)\n   Gần nhất: trường học 317 m, bệnh viện 996 m, chợ 1,2 km\n   Đăng 18/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-nguyen-van-quy-phuong-phu-thuan-3-luxgarden/ban-luxgden-quan-7-dien-tich-69m2-2pn-2wc-noi-that-ay-u-pr45328037\n\n4. [Tin 46058769] Căn hộ có gác full sàn 70m2 có 2 PN, 1 WC ngay tại Quận 7, giá 3 tỷ 650\n   3,65 tỷ · 38 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: M-One Nam Sài Gòn, Đường Bế Văn Cấm, Phường Tân Kiểng, Quận 7, Hồ Chí Minh (địa chỉ mới: Phường Tân Hưng, Hồ Chí Minh mới)\n   Gần nhất: trường học 113 m, bệnh viện 1,1 km, chợ 475 m\n   Đăng 14/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-be-van-cam-phuong-tan-kieng-m-one-nam-sai-gon/co-gac-full-san-70m2-co-2-pn-1wc-ngay-tai-quan-7-gia-3ty790-pr46058769\n\n5. [Tin 46219760] Bán giá ngộp chỉ 2,650 tỷ sở hữu căn hộ 77m2 2PN2WC nhà trống sang tên HĐMB tại Đức Khải Quận 7\n   2,65 tỷ · 77 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: The Era Town, Phường Phú Mỹ, Quận 7, Hồ Chí Minh (địa chỉ mới: Phường Tân Mỹ, Hồ Chí Minh mới)\n   Gần nhất: trường học 203 m, bệnh viện 762 m, chợ 499 m\n   Đăng 09/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-phu-my-9-the-era-town/ban-gia-ngop-chi-2-650-ty-so-huu-77m2-2pn2wc-nha-trong-sang-ten-h-mb-tai-uc-khai-quan-7-pr46219760\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Quận 7; giá tối đa 4 tỷ; từ 2 phòng ngủ.\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 2.328439899996738,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    4,
+    4
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ],
+   "S9": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "C45",
+  "category": "reset",
+  "turn": 2,
+  "user": "Thôi tìm lại từ đầu nhé",
+  "expect": {
+   "user": "Thôi tìm lại từ đầu nhé",
+   "expect_status": "need_clarification",
+   "expect_constraints": {
+    "property_types": [],
+    "district_names": [],
+    "price_max": null,
+    "bedrooms_min": null
+   }
+  },
+  "result": {
+   "conversation_id": "7a9e4a9d305c4f37a120eed699b60d6a",
+   "status": "need_clarification",
+   "constraints": {
+    "price_min": null,
+    "price_max": null,
+    "property_types": [],
+    "district_ids": [],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Mình đã xoá điều kiện cũ và tìm lại từ đầu. Bạn cho mình biết ngân sách (ví dụ: dưới 3 tỷ) hoặc khu vực muốn mua (quận/huyện ở TP.HCM) để mình tìm tin phù hợp nhé.",
+   "summary": "Mình đã xoá điều kiện cũ và tìm lại từ đầu. Bạn cho mình biết ngân sách (ví dụ: dưới 3 tỷ) hoặc khu vực muốn mua (quận/huyện ở TP.HCM) để mình tìm tin phù hợp nhé."
+  },
+  "latency": 1.5315794999987702,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    4,
+    4
+   ],
+   "S5": [
+    1,
+    1
+   ],
+   "S9": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "C45",
+  "category": "reset",
+  "turn": 3,
+  "user": "Mình cần mua đất ở Hóc Môn",
+  "expect": {
+   "user": "Mình cần mua đất ở Hóc Môn",
+   "expect_status": "ok",
+   "expect_constraints": {
+    "property_types": [
+     "Bán đất"
+    ],
+    "district_names": [
+     "Hóc Môn"
+    ],
+    "price_max": null,
+    "bedrooms_min": null
+   },
+   "min_results": 5
+  },
+  "result": {
+   "conversation_id": "7a9e4a9d305c4f37a120eed699b60d6a",
+   "status": "ok",
+   "constraints": {
+    "price_min": null,
+    "price_max": null,
+    "property_types": [
+     "Bán đất"
+    ],
+    "district_ids": [
+     75
+    ],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [
+    {
+     "listing_id": "46233766",
+     "title": "Đất 2 mặt tiền kinh doanh Lê Thị Hà - Hóc Môn - diện tích khủng 1.723 m2 full thổ - chỉ 66tr/m2",
+     "price": 115000.0,
+     "area": 1723.0,
+     "property_type": "Bán đất",
+     "bedrooms": null,
+     "district_old": "Hóc Môn",
+     "old_address": "Đường Lê Thị Hà, Xã Tân Xuân, Huyện Hóc Môn, Hồ Chí Minh",
+     "new_address": "Xã Hóc Môn, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-dat-duong-le-thi-ha-xa-tan-xuan-5-75/at-2-mat-tien-kinh-doanh-hoc-mon-dien-tich-khung-1-723-m2-full-tho-chi-66tr-m2-pr46233766",
+     "posted_at": "2026-09-13",
+     "expired_at": "2026-09-28",
+     "poi_distances": {
+      "truong_hoc": 182.31183154,
+      "benh_vien": 713.90806458,
+      "cho": 932.22353052
+     },
+     "score": 0.6963768135538787,
+     "similar_ids": [],
+     "latitude": 10.8804026747015,
+     "longitude": 106.599471431427,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 6
+    },
+    {
+     "listing_id": "46153973",
+     "title": "Bán đất gần chợ Bà Điểm, MT đường, 10x30m, SHR, xây dựng liền, Hóc Môn.",
+     "price": 14800.0,
+     "area": 300.0,
+     "property_type": "Bán đất",
+     "bedrooms": null,
+     "district_old": "Hóc Môn",
+     "old_address": "Đường Nguyễn Ảnh Thủ, Xã Bà Điểm, Huyện Hóc Môn, Hồ Chí Minh",
+     "new_address": "Xã Bà Điểm, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-dat-duong-nguyen-anh-thu-xa-ba-diem-75/ban-at-gan-cho-iem-mt-uong-10x30m-shr-xay-dung-lien-hoc-mon-pr46153973",
+     "posted_at": "2026-09-10",
+     "expired_at": "2026-09-25",
+     "poi_distances": {
+      "truong_hoc": 352.03570163,
+      "benh_vien": 1304.56441418,
+      "cho": 1017.65008858
+     },
+     "score": 0.6953567808450498,
+     "similar_ids": [],
+     "latitude": 10.8485476386023,
+     "longitude": 106.601769196009,
+     "coords_reliable": true,
+     "position": 2,
+     "days_left": 3
+    },
+    {
+     "listing_id": "46157578",
+     "title": "Đất thổ cư 6x17m, mặt tiền đường Nguyễn Thị Đành, gần Ngã Tư Hóc Môn",
+     "price": 4950.0,
+     "area": 102.0,
+     "property_type": "Bán đất",
+     "bedrooms": null,
+     "district_old": "Hóc Môn",
+     "old_address": "Đường Nguyễn Thị Đành, Xã Xuân Thới Sơn, Huyện Hóc Môn, Hồ Chí Minh",
+     "new_address": "Xã Xuân Thới Sơn, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-dat-duong-nguyen-thi-danh-xa-xuan-thoi-son-75/at-tho-cu-6x17m-mat-tien-uong-anh-gan-nga-tu-hoc-mon-pr46157578",
+     "posted_at": "2026-09-15",
+     "expired_at": "2026-09-30",
+     "poi_distances": {
+      "truong_hoc": 484.24338427,
+      "benh_vien": 2224.58208109,
+      "cho": 1260.35288869
+     },
+     "score": 0.6797987940601955,
+     "similar_ids": [],
+     "latitude": 10.8747701274861,
+     "longitude": 106.573927980419,
+     "coords_reliable": true,
+     "position": 3,
+     "days_left": 8
+    },
+    {
+     "listing_id": "45169904",
+     "title": "Chính chủ gửi bán đất sổ hồng riêng mặt tiền Trung Đông 10 Nguyễn Thị Ngâu vào 200m, xã Đông Thạnh",
+     "price": 3650.0,
+     "area": 110.0,
+     "property_type": "Bán đất",
+     "bedrooms": null,
+     "district_old": "Hóc Môn",
+     "old_address": "Đường Trung Đông 10, Xã Đông Thạnh, Huyện Hóc Môn, Hồ Chí Minh",
+     "new_address": "Xã Đông Thạnh, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-dat-duong-trung-dong-10-xa-dong-thanh-75/chinh-chu-goi-ban-at-so-hong-rieng-mat-tien-ong-10-nguyen-thi-ngau-vao-200m-ong-thanh-pr45169904",
+     "posted_at": "2026-09-13",
+     "expired_at": "2026-09-28",
+     "poi_distances": {
+      "truong_hoc": 668.54110502,
+      "benh_vien": 3191.62359615,
+      "cho": 2483.67474165
+     },
+     "score": 0.6720820399419123,
+     "similar_ids": [],
+     "latitude": 10.9029530608715,
+     "longitude": 106.613899305403,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 6
+    },
+    {
+     "listing_id": "45872401",
+     "title": "Bán đất 2MT Trung Đông 11, Đông Thạnh, Hóc Môn, 7500m2, 85 tỷ",
+     "price": 85000.0,
+     "area": 7500.0,
+     "property_type": "Bán đất",
+     "bedrooms": null,
+     "district_old": "Hóc Môn",
+     "old_address": "Đường Trung Đông 11, Xã Thới Tam Thôn, Huyện Hóc Môn, Hồ Chí Minh",
+     "new_address": "Xã Đông Thạnh, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-dat-duong-trung-dong-11-xa-thoi-tam-thon-75/ban-at-2mt-ong-11-ong-thanh-hoc-mon-7500m2-85-ty-pr45872401",
+     "posted_at": "2026-09-14",
+     "expired_at": "2026-09-29",
+     "poi_distances": {
+      "truong_hoc": 327.25476264,
+      "benh_vien": 2660.77934695,
+      "cho": 1965.0579668
+     },
+     "score": 0.6636065909377152,
+     "similar_ids": [],
+     "latitude": 10.9045265591537,
+     "longitude": 106.603233560639,
+     "coords_reliable": true,
+     "position": 5,
+     "days_left": 7
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Mình tìm được 5 tin phù hợp với điều kiện: Bán đất; khu vực Huyện Hóc Môn.\n\n1. [Tin 46233766] Đất 2 mặt tiền kinh doanh Lê Thị Hà - Hóc Môn - diện tích khủng 1.723 m2 full thổ - chỉ 66tr/m2\n   115 tỷ · 1723 m² · Bán đất\n   Địa chỉ: Đường Lê Thị Hà, Xã Tân Xuân, Huyện Hóc Môn, Hồ Chí Minh (địa chỉ mới: Xã Hóc Môn, Hồ Chí Minh mới)\n   Gần nhất: trường học 182 m, bệnh viện 714 m, chợ 932 m\n   Đăng 13/09/2026 · https://batdongsan.com.vn/ban-dat-duong-le-thi-ha-xa-tan-xuan-5-75/at-2-mat-tien-kinh-doanh-hoc-mon-dien-tich-khung-1-723-m2-full-tho-chi-66tr-m2-pr46233766\n\n2. [Tin 46153973] Bán đất gần chợ Bà Điểm, MT đường, 10x30m, SHR, xây dựng liền, Hóc Môn.\n   14,8 tỷ · 300 m² · Bán đất\n   Địa chỉ: Đường Nguyễn Ảnh Thủ, Xã Bà Điểm, Huyện Hóc Môn, Hồ Chí Minh (địa chỉ mới: Xã Bà Điểm, Hồ Chí Minh mới)\n   Gần nhất: trường học 352 m, bệnh viện 1,3 km, chợ 1 km\n   Đăng 10/09/2026 · https://batdongsan.com.vn/ban-dat-duong-nguyen-anh-thu-xa-ba-diem-75/ban-at-gan-cho-iem-mt-uong-10x30m-shr-xay-dung-lien-hoc-mon-pr46153973\n\n3. [Tin 46157578] Đất thổ cư 6x17m, mặt tiền đường Nguyễn Thị Đành, gần Ngã Tư Hóc Môn\n   4,95 tỷ · 102 m² · Bán đất\n   Địa chỉ: Đường Nguyễn Thị Đành, Xã Xuân Thới Sơn, Huyện Hóc Môn, Hồ Chí Minh (địa chỉ mới: Xã Xuân Thới Sơn, Hồ Chí Minh mới)\n   Gần nhất: trường học 484 m, bệnh viện 2,2 km, chợ 1,3 km\n   Đăng 15/09/2026 · https://batdongsan.com.vn/ban-dat-duong-nguyen-thi-danh-xa-xuan-thoi-son-75/at-tho-cu-6x17m-mat-tien-uong-anh-gan-nga-tu-hoc-mon-pr46157578\n\n4. [Tin 45169904] Chính chủ gửi bán đất sổ hồng riêng mặt tiền Trung Đông 10 Nguyễn Thị Ngâu vào 200m, xã Đông Thạnh\n   3,65 tỷ · 110 m² · Bán đất\n   Địa chỉ: Đường Trung Đông 10, Xã Đông Thạnh, Huyện Hóc Môn, Hồ Chí Minh (địa chỉ mới: Xã Đông Thạnh, Hồ Chí Minh mới)\n   Gần nhất: trường học 669 m, bệnh viện 3,2 km, chợ 2,5 km\n   Đăng 13/09/2026 · https://batdongsan.com.vn/ban-dat-duong-trung-dong-10-xa-dong-thanh-75/chinh-chu-goi-ban-at-so-hong-rieng-mat-tien-ong-10-nguyen-thi-ngau-vao-200m-ong-thanh-pr45169904\n\n5. [Tin 45872401] Bán đất 2MT Trung Đông 11, Đông Thạnh, Hóc Môn, 7500m2, 85 tỷ\n   85 tỷ · 7500 m² · Bán đất\n   Địa chỉ: Đường Trung Đông 11, Xã Thới Tam Thôn, Huyện Hóc Môn, Hồ Chí Minh (địa chỉ mới: Xã Đông Thạnh, Hồ Chí Minh mới)\n   Gần nhất: trường học 327 m, bệnh viện 2,7 km, chợ 2 km\n   Đăng 14/09/2026 · https://batdongsan.com.vn/ban-dat-duong-trung-dong-11-xa-thoi-tam-thon-75/ban-at-2mt-ong-11-ong-thanh-hoc-mon-7500m2-85-ty-pr45872401\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Mình tìm được 5 tin phù hợp với điều kiện: Bán đất; khu vực Huyện Hóc Môn.\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 3.1355836000002455,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    4,
+    4
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ],
+   "S9": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ }
+]

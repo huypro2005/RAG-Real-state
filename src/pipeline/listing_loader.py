@@ -1,59 +1,75 @@
-"""Nạp tin đã làm sạch vào PostgreSQL (schema listing) và tính đặc trưng không gian."""
-from pathlib import Path
+"""Nạp tin đã làm sạch vào PostgreSQL (bảng public.listings) và tính các cột suy ra.
 
-from psycopg.types.json import Jsonb
+Cấu trúc bảng do Alembic tạo (housing-backend: alembic upgrade head), loader không tạo bảng.
+"""
+from typing import ClassVar
 
 
 class ListingLoader:
-    """Tạo schema, upsert tin sạch theo listing_id, tính lại 6 biến đếm POI.
+    """Upsert tin sạch theo listing_id, điền FK địa chỉ, tính lại đặc trưng không gian.
 
-    Chạy lại an toàn: tin đã có được cập nhật, không nhân bản; tin không còn trong file
-    mới vẫn giữ nguyên trong database (không xóa lịch sử).
+    Chạy lại an toàn: tin đã có và không đổi thì không bị ghi (kể cả updated_at); tin không
+    còn trong file mới vẫn giữ nguyên trong database (không xóa lịch sử). Mỗi phương thức là
+    một transaction riêng và trả về số liệu của đúng bước đó.
     """
 
-    SCHEMA_FILE = Path(__file__).with_name('schema.sql')
-    COLUMNS = [
+    COLUMNS: ClassVar[list[str]] = [
         'listing_id', 'listing_url', 'title', 'description', 'transaction_type', 'property_type',
         'price', 'price_per_m2', 'area', 'frontage', 'bedrooms', 'bathrooms', 'road_width',
         'floors', 'legal', 'legal_group', 'interior', 'province_old', 'district_old', 'old_ward',
         'old_address', 'old_address_detail', 'new_ward', 'new_city', 'new_address',
-        'latitude', 'longitude', 'posted_at', 'expired_at', 'quality_flags', 'raw_record',
-        'source_file',
+        'latitude', 'longitude', 'posted_at', 'expired_at', 'quality_flags',
     ]
 
     def __init__(self, conn):
         self.conn = conn
 
-    def load(self, listings, source_file):
-        """Nạp DataFrame tin sạch (đầu ra ListingCleaner) trong một transaction; trả về số liệu."""
-        rows = listings.assign(source_file=str(source_file))[self.COLUMNS]
+    def upsert(self, listings):
+        """Nạp DataFrame tin sạch (đầu ra ListingCleaner); trả về số dòng thêm mới / sửa / giữ nguyên."""
+        rows = listings[self.COLUMNS]
         rows = rows.astype(object).where(rows.notna(), None).to_dict('records')
         for row in rows:
-            row['raw_record'] = Jsonb(row['raw_record'])
             for field in ('bedrooms', 'bathrooms', 'floors'):   # numpy int -> int cho psycopg
                 if row[field] is not None:
                     row[field] = int(row[field])
 
-        columns = ', '.join(self.COLUMNS)
-        placeholders = ', '.join(f'%({c})s' for c in self.COLUMNS)
-        updates = ', '.join(f'{c} = EXCLUDED.{c}' for c in self.COLUMNS if c != 'listing_id')
-        upsert = (f'INSERT INTO listing.listings ({columns}) VALUES ({placeholders}) '
-                  f'ON CONFLICT (listing_id) DO UPDATE SET {updates}, updated_at = now() '
-                  f'RETURNING (xmax = 0) AS inserted')
+        data_columns = self.COLUMNS[1:]
+        updates = ', '.join(f'{c} = EXCLUDED.{c}' for c in data_columns)
+        upsert = (
+            f"INSERT INTO listings ({', '.join(self.COLUMNS)}) "
+            f"VALUES ({', '.join(f'%({c})s' for c in self.COLUMNS)}) "
+            f'ON CONFLICT (listing_id) DO UPDATE SET {updates}, updated_at = now() '
+            # Chỉ ghi khi có cột khác: chạy lại cùng dữ liệu thì không đổi gì
+            f"WHERE ({', '.join(f'listings.{c}' for c in data_columns)}) "
+            f"IS DISTINCT FROM ({', '.join(f'EXCLUDED.{c}' for c in data_columns)}) "
+            f'RETURNING (xmax = 0) AS inserted')
 
         with self.conn.transaction(), self.conn.cursor() as cur:
-            cur.execute(self.SCHEMA_FILE.read_text(encoding='utf-8'))
             cur.executemany(upsert, rows, returning=True)
-            inserted = 0
-            while True:     # executemany + returning: mỗi dòng dữ liệu một result set
-                inserted += cur.fetchone()[0]
+            written = []
+            while True:     # executemany + returning: mỗi dòng dữ liệu một result set (rỗng nếu giữ nguyên)
+                written += [row[0] for row in cur.fetchall()]
                 if not cur.nextset():
                     break
-            cur.execute('SELECT listing.refresh_spatial_features()')
-            spatial = cur.fetchone()[0]
-            cur.execute('SELECT count(*), count(geom) FROM listing.listings')
-            total, with_geom = cur.fetchone()
+        inserted = sum(written)
+        return {'rows_in': len(rows), 'inserted': inserted,
+                'updated': len(written) - inserted, 'unchanged': len(rows) - len(written)}
 
-        return {'loaded': len(rows), 'inserted': inserted, 'updated': len(rows) - inserted,
-                'listings_in_db': total, 'listings_with_geom': with_geom,
-                'spatial_features_refreshed': spatial}
+    def link_addresses(self):
+        """Điền old_district_id / old_ward_id / new_ward_id bằng function của migration 0001."""
+        with self.conn.transaction(), self.conn.cursor() as cur:
+            changed = cur.execute('SELECT refresh_listing_address_ids()').fetchone()[0]
+            counts = cur.execute(
+                'SELECT count(*), count(old_district_id), count(old_ward_id), count(new_ward_id) '
+                'FROM listings').fetchone()
+        return dict(zip(('listings_in_db', 'old_district_id', 'old_ward_id', 'new_ward_id'),
+                        counts, strict=True), fk_changed=changed)
+
+    def refresh_spatial(self):
+        """Tính lại 6 biến đếm POI + POI gần nhất (function refresh_spatial_features())."""
+        with self.conn.transaction(), self.conn.cursor() as cur:
+            refreshed = cur.execute('SELECT refresh_spatial_features()').fetchone()[0]
+            with_geom, features = cur.execute(
+                'SELECT count(geom), (SELECT count(*) FROM listing_spatial_features) '
+                'FROM listings').fetchone()
+        return {'listings_with_geom': with_geom, 'spatial_rows': features, 'refreshed': refreshed}

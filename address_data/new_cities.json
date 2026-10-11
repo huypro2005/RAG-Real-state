@@ -1,0 +1,342 @@
+[
+    {
+        "cityCode": "HN",
+        "cityName": "Hà Nội",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 4,
+        "priority": 1000,
+        "cityAlias": "tp-ha-noi",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "SG",
+        "cityName": "Hồ Chí Minh",
+        "countryCode": "VN",
+        "area": "MN",
+        "areaCode": 1,
+        "priority": 900,
+        "cityAlias": "tp-ho-chi-minh",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "DDN",
+        "cityName": "Đà Nẵng",
+        "countryCode": "VN",
+        "area": "MT",
+        "areaCode": 511,
+        "priority": 800,
+        "cityAlias": "tp-da-nang",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "KH",
+        "cityName": "Khánh Hòa",
+        "countryCode": "VN",
+        "area": "MT",
+        "areaCode": 58,
+        "priority": 700,
+        "cityAlias": "tinh-khanh-hoa",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "DNA",
+        "cityName": "Đồng Nai",
+        "countryCode": "VN",
+        "area": "MN",
+        "areaCode": 61,
+        "priority": 600,
+        "cityAlias": "tinh-dong-nai",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "HP",
+        "cityName": "Hải Phòng",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 31,
+        "priority": 500,
+        "cityAlias": "tp-hai-phong",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "AG",
+        "cityName": "An Giang",
+        "countryCode": "VN",
+        "area": "MN",
+        "areaCode": 76,
+        "priority": 28,
+        "cityAlias": "tinh-an-giang",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "BN",
+        "cityName": "Bắc Ninh",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 241,
+        "priority": 27,
+        "cityAlias": "tinh-bac-ninh",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "CM",
+        "cityName": "Cà Mau",
+        "countryCode": "VN",
+        "area": "MN",
+        "areaCode": 780,
+        "priority": 26,
+        "cityAlias": "tinh-ca-mau",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "CT",
+        "cityName": "Cần Thơ",
+        "countryCode": "VN",
+        "area": "MN",
+        "areaCode": 710,
+        "priority": 25,
+        "cityAlias": "tp-can-tho",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "CB",
+        "cityName": "Cao Bằng",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 26,
+        "priority": 24,
+        "cityAlias": "tinh-cao-bang",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "DDL",
+        "cityName": "Đắk Lắk",
+        "countryCode": "VN",
+        "area": "MN",
+        "areaCode": 500,
+        "priority": 23,
+        "cityAlias": "tinh-dak-lak",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "DDB",
+        "cityName": "Điện Biên",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 230,
+        "priority": 22,
+        "cityAlias": "tinh-dien-bien",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "DDT",
+        "cityName": "Đồng Tháp",
+        "countryCode": "VN",
+        "area": "MN",
+        "areaCode": 67,
+        "priority": 21,
+        "cityAlias": "tinh-dong-thap",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "GL",
+        "cityName": "Gia Lai",
+        "countryCode": "VN",
+        "area": "MN",
+        "areaCode": 59,
+        "priority": 20,
+        "cityAlias": "tinh-gia-lai",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "HT",
+        "cityName": "Hà Tĩnh",
+        "countryCode": "VN",
+        "area": "MT",
+        "areaCode": 39,
+        "priority": 19,
+        "cityAlias": "tinh-ha-tinh",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "TTH",
+        "cityName": "Huế",
+        "countryCode": "VN",
+        "area": "MT",
+        "areaCode": 54,
+        "priority": 18,
+        "cityAlias": "tp-hue",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "HY",
+        "cityName": "Hưng Yên",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 321,
+        "priority": 17,
+        "cityAlias": "tinh-hung-yen",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "LCH",
+        "cityName": "Lai Châu",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 231,
+        "priority": 16,
+        "cityAlias": "tinh-lai-chau",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "LDD",
+        "cityName": "Lâm Đồng",
+        "countryCode": "VN",
+        "area": "MN",
+        "areaCode": 63,
+        "priority": 15,
+        "cityAlias": "tinh-lam-dong",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "LS",
+        "cityName": "Lạng Sơn",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 25,
+        "priority": 14,
+        "cityAlias": "tinh-lang-son",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "LCA",
+        "cityName": "Lào Cai",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 20,
+        "priority": 13,
+        "cityAlias": "tinh-lao-cai",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "NA",
+        "cityName": "Nghệ An",
+        "countryCode": "VN",
+        "area": "MT",
+        "areaCode": 38,
+        "priority": 12,
+        "cityAlias": "tinh-nghe-an",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "NB",
+        "cityName": "Ninh Bình",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 30,
+        "priority": 11,
+        "cityAlias": "tinh-ninh-binh",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "PT",
+        "cityName": "Phú Thọ",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 210,
+        "priority": 10,
+        "cityAlias": "tinh-phu-tho",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "QNG",
+        "cityName": "Quảng Ngãi",
+        "countryCode": "VN",
+        "area": "MT",
+        "areaCode": 55,
+        "priority": 9,
+        "cityAlias": "tinh-quang-ngai",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "QNI",
+        "cityName": "Quảng Ninh",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 33,
+        "priority": 8,
+        "cityAlias": "tinh-quang-ninh",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "QT",
+        "cityName": "Quảng Trị",
+        "countryCode": "VN",
+        "area": "MT",
+        "areaCode": 53,
+        "priority": 7,
+        "cityAlias": "tinh-quang-tri",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "SL",
+        "cityName": "Sơn La",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 22,
+        "priority": 6,
+        "cityAlias": "tinh-son-la",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "TNI",
+        "cityName": "Tây Ninh",
+        "countryCode": "VN",
+        "area": "MN",
+        "areaCode": 66,
+        "priority": 5,
+        "cityAlias": "tinh-tay-ninh",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "TN",
+        "cityName": "Thái Nguyên",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 280,
+        "priority": 4,
+        "cityAlias": "tinh-thai-nguyen",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "TH",
+        "cityName": "Thanh Hóa",
+        "countryCode": "VN",
+        "area": "MT",
+        "areaCode": 37,
+        "priority": 3,
+        "cityAlias": "tinh-thanh-hoa",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "TQ",
+        "cityName": "Tuyên Quang",
+        "countryCode": "VN",
+        "area": "MB",
+        "areaCode": 27,
+        "priority": 2,
+        "cityAlias": "tinh-tuyen-quang",
+        "otherNames": ""
+    },
+    {
+        "cityCode": "VL",
+        "cityName": "Vĩnh Long",
+        "countryCode": "VN",
+        "area": "MN",
+        "areaCode": 70,
+        "priority": 1,
+        "cityAlias": "tinh-vinh-long",
+        "otherNames": ""
+    }
+]

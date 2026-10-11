@@ -1,0 +1,708 @@
+[
+ {
+  "id": "X01",
+  "category": "extra_confirm_budget",
+  "turn": 1,
+  "user": "Căn hộ Bình Tân dưới 6 tỷ",
+  "expect": {
+   "user": "Căn hộ Bình Tân dưới 6 tỷ",
+   "expect_status": "ok",
+   "expect_constraints": {
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_names": [
+     "Bình Tân"
+    ],
+    "price_max": 6000
+   },
+   "min_results": 5
+  },
+  "result": {
+   "conversation_id": "2363de889224454587052f3d0585715f",
+   "status": "ok",
+   "constraints": {
+    "price_min": null,
+    "price_max": 6000.0,
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_ids": [
+     65
+    ],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [
+    {
+     "listing_id": "46223137",
+     "title": "Bán căn 2PN ban công view công viên hồ bơi",
+     "price": 2680.0,
+     "area": 64.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Bình Tân",
+     "old_address": "Khu căn hộ EHome 3, Đường Hồ Học Lãm, Phường An Lạc, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường An Lạc, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-ho-hoc-lam-phuong-an-lac-6-khu-can-ho-ehome-3/ban-2pn-bancong-view-cong-vien-boi-pr46223137",
+     "posted_at": "2026-09-09",
+     "expired_at": "2026-09-24",
+     "poi_distances": {
+      "truong_hoc": 124.2519535,
+      "benh_vien": 1813.81258091,
+      "cho": 740.26195459
+     },
+     "score": 0.6895071533323173,
+     "similar_ids": [],
+     "latitude": 10.7226520224731,
+     "longitude": 106.610677024995,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 2
+    },
+    {
+     "listing_id": "46179291",
+     "title": "Thanh toán 250 triệu còn lại ngân hàng hỗ trợ",
+     "price": 2500.0,
+     "area": 60.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Bình Tân",
+     "old_address": "Green Town Bình Tân, Phường Bình Hưng Hòa B, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường Bình Tân, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-binh-hung-hoa-b-green-town-binh-tan/trung-gia-dan-ngay-trung-tam-sai-gon-pr46179291",
+     "posted_at": "2026-09-16",
+     "expired_at": "2026-10-01",
+     "poi_distances": {
+      "truong_hoc": 152.80056281,
+      "benh_vien": 1144.72240343,
+      "cho": 2047.18269045
+     },
+     "score": 0.6725723748057907,
+     "similar_ids": [],
+     "latitude": 10.80779,
+     "longitude": 106.5934,
+     "coords_reliable": true,
+     "position": 2,
+     "days_left": 9
+    },
+    {
+     "listing_id": "46004028",
+     "title": "Bán căn hộ Moonlight Hưng Thịnh đường Số 7, Khu Tên Lửa, Bình Tân",
+     "price": 2950.0,
+     "area": 50.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 1,
+     "district_old": "Bình Tân",
+     "old_address": "Moonlight Park View, Đường Số 7, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường An Lạc, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-so-7-phuong-an-lac-a-moonlight-park-view/ban-1pn-hong-cc-khu-ten-lua-binh-tan-pr46004028",
+     "posted_at": "2026-09-18",
+     "expired_at": "2026-10-03",
+     "poi_distances": {
+      "truong_hoc": 69.33156187,
+      "benh_vien": 310.17318793,
+      "cho": 499.82901023
+     },
+     "score": 0.6507320107250393,
+     "similar_ids": [],
+     "latitude": 10.7518521291673,
+     "longitude": 106.62026318004,
+     "coords_reliable": true,
+     "position": 3,
+     "days_left": 11
+    },
+    {
+     "listing_id": "46003765",
+     "title": "Bán căn 2PN 70m2 Saigonhomes, nhà mới đẹp vào ở liền, view thoáng mát, LH: 0909 702 *** Trí",
+     "price": 2800.0,
+     "area": 70.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Bình Tân",
+     "old_address": "819, Saigonhomes, Đường Hương lộ 2, Phường Bình Trị Đông A, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường Bình Trị Đông, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-huong-lo-2-phuong-binh-tri-dong-a-saigonhomes/ban-2pn-70m2-nha-moi-ep-vao-o-lien-view-thoang-mat-lh-tri-pr46003765",
+     "posted_at": "2026-09-12",
+     "expired_at": "2026-09-27",
+     "poi_distances": {
+      "truong_hoc": 55.56620464,
+      "benh_vien": 843.62426785,
+      "cho": 1780.79936173
+     },
+     "score": 0.6489179614354923,
+     "similar_ids": [],
+     "latitude": 10.76776,
+     "longitude": 106.5963,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 5
+    },
+    {
+     "listing_id": "42762734",
+     "title": "Bán gấp căn hộ Privia Khang Điền, Bình Tân, 68m2, 2PN, +1, có sổ, giá bán 4,3 tỷ, LH 0936 822 ***",
+     "price": 4300.0,
+     "area": 68.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Bình Tân",
+     "old_address": "The Privia, Đường An Dương Vương, Phường An Lạc, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường An Lạc, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-an-duong-vuong-phuong-an-lac-6-the-privia/ban-gap-khang-dien-q-6-68m2-2pn-1-phong-da-nang-co-so-4-3-ty-lh-pr42762734",
+     "posted_at": "2026-09-19",
+     "expired_at": "2026-10-04",
+     "poi_distances": {
+      "truong_hoc": 116.11268838,
+      "benh_vien": 825.35452865,
+      "cho": 1320.40060717
+     },
+     "score": 0.6485368638025648,
+     "similar_ids": [],
+     "latitude": 10.72789,
+     "longitude": 106.6204,
+     "coords_reliable": true,
+     "position": 5,
+     "days_left": 12
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Quận Bình Tân; giá tối đa 6 tỷ.\n\n1. [Tin 46223137] Bán căn 2PN ban công view công viên hồ bơi\n   2,68 tỷ · 64 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Khu căn hộ EHome 3, Đường Hồ Học Lãm, Phường An Lạc, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường An Lạc, Hồ Chí Minh mới)\n   Gần nhất: trường học 124 m, bệnh viện 1,8 km, chợ 740 m\n   Đăng 09/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-ho-hoc-lam-phuong-an-lac-6-khu-can-ho-ehome-3/ban-2pn-bancong-view-cong-vien-boi-pr46223137\n\n2. [Tin 46179291] Thanh toán 250 triệu còn lại ngân hàng hỗ trợ\n   2,5 tỷ · 60 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Green Town Bình Tân, Phường Bình Hưng Hòa B, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường Bình Tân, Hồ Chí Minh mới)\n   Gần nhất: trường học 153 m, bệnh viện 1,1 km, chợ 2 km\n   Đăng 16/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-binh-hung-hoa-b-green-town-binh-tan/trung-gia-dan-ngay-trung-tam-sai-gon-pr46179291\n\n3. [Tin 46004028] Bán căn hộ Moonlight Hưng Thịnh đường Số 7, Khu Tên Lửa, Bình Tân\n   2,95 tỷ · 50 m² · 1 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Moonlight Park View, Đường Số 7, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường An Lạc, Hồ Chí Minh mới)\n   Gần nhất: trường học 69 m, bệnh viện 310 m, chợ 500 m\n   Đăng 18/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-so-7-phuong-an-lac-a-moonlight-park-view/ban-1pn-hong-cc-khu-ten-lua-binh-tan-pr46004028\n\n4. [Tin 46003765] Bán căn 2PN 70m2 Saigonhomes, nhà mới đẹp vào ở liền, view thoáng mát, LH: 0909 702 *** Trí\n   2,8 tỷ · 70 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: 819, Saigonhomes, Đường Hương lộ 2, Phường Bình Trị Đông A, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường Bình Trị Đông, Hồ Chí Minh mới)\n   Gần nhất: trường học 56 m, bệnh viện 844 m, chợ 1,8 km\n   Đăng 12/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-huong-lo-2-phuong-binh-tri-dong-a-saigonhomes/ban-2pn-70m2-nha-moi-ep-vao-o-lien-view-thoang-mat-lh-tri-pr46003765\n\n5. [Tin 42762734] Bán gấp căn hộ Privia Khang Điền, Bình Tân, 68m2, 2PN, +1, có sổ, giá bán 4,3 tỷ, LH 0936 822 ***\n   4,3 tỷ · 68 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: The Privia, Đường An Dương Vương, Phường An Lạc, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường An Lạc, Hồ Chí Minh mới)\n   Gần nhất: trường học 116 m, bệnh viện 825 m, chợ 1,3 km\n   Đăng 19/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-an-duong-vuong-phuong-an-lac-6-the-privia/ban-gap-khang-dien-q-6-68m2-2pn-1-phong-da-nang-co-so-4-3-ty-lh-pr42762734\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Quận Bình Tân; giá tối đa 6 tỷ.\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 3.2887828999992053,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    3,
+    3
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ],
+   "S9": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "X01",
+  "category": "extra_confirm_budget",
+  "turn": 2,
+  "user": "Nâng ngân sách lên 4 tỷ rưỡi",
+  "expect": {
+   "user": "Nâng ngân sách lên 4 tỷ rưỡi",
+   "expect_status": "need_clarification",
+   "expect_constraints": {
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_names": [
+     "Bình Tân"
+    ],
+    "price_max": 6000
+   },
+   "expect_answer_all": [
+    "4,5 tỷ"
+   ],
+   "note": "nâng mà thấp hơn mức hiện tại ⇒ hỏi lại, không áp (B4)"
+  },
+  "result": {
+   "conversation_id": "2363de889224454587052f3d0585715f",
+   "status": "need_clarification",
+   "constraints": {
+    "price_min": null,
+    "price_max": 6000.0,
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_ids": [
+     65
+    ],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Bạn muốn đặt ngân sách tối đa 4,5 tỷ (thấp hơn mức 6 tỷ hiện tại) đúng không? Bạn xác nhận giúp mình nhé.",
+   "summary": "Bạn muốn đặt ngân sách tối đa 4,5 tỷ (thấp hơn mức 6 tỷ hiện tại) đúng không? Bạn xác nhận giúp mình nhé."
+  },
+  "latency": 1.8072601000021677,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    3,
+    3
+   ],
+   "S5": [
+    1,
+    1
+   ],
+   "X1": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": [
+   "4,5 tỷ"
+  ]
+ },
+ {
+  "id": "X01",
+  "category": "extra_confirm_budget",
+  "turn": 3,
+  "user": "ừ đúng rồi",
+  "expect": {
+   "user": "ừ đúng rồi",
+   "expect_status": "ok",
+   "expect_constraints": {
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_names": [
+     "Bình Tân"
+    ],
+    "price_max": 4500
+   },
+   "min_results": 5
+  },
+  "result": {
+   "conversation_id": "2363de889224454587052f3d0585715f",
+   "status": "ok",
+   "constraints": {
+    "price_min": null,
+    "price_max": 4500.0,
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_ids": [
+     65
+    ],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [
+    {
+     "listing_id": "46223137",
+     "title": "Bán căn 2PN ban công view công viên hồ bơi",
+     "price": 2680.0,
+     "area": 64.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Bình Tân",
+     "old_address": "Khu căn hộ EHome 3, Đường Hồ Học Lãm, Phường An Lạc, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường An Lạc, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-ho-hoc-lam-phuong-an-lac-6-khu-can-ho-ehome-3/ban-2pn-bancong-view-cong-vien-boi-pr46223137",
+     "posted_at": "2026-09-09",
+     "expired_at": "2026-09-24",
+     "poi_distances": {
+      "truong_hoc": 124.2519535,
+      "benh_vien": 1813.81258091,
+      "cho": 740.26195459
+     },
+     "score": 0.6895071533323173,
+     "similar_ids": [],
+     "latitude": 10.7226520224731,
+     "longitude": 106.610677024995,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 2
+    },
+    {
+     "listing_id": "46179291",
+     "title": "Thanh toán 250 triệu còn lại ngân hàng hỗ trợ",
+     "price": 2500.0,
+     "area": 60.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Bình Tân",
+     "old_address": "Green Town Bình Tân, Phường Bình Hưng Hòa B, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường Bình Tân, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-binh-hung-hoa-b-green-town-binh-tan/trung-gia-dan-ngay-trung-tam-sai-gon-pr46179291",
+     "posted_at": "2026-09-16",
+     "expired_at": "2026-10-01",
+     "poi_distances": {
+      "truong_hoc": 152.80056281,
+      "benh_vien": 1144.72240343,
+      "cho": 2047.18269045
+     },
+     "score": 0.6725723748057907,
+     "similar_ids": [],
+     "latitude": 10.80779,
+     "longitude": 106.5934,
+     "coords_reliable": true,
+     "position": 2,
+     "days_left": 9
+    },
+    {
+     "listing_id": "46004028",
+     "title": "Bán căn hộ Moonlight Hưng Thịnh đường Số 7, Khu Tên Lửa, Bình Tân",
+     "price": 2950.0,
+     "area": 50.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 1,
+     "district_old": "Bình Tân",
+     "old_address": "Moonlight Park View, Đường Số 7, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường An Lạc, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-so-7-phuong-an-lac-a-moonlight-park-view/ban-1pn-hong-cc-khu-ten-lua-binh-tan-pr46004028",
+     "posted_at": "2026-09-18",
+     "expired_at": "2026-10-03",
+     "poi_distances": {
+      "truong_hoc": 69.33156187,
+      "benh_vien": 310.17318793,
+      "cho": 499.82901023
+     },
+     "score": 0.6507320107250393,
+     "similar_ids": [],
+     "latitude": 10.7518521291673,
+     "longitude": 106.62026318004,
+     "coords_reliable": true,
+     "position": 3,
+     "days_left": 11
+    },
+    {
+     "listing_id": "46003765",
+     "title": "Bán căn 2PN 70m2 Saigonhomes, nhà mới đẹp vào ở liền, view thoáng mát, LH: 0909 702 *** Trí",
+     "price": 2800.0,
+     "area": 70.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Bình Tân",
+     "old_address": "819, Saigonhomes, Đường Hương lộ 2, Phường Bình Trị Đông A, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường Bình Trị Đông, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-huong-lo-2-phuong-binh-tri-dong-a-saigonhomes/ban-2pn-70m2-nha-moi-ep-vao-o-lien-view-thoang-mat-lh-tri-pr46003765",
+     "posted_at": "2026-09-12",
+     "expired_at": "2026-09-27",
+     "poi_distances": {
+      "truong_hoc": 55.56620464,
+      "benh_vien": 843.62426785,
+      "cho": 1780.79936173
+     },
+     "score": 0.6489179614354923,
+     "similar_ids": [],
+     "latitude": 10.76776,
+     "longitude": 106.5963,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 5
+    },
+    {
+     "listing_id": "42762734",
+     "title": "Bán gấp căn hộ Privia Khang Điền, Bình Tân, 68m2, 2PN, +1, có sổ, giá bán 4,3 tỷ, LH 0936 822 ***",
+     "price": 4300.0,
+     "area": 68.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Bình Tân",
+     "old_address": "The Privia, Đường An Dương Vương, Phường An Lạc, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường An Lạc, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-an-duong-vuong-phuong-an-lac-6-the-privia/ban-gap-khang-dien-q-6-68m2-2pn-1-phong-da-nang-co-so-4-3-ty-lh-pr42762734",
+     "posted_at": "2026-09-19",
+     "expired_at": "2026-10-04",
+     "poi_distances": {
+      "truong_hoc": 116.11268838,
+      "benh_vien": 825.35452865,
+      "cho": 1320.40060717
+     },
+     "score": 0.6485368638025648,
+     "similar_ids": [],
+     "latitude": 10.72789,
+     "longitude": 106.6204,
+     "coords_reliable": true,
+     "position": 5,
+     "days_left": 12
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Đã giảm ngân sách xuống 4,5 tỷ. Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Quận Bình Tân; giá tối đa 4,5 tỷ.\n\n1. [Tin 46223137] Bán căn 2PN ban công view công viên hồ bơi\n   2,68 tỷ · 64 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Khu căn hộ EHome 3, Đường Hồ Học Lãm, Phường An Lạc, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường An Lạc, Hồ Chí Minh mới)\n   Gần nhất: trường học 124 m, bệnh viện 1,8 km, chợ 740 m\n   Đăng 09/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-ho-hoc-lam-phuong-an-lac-6-khu-can-ho-ehome-3/ban-2pn-bancong-view-cong-vien-boi-pr46223137\n\n2. [Tin 46179291] Thanh toán 250 triệu còn lại ngân hàng hỗ trợ\n   2,5 tỷ · 60 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Green Town Bình Tân, Phường Bình Hưng Hòa B, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường Bình Tân, Hồ Chí Minh mới)\n   Gần nhất: trường học 153 m, bệnh viện 1,1 km, chợ 2 km\n   Đăng 16/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-binh-hung-hoa-b-green-town-binh-tan/trung-gia-dan-ngay-trung-tam-sai-gon-pr46179291\n\n3. [Tin 46004028] Bán căn hộ Moonlight Hưng Thịnh đường Số 7, Khu Tên Lửa, Bình Tân\n   2,95 tỷ · 50 m² · 1 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Moonlight Park View, Đường Số 7, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường An Lạc, Hồ Chí Minh mới)\n   Gần nhất: trường học 69 m, bệnh viện 310 m, chợ 500 m\n   Đăng 18/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-so-7-phuong-an-lac-a-moonlight-park-view/ban-1pn-hong-cc-khu-ten-lua-binh-tan-pr46004028\n\n4. [Tin 46003765] Bán căn 2PN 70m2 Saigonhomes, nhà mới đẹp vào ở liền, view thoáng mát, LH: 0909 702 *** Trí\n   2,8 tỷ · 70 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: 819, Saigonhomes, Đường Hương lộ 2, Phường Bình Trị Đông A, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường Bình Trị Đông, Hồ Chí Minh mới)\n   Gần nhất: trường học 56 m, bệnh viện 844 m, chợ 1,8 km\n   Đăng 12/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-huong-lo-2-phuong-binh-tri-dong-a-saigonhomes/ban-2pn-70m2-nha-moi-ep-vao-o-lien-view-thoang-mat-lh-tri-pr46003765\n\n5. [Tin 42762734] Bán gấp căn hộ Privia Khang Điền, Bình Tân, 68m2, 2PN, +1, có sổ, giá bán 4,3 tỷ, LH 0936 822 ***\n   4,3 tỷ · 68 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: The Privia, Đường An Dương Vương, Phường An Lạc, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường An Lạc, Hồ Chí Minh mới)\n   Gần nhất: trường học 116 m, bệnh viện 825 m, chợ 1,3 km\n   Đăng 19/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-an-duong-vuong-phuong-an-lac-6-the-privia/ban-gap-khang-dien-q-6-68m2-2pn-1-phong-da-nang-co-so-4-3-ty-lh-pr42762734\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Đã giảm ngân sách xuống 4,5 tỷ. Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Quận Bình Tân; giá tối đa 4,5 tỷ.\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 0.760421300001326,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    3,
+    3
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ },
+ {
+  "id": "X01",
+  "category": "extra_confirm_budget",
+  "turn": 4,
+  "user": "Rẻ hơn chút",
+  "expect": {
+   "user": "Rẻ hơn chút",
+   "expect_status": "ok",
+   "expect_constraints": {
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_names": [
+     "Bình Tân"
+    ],
+    "price_max": 4050
+   },
+   "min_results": 5
+  },
+  "result": {
+   "conversation_id": "2363de889224454587052f3d0585715f",
+   "status": "ok",
+   "constraints": {
+    "price_min": null,
+    "price_max": 4050.0,
+    "property_types": [
+     "Căn hộ chung cư"
+    ],
+    "district_ids": [
+     65
+    ],
+    "new_ward_ids": [],
+    "area_min": null,
+    "area_max": null,
+    "bedrooms_min": null,
+    "near_pois": [],
+    "soft_query": null
+   },
+   "listings": [
+    {
+     "listing_id": "46223137",
+     "title": "Bán căn 2PN ban công view công viên hồ bơi",
+     "price": 2680.0,
+     "area": 64.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Bình Tân",
+     "old_address": "Khu căn hộ EHome 3, Đường Hồ Học Lãm, Phường An Lạc, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường An Lạc, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-ho-hoc-lam-phuong-an-lac-6-khu-can-ho-ehome-3/ban-2pn-bancong-view-cong-vien-boi-pr46223137",
+     "posted_at": "2026-09-09",
+     "expired_at": "2026-09-24",
+     "poi_distances": {
+      "truong_hoc": 124.2519535,
+      "benh_vien": 1813.81258091,
+      "cho": 740.26195459
+     },
+     "score": 0.6895071533323173,
+     "similar_ids": [],
+     "latitude": 10.7226520224731,
+     "longitude": 106.610677024995,
+     "coords_reliable": true,
+     "position": 1,
+     "days_left": 2
+    },
+    {
+     "listing_id": "46179291",
+     "title": "Thanh toán 250 triệu còn lại ngân hàng hỗ trợ",
+     "price": 2500.0,
+     "area": 60.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Bình Tân",
+     "old_address": "Green Town Bình Tân, Phường Bình Hưng Hòa B, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường Bình Tân, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-binh-hung-hoa-b-green-town-binh-tan/trung-gia-dan-ngay-trung-tam-sai-gon-pr46179291",
+     "posted_at": "2026-09-16",
+     "expired_at": "2026-10-01",
+     "poi_distances": {
+      "truong_hoc": 152.80056281,
+      "benh_vien": 1144.72240343,
+      "cho": 2047.18269045
+     },
+     "score": 0.6725723748057907,
+     "similar_ids": [],
+     "latitude": 10.80779,
+     "longitude": 106.5934,
+     "coords_reliable": true,
+     "position": 2,
+     "days_left": 9
+    },
+    {
+     "listing_id": "46004028",
+     "title": "Bán căn hộ Moonlight Hưng Thịnh đường Số 7, Khu Tên Lửa, Bình Tân",
+     "price": 2950.0,
+     "area": 50.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 1,
+     "district_old": "Bình Tân",
+     "old_address": "Moonlight Park View, Đường Số 7, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường An Lạc, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-so-7-phuong-an-lac-a-moonlight-park-view/ban-1pn-hong-cc-khu-ten-lua-binh-tan-pr46004028",
+     "posted_at": "2026-09-18",
+     "expired_at": "2026-10-03",
+     "poi_distances": {
+      "truong_hoc": 69.33156187,
+      "benh_vien": 310.17318793,
+      "cho": 499.82901023
+     },
+     "score": 0.6507320107250393,
+     "similar_ids": [],
+     "latitude": 10.7518521291673,
+     "longitude": 106.62026318004,
+     "coords_reliable": true,
+     "position": 3,
+     "days_left": 11
+    },
+    {
+     "listing_id": "46003765",
+     "title": "Bán căn 2PN 70m2 Saigonhomes, nhà mới đẹp vào ở liền, view thoáng mát, LH: 0909 702 *** Trí",
+     "price": 2800.0,
+     "area": 70.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 2,
+     "district_old": "Bình Tân",
+     "old_address": "819, Saigonhomes, Đường Hương lộ 2, Phường Bình Trị Đông A, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường Bình Trị Đông, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-huong-lo-2-phuong-binh-tri-dong-a-saigonhomes/ban-2pn-70m2-nha-moi-ep-vao-o-lien-view-thoang-mat-lh-tri-pr46003765",
+     "posted_at": "2026-09-12",
+     "expired_at": "2026-09-27",
+     "poi_distances": {
+      "truong_hoc": 55.56620464,
+      "benh_vien": 843.62426785,
+      "cho": 1780.79936173
+     },
+     "score": 0.6489179614354923,
+     "similar_ids": [],
+     "latitude": 10.76776,
+     "longitude": 106.5963,
+     "coords_reliable": true,
+     "position": 4,
+     "days_left": 5
+    },
+    {
+     "listing_id": "46220242",
+     "title": "Bán căn hộ 1PN+, 1WC, giá tốt tại Moonlight Boulevard, 2,95 tỷ (56m2)",
+     "price": 2950.0,
+     "area": 56.0,
+     "property_type": "Căn hộ chung cư",
+     "bedrooms": 1,
+     "district_old": "Bình Tân",
+     "old_address": "Moonlight Boulevard, Đường Kinh Dương Vương, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh",
+     "new_address": "Phường An Lạc, Hồ Chí Minh mới",
+     "listing_url": "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-kinh-duong-vuong-phuong-an-lac-a-moonlight-boulevard/ban-1pn-1wc-gia-tot-tai-2-95-ty-56m2-pr46220242",
+     "posted_at": "2026-09-08",
+     "expired_at": "2026-10-08",
+     "poi_distances": {
+      "truong_hoc": 215.70471395,
+      "benh_vien": 305.61937615,
+      "cho": 156.11023835
+     },
+     "score": 0.6465361372393716,
+     "similar_ids": [],
+     "latitude": 10.741555,
+     "longitude": 106.618706,
+     "coords_reliable": true,
+     "position": 5,
+     "days_left": 16
+    }
+   ],
+   "referenced_ids": [],
+   "relax_options": [],
+   "degraded": false,
+   "answer": "Đã giảm giá 10%, còn 4,05 tỷ. Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Quận Bình Tân; giá tối đa 4,05 tỷ.\n\n1. [Tin 46223137] Bán căn 2PN ban công view công viên hồ bơi\n   2,68 tỷ · 64 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Khu căn hộ EHome 3, Đường Hồ Học Lãm, Phường An Lạc, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường An Lạc, Hồ Chí Minh mới)\n   Gần nhất: trường học 124 m, bệnh viện 1,8 km, chợ 740 m\n   Đăng 09/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-ho-hoc-lam-phuong-an-lac-6-khu-can-ho-ehome-3/ban-2pn-bancong-view-cong-vien-boi-pr46223137\n\n2. [Tin 46179291] Thanh toán 250 triệu còn lại ngân hàng hỗ trợ\n   2,5 tỷ · 60 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Green Town Bình Tân, Phường Bình Hưng Hòa B, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường Bình Tân, Hồ Chí Minh mới)\n   Gần nhất: trường học 153 m, bệnh viện 1,1 km, chợ 2 km\n   Đăng 16/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-phuong-binh-hung-hoa-b-green-town-binh-tan/trung-gia-dan-ngay-trung-tam-sai-gon-pr46179291\n\n3. [Tin 46004028] Bán căn hộ Moonlight Hưng Thịnh đường Số 7, Khu Tên Lửa, Bình Tân\n   2,95 tỷ · 50 m² · 1 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Moonlight Park View, Đường Số 7, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường An Lạc, Hồ Chí Minh mới)\n   Gần nhất: trường học 69 m, bệnh viện 310 m, chợ 500 m\n   Đăng 18/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-so-7-phuong-an-lac-a-moonlight-park-view/ban-1pn-hong-cc-khu-ten-lua-binh-tan-pr46004028\n\n4. [Tin 46003765] Bán căn 2PN 70m2 Saigonhomes, nhà mới đẹp vào ở liền, view thoáng mát, LH: 0909 702 *** Trí\n   2,8 tỷ · 70 m² · 2 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: 819, Saigonhomes, Đường Hương lộ 2, Phường Bình Trị Đông A, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường Bình Trị Đông, Hồ Chí Minh mới)\n   Gần nhất: trường học 56 m, bệnh viện 844 m, chợ 1,8 km\n   Đăng 12/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-huong-lo-2-phuong-binh-tri-dong-a-saigonhomes/ban-2pn-70m2-nha-moi-ep-vao-o-lien-view-thoang-mat-lh-tri-pr46003765\n\n5. [Tin 46220242] Bán căn hộ 1PN+, 1WC, giá tốt tại Moonlight Boulevard, 2,95 tỷ (56m2)\n   2,95 tỷ · 56 m² · 1 phòng ngủ · Căn hộ chung cư\n   Địa chỉ: Moonlight Boulevard, Đường Kinh Dương Vương, Phường An Lạc A, Quận Bình Tân, Hồ Chí Minh (địa chỉ mới: Phường An Lạc, Hồ Chí Minh mới)\n   Gần nhất: trường học 216 m, bệnh viện 306 m, chợ 156 m\n   Đăng 08/09/2026 · https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-kinh-duong-vuong-phuong-an-lac-a-moonlight-boulevard/ban-1pn-1wc-gia-tot-tai-2-95-ty-56m2-pr46220242\n\nGiá là giá rao bán tham khảo.",
+   "summary": "Đã giảm giá 10%, còn 4,05 tỷ. Mình tìm được 5 tin phù hợp với điều kiện: Căn hộ chung cư; khu vực Quận Bình Tân; giá tối đa 4,05 tỷ.\n\nGiá là giá rao bán tham khảo."
+  },
+  "latency": 2.5564855999982683,
+  "checks": {
+   "S2": [
+    1,
+    1
+   ],
+   "S3": [
+    3,
+    3
+   ],
+   "S4": [
+    1,
+    1
+   ],
+   "S1": [
+    1,
+    1
+   ],
+   "S6": [
+    1,
+    1
+   ],
+   "S15": [
+    1,
+    1
+   ],
+   "S5": [
+    1,
+    1
+   ]
+  },
+  "errors": [],
+  "price_review": []
+ }
+]

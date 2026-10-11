@@ -1,278 +1,244 @@
 # Database `housing` — giải thích bảng và cột
 
-Mô tả đúng hiện trạng database (khớp với `backup/data_ultilities.sql`), để làm đầu vào cho việc
-thiết kế lại. Sơ đồ quan hệ và luồng dữ liệu: [housing-database.drawio](housing-database.drawio).
+Mô tả thiết kế hiện tại. Nguồn chuẩn của cấu trúc là model SQLAlchemy trong
+`housing-backend/housing-backend/app/db/models/` và migration
+`housing-backend/housing-backend/migrations/versions/0001_baseline.py`. Spec của lần thiết kế
+lại: [tasks/address-db.md](tasks/address-db.md). (Sơ đồ `housing-database.drawio` vẽ thiết kế
+cũ 5 schema, chưa cập nhật.)
 
-Các bảng được chia thành 4 cụm theo mục đích sử dụng:
+**Mọi bảng nằm trong schema `public`.** 5 schema cũ (`admin`, `amenities`, `listing`, `ml`,
+`rag`) được thay bằng các bảng dưới đây; dữ liệu cũ chuyển sang bằng
+`scripts/migrate_legacy_data.py`. Không còn cột `raw_record`, `source_file`, `source_sha256`,
+`mapping_status` hay cột `jsonb` nào.
 
 | Cụm | Bảng | Làm việc gì |
 |---|---|---|
-| 1. Dữ liệu nền | `admin.unit`, `admin.ward_transition`, `amenities.poi_schools`, `amenities.poi_hospitals`, `amenities.poi_markets` | Danh mục đơn vị hành chính cũ/mới và danh sách tiện ích có tọa độ. Nạp một lần, không phụ thuộc tin đăng. |
-| 2. Tin bất động sản (dùng chung) | `listing.listings`, `listing.listing_spatial_features` | Tin đăng đã làm sạch và đặc trưng tiện ích xung quanh từng tin. Là đầu vào cho cả Prediction và Recommendation. |
-| 3. Prediction | `ml.district_label`, `ml.district_link` | Bảng mã hóa quận thành nhãn số cho model dự đoán giá. |
-| 4. Recommendation (RAG) | `rag.listing_embeddings` | Văn bản và vector của từng tin để tìm kiếm ngữ nghĩa và đưa cho LLM. |
+| 1. Địa chỉ | `provinces_old`, `districts_old`, `wards_old`, `streets_old`, `provinces_new`, `wards_new`, `streets_new`, `ward_mappings` | Danh mục địa chỉ cũ/mới theo đúng dữ liệu và ID của batdongsan.com.vn |
+| 2. Tiện ích | `pois` | Trường học, bệnh viện, chợ có tọa độ |
+| 3. Tin bất động sản | `listings`, `listing_spatial_features` | Tin đã làm sạch và đặc trưng tiện ích quanh tin. Đầu vào chung cho Prediction và RAG |
+| 4. Prediction | `district_label` | Nhãn số của quận cho model dự đoán giá |
+| 5. RAG | `listing_embeddings` | Văn bản và vector của từng tin |
 
-Cách đọc cột **Nguồn** bên dưới:
+Cách đọc cột **Nguồn**:
+- **JSON batdongsan**: file trong `address_data/` (3 file có sẵn + 4 file do
+  `scripts/fetch_bds_address.py` tải từ API `api.batdongsan.com.vn/bff-seller/locations`).
 - **crawler**: `CrawlData/listing_extractor.py` lấy từ HTML Batdongsan.
-- **cleaner**: `src/pipeline/listing_cleaner.py` tính hoặc sửa.
-- **CSV POI**: các file `CrawUltilities/data/poi_*.csv`.
-- **import_pois**: `tools/import_pois.py` tính khi nạp.
+- **cleaner**: `src/pipeline/listing_cleaner.py`.
 - **tự sinh**: cột `GENERATED` hoặc `DEFAULT` do PostgreSQL tự tính.
 
 ---
 
-## Cụm 1 — Dữ liệu nền
-
-Gồm hai nhóm bảng, đều do `tools/import_pois.py` nạp:
-
-- **Đơn vị hành chính** (`admin.*`): bộ từ điển tỉnh/quận/phường trước và sau sáp nhập 2025.
-  Nguồn là dữ liệu `vietnamadminunits/data/processed`, chỉ lấy các dòng có mã tỉnh 79 (TP.HCM).
-- **Tiện ích** (`amenities.*`): trường học, bệnh viện, chợ, mỗi loại một bảng. Mỗi điểm tiện ích
-  được gắn khóa ngoại tới đơn vị hành chính cũ và mới.
-
-### `admin.unit` — đơn vị hành chính
-
-Mỗi dòng là một tỉnh, quận hoặc phường của một phiên bản địa giới. Hai phiên bản nằm chung một
-bảng và phân biệt bằng cột `version`. Cấp cha–con nối bằng `parent_id`:
+## Cụm 1 — Địa chỉ
 
 ```text
-legacy_2025: province → district → ward     (3 cấp, trước sáp nhập)
-from_2025:   province → ward                (2 cấp, không còn quận)
+provinces_old (code) ── districts_old (id) ─┬─ wards_old   (id)
+                                            └─ streets_old (id, district_id)
+provinces_new (code) ── wards_new (id) ──── streets_new (id, ward_id)
+
+ward_mappings: wards_old.id ──► wards_new.id
 ```
 
-| Cột | Ý nghĩa | Nguồn |
-|---|---|---|
-| `id` | Khóa chính nội bộ. Các bảng khác trỏ tới cột này. | tự sinh (identity) |
-| `version` | Phiên bản địa giới: `legacy_2025` (cũ) hoặc `from_2025` (mới) | import_pois, theo file nguồn |
-| `level` | Cấp: `province` / `district` / `ward` | import_pois |
-| `code` | Mã đơn vị hành chính chính thức (mã tỉnh, quận, phường) | file `vietnamadminunits` (`provinceCode`, `districtCode`, `wardCode`) |
-| `name` | Tên đơn vị, giữ nguyên như nguồn (vd. `Phường 15`, `Quận Tân Bình`) | file `vietnamadminunits` |
-| `parent_id` | Đơn vị cấp trên. Tỉnh có `NULL`. | import_pois |
-| `source_file` | Tên file CSV nguồn | import_pois |
-| `raw_record` | Nguyên dòng CSV nguồn (JSON) | import_pois |
+Nạp bằng `scripts/seed_address.py` (upsert, chạy lại kết quả không đổi). Quy tắc chung:
 
-`(version, level, code)` là duy nhất.
+- Khóa chính là **ID của batdongsan**, không tự tăng. Tỉnh dùng `cityCode` (`'SG'`), **không**
+  phải mã hành chính `'79'`.
+- Mỗi cột lấy 1-1 từ một field JSON. Field lặp lại thông tin cấp cha (`cityName`,
+  `districtName`...) không thành cột vì đã có qua khóa ngoại. Bỏ `otherNames` (luôn rỗng, trừ 2
+  ghi chú tự do trong 34.091 đường mới), `areaCode`, `priority`, `countryCode`, `area`.
+- Chữ giữ nguyên như nguồn: `prefix` tách riêng khỏi `name`, có thể rỗng. **Tên đầy đủ** =
+  `prefix + ' ' + name`, prefix rỗng thì chỉ `name` (vd. quận `'Quận 1'` có prefix `''`).
+- Bộ cũ có tất cả tỉnh nhưng quận/phường/đường chỉ của `SG`. Bộ mới có tất cả tỉnh, phường và
+  đường chỉ của `SG` — gồm cả Bình Dương, Bà Rịa – Vũng Tàu cũ vì batdongsan không tách vùng.
 
-### `admin.ward_transition` — phường cũ chuyển sang phường mới
+| Bảng | Khóa chính | Cột (← field JSON) | Số dòng | File |
+|---|---|---|---|---|
+| `provinces_old` | `code` ← `cityCode` | `name` ← `cityName`, `alias` ← `cityAlias` | 63 | `old_cities.json` |
+| `provinces_new` | `code` ← `cityCode` | như trên | 34 | `new_cities.json` |
+| `districts_old` | `id` ← `districtId` | `province_code` ← `cityCode` (FK), `name` ← `districtName`, `prefix` ← `districtPrefix`, `alias` ← `districtAlias` | 24 | `sg_old.json` |
+| `wards_old` | `id` ← `wardId` | `district_id` ← `districtId` (FK), `name` ← `wardName`, `prefix` ← `wardPrefix`, `alias` ← `wardAlias` | 346 | `sg_old_wards.json` |
+| `streets_old` | `(id, district_id)` | `id` ← `streetId`, `district_id` ← `districtId` (FK), `name` ← `streetName`, `prefix` ← `streetPrefix`, `alias` ← `streetAlias` | 9.169 | `sg_old_streets.json` |
+| `wards_new` | `id` ← `wardId` | `province_code` ← `cityCode` (FK), `name` ← `wardName`, `prefix` ← `wardPrefix`, `alias` ← `wardAlias` | 169 | `sg_new_wards.json` |
+| `streets_new` | `(id, ward_id)` | `id` ← `streetId`, `ward_id` ← khóa ngoài của file (FK; response không có ID cha), `name`/`prefix`/`alias` như trên | 34.091 | `sg_new_streets.json` |
 
-Mỗi dòng cho biết một phường cũ (`legacy_2025`) đã được gộp vào phường mới (`from_2025`) nào.
-Đây là quan hệ ứng viên lấy từ nguồn: một phường cũ có thể ứng với nhiều phường mới. Vì vậy
-bảng này **không đủ để đổi địa chỉ cũ sang địa chỉ mới một cách chắc chắn**.
+**Vì sao bảng đường có khóa ghép:** kiểm tra dữ liệu thật cho thấy cùng một `streetId` xuất
+hiện ở nhiều quận/phường (5.504 ID cho 9.169 dòng đường cũ; 7.454 ID cho 34.091 dòng đường mới,
+vd. `3786` "Đường 5" có ở 92 phường), nhưng không trùng trong cùng một quận/phường.
 
-| Cột | Ý nghĩa | Nguồn |
-|---|---|---|
-| `old_ward_id` | Phường cũ, trỏ tới `admin.unit.id` | import_pois, từ `wardCode` |
-| `new_ward_id` | Phường mới, trỏ tới `admin.unit.id` | import_pois, từ `newWardCode` |
-| `source_file` | `convert_legacy_2025_with_location_and_default_ward.csv` | import_pois |
-| `raw_record` | Nguyên dòng CSV nguồn | import_pois |
+**Thủ Đức:** `districts_old` của batdongsan có cả `Quận 2` (54), `Quận 9` (61) **và**
+`Thành phố Thủ Đức` (71). Quận 71 chứa 34 phường, trong đó phường của Quận 2, Quận 9 bị lặp lại
+với `wardId` khác.
 
-Khóa chính là cặp `(old_ward_id, new_ward_id)`.
+### `ward_mappings` — phường cũ → phường mới
 
-### `amenities.poi_schools` / `poi_hospitals` / `poi_markets` — tiện ích
+| Cột | Ý nghĩa |
+|---|---|
+| `old_ward_id` | PK, FK → `wards_old.id` |
+| `new_ward_id` | FK → `wards_new.id` |
 
-Ba bảng có chung 18 cột và chỉ khác nhau ở vài cột riêng. Mỗi dòng là một điểm tiện ích. Số
-dòng trong CSV: 4.660 trường, 376 cơ sở y tế, 231 chợ.
+Nguồn **duy nhất**: `address_data/ward_mappings.sql` (dump MySQL toàn quốc, mã hành chính
+chính thức), chỉ các dòng `old_province_name = 'Thành phố Hồ Chí Minh'` (273 dòng). Seed nối
+sang ID batdongsan bằng so khớp tên đầy đủ **chính xác** (chỉ bỏ dấu cách thừa, không phân biệt
+hoa/thường, chuẩn hóa Unicode NFC; không bỏ dấu, không fuzzy). NFC cần vì file `.sql` lưu một số
+tên dạng tổ hợp (NFD, vd. `Hội` = `ô` + dấu nặng rời), batdongsan lưu dạng dựng sẵn: cùng chữ,
+khác byte.
 
-Pipeline tạo CSV (`.codex_tmp/poi_build`, step 1 → 5): lấy dữ liệu thô từ file Excel chợ, PDF
-trường học, Wikipedia, OSM, rồi geocode bằng Goong để có `poi_master_old_hcm.csv`, sau đó tách
-ra thành 3 file CSV.
+1. Quận cũ: `old_district_name` = tên đầy đủ trong `districts_old` (đúng 1 quận). Dòng
+   `Thành phố Thủ Đức` khớp quận 71 của batdongsan.
+2. Phường cũ: `old_ward_name` = tên đầy đủ của đúng 1 phường trong quận đó.
+3. Phường mới: `new_ward_name` = tên đầy đủ của đúng 1 phường trong `wards_new`.
 
-**Cột chung:**
-
-| Cột | Ý nghĩa | Nguồn |
-|---|---|---|
-| `poi_id` | Mã tiện ích kèm tiền tố nguồn (vd. `school:614108`, `osm:node/…`, `market:6`) | CSV POI |
-| `poi_type` | Loại: `truong_hoc` / `benh_vien` / `cho`. Mỗi bảng chỉ nhận một giá trị. | CSV POI |
-| `poi_subtype` | Loại chi tiết: trường có `Mầm non`, `Tiểu học`, `THCS`, `THPT`…; y tế có `Bệnh viện`, `Phòng khám đa khoa`…; chợ chỉ có `Chợ truyền thống` | CSV POI |
-| `name` | Tên tiện ích | CSV POI |
-| `address_old` | Địa chỉ theo địa giới cũ (có quận) | CSV POI |
-| `address_new` | Địa chỉ theo địa giới mới | CSV POI |
-| `old_province_id` | Tỉnh cũ, trỏ tới `admin.unit` | import_pois so khớp cột chữ `old_province` của CSV với tên trong `admin.unit` |
-| `old_district_id` | Quận cũ, trỏ tới `admin.unit` | như trên, cột `old_district`, tìm trong các quận của tỉnh đã khớp |
-| `old_ward_id` | Phường cũ, trỏ tới `admin.unit` | như trên, cột `old_ward` |
-| `new_province_id` | Tỉnh mới, trỏ tới `admin.unit` | như trên, cột `new_province` |
-| `new_ward_id` | Phường mới, trỏ tới `admin.unit` | import_pois: ưu tiên `new_ward_code` (kiểm tra cả tên và tỉnh cha), không có mã thì so khớp tên |
-| `latitude`, `longitude` | Tọa độ WGS84. Hoặc có cả hai, hoặc cả hai đều trống. | CSV POI (phần lớn từ Goong/OSM) |
-| `mapping_status` | Kết quả so khớp của 5 cột `*_id` ở trên. Mỗi khóa nhận `matched`, `missing`, `unmatched`, `ambiguous`, `parent_unresolved` (riêng `new_ward` có thêm `matched_code_and_name` / `code_name_or_parent_mismatch`). Cột `*_id` có giá trị `NULL` thì xem trạng thái ở đây. | import_pois |
-| `source_file` | Tên file CSV | import_pois |
-| `source_sha256` | Mã băm của file CSV lúc nạp, để biết dữ liệu đến từ phiên bản file nào | import_pois |
-| `raw_record` | Nguyên dòng CSV. Các trường CSV không có cột riêng (`geocode_confidence`, `location_precision`, `source`, `source_url`, `updated_at`…) chỉ nằm ở đây. | import_pois |
-| `imported_at` | Thời điểm nạp | tự sinh (`now()`) |
-| `geom` | Điểm địa lý tạo từ `latitude`/`longitude`, có GiST index, dùng cho mọi truy vấn khoảng cách | tự sinh, thêm bởi `enable_postgis.sql` |
-
-**Cột riêng của từng bảng** (đều tự sinh từ `raw_record`):
-
-| Bảng | Cột | Ý nghĩa |
-|---|---|---|
-| `poi_schools` | `campus_name` | Tên cơ sở hoặc điểm trường |
-| | `school_level_codes` | Mã các cấp học của trường |
-| | `ownership` | Loại hình: công lập, tư thục… |
-| | `student_count` | Số học sinh |
-| | `old_address_confidence` | Độ tin cậy của địa chỉ cũ |
-| `poi_hospitals` | `ownership` | Loại hình sở hữu |
-| `poi_markets` | `manual_review_required` | Bản ghi cần kiểm tra lại bằng tay |
-
-> View `amenities.housing_poi` gộp 3 bảng trên bằng `UNION ALL`. Hàm `amenities.nearby()` và
-> view `ml.poi_district_features` đọc từ view này.
+Dòng không khớp (hoặc khớp nhiều hơn 1) không được insert mà ghi vào
+`address_data/ward_mappings_unmatched.json` kèm lý do. Kết quả hiện tại: **270 khớp, 3 không
+khớp** — tên phường cũ khác cách viết (`Bình Hưng Hoà A/B` ở file mapping, `Bình Hưng Hòa A/B`
+ở batdongsan; `Quy Đức` / `Qui Đức`), cố ý không thêm alias.
 
 ---
 
-## Cụm 2 — Tin bất động sản (dùng chung)
+## Cụm 2 — Tiện ích: `pois`
 
-Nơi lưu tập dữ liệu tin đăng mà cả Prediction và RAG cùng đọc. Do `python -m src.pipeline` ghi:
+Một bảng cho cả 3 loại, phân biệt bằng `poi_type`. Dữ liệu chuyển từ 3 bảng cũ
+`amenities.poi_schools/poi_hospitals/poi_markets` (4.660 + 376 + 231 = 5.267 dòng). POI **không**
+có khóa ngoại sang bảng địa chỉ: địa chỉ POI đến từ nguồn khác batdongsan, không nối chắc chắn
+được; vị trí POI dùng `geom`.
+
+| Cột | Ý nghĩa |
+|---|---|
+| `id` | Khóa chính tự tăng. Khi chuyển dữ liệu cũ, id đánh theo thứ tự `(poi_type, poi_id cũ)` để chạy lại không nhân bản |
+| `poi_type` | `truong_hoc` / `benh_vien` / `cho` (CHECK), có index |
+| `poi_subtype` | Loại chi tiết: `Mầm non`, `THPT`...; `Bệnh viện`, `Phòng khám`...; `Chợ truyền thống` |
+| `name` | Tên tiện ích |
+| `address_old`, `address_new` | Địa chỉ theo địa giới cũ / mới, dạng chữ như nguồn |
+| `latitude`, `longitude` | Tọa độ WGS84; có cả hai hoặc không có cả hai (CHECK) |
+| `ownership` | Chỉ trường học/bệnh viện: `Công lập`, `Ngoài công lập`... |
+| `school_level_codes` | Chỉ trường học: `mn`, `th`, `thcs`, `thpt`... |
+| `geom` | `geography(Point, 4326)` tự sinh từ tọa độ, index GiST |
+
+Function `nearby(lon, lat, radius_m DEFAULT 1000, filter_type DEFAULT NULL)` trả về
+`(poi_id integer = pois.id, poi_type, name, distance_m)`, gần nhất trước.
+
+---
+
+## Cụm 3 — Tin bất động sản
+
+Tin do `python -m src.pipeline` ghi (upsert theo `listing_id`):
 
 ```text
 CrawlData/data.json → ListingCleaner → ListingLoader (UPSERT) → refresh_spatial_features()
 ```
 
 Cleaner chỉ giữ tin **bán** thuộc **24 quận/huyện TP.HCM cũ**, có giá và diện tích hợp lệ.
-Đơn vị giữ như crawler: giá tính bằng triệu VND, diện tích bằng m². Nạp lại không xóa tin cũ:
-tin có cùng `listing_id` sẽ được cập nhật.
+Đơn vị giữ như crawler: giá tính bằng triệu VND, diện tích bằng m².
 
-### `listing.listings` — tin đăng
+### `listings` — tin đăng
 
-Mỗi dòng là một tin, khóa chính là `listing_id`.
+Khóa chính `listing_id` = mã tin batdongsan (chỉ có một nguồn tin nên không có cột
+`source`/`id` riêng).
 
 | Cột | Ý nghĩa | Nguồn |
 |---|---|---|
 | `listing_id` | Mã tin của Batdongsan | crawler: mục "Mã tin" trong `.js__pr-config` |
 | `listing_url` | Link bài đăng | crawler: `<link rel="canonical">` |
 | `title` | Tiêu đề | crawler: `h1.js__pr-title` |
-| `description` | Mô tả gốc. Chỉ chuẩn hóa khoảng trắng, không xóa nội dung. | crawler `.re__detail-content`, cleaner gom khoảng trắng |
-| `transaction_type` | Bán / Cho thuê. Sau cleaner, mọi dòng đều là `Bán`. | crawler: breadcrumb cấp 1, nếu không có thì đọc từ URL (`/ban-`, `/cho-thue-`) |
-| `property_type` | Loại nhà đất (Căn hộ chung cư, Nhà riêng, Nhà mặt phố, Đất…) | crawler: breadcrumb cấp 4, lấy phần trước chữ "tại" |
-| `price` | Giá, triệu VND (vd. 24900 = 24,9 tỷ) | crawler: mục "Mức giá" trong short-info, đổi sang số |
-| `price_per_m2` | Giá/m² do website hiển thị, triệu/m² | crawler: phần phụ của mục "Mức giá" |
-| `area` | Diện tích, m² | crawler (specs / short-info). Cleaner nhân 1000 khi crawler đọc nhầm dấu phân cách hàng nghìn (`1.437 m²` → `1.437`), chỉ khi kết quả khớp `price_per_m2`. |
-| `frontage` | Mặt tiền, m | crawler: mục "Đặc điểm BĐS" (`.re__pr-specs-content-item`), không có thì tìm trong mô tả bằng regex. Cleaner đặt `NULL` nếu quá lớn hoặc lớn hơn diện tích. |
-| `bedrooms` | Số phòng ngủ | như `frontage` (specs, short-info, rồi mô tả). Cleaner đặt `NULL` nếu > 50. |
-| `bathrooms` | Số phòng vệ sinh | như trên |
-| `road_width` | Độ rộng đường vào, m | như trên |
-| `floors` | Số tầng | như trên |
-| `legal` | Pháp lý, chữ gốc (vd. `Sổ hồng riêng`) | crawler: specs, không có thì lấy từ mô tả |
-| `legal_group` | Nhóm pháp lý: `so_do_so_hong` / `dang_cho_so` / `hop_dong_mua_ban` / `khac` | cleaner, phân loại `legal` bằng regex |
-| `interior` | Nội thất, chữ gốc | crawler: specs, không có thì lấy từ mô tả |
-| `province_old` | Tỉnh/TP theo địa giới cũ | crawler: breadcrumb cấp 2 |
-| `district_old` | Quận/huyện cũ, dạng chữ (vd. `Tân Bình`, `Quận 7`). **Không trỏ tới `admin.unit`.** | crawler: breadcrumb cấp 3 |
-| `old_ward` | Phường cũ, dạng chữ | crawler: tách từ `old_address` |
-| `old_address` | Địa chỉ cũ đầy đủ đúng như website hiển thị | crawler: `.re__address-line-1` |
-| `old_address_detail` | Phần đầu của `old_address` (số nhà, đường, phường), bỏ quận và tỉnh | crawler: cắt từ `old_address` |
-| `new_address` | Địa chỉ mới sau sáp nhập. Chỉ có khi website hiển thị dòng thứ hai, không tự suy ra từ địa chỉ cũ. Thường chỉ có phường + tỉnh. | crawler: `.re__address-line-2`, bỏ dấu ngoặc |
-| `new_ward` | Phường mới, dạng chữ | crawler: tách từ `new_address` |
-| `new_city` | Tỉnh/TP mới, dạng chữ | crawler: tách từ `new_address` |
-| `latitude`, `longitude` | Tọa độ của tin | crawler: regex trong script khởi tạo bản đồ. Cleaner đặt `NULL` nếu nằm ngoài khung TP.HCM (website gán tọa độ trung tâm Hà Nội cho tin không có vị trí). |
-| `posted_at` | Ngày đăng | crawler (dd/mm/yyyy), cleaner đổi sang kiểu date |
-| `expired_at` | Ngày hết hạn | như trên |
-| `quality_flags` | Danh sách cờ chất lượng, vd. `price_per_m2_mismatch`, `coords_outside_hcm`, `bedrooms_out_of_range`, `area_thousands_separator_fixed` | cleaner |
-| `raw_record` | Nguyên bản ghi crawler trước khi làm sạch. Giá trị gốc của các cột đã bị đặt `NULL` vẫn nằm ở đây. | cleaner chép nguyên |
-| `source_file` | File crawl đã nạp tin này | ListingLoader |
-| `first_loaded_at` | Lần đầu tin vào database | tự sinh |
-| `updated_at` | Lần gần nhất tin được ghi lại | ListingLoader đặt `now()` mỗi lần upsert |
-| `geom` | Điểm địa lý từ tọa độ, `NULL` nếu không có tọa độ | tự sinh |
+| `description` | Mô tả gốc, chỉ chuẩn hóa khoảng trắng | crawler `.re__detail-content`, cleaner |
+| `transaction_type` | Bán / Cho thuê. Sau cleaner đều là `Bán` | crawler: breadcrumb cấp 1 hoặc URL |
+| `property_type` | Loại nhà đất, chữ nguyên văn (`Nhà riêng`, `Căn hộ chung cư`...). Không có bảng danh mục | crawler: breadcrumb cấp 4 |
+| `price` | Giá, triệu VND (24900 = 24,9 tỷ) | crawler: "Mức giá" |
+| `price_per_m2` | Giá/m² website hiển thị, triệu/m² | crawler |
+| `area` | Diện tích, m² | crawler; cleaner sửa lỗi dấu phân cách hàng nghìn |
+| `frontage`, `road_width` | Mặt tiền, đường vào (m) | crawler: specs, không có thì từ mô tả; cleaner đặt `NULL` nếu bất khả thi |
+| `bedrooms`, `bathrooms`, `floors` | Số phòng ngủ, phòng vệ sinh, số tầng | như trên |
+| `legal` | Pháp lý, chữ gốc | crawler |
+| `legal_group` | `so_do_so_hong` / `dang_cho_so` / `hop_dong_mua_ban` / `khac` | cleaner |
+| `interior` | Nội thất, chữ gốc | crawler |
+| `province_old`, `district_old` | Tỉnh, quận cũ dạng chữ (`Tân Bình`, `Quận 7`, `Thủ Đức`) | crawler: breadcrumb |
+| `old_ward` | Phường cũ dạng chữ đầy đủ (`Phường 14`) | crawler: tách từ `old_address` |
+| `old_address` | Địa chỉ cũ đúng như website hiển thị | crawler: `.re__address-line-1` |
+| `old_address_detail` | Phần đầu của `old_address` (số nhà, đường, phường) | crawler |
+| `new_address` | Địa chỉ mới, chỉ khi website hiển thị dòng thứ hai; không tự suy ra | crawler: `.re__address-line-2` |
+| `new_ward`, `new_city` | Phường, tỉnh mới dạng chữ | crawler: tách từ `new_address` |
+| `old_district_id` | FK → `districts_old.id`, nullable | `refresh_listing_address_ids()`: `district_old` = `districts_old.name` của SG, đúng 1 dòng |
+| `old_ward_id` | FK → `wards_old.id`, nullable | (`old_district_id`, `old_ward` = tên đầy đủ phường cũ), đúng 1 dòng |
+| `new_ward_id` | FK → `wards_new.id`, nullable | `new_ward` = tên đầy đủ phường mới của SG, đúng 1 dòng |
+| `latitude`, `longitude` | Tọa độ; cleaner đặt `NULL` nếu ngoài khung TP.HCM | crawler |
+| `posted_at`, `expired_at` | Ngày đăng, ngày hết hạn | crawler, cleaner đổi sang date |
+| `quality_flags` | Cờ chất lượng (`price_per_m2_mismatch`, `coords_outside_hcm`...) | cleaner |
+| `first_loaded_at`, `updated_at` | Lần đầu nạp / lần ghi gần nhất | tự sinh / ListingLoader |
+| `geom` | Điểm địa lý từ tọa độ | tự sinh |
 
-### `listing.listing_spatial_features` — tiện ích quanh mỗi tin
+FK địa chỉ chỉ điền khi khớp chính xác đúng 1 dòng, không khớp thì `NULL`. Khi chuyển 7.603
+tin hiện có: `old_district_id` 7.603/7.603, `new_ward_id` 7.603/7.603, `old_ward_id`
+7.597/7.603 (6 tin ghi phường không chuẩn: `phường 3 quận Tân Bình`, `Phường 16 - quận 8`,
+`phường 14` viết thường, hoặc ghi tên phường mới như `Phường Chợ Lớn`, `Phường Hạnh Thông`).
 
-Mỗi tin **có tọa độ** có một dòng ở đây (quan hệ 1–0..1, xóa tin thì dòng này tự xóa theo). Toàn
-bộ cột do hàm `listing.refresh_spatial_features()` tính bằng PostGIS, từ `listings.geom` và
-`geom` của 3 bảng POI. Hàm chạy cuối mỗi lần nạp tin.
+Logic khớp chỉ nằm ở **một chỗ**: function `refresh_listing_address_ids()` (migration 0001),
+so sánh sau `normalize(..., NFC)`, trả về số tin có FK thay đổi. `ListingLoader` (mỗi lần nạp
+tin) và `migrate_legacy_data.py` đều gọi function này. Index `listings_filter_idx` là
+`(property_type, old_district_id, price)` cho lọc Hybrid Search theo FK quận.
 
-| Cột | Ý nghĩa | Nguồn |
-|---|---|---|
-| `listing_id` | Tin tương ứng, trỏ tới `listing.listings` | refresh_spatial_features |
-| `school_count_1km`, `hospital_count_1km`, `market_count_1km` | Số trường / cơ sở y tế / chợ trong bán kính 1 km | refresh_spatial_features (`ST_DWithin` 1000 m) |
-| `school_count_3km`, `hospital_count_3km`, `market_count_3km` | Như trên, bán kính 3 km | refresh_spatial_features (`ST_DWithin` 3000 m) |
-| `nearest_school_name`, `nearest_school_m` | Tên trường gần nhất và khoảng cách (m), không giới hạn bán kính | refresh_spatial_features (toán tử `<->` dùng GiST index) |
-| `nearest_hospital_name`, `nearest_hospital_m` | Như trên, cho cơ sở y tế | như trên |
-| `nearest_market_name`, `nearest_market_m` | Như trên, cho chợ | như trên |
-| `computed_at` | Thời điểm tính | refresh_spatial_features |
+### `listing_spatial_features` — tiện ích quanh mỗi tin
 
-6 cột `*_count_*` là đặc trưng không gian cho model dự đoán giá. Các cột `nearest_*` được đưa vào
-`rag_document` ở cụm 4.
+Một dòng cho mỗi tin **có tọa độ** (PK `listing_id` → `listings`, ON DELETE CASCADE). Do
+function `refresh_spatial_features()` tính từ `listings.geom` và `pois.geom` (lọc theo
+`poi_type`); chạy cuối mỗi lần nạp tin, trả về số tin đã tính.
+
+| Cột | Ý nghĩa |
+|---|---|
+| `school_count_1km`, `hospital_count_1km`, `market_count_1km` | Số trường / cơ sở y tế / chợ trong 1 km |
+| `school_count_3km`, `hospital_count_3km`, `market_count_3km` | Như trên, 3 km |
+| `nearest_school_name`, `nearest_school_m` (và `hospital`, `market`) | Tiện ích gần nhất từng loại và khoảng cách (m), không giới hạn bán kính |
+| `computed_at` | Thời điểm tính |
 
 ---
 
-## Cụm 3 — Prediction
+## Cụm 4 — Prediction: `district_label`
 
-Cụm này hiện chỉ có bảng mã hóa quận. Model dự đoán giá đọc dữ liệu đặc trưng trực tiếp từ cụm 2.
-Cả hai bảng đều do `tools/import_pois.py` nạp.
+Nhãn số 0–23 của 24 quận/huyện TP.HCM cũ, trùng cách mã hóa của dự án cũ (vd. Quận 2 = 13).
+**Không phải mã hành chính.**
 
-### `ml.district_label` — nhãn số của quận
+| Cột | Ý nghĩa |
+|---|---|
+| `model_version` | Phiên bản bộ nhãn, hiện chỉ có `hcm_24_user_v1` |
+| `label` | Nhãn số (CHECK `label >= 0`) |
+| `district_id` | FK → `districts_old.id` |
 
-Danh sách 24 quận/huyện TP.HCM cũ, mỗi quận một nhãn số 0–23 dùng làm đặc trưng cho model.
-Thứ tự nhãn là thứ tự trong danh sách `LABELS` viết cứng trong `import_pois.py`, trùng với cách
-mã hóa của dự án cũ (vd. `quận 2` = 13). **Đây không phải mã hành chính chính thức.**
-
-| Cột | Ý nghĩa | Nguồn |
-|---|---|---|
-| `model_version` | Phiên bản bộ nhãn. Hiện chỉ có `hcm_24_user_v1`. | import_pois (hằng `MODEL`) |
-| `label` | Nhãn số 0–23 | import_pois (vị trí trong `LABELS`) |
-| `district_name` | Tên quận, viết thường, không có tiền tố cấp (vd. `bình thạnh`, `quận 7`) | import_pois (`LABELS`) |
-
-Khóa chính là `(model_version, label)`. `district_name` là duy nhất trong mỗi phiên bản.
-
-### `ml.district_link` — nối quận hành chính với nhãn
-
-Cho biết quận nào trong `admin.unit` (`legacy_2025`) mang nhãn nào.
-
-| Cột | Ý nghĩa | Nguồn |
-|---|---|---|
-| `admin_district_id` | Quận cũ, trỏ tới `admin.unit` | import_pois |
-| `model_version` | Phiên bản bộ nhãn | import_pois |
-| `label` | Nhãn, trỏ tới `ml.district_label` cùng phiên bản | import_pois: so tên quận với `LABELS`, chỉ ghi khi khớp đúng một nhãn |
-| `evidence` | Lý do gán nhãn (hiện là một câu cố định) | import_pois |
-
-Bộ địa giới `legacy_2025` đã gộp Quận 2, Quận 9 và Thủ Đức thành *Thành phố Thủ Đức*. Vì vậy
-thành phố này bị bỏ qua khi gán nhãn, và 3 nhãn `quận 2`, `quận 9`, `thủ đức` không có dòng
-nào ở bảng này.
+Khóa chính `(model_version, label)`; UNIQUE `(model_version, district_id)`. Chuyển từ
+`ml.district_label` bằng so khớp `district_name` cũ (viết thường) với `lower(districts_old.name)`
+— khớp đủ 24/24. Batdongsan có riêng `Quận 2`, `Quận 9`, `Thủ Đức` nên cả 24 nhãn đều có quận.
 
 ---
 
-## Cụm 4 — Recommendation (RAG)
+## Cụm 5 — RAG: `listing_embeddings`
 
-### `rag.listing_embeddings` — văn bản và vector của tin
+Tối đa một dòng mỗi tin (PK `listing_id` → `listings`, ON DELETE CASCADE). Do
+`ListingEmbedder` ghi; vector tính bằng API embedding chạy trên Kaggle (`BAAI/bge-m3`, 1024
+chiều, URL/key chỉ đọc từ `.env`). Tin chỉ được embed lại khi `content_hash` đổi.
+`python -m src.pipeline --embed-only` embed các tin đã có trong DB.
 
-Mỗi tin có tối đa một dòng (quan hệ 1–0..1 với `listing.listings`, xóa tin thì dòng này tự xóa
-theo). Do `ListingEmbedder` ghi. Vector được tính bằng API embedding chạy trên Kaggle
-(`BAAI/bge-m3`, 1024 chiều). Tin chỉ được embed lại khi `content_hash` thay đổi.
-
-| Cột | Ý nghĩa | Nguồn |
-|---|---|---|
-| `listing_id` | Tin tương ứng, trỏ tới `listing.listings` | ListingEmbedder |
-| `model_name` | Model đã tạo vector (`BAAI/bge-m3`) | ListingEmbedder |
-| `content_hash` | sha256 của `model_name` + `embedding_text`, dùng để bỏ qua tin không đổi | ListingEmbedder |
-| `embedding_text` | Phần đem đi embed: loại nhà, quận, tiêu đề, mô tả. Số điện thoại đã bị xóa. Không chứa giá hay diện tích, vì các số liệu này để SQL lọc. | ListingEmbedder, từ `listings` |
-| `rag_document` | Văn bản đưa cho LLM: tiêu đề, giá, diện tích, chi tiết, pháp lý, địa chỉ cũ/mới, tiện ích 1 km/3 km và gần nhất, ngày đăng, link, mô tả. Được cập nhật lại ngay cả khi không cần embed lại. | ListingEmbedder, từ `listings` + `listing_spatial_features` |
-| `embedding` | Vector 1024 chiều đã chuẩn hóa L2, so sánh bằng cosine (`<=>`) | API Kaggle |
-| `embedded_at` | Thời điểm embed gần nhất | tự sinh / ListingEmbedder |
+| Cột | Ý nghĩa |
+|---|---|
+| `model_name` | Model tạo vector |
+| `content_hash` | sha256 của `model_name` + `embedding_text` |
+| `embedding_text` | Phần đem embed: loại nhà, quận, tiêu đề, mô tả (đã xóa số điện thoại) |
+| `rag_document` | Văn bản đưa cho LLM: giá, diện tích, pháp lý, địa chỉ cũ/mới, tiện ích, link, mô tả |
+| `embedding` | `vector(1024)` đã chuẩn hóa L2, so sánh bằng cosine (`<=>`) |
+| `embedded_at` | Thời điểm embed gần nhất |
 
 ---
 
 ## Quan hệ giữa các cụm
 
 ```text
-              Cụm 1: Dữ liệu nền
-   admin.unit ◄──FK── admin.ward_transition
-      ▲   ▲
-      │   └──FK (5 cột *_id)── amenities.poi_* ──geom──┐
-      │                                                 │ chỉ nối bằng khoảng cách,
-      │FK                                               │ không có khóa ngoại
-      │                                                 ▼
- Cụm 3: ml.district_link ──FK──► ml.district_label    Cụm 2: listing.listings ──1:1── listing_spatial_features
-                                                               │
-                                                               └──1:1 FK── Cụm 4: rag.listing_embeddings
+provinces_old ◄─ districts_old ◄─┬─ wards_old ◄── ward_mappings ──► wards_new ─► provinces_new
+                    ▲   ▲        ├─ streets_old                       ▲   ▲
+                    │   │        │                                    │   └── streets_new
+                    │   └────────┼─ listings.old_district_id          │
+     district_label ┘            └── listings.old_ward_id   listings.new_ward_id
+
+pois ──(chỉ khoảng cách geom)──► listing_spatial_features ◄─1:1─ listings ─1:1─► listing_embeddings
 ```
 
-- **Bên trong cụm 1 nối bằng khóa ngoại.** Mỗi điểm tiện ích trỏ tới tỉnh/quận/phường cũ và
-  tỉnh/phường mới trong `admin.unit`.
-- **Cụm 1 và cụm 2 chỉ nối bằng không gian.** `listing_spatial_features` được tính bằng khoảng
-  cách giữa `listings.geom` và `poi_*.geom`. Địa chỉ của tin (`district_old`, `old_ward`,
-  `new_ward`…) là chữ, không có khóa ngoại tới `admin.unit`. Hệ quả: hai phía biểu diễn địa chỉ
-  theo hai cách khác nhau.
-- **Cụm 3 nối với cụm 1, nhưng không nối với cụm 2.** `ml.district_link` trỏ tới quận trong
-  `admin.unit`. Chưa có bảng nào gắn tin đăng với nhãn quận, nên nếu cần thì phải tự đổi
-  `listings.district_old` (chữ) sang `district_label` theo tên.
-- **Cụm 4 phụ thuộc cụm 2.** `rag.listing_embeddings` trỏ tới `listings`, và `rag_document`
-  chép số liệu tiện ích từ `listing_spatial_features` vào dạng văn bản. Vì vậy khi đặc trưng
-  tiện ích đổi, phải chạy lại embedder để `rag_document` cập nhật theo.
-- **Thứ tự nạp:** cụm 1 (gồm cả bước `enable_postgis.sql` để có `geom`) phải có trước cụm 2,
-  vì `refresh_spatial_features()` đọc `geom` của tiện ích. Cụm 4 chạy sau cụm 2.
+- Tin nối với địa chỉ bằng FK nullable (khớp tên chính xác), và với tiện ích chỉ bằng khoảng cách.
+- `rag_document` chép số liệu từ `listing_spatial_features`, nên khi tiện ích đổi cần chạy lại
+  embedder (chỉ cập nhật `rag_document`, không embed lại nếu nội dung ngữ nghĩa không đổi).
+- Thứ tự dựng DB: `alembic upgrade head` → `seed_address.py` → `migrate_legacy_data.py` (hoặc
+  `python -m src.pipeline`) → `--embed-only`.

@@ -1,0 +1,30 @@
+[project]
+name = "housing-backend"
+version = "0.1.0"
+description = "Backend FastAPI cho chatbot tư vấn bất động sản TP.HCM"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.3",
+    "sqlalchemy[asyncio]>=2.0.30",
+    "asyncpg>=0.29",
+    "psycopg[binary]>=3.2",      # driver sync cho script import/pipeline
+    "alembic>=1.13",
+    "geoalchemy2>=0.15",
+    "pgvector>=0.3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-asyncio>=0.23", "ruff>=0.5"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.ruff]
+line-length = 100

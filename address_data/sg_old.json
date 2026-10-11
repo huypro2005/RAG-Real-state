@@ -1,0 +1,194 @@
+[
+    {
+        "districtId": 72,
+        "districtName": "Bình Chánh",
+        "cityCode": "SG",
+        "districtAlias": "binh-chanh",
+        "districtPrefix": "Huyện",
+        "otherNames": null
+    },
+    {
+        "districtId": 65,
+        "districtName": "Bình Tân",
+        "cityCode": "SG",
+        "districtAlias": "binh-tan",
+        "districtPrefix": "Quận",
+        "otherNames": null
+    },
+    {
+        "districtId": 66,
+        "districtName": "Bình Thạnh",
+        "cityCode": "SG",
+        "districtAlias": "binh-thanh",
+        "districtPrefix": "Quận",
+        "otherNames": null
+    },
+    {
+        "districtId": 73,
+        "districtName": "Cần Giờ",
+        "cityCode": "SG",
+        "districtAlias": "can-gio",
+        "districtPrefix": "Huyện",
+        "otherNames": null
+    },
+    {
+        "districtId": 74,
+        "districtName": "Củ Chi",
+        "cityCode": "SG",
+        "districtAlias": "cu-chi",
+        "districtPrefix": "Huyện",
+        "otherNames": null
+    },
+    {
+        "districtId": 67,
+        "districtName": "Gò Vấp",
+        "cityCode": "SG",
+        "districtAlias": "go-vap",
+        "districtPrefix": "Quận",
+        "otherNames": null
+    },
+    {
+        "districtId": 75,
+        "districtName": "Hóc Môn",
+        "cityCode": "SG",
+        "districtAlias": "hoc-mon",
+        "districtPrefix": "Huyện",
+        "otherNames": null
+    },
+    {
+        "districtId": 76,
+        "districtName": "Nhà Bè",
+        "cityCode": "SG",
+        "districtAlias": "nha-be",
+        "districtPrefix": "Huyện",
+        "otherNames": null
+    },
+    {
+        "districtId": 68,
+        "districtName": "Phú Nhuận",
+        "cityCode": "SG",
+        "districtAlias": "phu-nhuan",
+        "districtPrefix": "Quận",
+        "otherNames": null
+    },
+    {
+        "districtId": 53,
+        "districtName": "Quận 1",
+        "cityCode": "SG",
+        "districtAlias": "quan-1",
+        "districtPrefix": "",
+        "otherNames": null
+    },
+    {
+        "districtId": 62,
+        "districtName": "Quận 10",
+        "cityCode": "SG",
+        "districtAlias": "quan-10",
+        "districtPrefix": "",
+        "otherNames": null
+    },
+    {
+        "districtId": 63,
+        "districtName": "Quận 11",
+        "cityCode": "SG",
+        "districtAlias": "quan-11",
+        "districtPrefix": "",
+        "otherNames": null
+    },
+    {
+        "districtId": 64,
+        "districtName": "Quận 12",
+        "cityCode": "SG",
+        "districtAlias": "quan-12",
+        "districtPrefix": "",
+        "otherNames": null
+    },
+    {
+        "districtId": 54,
+        "districtName": "Quận 2",
+        "cityCode": "SG",
+        "districtAlias": "quan-2",
+        "districtPrefix": "",
+        "otherNames": null
+    },
+    {
+        "districtId": 55,
+        "districtName": "Quận 3",
+        "cityCode": "SG",
+        "districtAlias": "quan-3",
+        "districtPrefix": "",
+        "otherNames": null
+    },
+    {
+        "districtId": 56,
+        "districtName": "Quận 4",
+        "cityCode": "SG",
+        "districtAlias": "quan-4",
+        "districtPrefix": "",
+        "otherNames": null
+    },
+    {
+        "districtId": 57,
+        "districtName": "Quận 5",
+        "cityCode": "SG",
+        "districtAlias": "quan-5",
+        "districtPrefix": "",
+        "otherNames": null
+    },
+    {
+        "districtId": 58,
+        "districtName": "Quận 6",
+        "cityCode": "SG",
+        "districtAlias": "quan-6",
+        "districtPrefix": "",
+        "otherNames": null
+    },
+    {
+        "districtId": 59,
+        "districtName": "Quận 7",
+        "cityCode": "SG",
+        "districtAlias": "quan-7",
+        "districtPrefix": "",
+        "otherNames": null
+    },
+    {
+        "districtId": 60,
+        "districtName": "Quận 8",
+        "cityCode": "SG",
+        "districtAlias": "quan-8",
+        "districtPrefix": "",
+        "otherNames": null
+    },
+    {
+        "districtId": 61,
+        "districtName": "Quận 9",
+        "cityCode": "SG",
+        "districtAlias": "quan-9",
+        "districtPrefix": "",
+        "otherNames": null
+    },
+    {
+        "districtId": 69,
+        "districtName": "Tân Bình",
+        "cityCode": "SG",
+        "districtAlias": "tan-binh",
+        "districtPrefix": "Quận",
+        "otherNames": null
+    },
+    {
+        "districtId": 70,
+        "districtName": "Tân Phú",
+        "cityCode": "SG",
+        "districtAlias": "tan-phu",
+        "districtPrefix": "Quận",
+        "otherNames": null
+    },
+    {
+        "districtId": 71,
+        "districtName": "Thủ Đức",
+        "cityCode": "SG",
+        "districtAlias": "thu-duc",
+        "districtPrefix": "Thành phố",
+        "otherNames": null
+    }
+]

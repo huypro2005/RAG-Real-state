@@ -1,6 +1,8 @@
 {
-  "input_file": "D:\\my_project\\DoAn2\\Multi-Agent-RAG-and-Prediction-Housing-Price\\CrawlData\\data.json",
-  "generated_at": "2026-09-28T00:14:04+07:00",
+  "input_files": [
+    "CrawlData\\data.json"
+  ],
+  "generated_at": "2026-10-10T03:07:20+07:00",
   "input_lines": 8570,
   "malformed_lines": [],
   "duplicates_removed": 720,
