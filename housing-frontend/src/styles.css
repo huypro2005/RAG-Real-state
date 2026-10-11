@@ -1,64 +1,94 @@
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; margin: 0; }
 body { font-family: system-ui, "Segoe UI", sans-serif; color: #1f2937; background: #f3f4f6; }
+:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
 
-.layout { display: grid; grid-template-columns: minmax(360px, 460px) 1fr; height: 100%; }
+.layout { display: grid; grid-template-columns: minmax(360px, 480px) 1fr; height: 100%; }
 @media (max-width: 800px) {
-  .layout { grid-template-columns: 1fr; grid-template-rows: 1fr 45vh; }
+  .layout { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) 40vh; }
+  .chat { border-right: 0; border-bottom: 1px solid #e5e7eb; }
 }
 
 /* Chat */
 .chat { display: flex; flex-direction: column; min-height: 0; background: #fff; border-right: 1px solid #e5e7eb; }
-.chat__header { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #e5e7eb; }
+.chat__header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid #e5e7eb; }
 .chat__header h1 { font-size: 16px; margin: 0; }
+.chat__actions { display: flex; align-items: center; gap: 8px; }
 .chat__list { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
-.chat__empty, .chat__loading { color: #6b7280; font-size: 14px; margin: 0; }
+.chat__empty { display: flex; flex-direction: column; gap: 8px; color: #4b5563; font-size: 14px; }
+.chat__empty p { margin: 0 0 4px; }
+.chat__loading { display: flex; align-items: center; gap: 8px; color: #4b5563; font-size: 14px; margin: 0; }
 .chat__form { display: flex; gap: 8px; padding: 10px; border-top: 1px solid #e5e7eb; }
 .chat__form textarea { flex: 1; resize: none; padding: 8px; font: inherit; border: 1px solid #d1d5db; border-radius: 8px; }
+.chat__form textarea:focus { border-color: #2563eb; outline: none; box-shadow: 0 0 0 2px #bfdbfe; }
+
+.dots { display: inline-flex; gap: 3px; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: #2563eb; animation: blink 1s infinite ease-in-out; }
+.dots i:nth-child(2) { animation-delay: 0.15s; }
+.dots i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes blink { 0%, 80%, 100% { opacity: 0.25; } 40% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .dots i { animation: none; } }
 
 .btn { background: #2563eb; color: #fff; border: 0; border-radius: 8px; padding: 8px 14px; font: inherit; cursor: pointer; }
+.btn:hover:not(:disabled) { background: #1d4ed8; }
 .btn:disabled { background: #9ca3af; cursor: not-allowed; }
-.btn--ghost { background: transparent; color: #2563eb; border: 1px solid #2563eb; padding: 4px 10px; font-size: 13px; }
-.chip { align-self: flex-start; background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; border-radius: 16px; padding: 6px 12px; font: inherit; font-size: 13px; cursor: pointer; }
+.btn--ghost { background: transparent; color: #1d4ed8; border: 1px solid #93c5fd; padding: 4px 10px; font-size: 13px; }
+.btn--ghost:hover:not(:disabled) { background: #eff6ff; }
+.btn--ghost:disabled { background: transparent; color: #9ca3af; border-color: #e5e7eb; }
+.btn--small { justify-self: start; padding: 5px 12px; font-size: 13px; }
+.chip { align-self: flex-start; background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; border-radius: 16px; padding: 6px 12px; font: inherit; font-size: 13px; cursor: pointer; text-align: left; }
+.chip:hover { background: #dbeafe; }
+
+.modes { display: inline-flex; padding: 2px; border-radius: 8px; background: #f3f4f6; border: 1px solid #e5e7eb; }
+.modes__btn { border: 0; background: transparent; color: #4b5563; border-radius: 6px; padding: 4px 10px; font: inherit; font-size: 13px; cursor: pointer; }
+.modes__btn--on { background: #fff; color: #1d4ed8; font-weight: 600; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
 
 /* Bong bóng */
 .message { display: flex; flex-direction: column; gap: 8px; }
 .message--user { align-items: flex-end; }
 .bubble { max-width: 90%; padding: 8px 12px; border-radius: 12px; font-size: 14px; line-height: 1.45; }
 .bubble__text { margin: 0; white-space: pre-wrap; }
-.bubble--user { background: #2563eb; color: #fff; }
-.bubble--assistant { background: #f3f4f6; }
+.bubble--user { background: #2563eb; color: #fff; border-bottom-right-radius: 4px; }
+.bubble--assistant { align-self: flex-start; background: #f3f4f6; border-bottom-left-radius: 4px; }
 .bubble--hint { background: #fef9c3; }
 .bubble--error { background: #fee2e2; color: #991b1b; }
 .banner { margin: 0 0 6px; padding: 4px 8px; border-radius: 6px; background: #ffedd5; color: #9a3412; font-size: 12px; }
 
 /* Thẻ tin */
-.card { display: flex; gap: 10px; padding: 10px; border: 1px solid #e5e7eb; border-radius: 10px; background: #fff; cursor: pointer; }
+.card { display: flex; gap: 10px; padding: 10px; border: 1px solid #e5e7eb; border-radius: 10px; background: #fff; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
 .card:hover { border-color: #93c5fd; }
 .card--selected { border-color: #2563eb; box-shadow: 0 0 0 2px #bfdbfe; }
 .badge { flex: none; width: 26px; height: 26px; border-radius: 50%; background: #2563eb; color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 13px; }
 .card__body { min-width: 0; }
 .card__body p { margin: 2px 0; }
-.card__title { margin: 0; font-size: 14px; }
+.card__title { margin: 0; font-size: 14px; line-height: 1.35; }
 .card__price { font-weight: 700; color: #b91c1c; }
+.card__unit { font-weight: 400; font-size: 13px; color: #4b5563; }
 .card__meta { font-size: 13px; color: #4b5563; }
 .card__addr { font-size: 13px; }
-.card__addr--new { font-size: 12px; color: #6b7280; }
+.card__addr--new { font-size: 12px; color: #4b5563; }
 .card__warnings { display: flex; flex-wrap: wrap; gap: 4px; }
-.warning { background: #fef3c7; color: #92400e; font-size: 12px; padding: 1px 6px; border-radius: 4px; }
+.warning { margin: 0; background: #fef3c7; color: #92400e; font-size: 12px; padding: 1px 6px; border-radius: 4px; }
+
+/* Định giá */
+.price-card { display: grid; gap: 8px; max-width: 90%; padding: 10px 12px; border: 1px solid #bfdbfe; border-radius: 8px; background: #eff6ff; font-size: 14px; }
+.fields { display: flex; flex-wrap: wrap; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.field { padding: 2px 8px; border-radius: 12px; background: #fff; border: 1px solid #dbeafe; font-size: 12px; color: #374151; }
+.field--missing { border-style: dashed; border-color: #f59e0b; color: #92400e; }
+.estimate { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; margin: 0; }
+.estimate dt { color: #475569; }
+.estimate dd { margin: 0; font-weight: 600; text-align: right; }
+.estimate .estimate__total { font-size: 17px; color: #b91c1c; }
 
 /* Bản đồ */
 .map { position: relative; min-height: 0; }
 .map__canvas { height: 100%; width: 100%; }
-.pin { width: 30px; height: 30px; border-radius: 50%; background: #2563eb; color: #fff; border: 2px solid #fff; display: grid; place-items: center; font-weight: 700; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); }
+.map__note { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000; margin: 0; padding: 6px 10px; max-width: calc(100% - 100px); background: #fff; border-radius: 8px; font-size: 13px; color: #374151; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); }
+.pin { width: 30px; height: 30px; border-radius: 50%; background: #2563eb; color: #fff; border: 2px solid #fff; display: grid; place-items: center; font-weight: 700; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); transition: transform 0.15s; }
 .pin--unreliable { background: #6b7280; }
+.pin--active { background: #b91c1c; transform: scale(1.25); }
 .legend { position: absolute; right: 10px; bottom: 20px; z-index: 1000; margin: 0; padding: 8px 10px; list-style: none; background: #fff; border-radius: 8px; font-size: 12px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); }
 .legend li { display: flex; align-items: center; gap: 6px; }
 .legend__dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
 .legend__dot--pin { background: #2563eb; }
-
-.modes { display: flex; gap: 4px; }
-.btn--on { background: #1d4ed8; color: #fff; }
-.price-card { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; margin: 6px 0 0; padding: 10px 12px; border: 1px solid #bfdbfe; border-radius: 8px; background: #eff6ff; font-size: 14px; }
-.price-card dt { color: #475569; }
-.price-card dd { margin: 0; font-weight: 600; text-align: right; }
+.legend__dot--unreliable { background: #6b7280; }

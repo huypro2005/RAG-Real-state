@@ -19,11 +19,17 @@ export function App() {
         messages={chat.messages}
         loading={chat.loading}
         selected={recommend.selected}
+        shown={recommend.listings}
         onSend={chat.send}
         onReset={chat.reset}
+        onSelect={recommend.select}
+      />
+      <MapView
+        listings={recommend.listings}
+        pois={recommend.pois}
+        selected={recommend.selected}
         onSelect={recommend.setSelected}
       />
-      <MapView listings={recommend.listings} pois={recommend.pois} selected={recommend.selected} />
     </main>
   );
 }

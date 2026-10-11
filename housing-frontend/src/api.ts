@@ -37,17 +37,23 @@ export type Mode = "recommendation" | "prediction";
 export interface PredictionEstimate {
   price_per_m2: number; // triệu VND/m²
   total_price: number; // triệu VND
+  price_per_m2_low?: number; // khoảng tin cậy (phân vị các cây RF), triệu VND/m²
+  price_per_m2_high?: number;
   distance_to_center_km: number;
   district_median_per_m2: number | null; // backend không có median của quận thì null
+  median_by_type?: boolean; // true: median riêng của loại nhà này trong quận
+  warnings?: string[]; // dữ liệu train thưa / ngoại suy / các cây bất đồng
 }
+
+export type PredictionStatus = "collecting" | "ready" | "predicted" | "out_of_scope";
 
 export interface PredictionTurn {
   conversation_id: string;
   mode: "prediction";
-  status: "collecting" | "ready" | "predicted" | "out_of_scope";
+  status: PredictionStatus;
   answer: string;
   summary: string;
-  fields: Record<string, unknown>;
+  fields: Record<string, string | number | null>;
   missing: string[];
   prediction?: PredictionEstimate | null;
 }
@@ -95,10 +101,26 @@ export const GOONG_TILES_KEY: string = import.meta.env.VITE_GOONG_MAPTILES_KEY ?
 
 const PREFIX = `${API_URL}/api/v1/recommend`;
 
+/** Lấy `detail` dạng chuỗi của FastAPI (vd. 503 "Trợ lý tạm thời không phản hồi…") nếu có. */
+async function errorDetail(response: Response): Promise<string> {
+  try {
+    const body = (await response.json()) as { detail?: unknown };
+    if (typeof body.detail === "string") return body.detail;
+  } catch {
+    // Thân lỗi không phải JSON: dùng mã trạng thái.
+  }
+  return `Máy chủ trả lỗi ${response.status}.`;
+}
+
 async function request<T>(url: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(url, init);
+  let response: Response;
+  try {
+    response = await fetch(url, init);
+  } catch {
+    throw new Error("Không kết nối được máy chủ. Kiểm tra backend (hoặc mock) đang chạy.");
+  }
   if (!response.ok) {
-    throw new Error(`Máy chủ trả lỗi ${response.status}`);
+    throw new Error(await errorDetail(response));
   }
   return (await response.json()) as T;
 }

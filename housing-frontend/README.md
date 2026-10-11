@@ -17,7 +17,9 @@ PORT=8001 npm run mock && npm run dev
 ```
 
 Nút "Gợi ý | Dự đoán giá" đổi mode. Gợi ý: `POST /api/v1/recommend/chat`, `/recommend/map`, `/recommend/reset`.
-Dự đoán giá: `POST /api/v1/chat` (mode `prediction`) và `POST /api/v1/reset` (chỉ mock có sẵn cho tới khi backend xong).
+Dự đoán giá: `POST /api/v1/chat` (mode `prediction`) và `POST /api/v1/reset`.
+Thẻ định giá hiện các trường đã biết/còn thiếu, giá ước tính, khoảng tham khảo (từ `price_per_m2_low/high`), trung vị quận và cảnh báo; trạng thái `ready` có nút "Dự đoán giá ngay" (gửi "ok").
+Bản đồ: bấm thẻ ⇒ bay tới marker; bấm marker ⇒ chọn và cuộn tới thẻ; bấm thẻ của lượt cũ ⇒ bản đồ đổi về bộ tin của lượt đó.
 Câu thử với mock: "Căn hộ Quận 7 dưới 3 tỷ", "Mình muốn mua nhà", "so sánh căn 1 và 3", "tin hiếm", "degraded", "thuê"; mode giá: "Nhà 60m2 Gò Vấp".
 
 ## Biến môi trường (xem `.env.example`)

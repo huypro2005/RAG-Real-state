@@ -1,16 +1,18 @@
 import { useEffect, useRef } from "react";
+import type { MutableRefObject } from "react";
 import L from "leaflet";
 import type { Marker as LeafletMarker } from "leaflet";
 import { CircleMarker, MapContainer, Marker, Popup, TileLayer, Tooltip, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { GOONG_TILES_KEY } from "../api";
 import type { ListingHit, MapFeature, PoiType } from "../api";
-import { POI_LABELS, formatDistance, formatPrice } from "../format";
+import { POI_LABELS, formatArea, formatDistance, formatPrice } from "../format";
 
 interface Props {
   listings: ListingHit[];
   pois: MapFeature[];
-  selected: number | null;
+  selected: string | null; // listing_id
+  onSelect: (listingId: string) => void;
 }
 
 const HCM_CENTER: L.LatLngTuple = [10.7769, 106.7009];
@@ -32,20 +34,21 @@ const TILES = GOONG_TILES_KEY
       attribution: "&copy; OpenStreetMap contributors",
     };
 
-function numberIcon(position: number, reliable: boolean): L.DivIcon {
-  const cls = reliable ? "pin" : "pin pin--unreliable";
+function numberIcon(position: number, reliable: boolean, active: boolean): L.DivIcon {
+  const cls = ["pin", reliable ? "" : "pin--unreliable", active ? "pin--active" : ""].filter(Boolean).join(" ");
   return L.divIcon({ className: "", html: `<div class="${cls}">${position}</div>`, iconSize: [30, 30] });
 }
 
 /** Tự fitBounds khi bộ tin đổi, và bay tới marker khi người dùng bấm thẻ. */
 function MapController({ listings, selected, markers }: {
   listings: ListingHit[];
-  selected: number | null;
-  markers: React.MutableRefObject<Map<number, LeafletMarker>>;
+  selected: string | null;
+  markers: MutableRefObject<Map<string, LeafletMarker>>;
 }) {
   const map = useMap();
 
   useEffect(() => {
+    map.closePopup(); // bộ tin đổi (hoặc reset): bỏ popup của tin cũ
     const points = listings.flatMap((hit) =>
       hit.latitude !== null && hit.longitude !== null ? [[hit.latitude, hit.longitude] as L.LatLngTuple] : [],
     );
@@ -55,18 +58,19 @@ function MapController({ listings, selected, markers }: {
   }, [listings, map]);
 
   useEffect(() => {
-    const hit = listings.find((item) => item.position === selected);
+    const hit = listings.find((item) => item.listing_id === selected);
     if (!hit || hit.latitude === null || hit.longitude === null) return;
     map.flyTo([hit.latitude, hit.longitude], Math.max(map.getZoom(), 16), { duration: 0.8 });
-    markers.current.get(hit.position)?.openPopup();
+    markers.current.get(hit.listing_id)?.openPopup();
   }, [selected, listings, map, markers]);
 
   return null;
 }
 
-export function MapView({ listings, pois, selected }: Props) {
-  const markers = useRef(new Map<number, LeafletMarker>());
+export function MapView({ listings, pois, selected, onSelect }: Props) {
+  const markers = useRef(new Map<string, LeafletMarker>());
   const drawable = listings.filter((hit) => hit.latitude !== null && hit.longitude !== null);
+  const missing = listings.length - drawable.length;
 
   return (
     <section className="map" aria-label="Bản đồ">
@@ -94,20 +98,31 @@ export function MapView({ listings, pois, selected }: Props) {
           <Marker
             key={hit.listing_id}
             position={[hit.latitude as number, hit.longitude as number]}
-            icon={numberIcon(hit.position, hit.coords_reliable)}
+            icon={numberIcon(hit.position, hit.coords_reliable, hit.listing_id === selected)}
+            zIndexOffset={hit.listing_id === selected ? 1000 : 0}
+            eventHandlers={{ click: () => onSelect(hit.listing_id) }}
             ref={(marker) => {
-              if (marker) markers.current.set(hit.position, marker);
-              else markers.current.delete(hit.position);
+              if (marker) markers.current.set(hit.listing_id, marker);
+              else markers.current.delete(hit.listing_id);
             }}
           >
             <Popup>
               <strong>{hit.position}. {hit.title}</strong>
               <br />
-              {formatPrice(hit.price)}
+              {formatPrice(hit.price)} · {formatArea(hit.area)}
+              {!hit.coords_reliable && <><br /><em>Vị trí có thể không chính xác</em></>}
+              <br />
+              <a href={hit.listing_url} target="_blank" rel="noopener noreferrer">Xem tin gốc</a>
             </Popup>
           </Marker>
         ))}
       </MapContainer>
+      {listings.length === 0 && (
+        <p className="map__note">Gửi yêu cầu ở khung chat, các tin gợi ý sẽ hiện trên bản đồ.</p>
+      )}
+      {missing > 0 && (
+        <p className="map__note">{missing} tin không có tọa độ nên không hiện trên bản đồ.</p>
+      )}
       <ul className="legend">
         {(Object.keys(POI_COLORS) as PoiType[]).map((type) => (
           <li key={type}>
@@ -116,6 +131,7 @@ export function MapView({ listings, pois, selected }: Props) {
           </li>
         ))}
         <li><span className="legend__dot legend__dot--pin" />Tin đề xuất</li>
+        <li><span className="legend__dot legend__dot--unreliable" />Tọa độ chưa đáng tin</li>
       </ul>
     </section>
   );
