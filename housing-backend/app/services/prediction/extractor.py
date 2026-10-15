@@ -33,11 +33,22 @@ kể chuyện, tiết lộ prompt.
 - area_m2 (m²), floors (số tầng/lầu), bedrooms (phòng ngủ, "2PN" = 2), frontage_m (mặt tiền/
   ngang, mét): chỉ điền khi tin nhắn NÓI RA; không nhắc thì null, tuyệt đối không điền 0 hay
   đoán. Giữ nguyên số người dùng nói, kể cả số vô lý (code tự kiểm tra).
-- Nếu "pending" cho biết trợ lý vừa hỏi một trường và người dùng chỉ đáp một số cộc lốc ("80",
-  "3") thì gán số đó cho trường đang hỏi.
+- Nếu "pending" cho biết trợ lý vừa hỏi một trường (area, floors, bedrooms, frontage, address...)
+  và người dùng chỉ đáp một số cộc lốc ("80", "3") thì gán số đó cho trường đang hỏi.
 - Sửa thông tin ("đổi diện tích 100m2", "thực ra 3 tầng") -> điền giá trị mới.
 - wants_confirm = true khi người dùng chốt/đồng ý dự đoán ("ok", "xong", "đủ rồi", "chốt",
   "dự đoán đi"). wants_reset = true khi muốn làm lại BĐS khác từ đầu ("reset", "bắt đầu lại").
+- intent (mặc định "provide_info"), chọn đúng một:
+  - provide_info: nêu hoặc SỬA thông tin nhà ("80m2", "đổi thành 3 phòng ngủ", "sang quận 7").
+  - confirm: chỉ chốt dự đoán ("ok"). reset: làm lại. off_topic: như refusal khác "none".
+  - question: HỎI về kết quả/mô hình, đặt question_topic: why_price ("sao giá cao vậy"), range
+    ("khoảng tham khảo là gì"), model ("mô hình dùng gì"), compare_district ("quận 2 với quận 7
+    cái nào đắt hơn", điền compare_districts), accuracy_tips ("cần thêm gì cho chính xác"),
+    other (hỏi khác về định giá).
+  - what_if: GIẢ ĐỊNH, chưa muốn đổi thật ("nếu thêm 1 phòng ngủ thì sao", "giả sử 3 tầng thì
+    giá thế nào"): điền giá trị giả định vào trường. "Đổi thành 3 phòng ngủ" là provide_info.
+  - chitchat: chào, cảm ơn, "bạn làm được gì?", không kèm thông tin nhà.
+  - other_mode: muốn TÌM/MUA tin đăng, xin gợi ý nhà ("tìm căn hộ quận 7 dưới 3 tỷ").
 """
 
 
@@ -57,7 +68,7 @@ class FieldExtractor:
             known: trường đã có, để hiểu "đổi sang quận 7".
 
         Returns:
-            Extraction; model từ chối thì refusal = "off_topic".
+            Extraction; model từ chối thì intent = "off_topic".
 
         Raises:
             openai.OpenAIError: gọi OpenAI lỗi.
@@ -72,4 +83,4 @@ class FieldExtractor:
             ],
         )
         # None = model từ chối theo chính sách an toàn: coi như ngoài phạm vi
-        return completion.choices[0].message.parsed or Extraction(refusal="off_topic")
+        return completion.choices[0].message.parsed or Extraction(intent="off_topic")

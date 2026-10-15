@@ -11,7 +11,9 @@ from typing import NamedTuple
 
 from app.services.recommendation.schemas import (
     POI_NAMES,
+    PROPERTY_TYPES,
     ConstraintDelta,
+    PlaceRequest,
     SearchConstraints,
     TurnPlan,
 )
@@ -47,6 +49,42 @@ RESET_PATTERN_FOLDED = re.compile(r"""
 ANY_AREA_PATTERN_FOLDED = re.compile(r"""
     \b(?: toan\s(?:thanh\spho|tp|tphcm|sai\sgon)
         | (?:quan|khu\svuc|khu)\snao\scung\sduoc | dau\scung\sduoc )\b""", re.VERBOSE)
+OWN_HOME_PATTERN_FOLDED = re.compile(r"\b(?:dinh\sgia|nha\s(?:cua\s)?toi|ban\sduoc\sbao\snhieu)\b")
+# Bí danh địa điểm → tên (không dấu) có trong pois; khoá so với cả cụm sau khi bỏ từ đệm
+ALIASES = {
+    "uit": "cong nghe thong tin", "cntt": "cong nghe thong tin", "bk": "dai hoc bach khoa",
+    "bach khoa": "dai hoc bach khoa", "hcmut": "dai hoc bach khoa",
+    "khtn": "khoa hoc tu nhien", "hcmus": "khoa hoc tu nhien", "kinh te": "kinh te thanh pho",
+    "ueh": "kinh te thanh pho", "xhnv": "khoa hoc xa hoi", "ussh": "khoa hoc xa hoi",
+    "tdtu": "ton duc thang", "spkt": "cong nghe ky thuat thanh pho",  # SPKT nay đổi tên (OSM)
+    "su pham ky thuat": "cong nghe ky thuat thanh pho",
+}
+# Viết tắt KHÔNG tra bằng pois mà để Goong: "đhqg" gần nhất trong pois là Bách khoa (Q10), trong
+# khi ĐHQG-HCM ở Thủ Đức. Giá trị là tên đầy đủ gửi Goong và dùng để kiểm kết quả.
+GOONG_ONLY = {"dhqg": "dai hoc quoc gia thanh pho ho chi minh"}
+# "gần <từ chỉ loại> <tên riêng>": nhóm poi là từ chỉ loại, nhóm rest là phần còn lại của câu
+POI_ALT = "dai hoc|dh|cao dang|hoc vien|thpt|thcs|truong|benh vien|bv|cho"
+PLACE_PATTERN_FOLDED = re.compile(
+    rf"\b(?:gan|canh|sat|quanh|toi|den)\s+(?:(?P<poi>{POI_ALT})\s+)?(?P<rest>[a-z0-9 ]+)")
+REMOVE_PLACE_PATTERN_FOLDED = re.compile(r"\b(?:bo|xoa|khong can)\s+(?:dieu\skien\s+)?gan\b")
+POI_KINDS = {"truong": "truong_hoc", "thpt": "truong_hoc", "thcs": "truong_hoc",
+             "dai hoc": "truong_hoc", "dh": "truong_hoc", "cao dang": "truong_hoc",
+             "hoc vien": "truong_hoc", "benh vien": "benh_vien", "bv": "benh_vien", "cho": "cho"}
+KEEP_POI_WORD = {"dai hoc", "dh", "cao dang", "hoc vien", "thpt", "thcs"}  # nằm trong tên riêng
+# Hết tên riêng: từ nối, quận, giá, số lượng
+NAME_STOP = {"o", "tai", "quan", "huyen", "phuong", "q", "duoi", "tren", "khoang", "tam", "gia",
+             "co", "voi", "de", "va", "ma", "can", "thi", "khong", "nhe", "nua", "hon", "gan",
+             "ban", "den"}
+# "tu", "nha" cũng là tên ("bệnh viện Từ Dũ", "chợ Nhà Bè"): chỉ là từ nối khi đứng sau tên
+LATE_STOP = {"tu", "nha"}
+NAME_UNITS = {"ty", "tr", "trieu", "pn", "phong", "m2", "km", "m", "met", "tang", "lau"}
+# Phần đầu chỉ là mô tả loại ("trường học", "bệnh viện lớn"): không phải tên riêng. "đa khoa"
+# chỉ là mô tả khi đứng cuối; "bệnh viện đa khoa Sài Gòn" là tên. "từ" không có ("bệnh viện Từ Dũ").
+GENERIC_NAME = re.compile(r"^(?:(?:hoc|lon|nho|tot|cong|tu nhan|quoc te|dan lap|chat luong|mam non|"
+                          r"tieu hoc|ban tru)\b\s*|(?:da khoa|chuyen khoa)\s*$)")
+# Câu có số + đơn vị khoảng cách: "8 km", "tầm 12 km", "500m", "3 cây số" (không phải "60 m vuông")
+DISTANCE_PATTERN_FOLDED = re.compile(
+    r"\b(\d+(?:[.,]\d+)?)\s*(km|met|cay\sso|m(?!\s*(?:2|vuong)))\b")
 # Câu có nhắc loại BĐS: khớp "căn hộ", "nhà", "loại nào cũng được"; không khớp "bệnh viện".
 PROPERTY_WORDS_PATTERN_FOLDED = re.compile(
     r"\b(?:loai|can\sho|chung\scu|nha|dat|biet\sthu|lien\ske|shophouse|kho|xuong)\b"
@@ -179,10 +217,15 @@ class MessageRules:
         delta.cheaper = (delta.cheaper and bool(CHEAPER_PATTERN_FOLDED.search(self.text))
                          and delta.price_max is None and delta.price_min is None)
         self._correct_bedrooms(delta)
+        self._correct_places(delta, current, ignored)
         self._correct_pois(delta, current, ignored)
         self._correct_property_kinds(plan, delta, reset)
         self._correct_areas(delta, [] if reset else current_areas, ward_names, district_names)
         self._correct_clear_fields(plan, delta)
+        own_home = plan.intent == "other_mode" and OWN_HOME_PATTERN_FOLDED.search(self.text)
+        if plan.intent in ("chitchat", "other_mode") and not own_home and (
+                self._adds_conditions(plan, current, current_areas)):
+            plan.intent = "refine" if current != SearchConstraints() else "search"
         if (plan.intent in ("search", "refine") and "?" in self.raw and not plan.clear_fields
                 and delta.model_copy(update={"soft_query": None}) == ConstraintDelta()):
             plan.intent = "ask_detail"  # câu hỏi không có điều kiện mới thì không có gì để tìm lại
@@ -192,6 +235,21 @@ class MessageRules:
                 part for part in phrases(delta.soft_query) if fold(part) not in old
             ) or None
         return Correction(plan, ignored, typed_price)
+
+    @staticmethod
+    def _adds_conditions(plan: TurnPlan, current: SearchConstraints, areas: list[str]) -> bool:
+        """Plan có điều kiện tìm MỚI; LLM chép lại điều kiện đang có (câu "hi") thì không tính."""
+        delta = plan.set_fields.model_copy(update={"soft_query": None})
+        kinds = {t for kind in delta.property_kinds for t in PROPERTY_TYPES[kind]}
+        names = {area_key(name) for name in [*delta.district_names, *delta.new_ward_names]}
+        if kinds <= set(current.property_types):
+            delta.property_kinds = []
+        if names <= {area_key(name) for name in areas}:
+            delta.district_names, delta.new_ward_names = [], []
+        same = [f for f in ("price_min", "price_max", "area_min", "area_max", "bedrooms_min")
+                if getattr(delta, f) == getattr(current, f)]
+        delta = delta.model_copy(update=dict.fromkeys(same))
+        return bool(plan.clear_fields) or delta != ConstraintDelta()
 
     def references(self, last_results: list[str]) -> tuple[list[str], list[str]]:
         """(listing_id hợp lệ, tham chiếu không có); không tham chiếu nào thì xét mọi tin (#25)."""
@@ -279,13 +337,69 @@ class MessageRules:
         if delta.bedrooms_min not in found:
             delta.bedrooms_min = found[0] if found else None
 
+    def _correct_places(
+        self, delta: ConstraintDelta, current: SearchConstraints, ignored: list[str]
+    ) -> None:
+        """Địa điểm có tên: bỏ tên kèm chỉ thị (N9); LLM không đặt thì dựng từ câu ("gần bv chợ
+        rẫy", "gần UIT"); loại (kind) theo từ loại đứng ngay trước tên trong câu; bán kính chỉ nhận
+        khi câu có số + km/m (LLM hay điền mặc định 2 km) và đổi được bán kính địa điểm đang có."""
+        places = [p for p in delta.near_places if not re.search(r"[;!?\n]", p.name)]
+        dropping = REMOVE_PLACE_PATTERN_FOLDED.search(self.text)  # "bỏ điều kiện gần X"
+        for match in [] if places or dropping else PLACE_PATTERN_FOLDED.finditer(self.text):
+            words, tokens = match["rest"].split(), []
+            for i, token in enumerate(words):
+                stop = token in NAME_STOP or re.fullmatch(r"q?\d+[a-z]+", token) or len(tokens) >= 6
+                stop = stop or (tokens and token in LATE_STOP)
+                if stop or (token.isdigit() and words[i + 1:i + 2] and words[i + 1] in NAME_UNITS):
+                    break
+                tokens.append(token)
+            poi, name = match["poi"], " ".join(tokens)
+            if poi not in KEEP_POI_WORD:  # "trường học", "bệnh viện lớn": mô tả loại, không có tên
+                name = GENERIC_NAME.sub("", name)
+            if poi and name:
+                name = f"{poi} {name}" if poi in KEEP_POI_WORD else name
+                places.append(PlaceRequest(name=name, kind=POI_KINDS[poi], max_distance_m=None))
+            elif not poi and (" ".join(tokens) in ALIASES or " ".join(tokens) in GOONG_ONLY):
+                places.append(PlaceRequest(name=" ".join(tokens), kind=None, max_distance_m=None))
+        distance = DISTANCE_PATTERN_FOLDED.search(self.text)
+        meters = distance and float(distance[1].replace(",", ".")) * (
+            1000 if distance[2] in ("km", "cay so") else 1)
+        if not places and distance and current.near_places and not re.search(
+                rf"\b(?:{POI_ALT})\b", self.text):  # "gần hơn nữa, 1 km thôi": đổi bán kính
+            targets = current.near_places if len(current.near_places) == 1 else [
+                c for c in current.near_places if self._mentions(c.name)]
+            if len(targets) == 1:
+                places = [PlaceRequest(name=targets[0].name, kind=None, max_distance_m=int(meters))]
+            else:
+                ignored.append("bán kính (quanh địa điểm nào?)")
+        delta.near_places = [self._place_kind(p).model_copy(update={
+            "max_distance_m": p.max_distance_m if distance else None}) for p in places]
+
+    def _place_kind(self, place: PlaceRequest) -> PlaceRequest:
+        """Từ loại ngay trước tên ("bệnh viện Hùng Vương") hoặc đầu tên thắng kind "khac"/None."""
+        name = re.escape(fold(place.name))
+        before = re.search(rf"\b(?:({POI_ALT})\s+)?{name}\b", self.text)
+        leading = re.match(rf"({POI_ALT})\b", fold(place.name))
+        word = (before and before.group(1)) or (leading and leading.group(1))
+        if place.kind in (None, "khac") and word:
+            return place.model_copy(update={"kind": POI_KINDS[word]})
+        return place
+
+    def _mentions(self, name: str) -> bool:
+        """Câu nhắc tên địa điểm đang có (một từ riêng của tên, hoặc bí danh của nó)."""
+        words = set(fold(name).split()) - {"truong", "dai", "hoc", "benh", "vien", "cao", "dang"}
+        said = set(self.text.split())
+        return any(len(w) > 2 and w in said for w in words) or any(
+            key in said and set(value.split()) <= words for key, value in ALIASES.items())
+
     def _correct_pois(
         self, delta: ConstraintDelta, current: SearchConstraints, ignored: list[str]
     ) -> None:
         """POI chỉ khi câu nhắc trường/bệnh viện/chợ; TTTM, công viên... thành sở thích mềm."""
         known = {poi.poi_type for poi in current.near_pois}
-        mentioned = [r for r in delta.near_pois if POI_MENTIONS_RAW[r.poi_type].search(self.raw)]
-        explained = any(pattern.search(self.text) for pattern, _ in SOFT_PLACES_FOLDED)
+        mentioned = [r for r in delta.near_pois if POI_MENTIONS_RAW[r.poi_type].search(self.raw)
+                     and r.poi_type not in {p.kind for p in delta.near_places}]  # tên riêng thắng
+        explained = delta.near_places or any(p.search(self.text) for p, _ in SOFT_PLACES_FOLDED)
         if "gan" in self.text.split() and not explained:  # "gần <nơi lạ>": báo, không bỏ im
             ignored += [f"gần {POI_NAMES[r.poi_type]}" for r in delta.near_pois
                         if r not in mentioned and r.poi_type not in known]

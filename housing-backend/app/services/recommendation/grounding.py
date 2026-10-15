@@ -7,7 +7,7 @@ from collections.abc import Callable, Sequence
 from datetime import date
 from typing import Any, NamedTuple
 
-from app.services.recommendation.schemas import (
+from app.services.formatting import (
     format_distance,
     format_number,
     format_price,

@@ -6,13 +6,15 @@ LLM chỉ dùng ở TurnInterpreter; chọn nhánh, merge, kiểm tra và viết
 import uuid
 from datetime import date, datetime, timedelta, timezone
 
-import httpx
-from openai import AsyncOpenAI, DefaultAsyncHttpxClient
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 from sqlalchemy.pool import NullPool
 
-from app.core.config import Settings, get_settings
+from app.core.config import get_settings
+from app.services.assistant_text import assistant_reply
 from app.services.embedding import EmbeddingClient
+from app.services.formatting import format_price
+from app.services.openai_client import openai_client
+from app.services.places import PlaceOutcome, PlaceResolver
 from app.services.recommendation.grounding import is_vague_question
 from app.services.recommendation.interpreter import TurnInterpreter
 from app.services.recommendation.schemas import (
@@ -24,7 +26,6 @@ from app.services.recommendation.schemas import (
     PoiRequest,
     SearchConstraints,
     TurnPlan,
-    format_price,
 )
 from app.services.recommendation.search import TOP_K, HybridSearch
 from app.services.recommendation.text_rules import Correction, MessageRules, phrases
@@ -40,6 +41,7 @@ from app.services.recommendation.writer import (
     refs_not_found,
     results_answer,
 )
+from app.services.valuation import NO_LISTINGS, NO_VALUER, ListingValuer
 
 MAX_MESSAGE_CHARS = 1000
 HISTORY_MESSAGES = 12        # 6 lượt gần nhất (người dùng + trợ lý)
@@ -52,15 +54,6 @@ KEEP_BUDGET_ANSWER = "Mình giữ nguyên ngân sách hiện tại. Bạn cần 
 LAND_KINDS = {"dat", "dat_nen_du_an"}
 RESET_NOTE = "Mình đã xoá điều kiện cũ và tìm lại từ đầu. "
 VIETNAM_TZ = timezone(timedelta(hours=7))  # "hôm nay" theo giờ Việt Nam, không theo giờ máy chủ
-
-
-def openai_client(settings: Settings) -> AsyncOpenAI:
-    """Client OpenAI không giữ kết nối keep-alive (mỗi lượt có thể chạy trong event loop riêng)."""
-    key = settings.openai_api_key
-    return AsyncOpenAI(
-        api_key=key.get_secret_value() if key else None,
-        http_client=DefaultAsyncHttpxClient(limits=httpx.Limits(max_keepalive_connections=0)),
-    )
 
 
 class ConversationStore:
@@ -168,7 +161,8 @@ def validate_constraints(constraints: SearchConstraints) -> list[str]:
             problems.append(f"{label} tối thiểu lớn hơn {label} tối đa")
     low, high = POI_DISTANCE_RANGE
     problems += [f"khoảng cách {poi.max_distance_m} m phải trong {low}-{high} m"
-                 for poi in constraints.near_pois if not low <= poi.max_distance_m <= high]
+                 for poi in constraints.near_pois + constraints.near_places
+                 if not low <= poi.max_distance_m <= high]
     return problems
 
 
@@ -202,13 +196,16 @@ class RecommendationService:
         self, store: ConversationStore | None = None,
         interpreter: TurnInterpreter | None = None,
         embedding_client: EmbeddingClient | None = None, engine: AsyncEngine | None = None,
-        rerank_enabled: bool | None = None,
+        rerank_enabled: bool | None = None, valuer: ListingValuer | None = None,
+        places: PlaceResolver | None = None,
     ):
         settings = get_settings()
         self.interpreter = interpreter or TurnInterpreter(
             openai_client(settings), settings.openai_model
         )
         self.store = store or ConversationStore()
+        self.valuer = valuer  # None: chưa có mô hình định giá, intent appraise báo chưa bật
+        self.places = places or PlaceResolver(settings.goong_api_key)  # key Goong của Geocoder
         self.embedding_client = embedding_client or EmbeddingClient(settings)
         # Tự dựng engine thì không giữ pool: người gọi (script, harness) có thể chạy mỗi lượt
         # bằng một asyncio.run riêng, kết nối pool gắn với event loop cũ sẽ hỏng.
@@ -249,6 +246,16 @@ class RecommendationService:
         """Hiểu câu (hoặc xử lý câu xác nhận ngân sách) rồi chọn nhánh trả lời."""
         areas = await search.area_names(state.constraints)
         rules = MessageRules(message)  # LLM chỉ đề xuất; quy tắc tất định có quyền bác
+        pending_places, state.pending_places = state.pending_places, []  # câu khác: bỏ chờ
+        picked = self.places.choose(state.constraints, pending_places, message,
+                                    rules.confirmation() == "yes")  # chọn bằng code, khỏi gọi LLM
+        if picked == "retry":  # chưa hiểu chọn ai: hỏi lại, giữ danh sách
+            state.pending_places = pending_places
+            question, chips = self.places.ask("", pending_places, True, retry=True)
+            return _result(state, "need_clarification", question, suggestions=chips)
+        if picked:
+            empty = Correction(TurnPlan(intent="refine", set_fields=ConstraintDelta()), [], None)
+            return await self._search_turn(state, empty, rules, areas, as_of, search)
         pending, state.pending_value = state.pending_value, None  # câu khác: bỏ giá trị chờ
         confirmed = rules.confirmation() if pending is not None else None
         if confirmed:
@@ -263,7 +270,10 @@ class RecommendationService:
             return _result(state, "answered", KEEP_BUDGET_ANSWER)
         if fixed.plan.intent == "out_of_scope":  # giữ nguyên điều kiện và kết quả cũ
             return _result(state, "out_of_scope", OUT_OF_SCOPE_ANSWER)
-        if fixed.plan.intent in ("ask_detail", "compare"):
+        if fixed.plan.intent in ("chitchat", "other_mode"):  # giữ nguyên điều kiện và kết quả cũ
+            return _result(state, "answered", assistant_reply(
+                fixed.plan.intent, "recommendation", bool(state.last_results)))
+        if fixed.plan.intent in ("ask_detail", "compare", "appraise"):
             return await self._answer_about_results(
                 state, rules, message, search, fixed.plan.intent)
         return await self._search_turn(state, fixed, rules, areas, as_of, search)
@@ -286,15 +296,22 @@ class RecommendationService:
             state.constraints, state.last_results, old_areas = SearchConstraints(), [], []
             note = RESET_NOTE
         old, delta = state.constraints, plan.set_fields
-        merged = await self._merge_or_ask(state, fixed, rules, note, search)
+        found = await self.places.resolve_all(search.session, delta.near_places, rules.text,
+                                              delta.district_names or old_areas, old.near_places)
+        merged = await self._merge_or_ask(state, fixed, rules, note, search, found)
         if isinstance(merged, ChatTurnResult):
             return merged
+        if found.question:  # trùng tên / điểm Goong: điều kiện khác đã áp, hỏi rồi mới tìm
+            state.constraints, state.pending_places = merged, found.pending
+            result = self._clarify(state, "place", note + found.question)
+            return result.model_copy(update={"suggestions": found.suggestions})
 
         state.constraints, state.pending_question = merged, None
         new_areas = await search.area_names(merged)
         changes = [note.strip()] if note else describe_changes(  # sau reset không so với state cũ
             old, merged, old_areas, new_areas, cheaper=delta.cheaper,
         )
+        changes += found.notes
         if fixed.ignored:  # spec 9 #32d: nói rõ điều kiện chưa hiểu, không bỏ im
             unknown = ", ".join(fixed.ignored)
             changes.append(f"Mình chưa hiểu rõ điều kiện {unknown} nên chưa áp dụng.")
@@ -317,7 +334,7 @@ class RecommendationService:
 
     async def _merge_or_ask(
         self, state: ConversationState, fixed: Correction, rules: MessageRules, note: str,
-        search: HybridSearch,
+        search: HybridSearch, found: PlaceOutcome,
     ) -> SearchConstraints | ChatTurnResult:
         """Điều kiện sau merge, hoặc câu hỏi lại khi thiếu/sai/mâu thuẫn (không áp delta)."""
         plan = fixed.plan
@@ -338,6 +355,8 @@ class RecommendationService:
                                  + ask_confirm_budget(delta.price_max, old.price_max))
 
         merged = merge_constraints(old, plan, district_ids, ward_ids)
+        merged.near_places = PlaceResolver.merge(merged.near_places, found.places)
+        merged.soft_query = ", ".join([*phrases(merged.soft_query), *found.soft_names]) or None
         if problems := validate_constraints(merged):  # spec 9.3: không áp delta
             if fixed.typed_price and any("giá" in p and "ngoài khoảng" in p for p in problems):
                 low, high = (format_price(limit) for limit in PRICE_RANGE)
@@ -347,8 +366,8 @@ class RecommendationService:
             return self._clarify(state, "fix_constraints", note + (
                 f"Mình chưa dùng được điều kiện này: {'; '.join(problems)}. "
                 "Bạn nói lại giúp mình nhé."))
-        if (merged.price_min is None and merged.price_max is None
-                and not merged.district_ids and not merged.new_ward_ids):
+        if (merged.price_min is None and merged.price_max is None and not merged.district_ids
+                and not merged.new_ward_ids and not merged.near_places and not found.pending):
             state.constraints = merged  # điều kiện một phần vẫn giữ cho lượt sau
             known = ", ".join(merged.property_types)
             repeated = state.pending_question == "budget_or_area"
@@ -360,8 +379,10 @@ class RecommendationService:
         self, state: ConversationState, rules: MessageRules, message: str,
         search: HybridSearch, intent: str,
     ) -> ChatTurnResult:
-        """ask_detail/compare: chỉ dùng tin trong last_results; tham chiếu sai thì báo không có."""
+        """ask_detail/compare/appraise: chỉ dùng tin trong last_results; tham chiếu sai thì báo."""
         total = len(state.last_results)
+        if intent == "appraise" and (total == 0 or self.valuer is None):
+            return _result(state, "answered", NO_LISTINGS if total == 0 else NO_VALUER)
         ids, missing = rules.references(state.last_results)
         not_found = refs_not_found(missing, total, state.last_status == "no_results")
         if not ids:
@@ -373,6 +394,9 @@ class RecommendationService:
         details = await search.fetch_details(ids)
         for row in details:  # "Căn N" trong câu trả lời khớp đúng thứ tự đã gợi ý
             row["position"] = state.last_results.index(row["listing_id"]) + 1
+        if intent == "appraise":  # so giá rao với ước tính của mô hình, không qua grounding
+            answer = self.valuer.answer(await self.valuer.appraise(details), notes)
+            return _result(state, "answered", answer, referenced_ids=ids)
         answer, winners = details_answer(details, message, notes)
         return _result(state, "answered", answer, referenced_ids=winners or ids)
 
@@ -380,4 +404,3 @@ class RecommendationService:
         """Hỏi lại người dùng; pending_question cho TurnInterpreter biết câu sau là trả lời."""
         state.pending_question = pending
         return _result(state, "need_clarification", answer)
-

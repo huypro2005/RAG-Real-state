@@ -53,7 +53,7 @@ def test_four_turn_prediction_conversation_returns_documented_shape(client, pred
         ext(property_type="nhà riêng"), ext(district_name="Quận 1", area_m2=80)]
     first = post(client, "nhà riêng").json()
     assert set(first) == {"conversation_id", "mode", "status", "answer", "summary", "fields",
-                          "missing", "prediction"}
+                          "missing", "prediction", "suggestions"}
     assert first["mode"] == "prediction" and first["status"] == "collecting"
     assert first["prediction"] is None and first["missing"] == ["district", "area"]
     cid = first["conversation_id"]

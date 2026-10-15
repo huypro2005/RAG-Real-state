@@ -109,7 +109,7 @@ flowchart LR
     API --> PC[PredictionChat]
 
     subgraph SHARED["Dùng chung (MỚI)"]
-        SM["assistant_text.py<br/>chào hỏi, giới thiệu năng lực,<br/>câu chuyển chế độ"]
+        SM["assistant_text.py<br/>chào hỏi, giới thiệu năng lực,<br/>câu chuyển chế độ, chip gợi ý"]
         VAL["valuation.py — ListingValuer<br/>tin rao → PriceInput → PricePredictor<br/>so giá rao với ước tính"]
     end
 
@@ -128,22 +128,25 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    M[Tin nhắn] --> CMD{Lệnh thuần?}
-    CMD -->|"reset / ok / bỏ qua"| ROUTE
+    M[Tin nhắn] --> CMD{"Lệnh thuần?<br/>reset / ok / bỏ qua / đúng"}
+    CMD -->|reset| RST[Xoá state, hỏi loại nhà]
+    CMD -->|"đúng/ừ khi đang chờ xác nhận"| HELD["Ghi các số bất thường đã giữ"]
+    CMD -->|"ok / bỏ qua"| NEXT
+    HELD --> NEXT
     CMD -->|không| EX["FieldExtractor (LLM)<br/>+ intent, question_topic,<br/>compare_districts"]
-    EX --> GUARD["Code kiểm chứng:<br/>tỉnh khác / thuê → out_of_scope<br/>số, quận phải có trong tin<br/>intent phải khớp từ khoá"]
+    EX --> GUARD["Code kiểm chứng:<br/>tỉnh khác / thuê → từ chối<br/>ghi thử vào bản sao state (trial):<br/>số, quận phải có trong tin<br/>intent phải khớp từ khoá"]
     GUARD --> ROUTE{intent sau kiểm chứng}
-    ROUTE -->|chitchat| CH["Chào / giới thiệu<br/>+ hỏi trường đang thiếu"]
-    ROUTE -->|other_mode| OM["Chỉ sang tab Gợi ý<br/>(giữ state)"]
-    ROUTE -->|out_of_scope| REF[Từ chối ngắn + quay lại việc đang dở]
-    ROUTE -->|question| Q["Trả lời bằng PredictionFacts<br/>(why_price, range, model,<br/>compare_district, accuracy_tips)"]
-    ROUTE -->|what_if| W["Dự đoán bản sao state<br/>→ 'trước → sau', KHÔNG ghi state"]
-    ROUTE -->|"provide_info / confirm"| APPLY[Ghi trường + kiểm tra hợp lý]
+    ROUTE -->|"off_topic / out_of_scope"| REF[Từ chối ngắn + quay lại việc đang dở]
+    ROUTE -->|"other_mode<br/>(có cụm tìm mua)"| OM["Chỉ sang tab Gợi ý<br/>(giữ state)"]
+    ROUTE -->|"chitchat<br/>(không có trường mới)"| CH["Chào / giới thiệu<br/>+ hỏi trường đang thiếu"]
+    ROUTE -->|"question<br/>(không có trường mới,<br/>trừ so sánh quận)"| Q["Trả lời bằng PredictionFacts<br/>(why_price, range, model,<br/>compare_district, accuracy_tips)"]
+    ROUTE -->|"what_if<br/>(cụm giả định + trường hợp lệ,<br/>đủ trường bắt buộc)"| W["Dự đoán trên bản sao state<br/>→ 'trước → sau', KHÔNG ghi state"]
+    ROUTE -->|"provide_info / confirm<br/>(hoặc intent không đạt kiểm chứng)"| APPLY[Ghi trường vào state]
     APPLY --> CHECK{"Bất thường<br/>nhưng trong biên?"}
-    CHECK -->|có| CONF[Hỏi xác nhận 1 câu]
+    CHECK -->|"có: giữ giá trị cũ"| CONF["Hỏi xác nhận 1 câu<br/>(state.pending_values)"]
     CHECK -->|không| NEXT{Còn thiếu?}
     NEXT -->|bắt buộc| ASK[Hỏi 1 trường + ví dụ]
-    NEXT -->|"tuỳ chọn, chưa ok"| OPT["Hỏi lần lượt trường tuỳ chọn<br/>quan trọng nhất + lý do<br/>'bỏ qua' → sang trường kế / dự đoán"]
+    NEXT -->|"tuỳ chọn, chưa ok"| OPT["Hỏi lần lượt trường tuỳ chọn<br/>quan trọng nhất + lý do (mỗi trường một lần,<br/>cuối cùng hỏi tên đường nếu mới có quận)"]
     NEXT -->|"đủ + ok"| PRD[Geocode → dự đoán → _explain]
 ```
 
@@ -161,15 +164,16 @@ sequenceDiagram
     RS->>TI: tin nhắn + ngữ cảnh (last_results)
     TI-->>RS: TurnPlan(intent=appraise)
     RS->>TR: references(last_results) → listing_id căn 2
-    RS->>V: appraise([listing_id])
-    V->>V: fetch_details → loại, quận, diện tích,<br/>mặt tiền, phòng ngủ, số tầng, toạ độ
+    RS->>RS: fetch_details → loại, quận, diện tích,<br/>mặt tiền, phòng ngủ, số tầng, toạ độ
+    RS->>V: appraise(rows)
     alt loại không hỗ trợ (shophouse, đất nền dự án, kho xưởng)
-        V-->>RS: unsupported
+        V-->>RS: Appraisal(unsupported)
     else hỗ trợ
         V->>PP: predict(PriceInput)
         PP-->>V: PriceEstimate (giá/m², khoảng p10–p90)
-        V-->>RS: giá rao, ước tính, lệch %, trong/ngoài khoảng
+        V-->>RS: Appraisal: giá rao, ước tính, lệch %, trong/ngoài khoảng
     end
+    RS->>V: answer(appraisals) → câu trả lời viết bằng code
     RS-->>U: "Căn 2 rao 3,2 tỷ; mô hình ước tính 2,9 tỷ<br/>(tham khảo 2,5–3,4 tỷ): cao hơn ước tính 10%,<br/>vẫn nằm trong khoảng tham khảo."
 ```
 
@@ -323,3 +327,20 @@ phong cách file xung quanh.
 - LLM viết câu trả lời tự do (kể cả "chỉ diễn đạt lại"): không làm.
 - Lưu lịch sử chat vào DB, đăng nhập: không làm.
 - Đặc trưng POI bán kính 1/3 km cho mô hình giá: vẫn là `TODO` của prediction-mode.md.
+
+---
+
+## 6. Ghi chú cài đặt (12/10/2026)
+
+- Giữ `Extraction.refusal` và `wants_confirm`/`wants_reset` cho tương thích test và prompt cũ;
+  `intent` bổ sung và code coi `off_topic`/`confirm`/`reset` tương đương các trường cũ.
+- Prediction: `other_mode` không xét "trường mới" (câu tìm mua luôn kèm quận/loại/giá và
+  state không bị ghi); what_if thiếu trường bắt buộc thì ghi như `provide_info`; giả định tương
+  đối ("thêm 1 tầng") được nhận khi số trong tin = giá trị hiện có ± số đó.
+- Recommendation: kiểm tra "appraise khi chưa có `last_results`" nằm ở `service` vì
+  `MessageRules.correct` không nhận `last_results`; `other_mode` giữ nguyên nếu câu có "định giá",
+  "nhà tôi", "bán được bao nhiêu" dù LLM điền thêm diện tích/quận.
+- Để `recommendation/` ≤ 1.900 dòng: `format_*`/`round_*` chuyển sang `app/services/formatting.py`
+  và `openai_client` sang `app/services/openai_client.py` (cả hai chatbot dùng chung).
+- `deps.py` dựng `ListingValuer` từ predictor và geocoder của `PredictionChat` (model 159 MB chỉ
+  nạp một lần); chưa train model thì `valuer = None`.

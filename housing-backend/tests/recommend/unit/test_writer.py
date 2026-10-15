@@ -4,13 +4,9 @@ from datetime import date
 
 import pytest
 
+from app.services.formatting import format_price
 from app.services.recommendation.grounding import asked_attributes, detail_answer
-from app.services.recommendation.schemas import (
-    ListingHit,
-    PoiConstraint,
-    SearchConstraints,
-    format_price,
-)
+from app.services.recommendation.schemas import ListingHit, PoiConstraint, SearchConstraints
 from app.services.recommendation.writer import (
     describe_changes,
     describe_constraints,

@@ -85,6 +85,8 @@ export function ChatPanel({ mode, onMode, messages, loading, selected, onSend, o
             selected={selected}
             onSelect={onSelect}
             onRelax={onSend}
+            onSuggest={onSend}
+            isLast={message === last}
           />
         ))}
         {loading && <p className="chat__loading">Đang xử lý…</p>}

@@ -123,15 +123,19 @@ async def recommend_reset(request: ResetRequest, service: RecommendationServiceD
 @router.get("/recommend/map", tags=["recommend"])
 async def recommend_map(
     session: SessionDep,
+    service: RecommendationServiceDep,
     ids: str = Query(min_length=1, description="listing_id cách nhau bởi dấu phẩy, theo thứ tự"),
     radius_m: float = Query(2000, gt=0, le=10_000),
     poi_types: str = "truong_hoc,benh_vien,cho",
+    conversation_id: str | None = Query(default=None, max_length=100),
 ):
-    """GeoJSON: tin đã gợi ý (đánh số theo thứ tự `ids`) và POI quanh chúng."""
+    """GeoJSON: tin đã gợi ý (đánh số theo thứ tự `ids`), POI quanh chúng và địa điểm có tên
+    đang lọc của hội thoại `conversation_id` (nếu có)."""
     listing_ids = list(dict.fromkeys(i.strip() for i in ids.split(",") if i.strip()))
     types = [t.strip() for t in poi_types.split(",") if t.strip()]
     if not listing_ids or len(listing_ids) > MAX_MAP_LISTINGS:
         raise HTTPException(422, f"ids cần từ 1 đến {MAX_MAP_LISTINGS} mã tin")
     if invalid := [t for t in types if t not in POI_NAMES]:
         raise HTTPException(422, f"poi_types không hợp lệ: {', '.join(invalid)}")
-    return await ChatSupport(session=session).geojson(listing_ids, radius_m, types)
+    places = service.store.get(conversation_id).constraints.near_places if conversation_id else []
+    return await ChatSupport(session=session).geojson(listing_ids, radius_m, types, places)

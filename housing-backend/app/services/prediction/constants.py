@@ -15,9 +15,28 @@ PROPERTY_PHRASES = {  # cách gọi trong câu trả lời
     0: "căn hộ chung cư", 2: "nhà riêng", 3: "nhà biệt thự/liền kề", 4: "nhà mặt phố", 7: "lô đất",
 }
 APARTMENT, LAND = 0, 7
-# Trường tuỳ chọn mà model dùng theo loại: chung cư chỉ phòng ngủ, đất chỉ mặt tiền
+# Trường tuỳ chọn mà model dùng theo loại, xếp theo thứ tự nên hỏi: chung cư chỉ phòng ngủ,
+# đất chỉ mặt tiền, nhà mặt phố hỏi mặt tiền trước, nhà riêng/biệt thự hỏi số tầng trước
 OPTIONAL_FIELDS = ("bedrooms", "frontage", "floors")
-OPTIONALS_BY_TYPE = {APARTMENT: ("bedrooms",), LAND: ("frontage",)}
+_HOUSE_FIELDS = ("floors", "bedrooms", "frontage")
+OPTIONALS_BY_TYPE = {  # 2 nhà riêng, 3 biệt thự/liền kề, 4 nhà mặt phố
+    APARTMENT: ("bedrooms",), 2: _HOUSE_FIELDS, 3: _HOUSE_FIELDS,
+    4: ("frontage", "floors", "bedrooms"), LAND: ("frontage",),
+}
+# Biên hợp lệ (nhỏ nhất, lớn nhất, nhãn, đơn vị); ngoài biên thì hỏi lại, không đoán
+BOUNDS = {
+    "area": (10, 2000, "Diện tích", "m²"),
+    "floors": (1, 20, "Số tầng", "tầng"),
+    "bedrooms": (0, 20, "Số phòng ngủ", "phòng"),
+    "frontage": (1, 50, "Mặt tiền", "m"),
+}
+FIELD_LABELS = {"property_type": "loại nhà", "district": "quận", "address": "địa chỉ",
+                "area": "diện tích", "frontage": "mặt tiền", "bedrooms": "phòng ngủ",
+                "floors": "số tầng"}
+SOURCE_NOTES = {
+    "goong": "tọa độ lấy từ địa chỉ qua Goong",
+    "district_centroid": "không xác định được địa chỉ cụ thể, dùng tâm quận",
+}
 
 # Mã quận/huyện 0-23 theo bảng trong retrain.py; tên khớp cột listings.district_old
 DISTRICT_NAMES = [

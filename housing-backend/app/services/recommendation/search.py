@@ -14,12 +14,13 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.services.embedding import EmbeddingClient
+from app.services.formatting import format_price
+from app.services.places import PlaceResolver
 from app.services.recommendation.schemas import (
     POI_NAMES,
     ListingHit,
     RelaxOption,
     SearchConstraints,
-    format_price,
 )
 from app.services.recommendation.text_rules import fold, phrases
 
@@ -52,7 +53,7 @@ DETAIL_COLUMNS = """
     l.listing_id, l.title, l.price, l.price_per_m2, l.area, l.property_type, l.bedrooms,
     l.bathrooms, l.floors, l.frontage, l.road_width, l.legal, l.interior, l.district_old,
     l.old_address, l.new_address, l.listing_url, l.posted_at, l.expired_at,
-    left(coalesce(l.description, ''), 800) AS description,
+    l.latitude, l.longitude, l.quality_flags, left(coalesce(l.description, ''), 800) AS description,
     f.nearest_school_name, f.nearest_school_m, f.nearest_hospital_name, f.nearest_hospital_m,
     f.nearest_market_name, f.nearest_market_m
 """
@@ -65,7 +66,7 @@ AREA_MATCH_SQL = f"""
 """
 
 
-def _to_hit(row: dict, position: int, as_of: date) -> ListingHit:
+def _to_hit(row: dict, position: int, as_of: date, constraints: SearchConstraints) -> ListingHit:
     """Dòng SQL -> ListingHit (khoảng cách tới POI gần nhất mỗi loại, vị trí, ngày còn lại)."""
     distances = {poi_type: row[column] for poi_type, column in POI_DISTANCE_COLUMNS.items()
                  if row[column] is not None}
@@ -75,6 +76,7 @@ def _to_hit(row: dict, position: int, as_of: date) -> ListingHit:
         "coords_outside_hcm" not in row["quality_flags"])
     return ListingHit(
         **fields, poi_distances=distances, position=position, coords_reliable=reliable,
+        place_distances={p.name: row[f"place_{i}"] for i, p in enumerate(constraints.near_places)},
         days_left=(expired - as_of).days if expired else None,
     )
 
@@ -120,12 +122,14 @@ def _filters(constraints: SearchConstraints, as_of: date) -> tuple[str, dict]:
     # Tin không có geom tự bị loại vì ST_DWithin(NULL) không đúng
     for i, poi in enumerate(constraints.near_pois):
         clauses.append(
-            f"EXISTS (SELECT 1 FROM pois p WHERE p.poi_type = :poi_type_{i}"
+            f"EXISTS (SELECT 1 FROM pois p WHERE p.poi_type = :poi_type_{i}"  # trường chung chung:
+            " AND coalesce(p.poi_subtype, '') NOT IN ('Đại học', 'Cao đẳng')"  # không tính ĐH/CĐ
             f" AND ST_DWithin(p.geom, l.geom, :poi_distance_{i}))"
         )
         params[f"poi_type_{i}"] = poi.poi_type
         params[f"poi_distance_{i}"] = poi.max_distance_m
-    return " AND ".join(clauses), params
+    where, _, place_params = PlaceResolver.sql(constraints.near_places)  # bán kính quanh địa điểm
+    return " AND ".join(clauses + where), params | place_params
 
 
 class HybridSearch:
@@ -195,11 +199,11 @@ class HybridSearch:
         rows = await self._rank_sql(constraints, as_of, vector)
         candidates = boost_lexical(rows, constraints.soft_query)
         degraded = vector is None
-        if self.rerank_enabled and not degraded and candidates:
+        if self.rerank_enabled and not degraded and candidates and not constraints.near_places:
             candidates, reranked = await self._rerank(query, candidates)
             degraded = not reranked
         top = group_reposts(candidates)[:TOP_K]
-        return [_to_hit(row, i, as_of) for i, row in enumerate(top, start=1)], degraded
+        return [_to_hit(r, i, as_of, constraints) for i, r in enumerate(top, 1)], degraded
 
     async def relax_options(
         self, constraints: SearchConstraints, as_of: date
@@ -257,9 +261,11 @@ class HybridSearch:
             # Tin chưa có embedding vẫn được trả, xếp sau tin đã có
             score = f"1 - {distance} AS score"
             order = f"{distance} NULLS LAST, l.posted_at DESC, l.listing_id"
+        places = PlaceResolver.sql(constraints.near_places)[1]
+        order = "place_0, " * bool(constraints.near_places and not constraints.soft_query) + order
         rows = (await self.session.execute(
             text(
-                f"SELECT {HIT_COLUMNS}, {score} FROM listings l"
+                f"SELECT {HIT_COLUMNS}, {score}{places} FROM listings l"
                 " LEFT JOIN listing_spatial_features f USING (listing_id)"
                 " LEFT JOIN listing_embeddings e USING (listing_id)"
                 f" WHERE {where} ORDER BY {order} LIMIT {CANDIDATE_LIMIT}"
@@ -300,6 +306,8 @@ def relaxed_variants(
             update={"near_pois": [p for p in constraints.near_pois if p != poi]}))
         for poi in constraints.near_pois
     ]
+    variants += [("near_places", text, constraints.model_copy(update={"near_places": places}))
+                 for text, places in PlaceResolver.relaxed(constraints.near_places)]
     if constraints.price_max is not None:
         budget = constraints.price_max * RELAX_BUDGET_FACTOR  # không làm tròn (spec 9.5)
         variants.append(("price_max", f"tăng ngân sách lên {format_price(budget)}",

@@ -50,6 +50,7 @@ export interface PredictionTurn {
   fields: Record<string, unknown>;
   missing: string[];
   prediction?: PredictionEstimate | null;
+  suggestions?: string[]; // câu trả lời nhanh do backend chọn, hiện thành chip
 }
 
 export interface ChatTurnResult {
@@ -61,10 +62,13 @@ export interface ChatTurnResult {
   degraded: boolean;
   answer: string;
   summary: string;
+  suggestions?: string[]; // vd. ứng viên địa điểm trùng tên, hiện thành chip
 }
 
 export interface MapProperties {
-  kind: "listing" | "poi";
+  kind: "listing" | "poi" | "place"; // place: địa điểm có tên đang lọc, kèm bán kính
+  address?: string | null;
+  radius_m?: number;
   position?: number;
   listing_id?: string;
   title?: string;
@@ -123,11 +127,12 @@ export function resetConversation(conversationId: string): Promise<{ conversatio
   return postJson(`${PREFIX}/reset`, { conversation_id: conversationId });
 }
 
-export function fetchMap(ids: string[]): Promise<MapData> {
+export function fetchMap(ids: string[], conversationId: string | null = null): Promise<MapData> {
   const query = new URLSearchParams({
     ids: ids.join(","),
     radius_m: "2000",
     poi_types: "truong_hoc,benh_vien,cho",
+    ...(conversationId ? { conversation_id: conversationId } : {}),
   });
   return request<MapData>(`${PREFIX}/map?${query.toString()}`);
 }

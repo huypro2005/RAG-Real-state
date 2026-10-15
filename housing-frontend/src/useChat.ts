@@ -47,10 +47,11 @@ export function useChat(mode: Mode) {
     setMessages((current) => [...current, { ...message, id: current.length }]);
   }, []);
 
-  const loadPois = useCallback(async (hits: ListingHit[]) => {
+  const loadPois = useCallback(async (hits: ListingHit[], id: string) => {
     try {
-      const data = await fetchMap(hits.map((hit) => hit.listing_id));
-      setPois(data.features.filter((feature) => feature.properties.kind === "poi"));
+      const data = await fetchMap(hits.map((hit) => hit.listing_id), id);
+      // POI quanh tin + địa điểm có tên đang lọc (vẽ vòng bán kính)
+      setPois(data.features.filter((feature) => feature.properties.kind !== "listing"));
     } catch {
       setPois([]); // Bản đồ vẫn có marker tin; chỉ thiếu POI.
     }
@@ -81,7 +82,7 @@ export function useChat(mode: Mode) {
           if (result.listings.length > 0) {
             setListings(result.listings);
             setSelected(null);
-            void loadPois(result.listings);
+            void loadPois(result.listings, result.conversation_id);
           }
         }
       } catch (error) {

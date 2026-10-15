@@ -25,6 +25,7 @@ class SlowPredictionChat:
     def __init__(self, extractor, predictor, geocoder):
         time.sleep(BUILD_SECONDS)
         built.append("prediction")
+        self.predictor, self.geocoder = predictor, geocoder
         self.turns = {}
 
     async def turn(self, conversation_id, message):
@@ -34,7 +35,7 @@ class SlowPredictionChat:
 
 
 class SlowRecommendationService:
-    def __init__(self, engine):
+    def __init__(self, engine, valuer=None):
         time.sleep(BUILD_SECONDS)
         built.append("recommendation")
         self.store, self.turns = ConversationStore(), {}

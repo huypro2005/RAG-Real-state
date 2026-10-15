@@ -5,7 +5,7 @@ from typing import Any
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.services.recommendation.schemas import ConversationState
+from app.services.recommendation.schemas import ConversationState, PlaceConstraint
 from app.services.recommendation.service import ConversationStore
 
 POIS_PER_TYPE = 6    # mỗi loại POI, mỗi tin
@@ -24,6 +24,7 @@ POIS_SQL = text(f"""
      CROSS JOIN LATERAL (
            SELECT * FROM pois
             WHERE poi_type = t.poi_type AND ST_DWithin(geom, l.geom, :radius_m)
+              AND coalesce(poi_subtype, '') NOT IN ('Đại học', 'Cao đẳng')
             ORDER BY geom <-> l.geom LIMIT {POIS_PER_TYPE}) p
      WHERE l.listing_id = ANY(:ids) AND l.geom IS NOT NULL
 """)
@@ -36,8 +37,10 @@ class ChatSupport:
         self.session = session
         self.store = store
 
-    async def geojson(self, ids: list[str], radius_m: float, poi_types: list[str]) -> dict:
-        """FeatureCollection: tin có tọa độ (đánh số theo thứ tự `ids`) + POI quanh chúng.
+    async def geojson(self, ids: list[str], radius_m: float, poi_types: list[str],
+                      places: list[PlaceConstraint] = ()) -> dict:
+        """FeatureCollection: tin có tọa độ (đánh số theo thứ tự `ids`) + POI quanh chúng + địa
+        điểm có tên đang lọc (kind "place", kèm bán kính để giao diện vẽ vòng tròn).
 
         Tin không có tọa độ (hoặc không tồn tại) không có feature, chỉ nằm trong `missing_ids`.
         """
@@ -54,6 +57,9 @@ class ChatSupport:
                 "title": row["title"], "price": row["price"], "area": row["area"],
                 "reliable": "coords_outside_hcm" not in row["quality_flags"],
             }))
+        features += [self._point(p.longitude, p.latitude, {
+            "kind": "place", "name": p.name, "address": p.address, "radius_m": p.max_distance_m,
+        }) for p in places]
         return {"type": "FeatureCollection",
                 "features": features + await self._poi_features(ids, radius_m, poi_types),
                 "missing_ids": missing}

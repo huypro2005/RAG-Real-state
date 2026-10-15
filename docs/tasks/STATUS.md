@@ -171,3 +171,13 @@ Kết quả: `housing-backend/housing-backend/tests/recommend/report.md`, `repor
 - Prediction: spec `prediction-mode.md`, reviewer PASS vòng 3; 20 ca thực tế: 18 PASS + 1 PASS-biên (R07) + 1 KNOWN-LIMIT (R12 Cần Giờ); khung train đã mở (R² 0,5695). Goong hết hạn mức ngày → 8 ca địa chỉ cụ thể chưa xác nhận bằng Goong thật.
 - Pipeline `src/pipeline` chạy thật 2 lần trên housing_dev (xem src/pipeline/README.md). Clean code xong, mọi test xanh (481 backend, 20 src, 8 frontend).
 - Báo cáo senior dev: `docs/reports/senior-review-2026-10-10.md` (việc tiếp theo ở mục 4 của báo cáo).
+
+
+## 14. Tạm dừng 15/10/2026 — chatbot thông minh hơn + địa điểm có tên
+- Tài liệu: [docs/chatbot.md](../chatbot.md) (kiến trúc, intent, API). Spec: [chat-intelligence.md](chat-intelligence.md) (**nghiệm thu PASS** I1–I12 sau vòng 2), [named-places.md](named-places.md) (**chưa PASS**).
+- named-places: đã qua 3 lượt chấm. Vòng 3 FAIL N1, N5, N6 (nhẹ), N10 (còn 12/15 hội thoại, cần ≥ 14). Danh sách lỗi và 9 mục sửa đã giao cho db-coder (vòng sửa 2/3) nhưng **bị dừng giữa chừng — code có thể dang dở**: chạy `pytest tests -q` + `uvx ruff check .` trước khi làm tiếp; lần chạy cuối coder báo 641 test xanh (trước vòng sửa 2).
+- Trần dòng đã nới: `recommendation/` ≤ 2.100, `places.py` ≤ 360 (hiện 2.008 và 217 trước vòng sửa 2).
+- Việc tiếp: (1) xem `git status`/chạy test để biết coder đã sửa tới đâu → (2) cho db-coder làm nốt 9 mục (xem báo cáo reviewer vòng 3: Dĩ An cơ sở 2 ĐH Bách khoa trong `pois`, ưu tiên ĐH khi tên bắt đầu "đại học", NAME_STOP "tu"/"nha", GENERIC_NAME "đa khoa", `kind` theo từ loại, `choose()` dùng `district`, Goong chặt hơn Bình Dương, fallback bán kính, bỏ alias `dhqg`) → (3) db-reviewer chấm lại N1/N5/N6/N10 (tối đa vòng 3/3; FAIL tiếp thì báo người dùng quyết) → (4) cập nhật docs/chatbot.md mục 7–8 và lệnh áp DB thật.
+- DB thật `housing`: **chưa có** `alembic_version` hay `public.pois` (vẫn 5 schema cũ) nên chưa áp migration 0002, 0003 và `scripts/import_universities.py` được. Thứ tự khi áp: `alembic upgrade head` rồi nạp ĐH/CĐ. Mọi thay đổi mới chỉ ở `housing_dev`. Không commit.
+- Chi phí: mỗi vòng chấm tốn 60–230 lượt OpenAI/Goong. Đặt ngân sách tổng cho reviewer (≤ 90) và tự đếm bằng hook httpx.
+- R13 (realistic) phụ thuộc Goong thật; baseline 362,38 là tâm quận.

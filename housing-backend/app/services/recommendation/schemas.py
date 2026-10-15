@@ -29,12 +29,12 @@ PROPERTY_TYPES: dict[str, list[str]] = {
 ClearableField = Literal[
     "price_min", "price_max", "property_types", "district_ids", "new_ward_ids",
     "area_min", "area_max", "bedrooms_min", "near_pois",
-    "near_pois.truong_hoc", "near_pois.benh_vien", "near_pois.cho", "soft_query",
+    "near_pois.truong_hoc", "near_pois.benh_vien", "near_pois.cho", "soft_query", "near_places",
 ]
 
 Intent = Literal[
-    "search", "refine", "relax", "answer_clarification",
-    "ask_detail", "compare", "reset", "out_of_scope",
+    "search", "refine", "relax", "answer_clarification", "ask_detail", "compare", "reset",
+    "out_of_scope", "chitchat", "other_mode", "appraise",
 ]
 TurnStatus = Literal["ok", "need_clarification", "out_of_scope", "no_results", "answered"]
 
@@ -49,6 +49,24 @@ class PoiRequest(BaseModel):
 
     poi_type: PoiType
     max_distance_m: int | None
+
+
+class PlaceRequest(BaseModel):
+    """Địa điểm có tên trong câu ("gần ĐH CNTT"), tên chép nguyên văn."""
+    name: str
+    kind: Literal["truong_hoc", "benh_vien", "cho", "khac"] | None
+    max_distance_m: int | None
+
+
+class PlaceConstraint(BaseModel):
+    """Địa điểm đã có toạ độ; tin phải nằm trong max_distance_m quanh điểm này."""
+    name: str
+    address: str | None = None
+    latitude: float
+    longitude: float
+    max_distance_m: int = 5000
+    poi_id: int | None = None
+    district: str | None = None  # quận tin đăng gần nhất, chỉ để phân biệt ứng viên
 
 
 class SearchConstraints(BaseModel):
@@ -66,6 +84,7 @@ class SearchConstraints(BaseModel):
     area_max: float | None = None
     bedrooms_min: int | None = None
     near_pois: list[PoiConstraint] = []
+    near_places: list[PlaceConstraint] = []
     soft_query: str | None = None   # chỉ dùng để sắp xếp bằng vector, không lọc
 
 
@@ -84,6 +103,7 @@ class ConstraintDelta(BaseModel):
     area_max: float | None = None
     bedrooms_min: int | None = None
     near_pois: list[PoiRequest] = []
+    near_places: list[PlaceRequest] = []
     soft_query: str | None = None
 
 
@@ -110,6 +130,7 @@ class ListingHit(BaseModel):
     posted_at: date | None
     expired_at: date | None
     poi_distances: dict[str, float]  # poi_type -> mét tới POI gần nhất loại đó
+    place_distances: dict[str, float] = {}  # tên địa điểm (near_places) -> mét
     score: float | None              # 1 - cosine distance; None khi sắp theo ngày đăng
     similar_ids: list[str] = []      # tin đăng lại gần như y hệt đã gộp vào tin này
     latitude: float | None = None
@@ -120,7 +141,7 @@ class ListingHit(BaseModel):
 
 
 class RelaxOption(BaseModel):
-    field: Literal["near_pois", "price_max", "property_types", "location"]
+    field: Literal["near_pois", "near_places", "price_max", "property_types", "location"]
     description: str     # "bỏ điều kiện gần bệnh viện", "tăng ngân sách lên 3,6 tỷ"
     result_count: int    # số tin người dùng sẽ thấy (đã gộp tin đăng lại) nếu chỉ nới điều này
     message: str         # câu gửi lại nguyên văn làm tin nhắn tiếp theo để áp phương án này
@@ -136,6 +157,7 @@ class ChatTurnResult(BaseModel):
     degraded: bool = False          # embed/rerank lỗi, đã dùng phương án dự phòng
     answer: str
     summary: str = ""               # answer bỏ khối từng tin (UI vẽ tin bằng thẻ)
+    suggestions: list[str] = []     # chip trả lời nhanh (vd. ứng viên địa điểm trùng tên)
 
 
 class ChatRequest(BaseModel):
@@ -152,37 +174,6 @@ class ConversationState(BaseModel):
     last_results: list[str] = []          # tối đa 5 listing_id theo thứ tự đã trả
     pending_question: str | None = None   # câu hỏi bổ sung đang chờ người dùng trả lời
     pending_value: float | None = None    # giá tối đa đang chờ xác nhận ("ừ" thì áp, spec 9 #29d)
+    pending_places: list[PlaceConstraint] = []  # ứng viên địa điểm đang chờ người dùng chọn
     last_status: TurnStatus | None = None  # ok/no_results của lượt tìm gần nhất
     history: list[dict[str, str]] = []    # 6 lượt gần nhất: {"role", "content"}
-
-
-def format_number(value: float) -> str:
-    """53.0 -> '53', 46.6 -> '46,6' (số trong câu trả lời, dấu phẩy thập phân)."""
-    return f"{value:g}".replace(".", ",")
-
-
-def format_distance(meters: float) -> str:
-    """350 -> '350 m', 2000 -> '2 km', 1250 -> '1,2 km'."""
-    if meters < 1000:
-        return f"{meters:.0f} m"
-    return f"{meters / 1000:.1f}".rstrip("0").rstrip(".").replace(".", ",") + " km"
-
-
-def format_price(million_vnd: float) -> str:
-    """2800 -> '2,8 tỷ', 2065 -> '2,065 tỷ', 900 -> '900 triệu' (giá trong câu trả lời)."""
-    if million_vnd >= 1000:
-        value, unit = million_vnd / 1000, "tỷ"
-    else:
-        value, unit = million_vnd, "triệu"
-    text = f"{value:.3f}".rstrip("0").rstrip(".").replace(".", ",")
-    return f"{text} {unit}"
-
-
-def round_distance(meters: float) -> float:
-    """Khoảng cách như người đọc thấy ('1,2 km' -> 1200): hiệu hai khoảng cách tính từ số này."""
-    return round(meters) if meters < 1000 else round(meters / 1000, 1) * 1000
-
-
-def round_price(million_vnd: float) -> float:
-    """Giá như người đọc thấy (đến 1 triệu khi >= 1 tỷ, 0,001 triệu khi nhỏ hơn)."""
-    return round(million_vnd) if million_vnd >= 1000 else round(million_vnd, 3)

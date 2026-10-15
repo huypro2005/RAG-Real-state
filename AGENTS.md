@@ -30,6 +30,8 @@ GĐ7 Hybrid Search: [docs/tasks/hybrid-search.md](docs/tasks/hybrid-search.md) �
 `doc-reviewer` phản biện tài liệu nghiên cứu trong `docs/research/`.
 Chatbot linh hoạt (hỏi đáp có căn cứ, what-if, chào hỏi, chuyển chế độ, so giá tin rao) + sơ đồ
 hệ thống hai chatbot: [docs/tasks/chat-intelligence.md](docs/tasks/chat-intelligence.md).
+Tìm "gần <địa điểm có tên>" (ĐH, bệnh viện, chợ, địa danh; trùng tên → hỏi lại; 5 km):
+[docs/tasks/named-places.md](docs/tasks/named-places.md) — làm sau chat-intelligence.
 
 Task đã xong: phân tích cấu trúc HTML tin đăng —
 [docs/tasks/html-analysis.md](docs/tasks/html-analysis.md), kết quả ở `CrawlData/analysis/`.
@@ -46,6 +48,7 @@ Task đã xong: phân tích cấu trúc HTML tin đăng —
 | Crawler tin đăng | [docs/crawler.md](docs/crawler.md), [CrawlData/README.md](CrawlData/README.md) |
 | Pipeline làm sạch tin | [docs/huong-dan-pipeline-lam-sach.md](docs/huong-dan-pipeline-lam-sach.md) |
 | Cấu trúc HTML batdongsan (field, selector, địa chỉ cũ/mới) | `CrawlData/analysis/*.md` |
+| Hai chatbot (kiến trúc, intent, API, chạy/test) | [docs/chatbot.md](docs/chatbot.md) |
 | Backlog | [docs/jira-backlog.md](docs/jira-backlog.md) |
 | Bàn giao dữ liệu trường học | [docs/handoffs/](docs/handoffs/) |
 | API địa chỉ batdongsan | [address_data/readme.md](address_data/readme.md) |

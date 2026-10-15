@@ -53,8 +53,20 @@ class SpyPipeline:
         return self.pipeline.predict(row)
 
 
-def make_predictor(medians: dict | None = None) -> PricePredictor:
-    return PricePredictor(SpyPipeline(), medians or {"9": 100.0, "18": 60.0})
+class VaryingPipeline(SpyPipeline):
+    """Giá/m² = 50 + 10 × phòng ngủ + 5 × số tầng: để thấy khác biệt "trước → sau" của what-if."""
+
+    def predict(self, row):
+        super().predict(row)
+        extra = row["phòng ngủ"].fillna(0) * 10 + row["số tầng"].fillna(0) * 5
+        return np.log(50 + extra.to_numpy())
+
+
+METRICS = {"r2": 0.57, "r2_log": 0.8, "mae": 33.9, "test_rows": 2478, "train_rows": 9066}
+
+
+def make_predictor(medians: dict | None = None, pipeline=None) -> PricePredictor:
+    return PricePredictor(pipeline or SpyPipeline(), medians or {"9": 100.0, "18": 60.0}, METRICS)
 
 
 def ext(**fields) -> Extraction:

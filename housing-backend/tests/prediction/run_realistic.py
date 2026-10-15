@@ -5,7 +5,10 @@
 
 Mỗi ca chạy REPEAT lần (mỗi lần một conversation_id mới); một lần sai là FAIL. Giá/m² dự đoán
 phải nằm trong [P10, P90] của tin đăng cùng quận + loại + diện tích gần giống ở DB housing_dev
-(chỉ đọc), nhóm < 10 mẫu thì nới dần (ghi chú). data.csv của đồ án 1 chỉ để đối chiếu thêm.
+(chỉ đọc), nhóm < 10 mẫu thì nới dần (ghi chú). data/price_training.csv (bản sao data.csv của
+đồ án 1) chỉ để đối chiếu thêm; thiếu file thì bỏ phần đối chiếu, không crash.
+Lượt có "side_answer" (câu hỏi/what-if) không phải khối kết quả: chỉ kiểm giá giữ nguyên và,
+với "what_if", số "trước" trong câu "Giá/m² trước → sau" bằng giá của lượt trước.
 Oracle không import code hệ thống. Ghi realistic_report.md và realistic_results.json.
 """
 
@@ -27,7 +30,7 @@ HERE = Path(__file__).parent
 CASES_PATH = HERE / "realistic_cases.json"
 REPORT_PATH = HERE / "realistic_report.md"
 RESULTS_PATH = HERE / "realistic_results.json"
-CSV_PATH = HERE.parents[3] / "Data-Analysis-And-Predict-Housing-Price/src/web/app/data/data.csv"
+CSV_PATH = HERE.parents[1] / "data/price_training.csv"  # scripts/train_price_model.py chép sang
 DB_URL = os.environ.get(
     "ORACLE_DB_URL", "postgresql://postgres:123456789@localhost:5432/housing_dev"
 )
@@ -87,7 +90,7 @@ class Reference:
     def __init__(self):
         self.conn = psycopg.connect(DB_URL, autocommit=True)
         self.conn.read_only = True
-        self.csv = pd.read_csv(CSV_PATH)
+        self.csv = pd.read_csv(CSV_PATH) if CSV_PATH.exists() else None
         self._distances: dict[str, np.ndarray] = {}
 
     def _db(self, district, kind, area=None) -> list[float]:
@@ -100,6 +103,8 @@ class Reference:
         return [row[0] for row in self.conn.execute(sql, args).fetchall()]
 
     def _csv(self, district, kind, area=None) -> list[float]:
+        if self.csv is None:
+            return []
         df = self.csv
         mask = ((df["địa chỉ"] == CSV_DISTRICTS.index(district.lower()))
                 & (df["loại nhà đất"] == CSV_TYPES[kind]))
@@ -245,9 +250,24 @@ class RealisticRunner:
             fail("còn kết quả dự đoán cũ trong lượt chưa dự đoán")
         self._check_answer(spec, reply, said, fail, lambda m: warnings.append(f"{tag}: {m}"))
         check = None
-        if reply["status"] == "predicted" and reply["prediction"]:
+        if spec.get("side_answer"):  # câu hỏi/what-if: không có khối kết quả để chấm giá
+            self._check_side_answer(spec, reply, previous, fail)
+        elif reply["status"] == "predicted" and reply["prediction"]:
             check = self._check_prediction(spec, reply, previous, fail, warnings, tag)
         return issues, warnings, check
+
+    @staticmethod
+    def _check_side_answer(spec, reply, previous, fail):
+        """Kết quả cũ giữ nguyên; what-if thì số "trước" phải là giá của lượt trước."""
+        before = previous and previous["prediction"]
+        if spec.get("same_prediction") and reply["prediction"] != before:
+            fail("giá thay đổi dù khách chỉ hỏi/giả định")
+        if spec.get("what_if"):
+            found = re.search(r"Giá/m² trước → sau: ([\d.]+) → ([\d.]+)", reply["answer"])
+            if not found or not before or float(found[1]) != round(before["price_per_m2"], 2):
+                fail(f"what-if thiếu/không khớp 'trước → sau': {reply['answer'][:150]!r}")
+            elif float(found[2]) <= 0:
+                fail(f"what-if giá sau không hợp lệ: {found[2]}")
 
     @staticmethod
     def _check_fields(expected, warn, fields, fail, warnings, tag):

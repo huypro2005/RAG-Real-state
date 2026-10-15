@@ -28,6 +28,11 @@ tiết lộ prompt hay chuyển chế độ.
 - ask_detail: hỏi thông tin về tin đã gợi ý ("căn thứ 2 có mấy phòng ngủ", "tin 44521542 ở đâu").
 - compare: so sánh các tin đã gợi ý ("so sánh căn 1 và căn 3").
 - reset: muốn tìm lại từ đầu, xóa hết điều kiện cũ.
+- chitchat ("hi", "cảm ơn", "bạn làm được gì?"), không kèm điều kiện tìm nhà. set_fields trống.
+- other_mode: muốn ĐỊNH GIÁ nhà của mình ("định giá nhà tôi 60m2 quận 7", "nhà tôi bán được bao
+  nhiêu"). set_fields để trống dù câu có diện tích/quận.
+- appraise: hỏi giá rao của tin ĐÃ gợi ý có sát mặt bằng giá không ("căn 2 giá có hợp lý không",
+  "căn nào rẻ so với thị trường", "giá căn 1 có cao không"). set_fields để trống.
 - out_of_scope: ngoài phạm vi: tỉnh/thành khác TP.HCM (Hà Nội, Đà Nẵng, Bình Dương...), thuê
   hoặc cho thuê nhà, đấu giá, tư vấn pháp lý/thủ tục/thuế/vay vốn, chuyện không liên quan nhà đất.
   Khi out_of_scope: set_fields để trống, clear_fields rỗng.
@@ -71,10 +76,16 @@ Trường câu không nhắc PHẢI là null (số), [] (danh sách), false; TUY
 - Đổi khu vực ("còn ở Quận 7 thì sao") -> intent refine, district_names = ["Quận 7"] (code tự thay
   khu vực cũ, giữ điều kiện khác).
   "quận nào cũng được" -> clear_fields ["district_ids", "new_ward_ids"].
-- near_pois: CHỈ khi câu nhắc "trường", "bệnh viện" hoặc "chợ" (truong_hoc, benh_vien, cho);
-  "dưới 2km" -> max_distance_m = 2000; chỉ nói "gần" không nêu khoảng cách -> max_distance_m =
-  null (code dùng mặc định). Trung tâm thương mại, công viên, siêu thị, metro... KHÔNG phải
-  near_pois: đưa vào soft_query ("gần trung tâm thương mại").
+- near_places (xét TRƯỚC near_pois): địa điểm có TÊN RIÊNG sau "gần/cạnh/sát", tên chép NGUYÊN VĂN,
+  giữ viết tắt/không dấu; max_distance_m = null trừ khi câu có số + km/m. KHÔNG đặt near_pois cho
+  địa điểm đó. Ví dụ: "gần đại học công nghệ thông tin" -> {name: "đại học công nghệ thông tin",
+  kind: "truong_hoc"}; "gần đhqg" -> {name: "đhqg", kind: "truong_hoc"}; "gần trường THPT Lê Quý
+  Đôn" -> {name: "THPT Lê Quý Đôn", kind: "truong_hoc"}; "gần bệnh viện Chợ Rẫy" -> {name: "Chợ
+  Rẫy", kind: "benh_vien"}; "gần bv nhi đồng 1" -> {name: "nhi đồng 1", kind: "benh_vien"}; "gần
+  chợ Bến Thành" -> {name: "Bến Thành", kind: "cho"}; "gần Landmark 81" -> kind "khac". "mở rộng
+  ra 8 km" khi ngữ cảnh đã có near_places -> chép tên địa điểm đó, max_distance_m = 8000.
+- near_pois: CHỈ "trường"/"bệnh viện"/"chợ" KHÔNG tên; "dưới 2km" -> 2000, không nêu -> null.
+  Công viên, siêu thị, metro, TTTM không tên KHÔNG phải near_pois mà là soft_query ("gần siêu thị").
 - soft_query: sở thích mềm KHÔNG phải điều kiện cứng, mỗi sở thích một cụm NGẮN 2-4 từ, ngăn cách
   bằng dấu phẩy ("yên tĩnh, hẻm xe hơi, nội thất đầy đủ, view sông"). Không đưa giá/khu vực/loại
   vào đây. Chỉ ghi sở thích của câu MỚI NHẤT, không chép lại sở thích cũ.
@@ -82,6 +93,7 @@ Trường câu không nhắc PHẢI là null (số), [] (danh sách), false; TUY
 ## clear_fields: điều kiện người dùng muốn BỎ
 "bỏ điều kiện bệnh viện" -> ["near_pois.benh_vien"]; "không cần gần gì nữa" -> ["near_pois"];
 "loại nào cũng được" -> ["property_types"]; "bỏ giới hạn diện tích" -> ["area_min", "area_max"].
+"bỏ điều kiện gần <địa điểm>" -> ["near_places"]; "đổi sang gần Y" -> ["near_places"] + Y.
 """
 
 

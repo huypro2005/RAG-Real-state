@@ -13,13 +13,13 @@ import asyncio
 from sqlalchemy.ext.asyncio import create_async_engine
 
 from app.core.config import get_settings
+from app.services.openai_client import openai_client
 from app.services.prediction.constants import DISTRICT_NAMES, PROPERTY_TYPES
 from app.services.prediction.extractor import FieldExtractor
 from app.services.prediction.geocoder import Geocoder
 from app.services.prediction.predictor import PriceInput, PricePredictor
 from app.services.prediction.schemas import Extraction
 from app.services.prediction.text import MessageRules
-from app.services.recommendation.service import openai_client
 
 
 def show(step: str, value) -> None:

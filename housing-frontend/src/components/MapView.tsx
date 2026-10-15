@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import L from "leaflet";
 import type { Marker as LeafletMarker } from "leaflet";
-import { CircleMarker, MapContainer, Marker, Popup, TileLayer, Tooltip, useMap } from "react-leaflet";
+import { Circle, CircleMarker, MapContainer, Marker, Popup, TileLayer, Tooltip, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { GOONG_TILES_KEY } from "../api";
 import type { ListingHit, MapFeature, PoiType } from "../api";
@@ -73,7 +73,35 @@ export function MapView({ listings, pois, selected }: Props) {
       <MapContainer center={HCM_CENTER} zoom={12} className="map__canvas">
         <TileLayer url={TILES.url} attribution={TILES.attribution} maxZoom={19} />
         <MapController listings={listings} selected={selected} markers={markers} />
-        {pois.map((poi, index) => {
+        {pois.filter((item) => item.properties.kind === "place").map((place) => {
+          const [lng, lat] = place.geometry.coordinates;
+          return (
+            <Circle
+              key={`place-${place.properties.name}`}
+              center={[lat, lng]}
+              radius={place.properties.radius_m ?? 5000}
+              pathOptions={{ color: "#ea580c", weight: 2, fillOpacity: 0.06 }}
+            >
+              <Tooltip>
+                {place.properties.name} (bán kính {formatDistance(place.properties.radius_m ?? 5000)})
+              </Tooltip>
+            </Circle>
+          );
+        })}
+        {pois.filter((item) => item.properties.kind === "place").map((place) => {
+          const [lng, lat] = place.geometry.coordinates;
+          return (
+            <CircleMarker
+              key={`place-pin-${place.properties.name}`}
+              center={[lat, lng]}
+              radius={9}
+              pathOptions={{ color: "#fff", weight: 2, fillColor: "#ea580c", fillOpacity: 1 }}
+            >
+              <Tooltip>{place.properties.name}</Tooltip>
+            </CircleMarker>
+          );
+        })}
+        {pois.filter((item) => item.properties.kind === "poi").map((poi, index) => {
           const [lng, lat] = poi.geometry.coordinates;
           const type = poi.properties.poi_type ?? "cho";
           return (
@@ -116,6 +144,7 @@ export function MapView({ listings, pois, selected }: Props) {
           </li>
         ))}
         <li><span className="legend__dot legend__dot--pin" />Tin đề xuất</li>
+        <li><span className="legend__dot" style={{ background: "#ea580c" }} />Địa điểm bạn chọn</li>
       </ul>
     </section>
   );

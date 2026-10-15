@@ -89,9 +89,10 @@ class PriceEstimate(BaseModel):
 class PricePredictor:
     """Nạp model một lần; predict() nhận các trường đã kiểm tra biên ở tầng hội thoại."""
 
-    def __init__(self, pipeline, medians: dict[str, float]):
+    def __init__(self, pipeline, medians: dict[str, float], metrics: dict | None = None):
         self.pipeline = pipeline
         self.medians = medians
+        self.metrics = metrics  # nội dung metrics.json (R², số dòng test...)
 
     @classmethod
     def load(cls, model_path: Path = MODEL_PATH, metrics_path: Path = METRICS_PATH):
@@ -102,8 +103,8 @@ class PricePredictor:
         """
         if not model_path.exists():
             raise FileNotFoundError(f"Chưa có {model_path}; chạy scripts/train_price_model.py")
-        medians = json.loads(metrics_path.read_text("utf-8"))["medians"]
-        return cls(joblib.load(model_path), medians)
+        metrics = json.loads(metrics_path.read_text("utf-8"))
+        return cls(joblib.load(model_path), metrics["medians"], metrics)
 
     @staticmethod
     def distance_to_center(lat, lon):

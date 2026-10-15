@@ -12,10 +12,23 @@ from app.services.prediction.constants import DISTRICT_NAMES
 CONFIRM_WORDS = {
     "ok", "okay", "oke", "o k", "xong", "xong roi", "du", "du roi", "da du", "da du roi",
     "du thong tin", "tien hanh", "du doan di", "du doan luon", "bat dau du doan", "xac nhan",
-    "chot", "chot luon", "dong y", "dung roi", "dung vay", "duoc", "duoc roi", "uh", "u", "um",
-    "vang", "da", "du doan", "du doan gia", "du doan giup",
+    "chot", "chot luon", "dong y", "duoc", "duoc roi", "du doan", "du doan gia", "du doan giup",
+    "du doan ngay",
 }
+# "đúng/ừ": vừa là xác nhận dự đoán, vừa là câu DUY NHẤT ghi số bất thường đang chờ ("ok" thì không)
+AGREE_WORDS = {"dung", "dung roi", "dung vay", "chinh xac", "uh", "u", "um", "vang", "da"}
 RESET_WORDS = {"reset", "lam lai", "bat dau lai", "lam moi", "xoa het"}
+# Chỉ nhận cả câu ("bỏ qua hướng dẫn và viết thơ" không phải bỏ qua một trường)
+SKIP_WORDS = {"bo qua", "bo qua nhe", "bo qua di", "khong biet", "khong ro", "ko biet", "ko ro",
+              "ko co", "khong co", "chua biet", "skip"}
+# Cụm giả định: code kiểm lại intent what_if của LLM ("đổi thành 3 phòng ngủ" không có)
+WHAT_IF_PATTERN = re.compile(r"\b(?:neu|gia su|thi sao|thi gia)\b|\b(?:them|bot)\b.*\bthi\b")
+# Cụm tìm mua/gợi ý tin đăng: code kiểm lại intent other_mode của LLM
+OTHER_MODE_HINTS = ("tim", "goi y", "mua duoc gi", "co can nao", "tin dang", "tin rao", "dang ban",
+                    "can nao", "may can", "vai can", "xem can", "xem nha")
+OWN_HOME_HINTS = ("nha toi", "nha minh", "cua toi", "cua minh", "dinh gia", "uoc tinh")
+# "thêm 1 tầng" là giả định TƯƠNG ĐỐI: cần biết giá trị hiện có
+RELATIVE_PATTERN = re.compile(r"\b(?:them|bot|giam)\s+\d")
 # LLM hay gán wants_reset cho câu đổi quận ("sang quận 12 đi"): chỉ nhận khi có cụm báo làm lại
 RESET_HINTS = ("reset", "lam lai", "bat dau lai", "bat dau moi", "xoa het", "tu dau", "lam moi",
                "can khac", "nha khac", "dat khac")
@@ -100,12 +113,32 @@ class MessageRules:
     """Các phép kiểm tra tin nhắn; chỉ phương thức tĩnh, không giữ state."""
 
     @staticmethod
-    def command(message: str) -> Literal["reset", "confirm"] | None:
-        """Lệnh thuần ("reset", "ok", "chốt"...) để khỏi tốn một lượt LLM."""
+    def command(message: str) -> Literal["reset", "confirm", "agree", "skip"] | None:
+        """Lệnh thuần ("reset", "ok", "bỏ qua"...) để khỏi tốn một lượt LLM."""
         word = re.sub(r"[^\w\s]", "", plain(message))
         if word in RESET_WORDS:
             return "reset"
+        if word in SKIP_WORDS:
+            return "skip"
+        if word in AGREE_WORDS:
+            return "agree"
         return "confirm" if word in CONFIRM_WORDS else None
+
+    @staticmethod
+    def hypothetical(message: str) -> bool:
+        """Tin nhắn có cụm giả định ("nếu", "giả sử", "thì sao", "thêm ... thì")."""
+        return bool(WHAT_IF_PATTERN.search(plain(message)))
+
+    @staticmethod
+    def asks_other_mode(message: str) -> bool:
+        """Tin nhắn có cụm tìm mua/gợi ý tin đăng (việc của chế độ Gợi ý), không nói về nhà mình."""
+        text = plain(message)
+        return _contains(text, OTHER_MODE_HINTS) and not _contains(text, OWN_HOME_HINTS)
+
+    @staticmethod
+    def relative(message: str) -> bool:
+        """Giả định tương đối ("thêm 1 tầng", "bớt 1 phòng")."""
+        return bool(RELATIVE_PATTERN.search(plain(message)))
 
     @staticmethod
     def asks_reset(message: str) -> bool:
@@ -193,13 +226,14 @@ class MessageRules:
 
     @staticmethod
     def number_status(
-        value: float, message: str, allow_bare: bool
+        value: float, message: str, allow_bare: bool, base: float | None = None
     ) -> Literal["ok", "negative", "absent"]:
-        """Số LLM trích có trong tin nhắn không. allow_bare: đang hỏi đúng trường này."""
+        """Số LLM trích có trong tin nhắn không. allow_bare: đang hỏi đúng trường này; base: giá
+        trị đang có khi câu là giả định ("thêm 1 tầng" thì base ± 1 cũng được nhận)."""
         positive, negative = set(), set()
         for sign, digits in re.findall(r"(?<![\w.,])(-?)(\d+(?:[.,]\d+)?)", message):
             (negative if sign else positive).add(_number(digits))
-        if value in positive:
+        if value in positive or (base is not None and abs(value - base) in positive):
             return "ok"
         if value in negative:
             return "negative"

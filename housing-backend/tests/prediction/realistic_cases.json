@@ -1,16 +1,25 @@
 {
-  "_doc": "20 ca khách hàng thật. Mỗi lượt: user, status mong đợi, fields = TOÀN BỘ trường khác null mong đợi (trường không liệt kê phải null; giá trị là danh sách = chấp nhận một trong các giá trị, null = chưa có), warn = giá trị gây cảnh báo (mơ hồ ngôn ngữ) chứ không FAIL, asks = trường hệ thống phải hỏi, address_has = chuỗi (không dấu) phải nằm trong địa chỉ, answer_has/answer_hasnt = chuỗi trong câu trả lời, same_prediction = giá không đổi so với lượt trước. Lượt status=predicted được chấm giá/m2 theo district/type/area của fields lượt đó: nằm trong [P10,P90] của tin đăng DB housing_dev cùng quận + loại + diện tích 0.6x-1.6x (nhóm <10 mẫu thì nới ra cả quận+loại, rồi data.csv, rồi cả quận; ghi chú).",
+  "_doc": "20 ca khách hàng thật. Mỗi lượt: user, status mong đợi, fields = TOÀN BỘ trường khác null mong đợi (trường không liệt kê phải null; giá trị là danh sách = chấp nhận một trong các giá trị, null = chưa có), warn = giá trị gây cảnh báo (mơ hồ ngôn ngữ) chứ không FAIL, asks = trường hệ thống phải hỏi, address_has = chuỗi (không dấu) phải nằm trong địa chỉ, answer_has/answer_hasnt = chuỗi trong câu trả lời, same_prediction = giá không đổi so với lượt trước. Lượt status=predicted được chấm giá/m2 theo district/type/area của fields lượt đó: nằm trong [P10,P90] của tin đăng DB housing_dev cùng quận + loại + diện tích 0.6x-1.6x (nhóm <10 mẫu thì nới ra cả quận+loại, rồi data.csv, rồi cả quận; ghi chú). side_answer = lượt trả lời câu hỏi/what-if (chat-intelligence.md 3.2.3): không chấm khối kết quả, chỉ kiểm giá giữ nguyên; what_if = số 'trước' trong 'Giá/m² trước → sau' phải bằng giá lượt trước và fields giữ nguyên. goong = ca phụ thuộc Goong thật (R01, R13); các ca khác chỉ có tên quận hoặc chấp nhận tâm quận.",
   "changes": [
     {"id": "R17", "what": "Lượt 1 bỏ kỳ vọng status=ready/loại=căn hộ; thay bằng collecting + hỏi loại, thêm lượt 'chung cư'",
      "why": "Khách chỉ nói 'căn 2pn' (không có 'hộ'/'chung cư'), loại thật sự mơ hồ (căn có thể là villa/shophouse) nên hệ thống hỏi lại loại là hợp lý; kỳ vọng ban đầu của test quá chặt"},
     {"id": "R16", "what": "answer_has lượt 2 đổi từ 'Goong' thành 'Cách trung tâm'",
      "why": "Theo main: Goong hết hạn mức (429) nên nguồn tọa độ không phải yêu cầu của hệ thống; báo cáo ghi riêng ca nào chưa xác nhận bằng Goong"},
     {"id": "tiêu chí", "what": "Thêm PASS-biên (giá lệch <=3% ngoài [P10,P90]) và KNOWN-LIMIT (R12: giá ngoài oracle nhưng câu trả lời có 'Lưu ý')",
-     "why": "Theo main: dung sai 3% cho sai số lấy mẫu của oracle; R12 là giới hạn dữ liệu/model đã biết, ghi 'FAIL giá / PASS cảnh báo', không che"}
+     "why": "Theo main: dung sai 3% cho sai số lấy mẫu của oracle; R12 là giới hạn dữ liệu/model đã biết, ghi 'FAIL giá / PASS cảnh báo', không che"},
+    {"id": "R02, R13", "what": "Lượt 3 'sao giá này cao vậy' thành side_answer: kiểm 'median', 'Cách trung tâm', giá giữ nguyên, không có dòng tổng giá",
+     "why": "chat-intelligence.md 3.2.3: câu hỏi why_price trả lời bằng PredictionFacts, không lặp khối kết quả"},
+    {"id": "R07", "what": "Lượt 3 'nếu ở quận 7 thì giá bao nhiêu' là what-if: fields giữ Bình Tân, kiểm số 'trước → sau' thay cho fields.district",
+     "why": "chat-intelligence.md 3.2.3 + I3: what-if không ghi state"},
+    {"id": "R13", "what": "Ghi chú: giá phụ thuộc Goong thật (298,5) hay tâm quận (362,38)",
+     "why": "Hai nguồn toạ độ cho hai giá khác nhau; run_realistic không có cờ ép tâm quận (backend dùng key Goong trong .env), nên báo cáo ghi riêng ca này"},
+    {"id": "harness", "what": "Reference đọc data/price_training.csv (bản sao data.csv); thiếu file thì bỏ phần đối chiếu",
+     "why": "Thư mục Data-Analysis-And-Predict-Housing-Price đã bị xoá khỏi repo, run_realistic.py crash"}
   ],
   "cases": [
     {
       "id": "R01",
+      "goong": "PHỤ THUỘC GOONG THẬT: 'Phú Mỹ Hưng' được geocode trong Q7; Goong lỗi/hết hạn mức thì dùng tâm quận Q7 (giá khác, báo cáo ghi 'CHƯA xác nhận bằng Goong')",
       "persona": "Anh Nam, 34 tuổi, nhân viên văn phòng, hỏi từng bước về căn hộ Phú Mỹ Hưng Q7",
       "tags": ["chung cư", "Quận 7", "từng bước", "tầm 70 mét vuông", "pn", "địa chỉ khu"],
       "turns": [
@@ -33,7 +42,8 @@
          "fields": {"property_type": "nhà riêng", "district": "Quận 5", "area": 60, "frontage": 4, "floors": 3}, "address_has": "nguyen trai"},
         {"user": "ok", "status": "predicted",
          "fields": {"property_type": "nhà riêng", "district": "Quận 5", "area": 60, "frontage": 4, "floors": 3}},
-        {"user": "sao giá này cao vậy", "status": "predicted", "same_prediction": true, "answer_has": ["median"],
+        {"user": "sao giá này cao vậy", "status": "predicted", "same_prediction": true, "side_answer": true,
+         "answer_has": ["median", "Cách trung tâm"], "answer_hasnt": ["- Tổng giá"],
          "fields": {"property_type": "nhà riêng", "district": "Quận 5", "area": 60, "frontage": 4, "floors": 3}}
       ]
     },
@@ -100,8 +110,9 @@
          "fields": {"property_type": "căn hộ chung cư", "district": "Bình Tân", "area": 65, "bedrooms": 2}},
         {"user": "ok", "status": "predicted",
          "fields": {"property_type": "căn hộ chung cư", "district": "Bình Tân", "area": 65, "bedrooms": 2}},
-        {"user": "nếu ở quận 7 thì giá bao nhiêu", "status": "predicted", "answer_has": ["Quận 7"],
-         "fields": {"property_type": "căn hộ chung cư", "district": "Quận 7", "area": 65, "bedrooms": 2}}
+        {"user": "nếu ở quận 7 thì giá bao nhiêu", "status": "predicted", "side_answer": true, "what_if": true,
+         "same_prediction": true, "answer_has": ["quận Bình Tân → Quận 7", "Giá/m² trước → sau", "chưa lưu"],
+         "fields": {"property_type": "căn hộ chung cư", "district": "Bình Tân", "area": 65, "bedrooms": 2}}
       ]
     },
     {
@@ -168,6 +179,7 @@
     },
     {
       "id": "R13",
+      "goong": "PHỤ THUỘC GOONG THẬT: 'Nguyễn Huệ' Q1. Baseline 10/10 (362,38 triệu/m²) chạy khi Goong hết hạn mức nên là TÂM QUẬN; với Goong thật giá ra 298,5, thấp hơn P10 = 312,5 khoảng 4,5%: do nguồn toạ độ khác, không do code. Chạy lại khi Goong hoạt động thì đối chiếu với giá này, không với baseline",
       "persona": "Chủ nhà mặt phố Nguyễn Huệ Q1, ngạc nhiên vì giá cao",
       "tags": ["mặt phố", "Quận 1", "trung tâm", "đường cụ thể", "hỏi sao giá cao"],
       "turns": [
@@ -175,7 +187,8 @@
          "fields": {"property_type": "nhà mặt phố", "district": "Quận 1", "area": 120, "frontage": 6, "floors": 5}, "address_has": "nguyen hue"},
         {"user": "ok", "status": "predicted",
          "fields": {"property_type": "nhà mặt phố", "district": "Quận 1", "area": 120, "frontage": 6, "floors": 5}},
-        {"user": "sao giá này cao vậy", "status": "predicted", "same_prediction": true, "answer_has": ["median"],
+        {"user": "sao giá này cao vậy", "status": "predicted", "same_prediction": true, "side_answer": true,
+         "answer_has": ["median", "Cách trung tâm"], "answer_hasnt": ["- Tổng giá"],
          "fields": {"property_type": "nhà mặt phố", "district": "Quận 1", "area": 120, "frontage": 6, "floors": 5}}
       ]
     },

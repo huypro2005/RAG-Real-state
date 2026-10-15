@@ -6,15 +6,14 @@ Kết quả tìm, 0 kết quả, câu hỏi bổ sung: câu soạn sẵn tại �
 import re
 from collections.abc import Callable
 
+from app.services.formatting import format_distance, format_number, format_price
+from app.services.places import PlaceResolver
 from app.services.recommendation.grounding import MISSING, detail_answer
 from app.services.recommendation.schemas import (
     POI_NAMES,
     ListingHit,
     RelaxOption,
     SearchConstraints,
-    format_distance,
-    format_number,
-    format_price,
 )
 
 MAX_RELAX_HINTS = 2      # lượt ok ít tin: tối đa 2 dòng gợi ý nới (spec 9 #27d)
@@ -63,10 +62,11 @@ def describe_constraints(constraints: SearchConstraints, areas: list[str]) -> st
     parts += _bounds("diện tích", c.area_min, c.area_max, lambda v: f"{format_number(v)} m²")
     if c.bedrooms_min is not None:
         parts.append(f"từ {c.bedrooms_min} phòng ngủ")
-    parts += [
+    parts += [  # nêu rõ phạm vi đang tìm (named-places.md 2.5)
         f"gần {POI_NAMES[p.poi_type]} trong bán kính {format_distance(p.max_distance_m)}"
         for p in c.near_pois
-    ]
+    ] + [f"trong bán kính {format_distance(p.max_distance_m)} quanh {PlaceResolver.label(p)}"
+         for p in c.near_places]
     return "; ".join(parts)
 
 
@@ -88,6 +88,8 @@ def _listing_block(position: int, hit: ListingHit) -> str:
         lines.append("   Gần nhất: " + ", ".join(
             f"{POI_NAMES[poi_type]} {format_distance(meters)}"
             for poi_type, meters in hit.poi_distances.items()))
+    lines += ["   " + ", ".join(f"Cách {name} {format_distance(meters)}" for name, meters
+                                in hit.place_distances.items())] * bool(hit.place_distances)
     lines.append(f"   Đăng {posted} · {hit.listing_url}")
     if hit.similar_ids:
         lines.append("   Tin đăng lại tương tự: "

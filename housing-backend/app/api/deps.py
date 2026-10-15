@@ -10,11 +10,13 @@ from app.core.config import get_settings
 from app.db.session import engine, get_session
 from app.repositories.listing_repo import ListingRepository
 from app.repositories.poi_repo import PoiRepository
+from app.services.openai_client import openai_client
 from app.services.prediction.chat import PredictionChat
 from app.services.prediction.extractor import FieldExtractor
 from app.services.prediction.geocoder import Geocoder
 from app.services.prediction.predictor import PricePredictor
-from app.services.recommendation.service import RecommendationService, openai_client
+from app.services.recommendation.service import RecommendationService
+from app.services.valuation import ListingValuer
 
 logger = logging.getLogger(__name__)
 
@@ -35,14 +37,18 @@ _init_lock = threading.Lock()
 
 
 @lru_cache
-def _build_recommendation_service() -> RecommendationService:
-    return RecommendationService(engine=engine)
+def _build_recommendation_service(prediction: PredictionChat | None) -> RecommendationService:
+    """Dùng chung predictor và geocoder của chatbot dự đoán để so giá tin rao (không nạp model hai
+    lần); chưa train model thì valuer None, intent appraise báo chưa bật."""
+    valuer = ListingValuer(prediction.predictor, prediction.geocoder) if prediction else None
+    return RecommendationService(engine=engine, valuer=valuer)
 
 
 def get_recommendation_service() -> RecommendationService:
     """Một service cho cả tiến trình: ConversationStore bên trong sống qua nhiều request."""
+    prediction = get_prediction_chat()  # lấy khoá riêng, không lồng trong khoá bên dưới
     with _init_lock:
-        return _build_recommendation_service()
+        return _build_recommendation_service(prediction)
 
 
 @lru_cache

@@ -7,9 +7,11 @@ interface Props {
   selected: number | null;
   onSelect: (position: number) => void;
   onRelax: (text: string) => void;
+  onSuggest: (text: string) => void;
+  isLast: boolean;
 }
 
-export function MessageBubble({ message, selected, onSelect, onRelax }: Props) {
+export function MessageBubble({ message, selected, onSelect, onRelax, onSuggest, isLast }: Props) {
   const result = message.result;
   const estimate = message.prediction?.prediction;
   const classes = ["bubble", `bubble--${message.role}`];
@@ -59,6 +61,13 @@ export function MessageBubble({ message, selected, onSelect, onRelax }: Props) {
             onClick={() => onRelax(option.message)}
           >
             {option.description}
+          </button>
+        ))}
+      {/* Chip chỉ ở tin cuối: bấm thì gửi nguyên văn như người dùng gõ */}
+      {isLast &&
+        (message.prediction?.suggestions ?? message.result?.suggestions)?.map((text) => (
+          <button key={text} type="button" className="chip" onClick={() => onSuggest(text)}>
+            {text}
           </button>
         ))}
     </div>
