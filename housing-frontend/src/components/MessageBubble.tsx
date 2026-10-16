@@ -1,22 +1,24 @@
+import type { ListingHit } from "../api";
 import type { ChatMessage } from "../useChat";
-import { formatDistance, formatPrice } from "../format";
 import { ListingCard } from "./ListingCard";
+import { PredictionCard } from "./PredictionCard";
 
 interface Props {
   message: ChatMessage;
-  selected: number | null;
-  onSelect: (position: number) => void;
-  onRelax: (text: string) => void;
-  onSuggest: (text: string) => void;
+  selected: string | null;
+  shown: ListingHit[]; // bộ tin đang vẽ trên bản đồ; chỉ thẻ của bộ này được tô "đang chọn"
+  onSelect: (hit: ListingHit, group: ListingHit[]) => void;
+  onSend: (text: string) => void;
   isLast: boolean;
 }
 
-export function MessageBubble({ message, selected, onSelect, onRelax, onSuggest, isLast }: Props) {
-  const result = message.result;
-  const estimate = message.prediction?.prediction;
+export function MessageBubble({ message, selected, shown, onSelect, onSend, isLast }: Props) {
+  const { result, prediction } = message;
   const classes = ["bubble", `bubble--${message.role}`];
   if (message.isError) classes.push("bubble--error");
-  if (result?.status === "need_clarification") classes.push("bubble--hint");
+  if (result?.status === "need_clarification" || prediction?.status === "collecting") {
+    classes.push("bubble--hint");
+  }
 
   return (
     <div className={`message message--${message.role}`}>
@@ -28,28 +30,15 @@ export function MessageBubble({ message, selected, onSelect, onRelax, onSuggest,
         )}
         <p className="bubble__text">{message.text}</p>
       </div>
-      {estimate && (
-        <dl className="price-card">
-          <dt>Giá ước tính</dt>
-          <dd>{formatPrice(estimate.total_price)}</dd>
-          <dt>Giá / m²</dt>
-          <dd>{formatPrice(estimate.price_per_m2)}/m²</dd>
-          {estimate.district_median_per_m2 !== null && (
-            <>
-              <dt>Trung vị quận</dt>
-              <dd>{formatPrice(estimate.district_median_per_m2)}/m²</dd>
-            </>
-          )}
-          <dt>Cách trung tâm</dt>
-          <dd>{formatDistance(estimate.distance_to_center_km * 1000)}</dd>
-        </dl>
+      {prediction && prediction.status !== "out_of_scope" && (
+        <PredictionCard turn={prediction} onSend={onSend} />
       )}
       {result?.listings.map((hit) => (
         <ListingCard
           key={hit.listing_id}
           hit={hit}
-          selected={selected === hit.position}
-          onSelect={onSelect}
+          selected={selected === hit.listing_id && result.listings === shown}
+          onSelect={() => onSelect(hit, result.listings)}
         />
       ))}
       {result?.status === "no_results" &&
@@ -58,7 +47,7 @@ export function MessageBubble({ message, selected, onSelect, onRelax, onSuggest,
             key={option.description}
             type="button"
             className="chip"
-            onClick={() => onRelax(option.message)}
+            onClick={() => onSend(option.message)}
           >
             {option.description}
           </button>
@@ -66,7 +55,7 @@ export function MessageBubble({ message, selected, onSelect, onRelax, onSuggest,
       {/* Chip chỉ ở tin cuối: bấm thì gửi nguyên văn như người dùng gõ */}
       {isLast &&
         (message.prediction?.suggestions ?? message.result?.suggestions)?.map((text) => (
-          <button key={text} type="button" className="chip" onClick={() => onSuggest(text)}>
+          <button key={text} type="button" className="chip" onClick={() => onSend(text)}>
             {text}
           </button>
         ))}

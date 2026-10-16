@@ -105,16 +105,21 @@ function predictionResult(body) {
   const area = /(\d+(?:[.,]\d+)?)\s*(?:m2|m²)/i.exec(String(body.message ?? ""));
   if (!area) {
     const summary = "Nhà rộng bao nhiêu m² và ở quận nào?";
-    return { ...base, status: "collecting", summary, answer: summary, missing: ["area", "district"] };
+    return {
+      ...base, status: "collecting", summary, answer: summary, missing: ["area", "district"],
+      fields: { property_type: "nhà riêng", district: null, address: null, area: null },
+    };
   }
   const size = Number(area[1].replace(",", "."));
   const perM2 = 62.5;
   const summary = `Giá ước tính khoảng ${(perM2 * size / 1000).toFixed(2)} tỷ.`;
   return {
-    ...base, status: "predicted", summary, answer: summary, fields: { area: size },
+    ...base, status: "predicted", summary, answer: summary,
+    fields: { property_type: "nhà riêng", district: "Gò Vấp", address: null, area: size, bedrooms: 3 },
     prediction: {
-      price_per_m2: perM2, total_price: perM2 * size,
-      distance_to_center_km: 7.4, district_median_per_m2: 58.1,
+      price_per_m2: perM2, total_price: perM2 * size, price_per_m2_low: 55, price_per_m2_high: 70,
+      distance_to_center_km: 7.4, district_median_per_m2: 58.1, median_by_type: true,
+      warnings: ["Ít tin cùng loại trong quận này, kết quả chỉ để tham khảo."],
     },
   };
 }

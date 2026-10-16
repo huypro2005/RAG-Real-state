@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { fetchMap, resetConversation, resetPrediction, sendChat, sendPrediction } from "./api";
 import type { ChatTurnResult, ListingHit, MapFeature, Mode, PredictionTurn } from "./api";
 
@@ -34,28 +34,52 @@ function saveConversationId(mode: Mode, id: string | null): void {
   }
 }
 
-/** Gom state hội thoại: tin nhắn, kết quả đang hiện trên bản đồ, tin được chọn. */
+/**
+ * Gom state hội thoại: tin nhắn, bộ tin đang hiện trên bản đồ, tin được chọn.
+ * Tin được chọn định danh bằng `listing_id` (không phải `position`): các lượt khác nhau
+ * đều có tin số 1–5, chọn thẻ của lượt cũ thì bản đồ chuyển về đúng bộ tin của lượt đó.
+ */
 export function useChat(mode: Mode) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [conversationId, setConversationId] = useState<string | null>(() => loadConversationId(mode));
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState<ListingHit[]>([]);
   const [pois, setPois] = useState<MapFeature[]>([]);
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
+  const nextId = useRef(0);
+  // Tăng mỗi lần reset; phản hồi của lượt gửi trước reset sẽ bị bỏ qua.
+  const generation = useRef(0);
 
   const append = useCallback((message: Omit<ChatMessage, "id">) => {
-    setMessages((current) => [...current, { ...message, id: current.length }]);
+    const id = nextId.current++;
+    setMessages((current) => [...current, { ...message, id }]);
   }, []);
 
-  const loadPois = useCallback(async (hits: ListingHit[], id: string) => {
-    try {
-      const data = await fetchMap(hits.map((hit) => hit.listing_id), id);
-      // POI quanh tin + địa điểm có tên đang lọc (vẽ vòng bán kính)
-      setPois(data.features.filter((feature) => feature.properties.kind !== "listing"));
-    } catch {
-      setPois([]); // Bản đồ vẫn có marker tin; chỉ thiếu POI.
-    }
+  const showOnMap = useCallback((hits: ListingHit[], id: string | null) => {
+    const current = generation.current;
+    setListings(hits);
+    setPois([]);
+    fetchMap(hits.map((hit) => hit.listing_id), id)
+      .then((data) => {
+        if (generation.current !== current) return;
+        // POI quanh tin + địa điểm có tên đang lọc (vẽ vòng bán kính)
+        setPois(data.features.filter((feature) => feature.properties.kind !== "listing"));
+      })
+      .catch(() => {
+        // Bản đồ vẫn có marker tin; chỉ thiếu POI.
+      });
   }, []);
+
+  /** Chọn một tin; nếu nó thuộc lượt khác với bộ đang hiện thì đổi bản đồ sang bộ đó. */
+  const select = useCallback(
+    (hit: ListingHit, group: ListingHit[]) => {
+      if (!listings.some((item) => item.listing_id === hit.listing_id)) {
+        showOnMap(group, conversationId);
+      }
+      setSelected(hit.listing_id);
+    },
+    [conversationId, listings, showOnMap],
+  );
 
   const remember = useCallback(
     (id: string) => {
@@ -67,49 +91,55 @@ export function useChat(mode: Mode) {
 
   const send = useCallback(
     async (text: string) => {
+      const current = generation.current;
       append({ role: "user", text });
       setLoading(true);
       try {
         if (mode === "prediction") {
           const turn = await sendPrediction(text, conversationId);
+          if (generation.current !== current) return;
           remember(turn.conversation_id);
           // answer chứa câu hỏi/hướng dẫn tiếp theo; summary chỉ là dòng tóm tắt trường đã biết
           append({ role: "assistant", text: turn.answer, prediction: turn });
         } else {
           const result = await sendChat(text, conversationId);
+          if (generation.current !== current) return;
           remember(result.conversation_id);
           append({ role: "assistant", text: result.summary, result });
           if (result.listings.length > 0) {
-            setListings(result.listings);
             setSelected(null);
-            void loadPois(result.listings, result.conversation_id);
+            showOnMap(result.listings, result.conversation_id);
           }
         }
       } catch (error) {
-        const reason = error instanceof Error ? error.message : "Lỗi không xác định";
+        if (generation.current !== current) return;
+        const reason = error instanceof Error ? error.message : "Lỗi không xác định.";
         append({ role: "assistant", text: `Không gửi được tin nhắn. ${reason}`, isError: true });
       } finally {
-        setLoading(false);
+        if (generation.current === current) setLoading(false);
       }
     },
-    [append, conversationId, loadPois, mode, remember],
+    [append, conversationId, mode, remember, showOnMap],
   );
 
   const reset = useCallback(async () => {
-    if (conversationId) {
-      try {
-        await (mode === "prediction" ? resetPrediction : resetConversation)(conversationId);
-      } catch {
-        // Dù /reset lỗi vẫn xóa phía giao diện để người dùng bắt đầu lại.
-      }
-    }
+    generation.current += 1;
+    const id = conversationId;
     saveConversationId(mode, null);
     setConversationId(null);
     setMessages([]);
     setListings([]);
     setPois([]);
     setSelected(null);
+    setLoading(false);
+    if (id) {
+      try {
+        await (mode === "prediction" ? resetPrediction : resetConversation)(id);
+      } catch {
+        // Dù /reset lỗi, giao diện đã xóa để người dùng bắt đầu lại.
+      }
+    }
   }, [conversationId, mode]);
 
-  return { messages, loading, listings, pois, selected, setSelected, send, reset };
+  return { messages, loading, listings, pois, selected, setSelected, select, send, reset };
 }
