@@ -4,8 +4,8 @@
 !.env.example
 
 # Model đã train (nặng, tự train lại bằng scripts/train_price_model.py)
-models/
-*.joblib
+# models/
+# *.joblib
 
 # Python virtual environments
 venv/
