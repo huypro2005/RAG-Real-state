@@ -194,7 +194,7 @@ class SqlOracle:
                    l.floors, l.frontage, l.road_width, l.legal, l.interior, l.posted_at,
                    l.expired_at, l.listing_url, f.nearest_school_m, f.nearest_hospital_m,
                    f.nearest_market_m
-            FROM listings l LEFT JOIN listing_spatial_features f USING (listing_id)
+            FROM listings l LEFT JOIN listing_spatial_features f ON f.listing_pk = l.id
             WHERE l.listing_id = ANY(%s)
         """
         cur = self._conn.execute(sql, [listing_ids])

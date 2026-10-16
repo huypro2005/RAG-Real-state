@@ -5,7 +5,7 @@ Chạy từ thư mục housing-backend/housing-backend, sau `alembic upgrade hea
     DATABASE_URL=postgresql+asyncpg://user:pass@localhost:5432/housing_dev \
         python scripts/seed_address.py
 
-Upsert theo khóa chính nên chạy lại nhiều lần kết quả không đổi.
+Upsert theo mã nguồn (UNIQUE) nên chạy lại nhiều lần kết quả không đổi.
 Không import `app` để chạy được bằng `python scripts/...` mà không cần cài package.
 """
 
@@ -23,18 +23,31 @@ import psycopg
 class AddressSeeder:
     """Đọc JSON, nối mapping phường cũ -> mới sang ID batdongsan, upsert vào DB."""
 
-    DATA_DIR = Path(__file__).resolve().parents[3] / "address_data"
+    DATA_DIR = Path(__file__).resolve().parents[2] / "address_data"
     HCM_OLD_PROVINCE = "Thành phố Hồ Chí Minh"  # giá trị old_province_name trong ward_mappings.sql
-    # Bảng -> (cột khóa chính, các cột khác), theo thứ tự cha trước con để FK hợp lệ
+    # Bảng -> (cột UNIQUE dùng cho upsert, các cột khác), theo thứ tự cha trước con để FK hợp lệ
     TABLES: ClassVar[dict[str, tuple[list[str], list[str]]]] = {
         "provinces_old": (["code"], ["name", "alias"]),
         "provinces_new": (["code"], ["name", "alias"]),
-        "districts_old": (["id"], ["province_code", "name", "prefix", "alias"]),
-        "wards_old": (["id"], ["district_id", "name", "prefix", "alias"]),
-        "streets_old": (["id", "district_id"], ["name", "prefix", "alias"]),
-        "wards_new": (["id"], ["province_code", "name", "prefix", "alias"]),
-        "streets_new": (["id", "ward_id"], ["name", "prefix", "alias"]),
+        "districts_old": (["source_id"], ["province_id", "name", "prefix", "alias"]),
+        "wards_old": (["source_id"], ["district_id", "name", "prefix", "alias"]),
+        "streets_old": (["source_id", "district_id"], ["name", "prefix", "alias"]),
+        "wards_new": (["source_id"], ["province_id", "name", "prefix", "alias"]),
+        "streets_new": (["source_id", "ward_id"], ["name", "prefix", "alias"]),
         "ward_mappings": (["old_ward_id"], ["new_ward_id"]),
+    }
+    # Cột khóa ngoài -> (khóa trong dòng nguồn, bảng cha, mã nguồn ở bảng cha). Dòng nguồn chỉ
+    # có mã batdongsan nên khi ghi phải tra sang `id` của bảng cha bằng subquery.
+    REFERENCES: ClassVar[dict[str, dict[str, tuple[str, str, str]]]] = {
+        "districts_old": {"province_id": ("province_code", "provinces_old", "code")},
+        "wards_old": {"district_id": ("district_id", "districts_old", "source_id")},
+        "streets_old": {"district_id": ("district_id", "districts_old", "source_id")},
+        "wards_new": {"province_id": ("province_code", "provinces_new", "code")},
+        "streets_new": {"ward_id": ("ward_id", "wards_new", "source_id")},
+        "ward_mappings": {
+            "old_ward_id": ("old_ward_id", "wards_old", "source_id"),
+            "new_ward_id": ("new_ward_id", "wards_new", "source_id"),
+        },
     }
     # Bảng -> (file JSON, cột ID cha nếu file gom theo ID cha, {cột: field JSON})
     SOURCES: ClassVar[dict[str, tuple[str, str | None, dict[str, str]]]] = {
@@ -43,20 +56,20 @@ class AddressSeeder:
         "provinces_new": ("new_cities.json", None,
                           {"code": "cityCode", "name": "cityName", "alias": "cityAlias"}),
         "districts_old": ("sg_old.json", None,
-                          {"id": "districtId", "province_code": "cityCode",
+                          {"source_id": "districtId", "province_code": "cityCode",
                            "name": "districtName", "prefix": "districtPrefix",
                            "alias": "districtAlias"}),
         "wards_old": ("sg_old_wards.json", "district_id",
-                      {"id": "wardId", "name": "wardName", "prefix": "wardPrefix",
+                      {"source_id": "wardId", "name": "wardName", "prefix": "wardPrefix",
                        "alias": "wardAlias"}),
         "streets_old": ("sg_old_streets.json", "district_id",
-                        {"id": "streetId", "name": "streetName", "prefix": "streetPrefix",
+                        {"source_id": "streetId", "name": "streetName", "prefix": "streetPrefix",
                          "alias": "streetAlias"}),
         "wards_new": ("sg_new_wards.json", None,
-                      {"id": "wardId", "province_code": "cityCode", "name": "wardName",
+                      {"source_id": "wardId", "province_code": "cityCode", "name": "wardName",
                        "prefix": "wardPrefix", "alias": "wardAlias"}),
         "streets_new": ("sg_new_streets.json", "ward_id",
-                        {"id": "streetId", "name": "streetName", "prefix": "streetPrefix",
+                        {"source_id": "streetId", "name": "streetName", "prefix": "streetPrefix",
                          "alias": "streetAlias"}),
     }
     INSERT_PATTERN = re.compile(r"^INSERT INTO `ward_mappings` \((.+?)\) VALUES \((.+)\);$")
@@ -108,12 +121,12 @@ class AddressSeeder:
         key = self.name_key
         district_ids, old_wards, new_wards = {}, {}, {}
         for d in rows["districts_old"]:
-            district_ids.setdefault(key(d["prefix"], d["name"]), []).append(d["id"])
+            district_ids.setdefault(key(d["prefix"], d["name"]), []).append(d["source_id"])
         for w in rows["wards_old"]:
             ward_key = (w["district_id"], key(w["prefix"], w["name"]))
-            old_wards.setdefault(ward_key, []).append(w["id"])
+            old_wards.setdefault(ward_key, []).append(w["source_id"])
         for w in rows["wards_new"]:
-            new_wards.setdefault(key(w["prefix"], w["name"]), []).append(w["id"])
+            new_wards.setdefault(key(w["prefix"], w["name"]), []).append(w["source_id"])
 
         matched, unmatched = [], []
         for record in self.read_ward_mappings_sql():
@@ -170,12 +183,18 @@ class AddressSeeder:
     def save(self, rows: dict[str, list[dict]]) -> None:
         """Upsert từng bảng trong một transaction rồi in số dòng DB so với số bản ghi nguồn."""
         with psycopg.connect(self.conninfo) as conn, conn.cursor() as cur:
-            for table, (pk, others) in self.TABLES.items():
-                columns = pk + others
+            for table, (unique, others) in self.TABLES.items():
+                columns = unique + others
+                references = self.REFERENCES.get(table, {})
+                values = [
+                    "(SELECT id FROM {1} WHERE {2} = %({0})s)".format(*references[c])
+                    if c in references else f"%({c})s"
+                    for c in columns
+                ]
                 cur.executemany(
                     f"INSERT INTO {table} ({', '.join(columns)}) "
-                    f"VALUES ({', '.join(f'%({c})s' for c in columns)}) "
-                    f"ON CONFLICT ({', '.join(pk)}) DO UPDATE SET "
+                    f"VALUES ({', '.join(values)}) "
+                    f"ON CONFLICT ({', '.join(unique)}) DO UPDATE SET "
                     + ", ".join(f"{c} = EXCLUDED.{c}" for c in others),
                     rows[table],
                 )

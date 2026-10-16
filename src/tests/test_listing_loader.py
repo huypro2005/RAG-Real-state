@@ -70,7 +70,8 @@ class ListingLoaderTests(unittest.TestCase):
 
         self.loader.refresh_spatial()
         has_features = [self.loader.conn.execute(
-            'SELECT count(*) FROM listing_spatial_features WHERE listing_id = %s', (listing_id,)
+            'SELECT count(*) FROM listing_spatial_features f JOIN listings l ON l.id = f.listing_pk '
+            'WHERE l.listing_id = %s', (listing_id,)
         ).fetchone()[0] for listing_id in ('T0', 'T1')]
         self.assertEqual(has_features, [1, 0])      # tin không có tọa độ thì không có đặc trưng
 

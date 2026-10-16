@@ -4,9 +4,9 @@ Tài liệu mô tả hai chatbot của đồ án: **Gợi ý** (tìm tin đang b
 (ước tính giá một bất động sản). Phạm vi: TP.HCM theo địa giới cũ (24 quận/huyện, trước sáp
 nhập 2025); dữ liệu là tin đăng trên batdongsan.com.vn.
 
-> Trạng thái: cập nhật 15/10/2026. Code các tính năng ở mục 6–7 (chat-intelligence,
-> named-places) đã cài xong, đang chờ nghiệm thu vòng 2. Kết quả nghiệm thu ghi ở
-> [STATUS.md](tasks/STATUS.md).
+> Trạng thái: cập nhật 16/10/2026. Mục 6 (chat-intelligence) đã nghiệm thu đạt. Mục 7
+> (địa điểm có tên) đạt ở lần chấm cuối, trừ lỗi Goong tỉnh giáp ranh đã sửa sau đó và chỉ
+> kiểm bằng test (chưa chấm lại bằng reviewer). Chi tiết ở [STATUS.md](tasks/STATUS.md).
 
 ## 1. Nguyên tắc thiết kế
 
@@ -284,8 +284,12 @@ flowchart TD
   chính xác theo địa chỉ cụ thể; Goong hết hạn mức thì dùng tâm quận.
 - Chỉ ước tính 5 loại: căn hộ chung cư, nhà riêng, biệt thự/liền kề, nhà mặt phố, đất. Cần Giờ
   có rất ít dữ liệu train (kết quả có thể lệch nhiều, có cảnh báo).
-- Câu rất ngắn, không dấu hoặc viết tắt hiếm đôi lúc làm LLM bỏ sót tên địa điểm; khi đó chatbot
-  chỉ lọc theo loại POI chung. Cải thiện dự kiến: nhận bí danh bằng code khi LLM bỏ sót.
+- Tên địa điểm: code tự dựng lại khi LLM bỏ sót (từ chỉ loại + tên riêng, bí danh), đạt khoảng
+  83% trên bộ câu thử (không dấu, viết tắt). Câu lạ vẫn có thể rơi về lọc theo loại POI chung.
+- Dữ liệu đại học/cao đẳng lấy từ OSM, lọc ranh phía bắc theo vĩ độ (≤ 10,885) và tên tỉnh, nên
+  vài điểm sát ranh Thủ Đức–Dĩ An có thể sai. Tên nhiều cơ sở (ĐH Luật, Hoa Sen…) bot hỏi lại.
+- Goong trả địa danh tỉnh giáp ranh (Thủ Dầu Một, Dĩ An…) bị loại bằng danh sách tên và yêu cầu
+  có tin đăng trong 1 km; địa danh lạ ngoài danh sách vẫn có thể lọt nếu sát tin đăng.
 - Embedding/rerank chạy trên Kaggle; khi mất kết nối, kết quả sắp theo ngày đăng (`degraded`).
 - Chạy lại `refresh_spatial_features()` sẽ tính đại học/cao đẳng vào cột "trường học gần nhất"
   của tin đăng; hàm này chưa được chỉnh.
@@ -315,8 +319,10 @@ uvx ruff check .
 - Bộ test gọi LLM thật có marker `llm`, chỉ chạy khi cần: `pytest -m llm`.
 - Kịch bản gợi ý: `tests/recommend/run_eval.py` (50 hội thoại nhiều lượt có oracle SQL).
 - Ca thực tế dự đoán giá: `tests/prediction/run_realistic.py` (20 ca, kỳ vọng ở `realistic_cases.json`).
-- Áp lên DB thật: `alembic upgrade head`, rồi `scripts/import_universities.py` (xem
-  [STATUS.md](tasks/STATUS.md)). **Chưa chạy** trên DB `housing`.
+- Áp lên DB thật: `alembic upgrade head` (gồm migration 0002 index tên, 0003 sửa hàm tính
+  đặc trưng không gian), **sau đó** `scripts/import_universities.py`. **Chưa chạy** trên DB
+  `housing`, và hiện chưa chạy được vì `housing` chưa có bảng `alembic_version`/`public.pois`
+  (vẫn 5 schema cũ) cho tới khi hoàn tất bước chuyển schema.
 
 ## 10. Tài liệu liên quan
 

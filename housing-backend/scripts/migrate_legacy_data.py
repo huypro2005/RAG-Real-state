@@ -76,12 +76,18 @@ class LegacyDataMigrator:
         ):
             self.copy(src, dst, "listings", LISTING_COLUMNS, ["listing_id"],
                       f"SELECT {', '.join(LISTING_COLUMNS)} FROM listing.listings")
-            self.copy(src, dst, "listing_spatial_features", SPATIAL_COLUMNS, ["listing_id"],
-                      f"SELECT {', '.join(SPATIAL_COLUMNS)} FROM listing.listing_spatial_features")
+            # Bảng con trỏ listings.id: đổi mã tin nguồn (cột đầu) sang id vừa nạp
+            listing_pks = dict(dst.execute("SELECT listing_id, id FROM listings").fetchall())
+            self.copy(src, dst, "listing_spatial_features", ["listing_pk", *SPATIAL_COLUMNS[1:]],
+                      ["listing_pk"],
+                      f"SELECT {', '.join(SPATIAL_COLUMNS)} FROM listing.listing_spatial_features",
+                      listing_pks)
             # vector đọc ra dạng text, Postgres tự ép text -> vector khi ghi
-            self.copy(src, dst, "listing_embeddings", EMBEDDING_COLUMNS, ["listing_id"],
+            self.copy(src, dst, "listing_embeddings", ["listing_pk", *EMBEDDING_COLUMNS[1:]],
+                      ["listing_pk"],
                       "SELECT listing_id, model_name, content_hash, embedding_text, rag_document,"
-                      " embedding::text, embedded_at FROM rag.listing_embeddings")
+                      " embedding::text, embedded_at FROM rag.listing_embeddings",
+                      listing_pks)
             self.copy(src, dst, "pois", POI_COLUMNS, ["id"], POI_SOURCE_SQL)
             # INSERT kèm id không đẩy sequence -> đặt lại để lần thêm POI sau không trùng id
             dst.execute(
@@ -92,10 +98,16 @@ class LegacyDataMigrator:
             dst.commit()
 
     def copy(
-        self, src, dst, table: str, columns: list[str], pk: list[str], select_sql: str
+        self, src, dst, table: str, columns: list[str], pk: list[str], select_sql: str,
+        first_column_map: dict | None = None,
     ) -> None:
-        """Đọc toàn bộ từ nguồn, upsert vào bảng đích theo khóa chính."""
+        """Đọc toàn bộ từ nguồn, upsert vào bảng đích theo khóa duy nhất `pk`.
+
+        first_column_map: nếu có, giá trị cột đầu của mỗi dòng được tra qua dict này.
+        """
         rows = src.execute(select_sql).fetchall()
+        if first_column_map:
+            rows = [(first_column_map[row[0]], *row[1:]) for row in rows]
         updates = ", ".join(f"{c} = EXCLUDED.{c}" for c in columns if c not in pk)
         with dst.cursor() as cur:
             cur.executemany(
@@ -110,7 +122,8 @@ class LegacyDataMigrator:
     def copy_district_labels(self, src, dst) -> None:
         """district_name cũ (viết thường) -> districts_old.id; phải khớp đủ, thiếu thì dừng."""
         district_ids = dict(dst.execute(
-            "SELECT lower(name), id FROM districts_old WHERE province_code = 'SG'"
+            "SELECT lower(name), id FROM districts_old"
+            " WHERE province_id = (SELECT id FROM provinces_old WHERE code = 'SG')"
         ).fetchall())
         labels = src.execute(
             "SELECT model_version, label, district_name FROM ml.district_label"

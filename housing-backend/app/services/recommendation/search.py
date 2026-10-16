@@ -60,7 +60,7 @@ DETAIL_COLUMNS = """
 FULL_NAME_SQL = "concat_ws(' ', nullif(prefix, ''), name)"  # "Quận 7", "Phường Tân Phong"
 AREA_MATCH_SQL = f"""
     SELECT id, alias FROM {{table}}
-     WHERE province_code = 'SG'
+     WHERE province_id = (SELECT id FROM {{provinces}} WHERE code = 'SG')
        AND (lower(unaccent(name)) = lower(unaccent(:name))
             OR lower(unaccent({FULL_NAME_SQL})) = lower(unaccent(:name)))
 """
@@ -158,7 +158,9 @@ class HybridSearch:
                 )
                 name = re.sub(r"^(?:tp\.?|thành phố)\s+", "", name, flags=re.IGNORECASE)
                 rows = (await self.session.execute(
-                    text(AREA_MATCH_SQL.format(table=table)), {"name": name}
+                    text(AREA_MATCH_SQL.format(
+                        table=table, provinces="provinces_" + table.rsplit("_", 1)[1]
+                    )), {"name": name}
                 )).all()
                 if not rows:
                     unknown.append(raw_name)
@@ -174,9 +176,11 @@ class HybridSearch:
     async def known_areas(self) -> tuple[list[str], list[str]]:
         """(tên phường/xã mới, tên đầy đủ quận/huyện cũ) của TP.HCM, để code tìm tên trong câu."""
         wards = await self.session.execute(
-            text("SELECT name FROM wards_new WHERE province_code = 'SG'"))
+            text("SELECT name FROM wards_new WHERE province_id ="
+                 " (SELECT id FROM provinces_new WHERE code = 'SG')"))
         districts = await self.session.execute(text(
-            f"SELECT {FULL_NAME_SQL} FROM districts_old WHERE province_code = 'SG'"))
+            f"SELECT {FULL_NAME_SQL} FROM districts_old"
+            " WHERE province_id = (SELECT id FROM provinces_old WHERE code = 'SG')"))
         return list(wards.scalars()), list(districts.scalars())
 
     async def area_names(self, constraints: SearchConstraints) -> list[str]:
@@ -232,7 +236,7 @@ class HybridSearch:
         rows = await self.session.execute(
             text(
                 f"SELECT {DETAIL_COLUMNS} FROM listings l"
-                " LEFT JOIN listing_spatial_features f USING (listing_id)"
+                " LEFT JOIN listing_spatial_features f ON f.listing_pk = l.id"
                 " WHERE l.listing_id = ANY(:ids)"
             ),
             {"ids": listing_ids},
@@ -266,8 +270,8 @@ class HybridSearch:
         rows = (await self.session.execute(
             text(
                 f"SELECT {HIT_COLUMNS}, {score}{places} FROM listings l"
-                " LEFT JOIN listing_spatial_features f USING (listing_id)"
-                " LEFT JOIN listing_embeddings e USING (listing_id)"
+                " LEFT JOIN listing_spatial_features f ON f.listing_pk = l.id"
+                " LEFT JOIN listing_embeddings e ON e.listing_pk = l.id"
                 f" WHERE {where} ORDER BY {order} LIMIT {CANDIDATE_LIMIT}"
             ),
             params,

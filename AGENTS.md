@@ -49,6 +49,7 @@ Task đã xong: phân tích cấu trúc HTML tin đăng —
 | Pipeline làm sạch tin | [docs/huong-dan-pipeline-lam-sach.md](docs/huong-dan-pipeline-lam-sach.md) |
 | Cấu trúc HTML batdongsan (field, selector, địa chỉ cũ/mới) | `CrawlData/analysis/*.md` |
 | Hai chatbot (kiến trúc, intent, API, chạy/test) | [docs/chatbot.md](docs/chatbot.md) |
+| Cách gọi API (endpoint, request/response, ví dụ, sự cố) | [docs/api.md](docs/api.md) |
 | Backlog | [docs/jira-backlog.md](docs/jira-backlog.md) |
 | Bàn giao dữ liệu trường học | [docs/handoffs/](docs/handoffs/) |
 | API địa chỉ batdongsan | [address_data/readme.md](address_data/readme.md) |

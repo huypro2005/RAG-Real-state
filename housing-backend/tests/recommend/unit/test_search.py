@@ -60,7 +60,8 @@ def test_resolve_areas_thu_duc_abbreviation_unaccent_and_unknown(run_db, make_se
         only_q9, _, _ = await search.resolve_areas(["Quận 9"], [])
         assert only_q9 == await district_ids(session, "quan-9")
         ward = (await session.execute(text(
-            "SELECT id FROM wards_new WHERE name = 'Sài Gòn' AND province_code = 'SG'"
+            "SELECT id FROM wards_new WHERE name = 'Sài Gòn' AND province_id ="
+            " (SELECT id FROM provinces_new WHERE code = 'SG')"
         ))).scalar_one()
         assert (districts, wards, unknown) == (expected, [ward], ["Hà Nội"])
 

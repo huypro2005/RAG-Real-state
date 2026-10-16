@@ -181,3 +181,8 @@ Kết quả: `housing-backend/housing-backend/tests/recommend/report.md`, `repor
 - DB thật `housing`: **chưa có** `alembic_version` hay `public.pois` (vẫn 5 schema cũ) nên chưa áp migration 0002, 0003 và `scripts/import_universities.py` được. Thứ tự khi áp: `alembic upgrade head` rồi nạp ĐH/CĐ. Mọi thay đổi mới chỉ ở `housing_dev`. Không commit.
 - Chi phí: mỗi vòng chấm tốn 60–230 lượt OpenAI/Goong. Đặt ngân sách tổng cho reviewer (≤ 90) và tự đếm bằng hook httpx.
 - R13 (realistic) phụ thuộc Goong thật; baseline 362,38 là tâm quận.
+
+### Cập nhật 16/10/2026 — named-places gần xong
+- Vòng chấm cuối: chỉ FAIL N6 (Goong trả Thủ Dầu Một); coder đã sửa (loại tên địa danh tỉnh giáp ranh, yêu cầu tin đăng ≤ 1 km) cùng các lỗi nhỏ N5/N10. Kiểm tay: pytest -m "not llm" 697 passed, ruff, alembic check (head 0003) sạch; recommendation/ 2.060 dòng, places.py 290.
+- Chưa chấm lại bằng reviewer sau sửa cuối; chưa thử Goong thật sau sửa. Nếu muốn chốt: 1 lượt reviewer nhỏ (≤ 30 lượt gọi thật) cho N6 + N10.
+- Việc còn lại: áp DB thật (cần xong bước chuyển schema), commit, xoay khoá OpenAI.

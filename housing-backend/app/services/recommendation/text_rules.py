@@ -65,7 +65,7 @@ GOONG_ONLY = {"dhqg": "dai hoc quoc gia thanh pho ho chi minh"}
 # "gần <từ chỉ loại> <tên riêng>": nhóm poi là từ chỉ loại, nhóm rest là phần còn lại của câu
 POI_ALT = "dai hoc|dh|cao dang|hoc vien|thpt|thcs|truong|benh vien|bv|cho"
 PLACE_PATTERN_FOLDED = re.compile(
-    rf"\b(?:gan|canh|sat|quanh|toi|den)\s+(?:(?P<poi>{POI_ALT})\s+)?(?P<rest>[a-z0-9 ]+)")
+    rf"\b(?:gan|canh|sat|quanh|toi|den|cach)\s+(?:(?P<poi>{POI_ALT})\s+)?(?P<rest>[a-z0-9 ]+)")
 REMOVE_PLACE_PATTERN_FOLDED = re.compile(r"\b(?:bo|xoa|khong can)\s+(?:dieu\skien\s+)?gan\b")
 POI_KINDS = {"truong": "truong_hoc", "thpt": "truong_hoc", "thcs": "truong_hoc",
              "dai hoc": "truong_hoc", "dh": "truong_hoc", "cao dang": "truong_hoc",
@@ -74,9 +74,9 @@ KEEP_POI_WORD = {"dai hoc", "dh", "cao dang", "hoc vien", "thpt", "thcs"}  # n�
 # Hết tên riêng: từ nối, quận, giá, số lượng
 NAME_STOP = {"o", "tai", "quan", "huyen", "phuong", "q", "duoi", "tren", "khoang", "tam", "gia",
              "co", "voi", "de", "va", "ma", "can", "thi", "khong", "nhe", "nua", "hon", "gan",
-             "ban", "den"}
+             "ban", "den", "ra", "len", "xuong", "thoi"}
 # "tu", "nha" cũng là tên ("bệnh viện Từ Dũ", "chợ Nhà Bè"): chỉ là từ nối khi đứng sau tên
-LATE_STOP = {"tu", "nha"}
+LATE_STOP = {"tu", "nha", "cho"}  # "cho": "gần trường học cho con"
 NAME_UNITS = {"ty", "tr", "trieu", "pn", "phong", "m2", "km", "m", "met", "tang", "lau"}
 # Phần đầu chỉ là mô tả loại ("trường học", "bệnh viện lớn"): không phải tên riêng. "đa khoa"
 # chỉ là mô tả khi đứng cuối; "bệnh viện đa khoa Sài Gòn" là tên. "từ" không có ("bệnh viện Từ Dũ").
@@ -345,6 +345,10 @@ class MessageRules:
         khi câu có số + km/m (LLM hay điền mặc định 2 km) và đổi được bán kính địa điểm đang có."""
         places = [p for p in delta.near_places if not re.search(r"[;!?\n]", p.name)]
         dropping = REMOVE_PLACE_PATTERN_FOLDED.search(self.text)  # "bỏ điều kiện gần X"
+        distance = DISTANCE_PATTERN_FOLDED.search(self.text)
+        meters = distance and float(distance[1].replace(",", ".")) * (
+            1000 if distance[2] in ("km", "cay so") else 1)
+        radius = int(meters) if distance else None  # "cách chợ Tân Bình 800m"
         for match in [] if places or dropping else PLACE_PATTERN_FOLDED.finditer(self.text):
             words, tokens = match["rest"].split(), []
             for i, token in enumerate(words):
@@ -358,12 +362,17 @@ class MessageRules:
                 name = GENERIC_NAME.sub("", name)
             if poi and name:
                 name = f"{poi} {name}" if poi in KEEP_POI_WORD else name
-                places.append(PlaceRequest(name=name, kind=POI_KINDS[poi], max_distance_m=None))
+                places.append(PlaceRequest(name=name, kind=POI_KINDS[poi], max_distance_m=radius))
             elif not poi and (" ".join(tokens) in ALIASES or " ".join(tokens) in GOONG_ONLY):
-                places.append(PlaceRequest(name=" ".join(tokens), kind=None, max_distance_m=None))
-        distance = DISTANCE_PATTERN_FOLDED.search(self.text)
-        meters = distance and float(distance[1].replace(",", ".")) * (
-            1000 if distance[2] in ("km", "cay so") else 1)
+                places.append(PlaceRequest(name=" ".join(tokens), kind=None, max_distance_m=radius))
+        skip = {"truong", "dai", "hoc", "benh", "vien", "bv", "dh"}
+        for i, place in enumerate(places):  # "chợ rẫy" khi đang có "Bệnh viện Chợ Rẫy": một nơi
+            words = set(fold(place.name).split()) - skip
+            same = [c for c in current.near_places
+                    if words and words <= set(fold(c.name).split())]
+            if same:
+                places[i] = place.model_copy(update={
+                    "name": same[0].name, "max_distance_m": place.max_distance_m or radius})
         if not places and distance and current.near_places and not re.search(
                 rf"\b(?:{POI_ALT})\b", self.text):  # "gần hơn nữa, 1 km thôi": đổi bán kính
             targets = current.near_places if len(current.near_places) == 1 else [
@@ -373,7 +382,9 @@ class MessageRules:
             else:
                 ignored.append("bán kính (quanh địa điểm nào?)")
         delta.near_places = [self._place_kind(p).model_copy(update={
-            "max_distance_m": p.max_distance_m if distance else None}) for p in places]
+            # một địa điểm + một số km trong câu: tin số trong câu, LLM hay cộng dồn ("nới ra 3 km")
+            "max_distance_m": radius if distance and len(places) == 1 else (
+                p.max_distance_m if distance else None)}) for p in places]
 
     def _place_kind(self, place: PlaceRequest) -> PlaceRequest:
         """Từ loại ngay trước tên ("bệnh viện Hùng Vương") hoặc đầu tên thắng kind "khac"/None."""

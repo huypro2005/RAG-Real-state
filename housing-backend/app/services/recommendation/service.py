@@ -311,7 +311,8 @@ class RecommendationService:
         changes = [note.strip()] if note else describe_changes(  # sau reset không so với state cũ
             old, merged, old_areas, new_areas, cheaper=delta.cheaper,
         )
-        changes += found.notes
+        changes += found.notes + PlaceResolver.shrink_notes(
+            old.near_places, merged.near_places, rules.text)
         if fixed.ignored:  # spec 9 #32d: nói rõ điều kiện chưa hiểu, không bỏ im
             unknown = ", ".join(fixed.ignored)
             changes.append(f"Mình chưa hiểu rõ điều kiện {unknown} nên chưa áp dụng.")

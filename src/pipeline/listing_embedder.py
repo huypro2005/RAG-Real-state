@@ -47,15 +47,15 @@ class ListingEmbedder:
                f.nearest_school_name, f.nearest_school_m, f.nearest_hospital_name,
                f.nearest_hospital_m, f.nearest_market_name, f.nearest_market_m
           FROM listings l
-          LEFT JOIN listing_spatial_features f USING (listing_id)
+          LEFT JOIN listing_spatial_features f ON f.listing_pk = l.id
          ORDER BY l.listing_id
     """
     UPSERT = """
         INSERT INTO listing_embeddings
-               (listing_id, model_name, content_hash, embedding_text, rag_document, embedding)
-        VALUES (%(listing_id)s, %(model_name)s, %(content_hash)s, %(embedding_text)s,
+               (listing_pk, model_name, content_hash, embedding_text, rag_document, embedding)
+        VALUES ((SELECT id FROM listings WHERE listing_id = %(listing_id)s), %(model_name)s, %(content_hash)s, %(embedding_text)s,
                 %(rag_document)s, %(embedding)s)
-        ON CONFLICT (listing_id) DO UPDATE SET
+        ON CONFLICT (listing_pk) DO UPDATE SET
             model_name = EXCLUDED.model_name, content_hash = EXCLUDED.content_hash,
             embedding_text = EXCLUDED.embedding_text, rag_document = EXCLUDED.rag_document,
             embedding = EXCLUDED.embedding, embedded_at = now()
@@ -105,7 +105,8 @@ class ListingEmbedder:
         with self.conn.cursor(row_factory=dict_row) as cur:
             cur.execute(self.SOURCE_QUERY)
             documents = [self.build_document(row) for row in cur.fetchall()]
-            cur.execute('SELECT listing_id, content_hash FROM listing_embeddings')
+            cur.execute('SELECT l.listing_id, e.content_hash FROM listing_embeddings e '
+                        'JOIN listings l ON l.id = e.listing_pk')
             existing = {row['listing_id']: row['content_hash'] for row in cur.fetchall()}
         self.conn.commit()
 
@@ -124,8 +125,9 @@ class ListingEmbedder:
         # Nội dung ngữ nghĩa không đổi nhưng document hiển thị có thể đổi (giá, POI...).
         with self.conn.transaction(), self.conn.cursor() as cur:
             cur.executemany(
-                'UPDATE listing_embeddings SET rag_document = %(rag_document)s '
-                'WHERE listing_id = %(listing_id)s AND rag_document IS DISTINCT FROM %(rag_document)s',
+                'UPDATE listing_embeddings e SET rag_document = %(rag_document)s '
+                'FROM listings l WHERE l.id = e.listing_pk AND l.listing_id = %(listing_id)s '
+                'AND e.rag_document IS DISTINCT FROM %(rag_document)s',
                 unchanged)
 
         return {'model': self.model_name, 'listings': len(documents),

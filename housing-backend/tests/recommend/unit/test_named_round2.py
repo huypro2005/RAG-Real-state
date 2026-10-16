@@ -1,7 +1,8 @@
 """Địa điểm có tên, vòng sửa 2: đại học chỉ khớp ĐH/CĐ, tên bắt đầu bằng "từ"/"nhà", "đa khoa",
-kind theo từ loại, đổi bán kính, chọn theo quận, Goong tỉnh khác, dữ liệu import (named-places.md)."""
+kind theo từ loại, đổi bán kính, chọn theo quận, Goong tỉnh khác, dữ liệu import."""
 
 import asyncio
+from typing import ClassVar
 
 import pytest
 from fakes import plan
@@ -68,8 +69,8 @@ def test_names_starting_with_connective_words_are_still_names(message, name):
 
 
 def test_dh_luat_tphcm_core_drops_the_city_and_expands_the_abbreviation():
-    assert PlaceResolver.core("đh luật tphcm") == "dai hoc luat"
-    assert PlaceResolver.core("ĐH Luật TP.HCM") == "dai hoc luat"
+    assert PlaceResolver.core("đh luật tphcm") == "luat"
+    assert PlaceResolver.core("ĐH Luật TP.HCM") == "luat"
     assert PlaceResolver.core("bv chợ rẫy") == "cho ray"
 
 
@@ -91,7 +92,8 @@ def test_kind_follows_the_word_before_the_name_and_generic_pois_of_that_kind_go_
 
 def test_kind_is_not_overridden_when_the_llm_already_chose_a_real_one():
     proposed = plan("search", near_places=[request("Hùng Vương", "truong_hoc")])
-    assert corrected("nhà gần bệnh viện Hùng Vương", proposed)[0].near_places[0].kind == "truong_hoc"
+    delta, _ = corrected("nhà gần bệnh viện Hùng Vương", proposed)
+    assert delta.near_places[0].kind == "truong_hoc"
 
 
 # ---- đổi bán kính của địa điểm đang có (mục 5, 8) ---------------------------------------------
@@ -189,7 +191,7 @@ def test_label_does_not_repeat_the_name_inside_the_address():
 # ---- Goong: tỉnh khác, xa tin đăng, viết tắt (N6) ----------------------------------------------
 
 class Client:
-    answer = {}
+    answer: ClassVar[dict] = {}
 
     def __init__(self, **_):
         pass
@@ -235,14 +237,15 @@ def test_goong_point_inside_the_city_is_still_offered_for_confirmation(run_db, m
     Client.answer = goong_result("Landmark 81", "208 Nguyễn Hữu Cảnh, Bình Thạnh, Hồ Chí Minh",
                                  10.7949, 106.7218)
     monkeypatch.setattr("app.services.places.httpx.AsyncClient", Client)
-    status, found = resolve(run_db, "Landmark 81", "khac", resolver=PlaceResolver(SecretStr("k")))
+    resolver = PlaceResolver(SecretStr("k"))
+    status, found = resolve(run_db, "Landmark 81", "khac", resolver=resolver)
     assert status == "geocoded" and found[0].name == "Landmark 81"
 
 
 def test_dhqg_is_left_to_goong_not_to_the_closest_pois_name(run_db):
-    resolver = FakeGoongResolver({"dhqg": LANDMARK.model_copy(update={
+    resolver = FakeGoongResolver({"đhqg": LANDMARK.model_copy(update={
         "name": "Đại học Quốc gia TP.HCM", "latitude": 10.8700, "longitude": 106.8030})})
-    status, found = resolve(run_db, "đhqg", None, resolver=resolver)
+    status, _ = resolve(run_db, "đhqg", None, resolver=resolver)
     assert status == "geocoded" and resolver.calls == ["đhqg"]
     assert resolve(run_db, "đhqg", None, resolver=FakeGoongResolver(fail=True)) == ("none", [])
 
@@ -251,7 +254,8 @@ def test_dhqg_is_left_to_goong_not_to_the_closest_pois_name(run_db):
 
 def test_imported_universities_are_all_inside_the_old_city(run_db):
     sql = text("""SELECT count(*) FILTER (WHERE latitude > 10.885),
-                         count(*) FILTER (WHERE name ILIKE '%Dĩ An%' OR address_old ILIKE '%Bình Dương%'),
+                         count(*) FILTER (WHERE name ILIKE '%Dĩ An%'
+                                 OR address_old ILIKE '%Bình Dương%'),
                          count(*) FILTER (WHERE name ILIKE '%VGU%'),
                          count(*) FILTER (WHERE name = 'Trường Đại học Bách khoa (cơ sở 2)'),
                          count(*) FILTER (WHERE name = 'Trường Đại học Quốc tế'),
@@ -270,3 +274,67 @@ def test_near_bach_khoa_no_longer_lists_the_di_an_campus(run_db):
 
 def test_asyncio_is_importable_for_the_goong_stub():
     assert asyncio.iscoroutinefunction(PlaceResolver._goong)
+
+
+# ---- vòng cuối: tỉnh giáp ranh, chọn theo từ riêng, "cách", thu hẹp bán kính -----------------
+
+@pytest.mark.parametrize("name, result", [
+    ("Đại học Thủ Dầu Một", goong_result("Đại học Thủ Dầu Một", "Thủ Dầu Một, Hồ Chí Minh",
+                                         10.9714, 106.6586)),
+    ("Quán Xyzq Dĩ An", goong_result("Quán Xyzq Dĩ An", "Dĩ An, Hồ Chí Minh", 10.87, 106.80)),
+])
+def test_goong_results_naming_a_neighbour_town_are_rejected_even_labelled_hcm(
+        run_db, monkeypatch, name, result):
+    Client.answer = result
+    monkeypatch.setattr("app.services.places.httpx.AsyncClient", Client)
+    assert resolve(run_db, name, "khac", resolver=PlaceResolver(SecretStr("k"))) == ("none", [])
+
+
+def test_airport_still_accepted_by_goong(run_db, monkeypatch):
+    Client.answer = goong_result("Sân bay quốc tế Tân Sơn Nhất", "Phường 2, Tân Bình, Hồ Chí Minh",
+                                 10.8185, 106.6588)
+    monkeypatch.setattr("app.services.places.httpx.AsyncClient", Client)
+    resolver = PlaceResolver(SecretStr("k"))
+    assert resolve(run_db, "sân bay Tân Sơn Nhất", "khac", resolver=resolver)[0] == "geocoded"
+
+
+NHI = [PlaceConstraint(name=f"Bệnh viện Nhi đồng {n}", latitude=10.7 + n / 100, longitude=106.7)
+       for n in (1, 2)] + [PlaceConstraint(name="Bệnh viện Nhi Thành phố", latitude=10.75,
+                                           longitude=106.7)]
+
+
+def test_candidates_are_chosen_by_their_own_words_and_ambiguity_asks_again():
+    constraints = SearchConstraints()
+    assert PlaceResolver.choose(constraints, NHI, "nhi đồng 2", False) == "chosen"
+    assert constraints.near_places == [NHI[1]]
+    twins = [NHI[0], NHI[0].model_copy(update={"latitude": 10.9})]  # cùng tên, khác chỗ
+    assert PlaceResolver.choose(SearchConstraints(), twins, "nhi đồng 1", False) == "retry"
+
+
+@pytest.mark.parametrize("message, name, meters", [
+    ("nhà cách chợ Tân Bình 800m", "tan binh", 800),
+    ("căn hộ cách bệnh viện Chợ Rẫy 2 km", "cho ray", 2000),
+])
+def test_cach_builds_a_place_with_the_distance_from_the_message(message, name, meters):
+    delta, _ = corrected(message)
+    assert [(p.name, p.max_distance_m) for p in delta.near_places] == [(name, meters)]
+
+
+def test_cho_con_does_not_become_a_place_name():
+    delta, _ = corrected("nhà gần trường học cho con", plan("search", near_pois=GENERIC[:1]))
+    assert delta.near_places == [] and delta.near_pois
+    assert corrected("nhà gần bệnh viện chợ rẫy")[0].near_places[0].name == "cho ray"
+
+
+def test_a_smaller_number_after_noi_is_a_new_radius_and_the_answer_says_so():
+    old, new = CURRENT[0], CURRENT[0].model_copy(update={"max_distance_m": 3000})
+    notes = PlaceResolver.shrink_notes([old], [new], "noi ra 3 km")
+    assert len(notes) == 1 and "5 km" in notes[0] and "3 km" in notes[0]
+    assert PlaceResolver.shrink_notes([old], [new], "doi sang 3 km") == []
+    assert PlaceResolver.shrink_notes([new], [old], "noi ra 5 km") == []
+
+
+def test_the_number_in_the_message_beats_an_llm_that_adds_it_to_the_old_radius():
+    proposed = plan("refine", near_places=[request(UIT, "truong_hoc", 8000)])
+    delta, _ = corrected("nới ra 3 km", proposed, SearchConstraints(near_places=CURRENT[:1]))
+    assert [(p.name, p.max_distance_m) for p in delta.near_places] == [(UIT, 3000)]
