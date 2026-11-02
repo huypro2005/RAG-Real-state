@@ -75,7 +75,7 @@ Task đã xong: phân tích cấu trúc HTML tin đăng —
 ├── src/pipeline/            # Làm sạch, nạp, embedding tin đăng
 ├── src/agent/               # Chatbot multi-agent
 ├── tools/                   # Script import/kiểm tra POI, reverse-engineer HTML
-├── backup/                  # Dump DB cũ (5 schema) — chỉ tham khảo
+├── backup/                  # Dump DB (không commit) + README: yêu cầu bắt buộc trước khi backup
 └── outputs/                 # Kết quả trung gian của pipeline POI
 ```
 
