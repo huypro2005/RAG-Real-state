@@ -79,7 +79,6 @@ export function ChatPanel({ mode, onMode, messages, loading, selected, shown, on
   return (
     <section className="chat">
       <header className="chat__header">
-        <h1>Trợ lý bất động sản TP.HCM</h1>
         <div className="chat__actions">
           <div role="group" aria-label="Chế độ" className="modes">
             {MODES.map(([value, label]) => (

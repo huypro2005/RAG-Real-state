@@ -170,3 +170,84 @@ export function sendPrediction(message: string, conversationId: string | null): 
 export function resetPrediction(conversationId: string): Promise<{ conversation_id: string }> {
   return postJson(`${API_URL}/api/v1/reset`, { conversation_id: conversationId });
 }
+
+// ---- Dashboard mô hình (docs/tasks/model-dashboard.md mục 1-2) ----
+// Backend chỉ proxy Prediction Server, nên tên trường giữ nguyên như spec. Giá/m² tính bằng triệu VND.
+
+export interface ModelMetrics {
+  r2_log: number | null;
+  mae: number | null;
+  mape: number | null; // tỷ lệ (0,24 = 24%), như sklearn
+}
+
+export interface DashboardModelSummary {
+  id: number;
+  created_at: string;
+  trigger: string; // bootstrap | ingest | manual
+  status: string; // succeeded | running | failed | skipped
+  is_active: boolean;
+  best_candidate: string | null;
+  train_rows: number | null;
+  test_rows: number | null;
+  metrics: ModelMetrics | null;
+  has_charts: boolean;
+}
+
+export interface PriceBin { x0: number; x1: number; count: number }
+export interface TypeStats { label: string; median: number; p10: number; p90: number; n: number }
+export interface ScatterPoint { actual: number; predicted: number; type: number; district: number }
+export interface FeatureImportanceItem { feature: string; importance: number; std: number }
+export interface Candidate {
+  name: string; cv_r2: number; cv_std: number; test_r2_log: number; mae: number; chosen: boolean;
+}
+export interface DistrictTypeMedian {
+  district: number; district_name: string; property_type: number; label: string; median: number; n: number;
+}
+
+export interface GeoPoint { lat: number; lon: number; price_per_m2: number; area: number; type: number }
+export interface GeoScatter {
+  points: GeoPoint[]; // ≤ 1.200 điểm lấy mẫu có seed
+  n_total: number;
+  bounds: { lat: [number, number]; lon: [number, number] };
+  price_clip: { p5: number; p95: number }; // thang màu cắt ở p5–p95
+  center: { name: string; lat: number; lon: number }; // Nhà thờ Đức Bà
+}
+
+export interface ModelCharts {
+  schema_version: number;
+  approximate?: boolean; // dựng lại từ dữ liệu hiện tại, không đúng tập test gốc
+  price_distribution: {
+    unit: string;
+    bins: PriceBin[];
+    clipped_above: number;
+    stats: { n: number; mean: number; median: number; p10: number; p90: number };
+    by_type: Record<string, TypeStats>;
+  };
+  scatter: {
+    points: ScatterPoint[];
+    n_test: number; r2_log: number; mae: number; mape: number; residual_q90_log: number;
+  };
+  feature_importance: { method: string; items: FeatureImportanceItem[] };
+  district_type_median?: DistrictTypeMedian[];
+  geo_scatter?: GeoScatter | null; // phiên bản cũ chưa có
+  candidates: Candidate[];
+}
+
+/** Chi tiết một phiên bản: thông tin phiên bản + `charts` (null khi chưa dựng). */
+export interface DashboardModelDetail extends DashboardModelSummary {
+  charts: ModelCharts | null;
+}
+
+const DASHBOARD = `${API_URL}/api/v1/dashboard/models`;
+
+/** Danh sách phiên bản; chấp nhận cả mảng trần lẫn `{models: [...]}`. */
+export async function fetchDashboardModels(): Promise<DashboardModelSummary[]> {
+  const body = await request<DashboardModelSummary[] | { models: DashboardModelSummary[] }>(DASHBOARD);
+  return Array.isArray(body) ? body : body.models;
+}
+
+/** `charts` + thông tin một phiên bản; chấp nhận thông tin phẳng hoặc lồng trong `model`. */
+export async function fetchDashboardModel(id: number | "active"): Promise<DashboardModelDetail> {
+  const body = await request<DashboardModelDetail & { model?: DashboardModelSummary }>(`${DASHBOARD}/${id}`);
+  return { ...body.model, ...body, charts: body.charts ?? null };
+}

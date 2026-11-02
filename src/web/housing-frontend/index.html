@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      // Áp theme đã lưu trước khi vẽ để không nháy sáng/tối.
+      try { var t = localStorage.getItem("housing-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
     <title>Trợ lý bất động sản TP.HCM</title>
   </head>
   <body>

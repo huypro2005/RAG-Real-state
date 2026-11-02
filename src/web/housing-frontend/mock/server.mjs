@@ -2,9 +2,12 @@
 // Chạy: npm run mock  (cổng 8000, đổi bằng PORT). Dữ liệu là 5 tin mẫu ở TP.HCM.
 import { createServer } from "node:http";
 import { randomUUID } from "node:crypto";
+import { dashboardDetail, dashboardList } from "./dashboard-data.mjs";
 
 const PORT = Number(process.env.PORT ?? 8000);
 const TODAY = new Date();
+// MOCK_DASHBOARD=down|empty giả lập server mô hình tắt / chưa có phiên bản (để thử trạng thái lỗi, rỗng).
+const DASHBOARD_MODE = process.env.MOCK_DASHBOARD ?? "";
 
 function day(offset) {
   const d = new Date(TODAY.getTime() + offset * 86400000);
@@ -175,6 +178,13 @@ const server = createServer(async (request, response) => {
     response.end(JSON.stringify(payload));
   };
   if (request.method === "OPTIONS") return send(204, {});
+  if (request.method === "GET" && url.pathname.startsWith("/api/v1/dashboard/models")) {
+    if (DASHBOARD_MODE === "down") return send(503, { detail: "Prediction Server chưa bật hoặc chưa cấu hình (PREDICTION_SERVER_URL)." });
+    const ref = url.pathname.split("/")[5];
+    if (!ref) return send(200, DASHBOARD_MODE === "empty" ? [] : dashboardList());
+    const detail = DASHBOARD_MODE === "empty" ? null : dashboardDetail(ref);
+    return detail ? send(200, detail) : send(404, { detail: "Không tìm thấy phiên bản mô hình." });
+  }
   if (url.pathname === "/health") return send(200, { status: "ok" });
   if (url.pathname === "/api/v1/recommend/map" && request.method === "GET") {
     return send(200, mapResult(url.searchParams));

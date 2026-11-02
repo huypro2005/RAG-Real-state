@@ -32,3 +32,11 @@ Câu thử với mock: "Căn hộ Quận 7 dưới 3 tỷ", "Mình muốn mua nh
 ## Lệnh khác
 
 `npm run build` (tsc strict + vite build), `npm test` (Vitest cho `src/format.ts`).
+
+## Dashboard mô hình
+
+Tab "Dashboard mô hình" (cạnh "Chat") gọi `GET /api/v1/dashboard/models` và `GET /api/v1/dashboard/models/{id}`
+(spec `docs/tasks/model-dashboard.md`). Mock có sẵn 7 phiên bản mẫu (bản #3 đang chạy, #4 thiếu charts, #5 lỗi,
+#6 đang train, #7 bỏ qua). `MOCK_DASHBOARD=down|empty npm run mock` giả lập server mô hình tắt / chưa có phiên bản.
+Biểu đồ vẽ bằng SVG/HTML thuần theo skill dataviz; phần tính toán nằm ở `src/dashboard.ts` (có test).
+Giao diện sáng/tối theo hệ điều hành, nút ở góc phải thanh trên để ghi đè.
