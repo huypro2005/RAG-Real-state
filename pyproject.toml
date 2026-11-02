@@ -14,6 +14,9 @@ dependencies = [
     "alembic>=1.13",
     "geoalchemy2>=0.15",
     "pgvector>=0.3",
+    "matplotlib>=3.11.2",
+    "pandas>=3.1.0",
+    "scikit-learn>=1.9.1",
 ]
 
 [project.optional-dependencies]

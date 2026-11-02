@@ -85,9 +85,9 @@ def main():
     for stream in (sys.stdout, sys.stderr):     # console Windows mặc định cp1252
         stream.reconfigure(encoding='utf-8')
     parser = argparse.ArgumentParser(description='Làm sạch tin đăng, nạp PostgreSQL và tạo embedding RAG.')
-    parser.add_argument('--input', type=Path, nargs='+', default=[ROOT / 'CrawlData/data.json'],
+    parser.add_argument('--input', type=Path, nargs='+', default=['./input/data.json'],
                         help='file JSON Lines từ crawler (mặc định CrawlData/data.json)')
-    parser.add_argument('--output-dir', type=Path, default=ROOT / 'data/listings',
+    parser.add_argument('--output-dir', type=Path, default='./output/listings',
                         help='nơi ghi file tin sạch/tin bị loại/báo cáo làm sạch')
     parser.add_argument('--db-url', help='mặc định: DATABASE_URL, rồi database housing_dev')
     mode = parser.add_mutually_exclusive_group()
