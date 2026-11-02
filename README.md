@@ -25,6 +25,28 @@ batdongsan.com.vn ──crawl──► data.json ──pipeline──► Postgre
 LLM chỉ **hiểu câu** (trích trường, ý định); mọi câu trả lời do code dựng từ số liệu thật.
 Chi tiết: [docs/chatbot.md](docs/chatbot.md), [docs/architecture.md](docs/architecture.md).
 
+## Giao diện
+
+**Chat gợi ý nhà** (Top 5 kèm bản đồ, chế độ "Dự đoán giá" ở cùng khung chat):
+
+![Chat gợi ý và bản đồ](docs/images/chat-light.png)
+
+**Dashboard mô hình** (dữ liệu thật của phiên bản đang chạy: phân bố giá, thực tế so với dự đoán, độ quan trọng đặc trưng, bản đồ giá theo vị trí, giá trung vị theo quận × loại nhà, lịch sử phiên bản):
+
+![Dashboard mô hình - sáng](docs/images/dashboard-light.png)
+
+<details>
+<summary>Chế độ tối và giao diện điện thoại</summary>
+
+![Dashboard mô hình - tối](docs/images/dashboard-dark.png)
+
+<img src="docs/images/dashboard-mobile.png" alt="Dashboard trên điện thoại" width="320">
+
+</details>
+
+> Ảnh chat chụp với dữ liệu mẫu của mock server (`npm run mock`) để không gọi OpenAI; ảnh dashboard chụp với
+> dữ liệu thật từ Prediction Server.
+
 ## Cấu trúc dự án
 
 ```text
