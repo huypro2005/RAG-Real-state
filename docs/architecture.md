@@ -25,6 +25,7 @@ Chuẩn hóa, deduplicate, theo dõi trạng thái tin
 - **PostgreSQL + PostGIS**: lọc điều kiện cứng, lưu địa lý và truy vấn khoảng cách tới POI.
 - **pgvector/RAG**: tìm kiếm ngữ nghĩa trên tiêu đề và mô tả, sau khi đã lọc theo điều kiện cứng.
 - **Price Prediction**: huấn luyện trên tập đã đạt tiêu chí chất lượng; giá là target, không được dùng làm feature đầu vào.
+- **Prediction Server** (`src/prediction_server/`, cổng 8100): dịch vụ FastAPI riêng, chung PostgreSQL với backend. Nhận tin crawl thô (`POST /ingest`: làm sạch → `listings` → FK địa chỉ → POI), tự retrain khi đủ tin mới, thi nhiều mô hình (CV 5-fold) rồi kích hoạt model tốt nhất (lịch sử ở bảng `price_model_runs`, có rollback). Backend chatbot gọi `POST /predict`, lỗi thì dùng mô hình cục bộ. Hướng dẫn chạy: README mục 7.
 - **Chatbot multi-agent**: có hai mode rõ ràng là `prediction` và `recommendation`.
 
 ## Nguyên tắc tách pipeline

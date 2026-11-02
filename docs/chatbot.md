@@ -47,7 +47,7 @@ flowchart LR
         PC --> MR["text.MessageRules<br/>kiểm chứng trường"]
         PC --> FACTS["PredictionFacts<br/>trả lời câu hỏi bằng số thật"]
         PC --> GC["Geocoder<br/>Goong → tâm quận"]
-        PC --> PP["PricePredictor<br/>Random Forest"]
+        PC --> PP["PricePredictor<br/>ExtraTrees"]
     end
 
     TI & FX -.-> OAI[(OpenAI<br/>gpt-4o-mini)]
@@ -167,11 +167,17 @@ bán kính quanh địa điểm) kèm số tin sẽ thấy, và câu gửi nguy�
 
 ### 5.1 Mô hình
 
-Random Forest (scikit-learn), huấn luyện trên tin đăng của đồ án 1 (~24.900 dòng), mục tiêu là
-`log(giá/m²)`, dự đoán `exp()`. Đặc trưng theo thứ tự: loại nhà đất, quận, diện tích, mặt tiền,
-phòng ngủ, toạ độ (lat, lon), số tầng, khoảng cách tới Nhà thờ Đức Bà. R² trên tập test khoảng
-0,57 (xem `models/price_rf.metrics.json`). Chưa dùng đặc trưng số bệnh viện/trường/chợ trong
-bán kính 1 km và 3 km (đánh dấu `TODO` trong code). Huấn luyện lại: `scripts/train_price_model.py`.
+ExtraTrees 200 cây (scikit-learn), huấn luyện trên tin đăng của đồ án 1, mục tiêu là
+`log(giá/m²)`, dự đoán `exp()`. 11 đặc trưng theo thứ tự: loại nhà đất, quận, diện tích, mặt
+tiền, phòng ngủ, toạ độ (lat, lon), số tầng, khoảng cách tới Nhà thờ Đức Bà, số trường học trong
+1 km và trong 3 km (đếm từ bảng `pois` bằng `SchoolCounter`, cùng một hàm cho lúc train và lúc
+dự đoán). R² trên tập test: 0,5705 giá/m², 0,8068 trên log (xem `models/price_rf.metrics.json`).
+So với RandomForest cũ chỉ tốt hơn chút (R² giá 0,5695, log 0,8024; MAE 33,85 → 32,93 triệu/m²).
+Lúc dự đoán có một truy vấn DB để đếm trường; DB lỗi thì mô hình dùng trung vị và kèm cảnh báo.
+Huấn luyện lại (cần Postgres đang chạy): `PYTHONPATH=. python scripts/train_price_model.py` trong
+`src/web/housing-backend/`. Model RandomForest cũ lưu ở `models/price_rf.joblib.rf_old` và
+`price_rf.metrics.json.rf_old` (muốn quay lại: chép đè hai file, bỏ hậu tố, và bỏ hai cột trường
+học khỏi `FEATURES`).
 
 - Bắt buộc: loại nhà, quận, diện tích. Tuỳ chọn (thiếu thì mô hình dùng trung vị): mặt tiền,
   phòng ngủ, số tầng. Căn hộ không có số tầng/mặt tiền riêng; đất không có số tầng/phòng ngủ.

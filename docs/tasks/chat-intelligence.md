@@ -228,8 +228,8 @@ phong cách file xung quanh.
      dự đoán thì nói chưa dự đoán và hỏi trường còn thiếu hoặc mời gõ ok.
    - `question/range`: giải thích khoảng p10–p90 các cây (không phải khoảng tin cậy) bằng số
      của dự đoán gần nhất.
-   - `question/model`: Random Forest, dữ liệu tin đăng batdongsan, R² test đọc từ
-     `price_rf.metrics.json`, 9 đặc trưng (đọc từ `FEATURES`).
+   - `question/model`: ExtraTrees, dữ liệu tin đăng batdongsan, R² test đọc từ
+     `price_rf.metrics.json`, 11 đặc trưng (đọc từ `FEATURES`).
    - `question/compare_district`: median giá/m² của các quận được nêu (cùng loại nhà nếu đã
      biết loại và có khoá `quận|loại`, không thì median cả quận). Quận không có median thì nói rõ.
    - `question/accuracy_tips`: liệt kê trường tuỳ chọn còn thiếu với loại nhà hiện tại.
