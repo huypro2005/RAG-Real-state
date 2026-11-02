@@ -63,3 +63,38 @@ tool/
 .codex_tmp/
 
 zz.test
+
+# ---- Bổ sung (11/2026): cấu trúc src/crawl, src/web, src/prediction_server ----
+# Node / frontend
+node_modules/
+dist/
+.env.local
+src/web/housing-frontend/screenshots/
+
+# Model đã train và file pickle thí nghiệm (nặng, train lại được)
+*.pkl
+/models/
+/src/web/housing-backend/models/
+src/notebook/predictionEDA/models_exp/
+src/notebook/predictionEDA/images/
+src/notebook/predictionEDA/data/poi_features.csv
+
+# Bản dump/sao lưu DB (nặng, có thể chứa dữ liệu nhạy cảm)
+/backup/*.dat.gz
+/backup/toc.dat
+/backup/*.dump
+/backup/*.sql
+
+# Dữ liệu crawl sinh ra (giữ src/pipeline/input/data.json làm dữ liệu mẫu cho pipeline)
+src/crawl/crawlProperties/linkNhaDat.txt
+src/crawl/crawlProperties/data.json
+src/crawl/crawlProperties/data1.json
+src/crawl/crawlProperties/data_error*.json
+src/crawl/crawlProperties/raw_html/
+/data/listings/
+
+# Build metadata
+*.egg-info/
+
+# Bản chạy thử / scratch
+test-*/
