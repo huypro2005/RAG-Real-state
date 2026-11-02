@@ -1,0 +1,13 @@
+# Prediction Server (python -m uvicorn src.prediction_server.main:app --port 8100)
+# Dùng chung .venv gốc; ngoài src/requirements.txt cần thêm:
+fastapi>=0.115
+uvicorn>=0.30
+pydantic>=2.7
+pydantic-settings>=2.3
+python-multipart>=0.0.9   # POST /ingest dạng upload file JSON Lines
+scikit-learn>=1.5
+joblib
+httpx                     # client của backend và test
+# Tùy chọn: có cài thì thành ứng viên của cuộc thi chọn mô hình
+xgboost
+lightgbm
