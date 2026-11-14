@@ -1,88 +1,109 @@
-# Backup database
+# Backup database (Postgres chạy trong Docker)
 
-Thư mục này chứa các bản sao lưu PostgreSQL của dự án. **File dump không được commit** (đã nằm trong
-`.gitignore`: `*.dump`, `*.sql`, `*.dat.gz`, `toc.dat`) vì nặng và chứa dữ liệu thật.
-Chỉ `README.md` này nằm trong git.
+Thư mục này chứa file sao lưu PostgreSQL. **File dump không được commit** (`.gitignore` bỏ qua `*.dump`,
+`*.sql`, `*.dat.gz`, `toc.dat`, `*.joblib`): chúng nặng và chứa dữ liệu thật. Chỉ `README.md` này nằm trong git.
 
-## Nội dung hiện có
+**Quy ước tên duy nhất** (dùng cho cả backup định kỳ lẫn chuyển dữ liệu / khôi phục sang máy khác):
 
-| File | Ý nghĩa |
+| DB | File |
 |---|---|
-| `housing_before_public_20261009.dump` | Dump DB `housing` thật trước khi chuyển sang schema `public` (định dạng custom, `pg_dump -Fc`) |
-| `data_ultilities.sql` | Dump SQL cũ của dữ liệu tiện ích |
-| `toc.dat`, `*.dat.gz` | Dump cũ 5 schema dạng thư mục (`pg_dump -Fd`), chỉ để tham khảo |
+| `housing_dev` (DB làm việc) | `backup\housing_dev_YYYYMMDD.dump` |
+| `housing` (DB cũ, chỉ đọc) | `backup\housing_YYYYMMDD.dump` |
+| file mô hình `models\` | thư mục `backup\models_YYYYMMDD\` |
+
+`YYYYMMDD` là ngày backup. Backup lại trong cùng ngày sẽ ghi đè file của ngày đó.
+
+> ⚠️ **Backup từ container Docker (`housing-postgres`, cổng 5433), không dùng `pg_dump` cài trên Windows.**
+> `pg_dump` của Postgres cài trực tiếp đọc bảng `listing_embeddings` sẽ lỗi
+> `could not load library ... vector.dll: An Application Control policy has blocked this file`.
+> Postgres trong Docker không bị chặn, dump có đủ cả vector.
+
+Mọi lệnh viết cho **PowerShell**, chạy tại **thư mục gốc dự án**.
 
 ## Yêu cầu BẮT BUỘC trước khi backup
 
-Chưa đủ cả sáu mục thì **không** backup: bản sao lưu dở dang hoặc không khôi phục được còn nguy hiểm
-hơn không có bản nào.
+Chưa đủ cả năm mục thì **không** backup.
 
-1. **Dùng đúng công cụ.** `pg_dump`/`pg_restore` cùng phiên bản (hoặc mới hơn) server: máy này là
-   PostgreSQL 18, ở `C:\Program Files\PostgreSQL\18\bin\` (không có trong PATH). Kiểm tra bằng
-   `pg_dump --version`.
-2. **Dừng mọi thứ đang ghi vào DB.** Tắt Prediction Server (cổng 8100) và backend (cổng 8000), không chạy
-   `python -m src.pipeline`, `train_price_model.py`, `seed_address.py`, `migrate_legacy_data.py`.
-   Kiểm tra không còn job đang chạy:
-   ```sql
-   SELECT id, status FROM price_model_runs WHERE status = 'running';   -- phải trả 0 dòng
-   SELECT count(*) FROM pg_stat_activity WHERE datname = 'housing' AND state <> 'idle' AND pid <> pg_backend_pid();  -- nên là 0
+1. **Container đang chạy:** `docker ps` thấy `housing-postgres ... (healthy)`. Chưa bật: xem
+   [docs/setup-docker-postgres.md](../docs/setup-docker-postgres.md) mục 3.
+2. **Dừng mọi thứ đang ghi vào DB:** tắt Prediction Server (8100) và backend (8000); không chạy
+   `python -m src.pipeline`, `train_price_model.py`, `seed_address.py`. Kiểm tra:
+   ```powershell
+   docker exec housing-postgres psql -U postgres -d housing_dev -At -c "select count(*) from price_model_runs where status = 'running'"   # phải là 0
+   docker exec housing-postgres psql -U postgres -d housing_dev -At -c "select count(*) from pg_stat_activity where datname in ('housing_dev', 'housing') and pid <> pg_backend_pid()"   # nên là 0
    ```
-   Một dòng `running` còn sót (job bị ngắt) phải được xử lý trước, vì khôi phục lại sẽ mang theo trạng thái
-   sai và khóa advisory retrain không còn ý nghĩa.
-3. **Schema đã ở phiên bản mới nhất.** `alembic current` phải bằng `alembic heads` (hiện là `0006`), và
-   `alembic check` báo "No new upgrade operations detected". Không backup khi migration đang dở.
-4. **Đủ chỗ trống và thư mục đích đúng.** Dump của `housing` cần khoảng 1–2 lần kích thước DB; đặt vào
-   `backup/` (đã ignore) hoặc ổ khác. Đặt tên có ngày: `housing_YYYYMMDD.dump`. Không ghi đè bản trước.
-5. **Có sao lưu kèm ngoài DB.** DB chỉ lưu đường dẫn mô hình (`price_model_runs.artifact_path`), không lưu
-   file `.joblib`. Sao lưu cả thư mục `models/` (gốc dự án) và `src/web/housing-backend/models/` cùng thời
-   điểm, nếu không thì sau khôi phục các phiên bản mô hình sẽ trỏ vào file không còn. File `.env` (khóa
-   OpenAI/Goong/embedding) cũng phải cất riêng ở nơi an toàn: dump không chứa nó và **không bao giờ** đưa
-   nó vào git.
-6. **Biết rõ DB nào đang sao lưu.** `housing` là DB thật; `housing_dev` là DB thử nghiệm. Kiểm tra
-   `DATABASE_URL`/`-d` trước khi chạy, và không dùng mật khẩu gõ thẳng trong lệnh (dùng `PGPASSWORD` hoặc
-   `pgpass`).
+   Có dòng `running` còn sót (job bị ngắt) thì xử lý trước, kẻo khôi phục lại mang theo trạng thái sai.
+3. **Schema ở phiên bản mới nhất:**
+   ```powershell
+   $PY = (Resolve-Path .\.venv\Scripts\python.exe).Path
+   cd src\web\housing-backend; & $PY -m alembic current; & $PY -m alembic check; cd ..\..\..
+   ```
+   Phải in `0006 (head)` và `No new upgrade operations detected.` (Alembic đọc `DATABASE_URL` từ
+   `src\web\housing-backend\.env`.)
+4. **Đủ chỗ trống:** cần khoảng 1–2 lần kích thước DB (bản `housing_dev` 14/11/2026 nặng ~75 MB).
+5. **Sao lưu kèm ngoài DB:** DB chỉ lưu đường dẫn mô hình (`price_model_runs.artifact_path`), không lưu file
+   `.joblib`; sao lưu thư mục `models\` cùng lúc (lệnh dưới). File `.env` (khóa OpenAI/Goong/embedding) cất riêng
+   ở nơi an toàn, **không bao giờ** đưa vào git.
 
 ## Cách backup
 
-PowerShell, tại thư mục gốc dự án:
-
 ```powershell
-$env:PGPASSWORD = '<mật khẩu>'
-$pg = 'C:\Program Files\PostgreSQL\18\bin'
-$stamp = Get-Date -Format 'yyyyMMdd'
-& "$pg\pg_dump.exe" -h localhost -U postgres -d housing -Fc --no-owner -f "backup\housing_$stamp.dump"
-Copy-Item -Recurse models "backup\models_$stamp"                       # file mô hình (nếu có)
-Remove-Item Env:PGPASSWORD
+$stamp = Get-Date -Format yyyyMMdd
+docker exec housing-postgres pg_dump -U postgres -d housing_dev -Fc --no-owner -f /tmp/b.dump
+docker cp housing-postgres:/tmp/b.dump "backup\housing_dev_$stamp.dump"
+docker exec housing-postgres pg_dump -U postgres -d housing -Fc --no-owner -f /tmp/b.dump
+docker cp housing-postgres:/tmp/b.dump "backup\housing_$stamp.dump"
+docker exec housing-postgres rm -f /tmp/b.dump
+New-Item -ItemType Directory -Force "backup\models_$stamp" | Out-Null
+Copy-Item -Force models\* "backup\models_$stamp\"
 ```
 
-`-Fc` (custom) cho phép khôi phục chọn lọc và nén sẵn. Dump gồm các extension (`postgis`, `pgvector`,
-`pg_trgm`, `unaccent`), hàm SQL (`nearby`, `refresh_*`) và dữ liệu mọi bảng, kể cả `listing_embeddings`.
+- Container không có DB `housing` thì bỏ hai dòng `-d housing`.
+- `docker cp` in `Successfully copied ...` là bình thường.
+- Dump `-Fc` đã nén, chứa extension (`postgis`, `vector`...), hàm SQL, bảng `alembic_version` và dữ liệu mọi
+  bảng, **kể cả vector**.
 
 ## Kiểm tra bản backup (bắt buộc sau khi backup)
 
-Bản backup chưa kiểm chứng coi như chưa có.
+Bản backup chưa kiểm chứng coi như chưa có. Khôi phục thử vào DB tạm `housing_test` rồi so số dòng với DB gốc.
+Chạy ngay trong cửa sổ vừa backup (dùng lại `$stamp`):
 
-1. **Đọc được mục lục:** `pg_restore -l backup\housing_YYYYMMDD.dump` không lỗi, có đủ các bảng chính
-   (`listings`, `pois`, `listing_embeddings`, `price_model_runs`, bảng địa chỉ).
-2. **Khôi phục thử vào DB tạm**, không bao giờ vào `housing`:
-   ```powershell
-   & "$pg\createdb.exe" -h localhost -U postgres housing_restore_test
-   & "$pg\pg_restore.exe" -h localhost -U postgres -d housing_restore_test --no-owner --exit-on-error backup\housing_YYYYMMDD.dump
-   ```
-   Cần PostGIS và pgvector đã cài trên máy khôi phục (xem `docs/setup-postgis-pgvector.md`); thiếu thì
-   `pg_restore` dừng ở bước tạo extension.
-3. **So số dòng** `listings`, `pois`, `listing_embeddings`, `price_model_runs` giữa DB gốc và DB tạm; chạy
-   `alembic current` trên DB tạm phải ra đúng phiên bản.
-4. Xóa DB tạm: `dropdb housing_restore_test`.
+```powershell
+docker exec housing-postgres psql -U postgres -d postgres -c "CREATE DATABASE housing_test"
+docker cp "backup\housing_dev_$stamp.dump" housing-postgres:/tmp/t.dump
+docker exec housing-postgres pg_restore -U postgres -d housing_test --no-owner --exit-on-error /tmp/t.dump
+docker exec housing-postgres psql -U postgres -d housing_test -At -c "select (select count(*) from listings), (select count(*) from pois), (select count(*) from listing_embeddings), (select count(*) from price_model_runs), (select count(*) from wards_new)"
+docker exec housing-postgres psql -U postgres -d housing_dev -At -c "select (select count(*) from listings), (select count(*) from pois), (select count(*) from listing_embeddings), (select count(*) from price_model_runs), (select count(*) from wards_new)"
+docker exec housing-postgres psql -U postgres -d postgres -c "DROP DATABASE housing_test"
+docker exec housing-postgres rm -f /tmp/t.dump
+```
+
+Hai dòng số in ra (`listings|pois|listing_embeddings|price_model_runs|wards_new`) phải giống nhau. Bản `housing`:
+thay `housing_dev_$stamp` bằng `housing_$stamp` và dùng câu đếm
+`select (select count(*) from listing.listings), (select count(*) from amenities.housing_poi), (select count(*) from ml.district_label)`
+cho cả `housing_test` lẫn `housing`.
 
 ## Khôi phục
 
-Luôn khôi phục vào DB **mới/trống** rồi đổi `DATABASE_URL`; không ghi đè `housing` đang chạy. Sau khi
-khôi phục: chép lại `models/`, bật Prediction Server, `GET /api/v1/health` phải báo model đang hoạt động.
+Làm theo [docs/setup-docker-postgres.md](../docs/setup-docker-postgres.md) **mục 4A** (xóa và tạo lại DB trong
+container rồi `pg_restore`). Sau đó chép lại mô hình:
+`Copy-Item -Force backup\models_YYYYMMDD\* models\` (đổi `YYYYMMDD` thành ngày của bản bạn có), bật Prediction
+Server, `GET http://localhost:8100/api/v1/health` phải báo có model đang hoạt động.
+
+## File hiện có trong thư mục này
+
+| File | Ý nghĩa |
+|---|---|
+| `housing_dev_20261114.dump` | `housing_dev` đầy đủ, **có vector**. Kiểm chứng 14/11/2026: `listings` 12931, `pois` 5451, `listing_embeddings` 12931, `price_model_runs` 2, `wards_new` 169 |
+| `housing_20261114.dump` | DB cũ `housing`. Kiểm chứng 14/11/2026: `listing.listings` 7603, `amenities.housing_poi` 5267, `ml.district_label` 24, `rag.listing_embeddings` 0 |
+| `models_20261114\` | File mô hình `price_run_*.joblib` (thư mục con `models\` bên trong là bản chép trùng của lệnh cũ) |
+| `housing_dev_for_docker.dump`, `housing_legacy_for_docker.dump` | **Bản cũ** (tên cũ), dump từ Postgres trên Windows, không có dữ liệu `listing_embeddings`. Giữ để tham khảo, không dùng trong hướng dẫn |
+| `toc.dat`, `*.dat.gz` | **Bản cũ** dạng thư mục (thiết kế 5 schema), chỉ để tham khảo |
 
 ## Lưu ý an toàn
 
-- Dump chứa dữ liệu thật: đừng gửi qua kênh công khai hay đưa vào git (nếu lỡ commit, phải xóa khỏi cả lịch sử).
-- `housing_before_public_20261009.dump` và `data_ultilities.sql` trước đây có trong git nên vẫn nằm trong
-  lịch sử cũ; muốn gỡ hẳn phải viết lại lịch sử (`git filter-repo`) chứ `git rm` là không đủ.
+- Dump chứa dữ liệu thật: đừng gửi qua kênh công khai hay đưa vào git (lỡ commit thì phải xóa khỏi cả lịch sử).
+- Dump cũ `housing_before_public_20261009.dump` và `data_ultilities.sql` từng có trong git nên vẫn nằm trong lịch
+  sử; muốn gỡ hẳn phải viết lại lịch sử (`git filter-repo`), `git rm` là không đủ.
 - Giữ ít nhất hai bản gần nhất, và một bản ở ổ khác máy.
+- `docker compose down -v` xóa volume (toàn bộ dữ liệu DB): luôn backup và kiểm tra bản backup trước.

@@ -42,11 +42,11 @@ theo đúng spec, không thêm thứ ngoài spec.
 ## An toàn database
 
 - Chỉ chạy migration/seed trên `housing_dev`. Tạo nếu chưa có:
-  `D:/my_project/DoAn2/Multi-Agent-RAG-and-Prediction-Housing-Price/.venv/Scripts/python.exe -c "import psycopg; c=psycopg.connect('postgresql://postgres:123456789@localhost:5432/postgres', autocommit=True); c.execute('CREATE DATABASE housing_dev')"`
+  `D:/my_project/DoAn2/Multi-Agent-RAG-and-Prediction-Housing-Price/.venv/Scripts/python.exe -c "import psycopg; c=psycopg.connect('postgresql://postgres:123456789@localhost:5433/postgres', autocommit=True); c.execute('CREATE DATABASE housing_dev')"`
 - Muốn dựng lại từ đầu: `DROP DATABASE housing_dev` rồi tạo lại. **Tuyệt đối không** DROP,
   TRUNCATE, upgrade/downgrade trên `housing`. Được **đọc** `housing` (nguồn cho
   `migrate_legacy_data.py`) với kết nối `SET default_transaction_read_only = on`.
-- Truyền `DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5432/housing_dev`
+- Truyền `DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5433/housing_dev`
   qua biến môi trường, không sửa mặc định trong `config.py`.
 - Không commit git.
 

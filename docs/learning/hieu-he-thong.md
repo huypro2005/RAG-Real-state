@@ -5,7 +5,7 @@ Thời gian: khoảng 2–3 giờ. Mọi lệnh chạy trong `housing-backend/`,
 
 ```bash
 export PYTHONPATH=. PYTHONIOENCODING=utf-8
-export DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5432/housing_dev
+export DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5433/housing_dev
 PY=../.venv/Scripts/python.exe
 ```
 

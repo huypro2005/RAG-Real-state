@@ -229,7 +229,7 @@ kiểm tra lần cuối trên DB thật (chỉ đọc).
 ### An toàn database
 
 - Chỉ chạy migration/seed trên DB thử **`housing_dev`** (tạo bằng Python + psycopg nếu chưa có,
-  vì máy không có `psql`). Kết nối mặc định: `postgres:123456789@localhost:5432`.
+  vì máy không có `psql`). Kết nối mặc định: `postgres:123456789@localhost:5433`.
 - **Không** `DROP`, `TRUNCATE`, `alembic downgrade` hay `alembic upgrade` trên DB `housing`.
 - Đặt URL bằng biến môi trường `DATABASE_URL` khi chạy lệnh, không sửa giá trị mặc định trong
   `config.py`.

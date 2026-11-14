@@ -6,7 +6,7 @@ lần agent báo xong.
 
 Điều kiện bắt đầu: [address-db.md](address-db.md) đã PASS (09/10). **Phát triển và test trên DB
 `housing_dev`** (đủ dữ liệu schema mới + embedding) cho tới khi người dùng áp migration lên
-`housing`. Kết nối: `postgresql://postgres:123456789@localhost:5432/housing_dev`; mọi code đọc
+`housing`. Kết nối: `postgresql://postgres:123456789@localhost:5433/housing_dev`; mọi code đọc
 URL từ biến môi trường (`DATABASE_URL`), không hard-code tên DB. Thư mục code: `housing-backend/housing-backend/` (`backend/`).
 
 Đề cương §5.8, §5.10 (mode recommendation), §7.3, §7.4: thu thập nhu cầu **qua nhiều lượt

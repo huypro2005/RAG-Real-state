@@ -304,11 +304,11 @@ flowchart TD
 ## 9. Chạy và kiểm thử
 
 Python dùng `.venv` ở thư mục gốc (không dùng `uv run`). Khoá API (`OPENAI_API_KEY`, `GOONG_API_KEY`,
-`EMBEDDING_API_URL`/`EMBEDDING_API_KEY`) nằm trong file `.env` (xem `app/core/config.py`), không commit.
+`EMBEDDING_API_URL`/`EMBEDDING_API_KEY`) nằm trong `src/web/housing-backend/.env` (xem `app/core/config.py`), không commit.
 
 ```powershell
 cd housing-backend
-$env:DATABASE_URL = "postgresql+asyncpg://postgres:<mật khẩu>@localhost:5432/housing_dev"
+$env:DATABASE_URL = "postgresql+asyncpg://postgres:<mật khẩu>@localhost:5433/housing_dev"
 
 # Backend
 ..\.venv\Scripts\python.exe -m uvicorn app.main:app --port 8000

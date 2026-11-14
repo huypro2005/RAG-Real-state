@@ -5,15 +5,18 @@ React 18 + TypeScript + Vite, CSS thuần. Hợp đồng API: `docs/tasks/chatbo
 
 ## Chọn mock hay backend thật: biến VITE_API_URL
 
-Mặc định `http://localhost:8000` (backend thật, đã bật CORS cho :5173). Đặt trong `.env.local`.
+Mặc định `http://localhost:8000` (backend thật, đã bật CORS cho :5173). Đặt trong `.env` của frontend (`src/web/housing-frontend/.env`).
 
-```bash
-# Backend thật (trong housing-backend/housing-backend, PYTHONPATH=., DATABASE_URL=...housing_dev)
-python -m uvicorn app.main:app --port 8000
-npm install && npm run dev            # http://localhost:5173
+PowerShell, tại `src\web\housing-frontend`:
 
-# Mock (không cần backend): đặt VITE_API_URL=http://localhost:8001 trong .env.local
-PORT=8001 npm run mock && npm run dev
+```powershell
+# Backend thật: bật DB, Prediction Server, backend theo README gốc (bước 8), rồi:
+npm install          # lần đầu
+npm run dev          # http://localhost:5173
+
+# Mock (không cần backend): đặt VITE_API_URL=http://localhost:8001 trong .env, rồi
+$env:PORT = '8001'; npm run mock     # cửa sổ 1, giữ chạy
+npm run dev                          # cửa sổ 2
 ```
 
 Nút "Gợi ý | Dự đoán giá" đổi mode. Gợi ý: `POST /api/v1/recommend/chat`, `/recommend/map`, `/recommend/reset`.

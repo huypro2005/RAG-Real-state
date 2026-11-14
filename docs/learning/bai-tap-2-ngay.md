@@ -15,7 +15,7 @@ Lệnh dùng chung (Git Bash, đứng ở `housing-backend/`):
 
 ```bash
 PY=D:/my_project/DoAn2/Multi-Agent-RAG-and-Prediction-Housing-Price/.venv/Scripts/python.exe
-export DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5432/housing_dev
+export DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5433/housing_dev
 ```
 
 ---

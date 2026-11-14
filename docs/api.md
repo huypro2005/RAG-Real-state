@@ -13,7 +13,7 @@ nằm ở [chatbot.md](chatbot.md); tài liệu này chỉ nói **cách gọi AP
 
 ```powershell
 cd housing-backend
-$env:DATABASE_URL = "postgresql+asyncpg://postgres:<mật khẩu>@localhost:5432/housing_dev"
+$env:DATABASE_URL = "postgresql+asyncpg://postgres:<mật khẩu>@localhost:5433/housing_dev"
 ..\.venv\Scripts\python.exe -m uvicorn app.main:app --port 8000
 ```
 

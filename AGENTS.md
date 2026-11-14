@@ -34,7 +34,7 @@ Tìm "gần <địa điểm có tên>" (ĐH, bệnh viện, chợ, địa danh; 
 [docs/tasks/named-places.md](docs/tasks/named-places.md) — làm sau chat-intelligence.
 
 Task đã xong: phân tích cấu trúc HTML tin đăng —
-[docs/tasks/html-analysis.md](docs/tasks/html-analysis.md), kết quả ở `CrawlData/analysis/`.
+[docs/tasks/html-analysis.md](docs/tasks/html-analysis.md), kết quả ở `src/crawl/crawlProperties/analysis/`.
 
 ## 2. Bản đồ tài liệu
 
@@ -44,50 +44,64 @@ Task đã xong: phân tích cấu trúc HTML tin đăng —
 | Kiến trúc tổng thể | [docs/architecture.md](docs/architecture.md) |
 | Quy ước dữ liệu, chất lượng | [docs/data-contract.md](docs/data-contract.md) |
 | Giải thích bảng/cột database | [docs/database.md](docs/database.md), [docs/housing-database.drawio](docs/housing-database.drawio) |
-| Cài PostGIS / pgvector | [docs/setup-postgis-pgvector.md](docs/setup-postgis-pgvector.md) |
-| Crawler tin đăng | [docs/crawler.md](docs/crawler.md), [CrawlData/README.md](CrawlData/README.md) |
+| Chạy dự án, DB Docker, khôi phục/backup | [README.md](README.md), [docs/setup-docker-postgres.md](docs/setup-docker-postgres.md), [backup/README.md](backup/README.md) |
+| Cài PostGIS / pgvector trên Windows (cách cũ) | [docs/setup-postgis-pgvector.md](docs/setup-postgis-pgvector.md) |
+| Crawler tin đăng | [docs/crawler.md](docs/crawler.md), [src/crawl/crawlProperties/README.md](src/crawl/crawlProperties/README.md) |
 | Pipeline làm sạch tin | [docs/huong-dan-pipeline-lam-sach.md](docs/huong-dan-pipeline-lam-sach.md) |
-| Cấu trúc HTML batdongsan (field, selector, địa chỉ cũ/mới) | `CrawlData/analysis/*.md` |
+| Cấu trúc HTML batdongsan (field, selector, địa chỉ cũ/mới) | `src/crawl/crawlProperties/analysis/*.md` |
 | Hai chatbot (kiến trúc, intent, API, chạy/test) | [docs/chatbot.md](docs/chatbot.md) |
 | Cách gọi API (endpoint, request/response, ví dụ, sự cố) | [docs/api.md](docs/api.md) |
 | Backlog | [docs/jira-backlog.md](docs/jira-backlog.md) |
 | Bàn giao dữ liệu trường học | [docs/handoffs/](docs/handoffs/) |
-| API địa chỉ batdongsan | [address_data/readme.md](address_data/readme.md) |
+| API địa chỉ batdongsan | [data/address_data/readme.md](data/address_data/readme.md) |
 
 ## 3. Bản đồ code và dữ liệu
 
 ```text
 .
-├── address_data/            # Địa chỉ lấy từ batdongsan (nguồn chuẩn cho bảng địa chỉ)
+├── data/address_data/       # Địa chỉ lấy từ batdongsan (nguồn chuẩn cho bảng địa chỉ)
 │   ├── readme.md            #   các endpoint API phải tự gọi
 │   ├── old_cities.json      #   tỉnh/TP trước 2025 (cityCode: 'SG', 'HN'...)
 │   ├── new_cities.json      #   tỉnh/TP từ 2025
 │   ├── sg_old.json          #   quận/huyện cũ của SG (districtId)
 │   └── ward_mappings.sql    #   mapping phường cũ → mới (dump MySQL, mã hành chính chính thức)
-├── housing-backend/housing-backend/   # Backend FastAPI + database (đích của task hiện tại)
+├── src/web/housing-backend/   # Backend FastAPI + database (đích của task hiện tại)
 │   ├── app/db/base.py       #   Base, IntPk, quy ước đặt tên constraint, map kiểu
 │   ├── app/db/models/       #   model SQLAlchemy: admin_units, district, poi, listing, views
 │   ├── migrations/          #   Alembic
 │   ├── db/                  #   SQL cũ (schema.sql, functions.sql) — đang được thay
 │   └── scripts/             #   script nạp/sửa dữ liệu
-├── CrawlData/               # Crawler tin đăng + listing_extractor.py + analysis/
-├── CrawUltilities/          # Dữ liệu POI (trường, bệnh viện, chợ)
-├── src/pipeline/            # Làm sạch, nạp, embedding tin đăng
-├── src/agent/               # Chatbot multi-agent
-├── tools/                   # Script import/kiểm tra POI, reverse-engineer HTML
-├── backup/                  # Dump DB (không commit) + README: yêu cầu bắt buộc trước khi backup
-└── outputs/                 # Kết quả trung gian của pipeline POI
+├── src/crawl/crawlProperties/  # Crawler tin đăng + listing_extractor.py + analysis/
+├── src/crawl/dataUltilities/   # Dữ liệu POI (trường, bệnh viện, chợ)
+├── src/pipeline/            # Làm sạch, nạp, embedding tin đăng (.env riêng)
+├── src/pipeline/input/      #   dữ liệu crawl đầu vào (data.json, data14-11.json)
+├── src/web/prediction_server/  # FastAPI dự đoán giá, nạp tin, tự retrain (.env riêng)
+├── src/web/housing-frontend/   # React + Vite (.env riêng)
+├── src/notebook/            # predictionEDA (EDA, thí nghiệm), kaggle (server embedding bge-m3)
+├── tools/                   # Script POI cũ (lỗi thời), reverse-engineer HTML
+├── backup/                  # Dump DB + models (không commit) + README: quy ước tên, yêu cầu trước khi backup
+├── models/                  # File mô hình giá của Prediction Server (không commit)
+└── output/listings/         # Đầu ra bước làm sạch của pipeline
 ```
+
+Hướng dẫn chạy: [README.md](README.md) (tóm tắt), [docs/setup-docker-postgres.md](docs/setup-docker-postgres.md)
+(DB Docker, khôi phục, dựng từ đầu), [backup/README.md](backup/README.md) (backup).
 
 ## 4. Môi trường
 
-- Windows 11. Có Bash (Git Bash) và PowerShell. **Không có `psql`/`pg_isready`**, Docker
-  thường tắt → thao tác DB bằng Python + `psycopg`.
-- Python: dùng `D:/my_project/DoAn2/Multi-Agent-RAG-and-Prediction-Housing-Price/.venv/Scripts/python.exe` (`.venv` gốc). **Không dùng `uv run` trong `housing-backend/`** — nó tạo `.venv` mới và bị Application Control của Windows chặn. Ruff: `uvx ruff check <file>`.
-- Postgres 18 local: `postgres:123456789@localhost:5432`. DB `housing` là DB thật — **không
-  được phá**. Thử nghiệm trên `housing_dev`.
-- Alembic chạy trong `housing-backend/housing-backend/`:
-  `DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5432/housing_dev D:/my_project/DoAn2/Multi-Agent-RAG-and-Prediction-Housing-Price/.venv/Scripts/python.exe -m alembic upgrade head`
+- Windows 11. Có Bash (Git Bash) và PowerShell. Không có `psql` trên Windows: dùng
+  `docker exec housing-postgres psql -U postgres -d housing_dev ...` hoặc Python + `psycopg`. Git Bash cần
+  `MSYS_NO_PATHCONV=1` trước `docker exec`/`docker cp` có đường dẫn `/tmp/...`.
+- Python: dùng `D:/my_project/DoAn2/Multi-Agent-RAG-and-Prediction-Housing-Price/.venv/Scripts/python.exe` (`.venv` gốc). **Không dùng `uv run`/`uv sync`/`uv add`** — tạo `.venv` mới/làm mất gói và bị Application Control của Windows chặn. Ruff: `uvx ruff check <file>`.
+- Database: Docker, container `housing-postgres` (`src/web/housing-backend/docker-compose.yml`), cổng **5433**,
+  user `postgres`, mật khẩu trong `src/web/housing-backend/.env`. DB `housing_dev` = DB làm việc/thử nghiệm;
+  `housing` = DB cũ, chỉ đọc — **không được phá**. Postgres cài trên Windows (cổng 5432) là bản cũ, không dùng.
+- Backup: `backup\housing_dev_YYYYMMDD.dump`, `backup\housing_YYYYMMDD.dump` (một quy ước duy nhất, xem
+  [backup/README.md](backup/README.md)).
+- Mỗi thành phần có `.env` riêng (không commit, có `.env.example`): `src/pipeline/`, `src/web/housing-backend/`, `src/web/prediction_server/`, `src/web/housing-frontend/`. Code không đọc `.env` ở gốc (file đó nếu còn là bản cũ). `PREDICTION_SERVER_API_KEY` của backend và prediction server phải trùng nhau.
+- Alembic chạy trong `src/web/housing-backend/` (tự đọc `DATABASE_URL` từ `.env` của backend):
+  `D:/my_project/DoAn2/Multi-Agent-RAG-and-Prediction-Housing-Price/.venv/Scripts/python.exe -m alembic upgrade head`
+- Backend và Prediction Server chạy trên Windows có thể bị Smart App Control chặn `.pyd` (`asyncpg`, `scikit-learn`).
 
 ## 5. Nguyên tắc chung
 

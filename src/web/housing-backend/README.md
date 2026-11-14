@@ -25,11 +25,15 @@ housing-backend/
 │   ├── api/                    # router FastAPI
 │   └── main.py
 ├── migrations/versions/
-│   └── 0001_baseline.py        # extension, toàn bộ bảng, 3 function SQL (bên dưới)
+│   ├── 0001_baseline.py        # extension, toàn bộ bảng, 3 function SQL (bên dưới)
+│   └── 0002 … 0006             # trgm tên POI, khóa chính thay thế, price_model_runs (+ charts)
+├── docker-compose.yml          # service db (container housing-postgres, cổng 5433)
 ├── scripts/
-│   ├── fetch_bds_address.py    # tải phường/đường SG từ API batdongsan -> address_data/*.json
-│   ├── seed_address.py         # nạp address_data/ vào 7 bảng địa chỉ + ward_mappings
-│   ├── migrate_legacy_data.py  # chuyển dữ liệu từ DB cũ (5 schema) sang bảng mới
+│   ├── fetch_bds_address.py    # tải phường/đường SG từ API batdongsan -> data/address_data/*.json
+│   ├── seed_address.py         # nạp data/address_data/ vào 7 bảng địa chỉ + ward_mappings
+│   ├── migrate_legacy_data.py  # chuyển dữ liệu từ DB cũ `housing` (5 schema) sang bảng mới, gồm POI
+│   ├── import_universities.py  # thêm ĐH/CĐ vào pois (đọc CrawUltilities/poi_master.csv, hiện không có trong repo)
+│   ├── train_price_model.py    # train mô hình giá cục bộ (dự phòng khi không có Prediction Server)
 │   ├── fix_backup.ps1 / .sh    # (cũ) sửa file backup 5 schema
 └── db/legacy/                  # SQL/model cũ, chỉ để tham khảo, không còn dùng
 ```
@@ -65,26 +69,25 @@ SELECT refresh_spatial_features();                          -- tính lại listi
 SELECT refresh_listing_address_ids();                       -- điền FK địa chỉ của listings (khớp đúng 1, NFC)
 ```
 
-## Dựng DB từ đầu
+## Dựng DB và chạy backend
 
-```bash
-cp .env.example .env
-docker compose up -d db
-pip install -e ".[dev]"
+DB chạy trong Docker (container `housing-postgres`, cổng 5433, `docker-compose.yml` ở thư mục này). Các bước bật
+container, khôi phục từ `backup\` (đường nhanh) hoặc dựng từ đầu (Alembic → `seed_address.py` →
+`migrate_legacy_data.py`): **[docs/setup-docker-postgres.md](../../../docs/setup-docker-postgres.md)** mục 3–4.
+Cấu hình ở `.env` của thư mục này (copy từ `.env.example`).
 
-export DATABASE_URL=postgresql+asyncpg://postgres:<mat_khau>@localhost:5432/housing_dev
-alembic upgrade head                 # tạo extension, bảng, function
-python scripts/fetch_bds_address.py  # chỉ khi address_data/ chưa có sg_*_wards/streets.json
-python scripts/seed_address.py       # nạp địa chỉ + ward_mappings, in số dòng mỗi bảng
-python scripts/migrate_legacy_data.py \
-    --source-url postgresql://postgres:<mat_khau>@localhost:5432/housing \
-    --target-url postgresql://postgres:<mat_khau>@localhost:5432/housing_dev
-uvicorn app.main:app --reload        # http://127.0.0.1:8000/docs
+Chạy backend (PowerShell, tại thư mục gốc dự án, sau khi DB và Prediction Server đã bật):
+
+```powershell
+$PY = (Resolve-Path .\.venv\Scripts\python.exe).Path
+cd src\web\housing-backend; & $PY -m uvicorn app.main:app --port 8000     # http://127.0.0.1:8000/docs
 ```
 
+- `scripts/fetch_bds_address.py` chỉ cần khi `data/address_data/` (ở gốc dự án) chưa có `sg_*_wards/streets.json`;
+  nó gọi API batdongsan.
 - `seed_address.py` và `migrate_legacy_data.py` đều upsert, chạy lại nhiều lần kết quả không đổi.
 - `seed_address.py` ghi các dòng mapping không nối được vào
-  `address_data/ward_mappings_unmatched.json` (kèm lý do).
+  `data/address_data/ward_mappings_unmatched.json` (kèm lý do).
 - `migrate_legacy_data.py` chỉ đọc DB nguồn (`default_transaction_read_only`), in số dòng
   nguồn/đích và số tin khớp FK địa chỉ.
 - Windows: `alembic.ini` chỉ được chứa ký tự ASCII (Alembic đọc file bằng encoding hệ điều hành).
@@ -114,8 +117,9 @@ rows = await PoiRepository(session).nearby(106.70, 10.77, radius_m=1000, poi_typ
 Dùng lại mô hình RandomForest của đồ án 1 (spec: `docs/tasks/prediction-mode.md`). Đồ án 1 không
 có file `.pkl`, nên phải train lại một lần (khoảng 1 phút, cần `scikit-learn`):
 
-```bash
-PYTHONPATH=. python scripts/train_price_model.py
+```powershell
+# tại src\web\housing-backend, $PY như mục "Dựng DB và chạy backend"
+$env:PYTHONPATH = '.'; & $PY scripts\train_price_model.py
 ```
 
 Script chép `data.csv` của đồ án 1 sang `data/price_training.csv`, in RMSE/MAE/R² (trên giá/m²) và
@@ -123,13 +127,14 @@ lưu `models/price_rf.joblib` + `models/price_rf.metrics.json`. Thư mục `mode
 `.gitignore` (file ~110 MB, không commit). Chưa train thì `POST /api/v1/chat` với
 `mode: "prediction"` trả 503, mode recommendation vẫn chạy bình thường.
 
-Cần trong `.env`: `OPENAI_API_KEY` (trích xuất trường bằng gpt-4o-mini), `GOONG_API_KEY`
+Cần trong `src/web/housing-backend/.env`: `OPENAI_API_KEY` (trích xuất trường bằng gpt-4o-mini), `GOONG_API_KEY`
 (geocode địa chỉ; lỗi thì dùng tâm các tin đăng của quận trong bảng `listings`).
 
-```bash
-uvicorn app.main:app --port 8011
-python tests/prediction/run_live.py http://localhost:8011   # kịch bản thật, tốn phí nhỏ
-pytest tests/prediction                                    # unit test, không gọi OpenAI/Goong
+```powershell
+# tại src\web\housing-backend
+& $PY -m uvicorn app.main:app --port 8011
+& $PY tests\prediction\run_live.py http://localhost:8011   # kịch bản thật, tốn phí nhỏ (cửa sổ khác)
+& $PY -m pytest tests\prediction                          # unit test, không gọi OpenAI/Goong
 ```
 
 Lưu ý về độ tin cậy:

@@ -26,7 +26,7 @@ chạy và output, hoặc kết quả truy vấn SQL.
   field nguồn. Cột không truy được về field nào → FAIL.
 - **[B] migration:** dựng lại `housing_dev` trống (DROP + CREATE bằng Python psycopg), chạy
   `alembic upgrade head` rồi `alembic check` trong `housing-backend/housing-backend/` với
-  `DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5432/housing_dev`.
+  `DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5433/housing_dev`.
 - **[A1][A3] trên DB thật:** truy vấn `information_schema.tables` / `columns`: không bảng nào
   ngoài `public` (trừ schema hệ thống, `tiger`, `topology` của PostGIS), không cột `jsonb`.
 - **[C] dữ liệu:** chỉ khi đủ 4 file `sg_old_wards.json`, `sg_old_streets.json`,

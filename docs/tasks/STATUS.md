@@ -28,17 +28,17 @@ Phiên mới: đọc file này đầu tiên, rồi làm theo mục 2 "Lệnh đ�
 **b) Áp DB `housing` (thật) — chưa làm.** Vẫn 5 schema cũ (`admin, amenities, listing, ml, rag`). Chế độ auto chặn ghi lên `housing` (loại "production deploy"); người dùng tự chạy, hoặc cấp quyền Bash cho agent. Trong `housing-backend/housing-backend`:
 
 ```bash
-export DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5432/housing
+export DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5433/housing
 ../../.venv/Scripts/python.exe -m alembic upgrade head
 ../../.venv/Scripts/python.exe scripts/seed_address.py
 ../../.venv/Scripts/python.exe scripts/migrate_legacy_data.py \
-  --source-url postgresql://postgres:123456789@localhost:5432/housing \
-  --target-url postgresql://postgres:123456789@localhost:5432/housing
+  --source-url postgresql://postgres:123456789@localhost:5433/housing \
+  --target-url postgresql://postgres:123456789@localhost:5433/housing
 # đối chiếu số dòng (listings 7603, listing_spatial_features 7342, pois 5267, district_label 24,
 # ward_mappings 270, streets_new 34091, streets_old 9169), rồi:
 #   DROP SCHEMA admin, amenities, listing, ml, rag CASCADE;
 # rồi embed (từ thư mục gốc, Kaggle phải bật):
-DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5432/housing ../../.venv/Scripts/python.exe -m src.pipeline --embed-only
+DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5433/housing ../../.venv/Scripts/python.exe -m src.pipeline --embed-only
 ```
 
 Sau khi áp, đổi `DATABASE_URL` của code và test từ `housing_dev` sang `housing` (`src.pipeline` mặc định `housing_dev`, muốn ghi `housing` phải truyền `DATABASE_URL`/`--db-url`).
@@ -62,7 +62,7 @@ Sau khi áp, đổi `DATABASE_URL` của code và test từ `housing_dev` sang `
 - Phân vai: LLM (gpt-4o-mini) **chỉ** ở `TurnInterpreter` (hiểu câu thành kế hoạch). Mọi quy tắc tất định và **toàn bộ câu trả lời do code viết** (từ "facts" của DB). Spec #13, #14, #28.
 - Unit test (không OpenAI): `tests/recommend/unit/` — **176 passed**, `uvx ruff check app tests/recommend/unit` sạch, không hàm nào > 40 dòng.
 - Bộ test của query-tester (không được sửa tay): `tests/recommend/` — `scenarios.json` (50 kịch bản/174 lượt, `as_of = 2026-09-22`), `scenarios_extra.json` (9 kịch bản hồi quy lỗi khách thật, `run_eval.py --extra`), `extraction_cases.json` (44 câu), `oracle.py` (SQL độc lập), `run_eval.py`, `report.md`, `last_run.json`.
-- Chạy unit test: `cd housing-backend/housing-backend; DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5432/housing_dev ../../.venv/Scripts/python.exe -m pytest tests/recommend/unit -q`.
+- Chạy unit test: `cd housing-backend/housing-backend; DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5433/housing_dev ../../.venv/Scripts/python.exe -m pytest tests/recommend/unit -q`.
 - Snapshot code trước đợt rút gọn (khôi phục nếu cần): `C:\Users\huypro37\AppData\Local\Temp\claude\d--my-project-DoAn2-Multi-Agent-RAG-and-Prediction-Housing-Price\960f0f8e-f6e7-43ce-a1ac-8cc8e5202e47\scratchpad\snapshot_before_trim` (có thể đã mất; code **không nằm trong git**).
 
 ### 3.2 Lịch sử chấm (query-tester, DB `housing_dev`)
@@ -127,7 +127,7 @@ Cải thiện không chặn (6 mục): "chỗ đậu ô tô" mất vì STOP_WORD
 **Quyết định người dùng:** phương án "sửa lỗi chặn + lỗi nhỏ rẻ, kiểm tra gọn" cho GĐ7 (không chạy vòng 7 đầy đủ).
 **Đang dở lúc dừng:** db-coder làm vòng sửa 6 (đã yêu cầu dừng ở trạng thái ổn định; xem báo cáo cuối của nó nếu có). Phạm vi vòng sửa 6: (1) lỗi chặn "giảm xuống 3tỷ2" bị trừ thêm 10% (bỏ cờ `cheaper` khi câu có số tiền); (2) lỗi nhỏ rẻ: STOP_WORDS loại nhầm "đậu/ô/tô", đổi sang đất/đất nền thì bỏ `bedrooms_min`, bỏ dòng thừa "đường: tin không ghi", không in lặp khối "rộng hơn", thông báo lỗi giá "3tr8"; (3) 3 lỗi code sạch nhẹ.
 **Làm tiếp (theo thứ tự):**
-1. Kiểm trạng thái code: `cd housing-backend/housing-backend; DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5432/housing_dev ../../.venv/Scripts/python.exe -m pytest tests/recommend/unit -q` + `uvx ruff check app tests/recommend/unit` + `wc -l app/services/recommendation/*.py` (trần 1.900). Nếu vòng sửa 6 chưa xong, giao lại db-coder (đọc mục 8.2 + mục này).
+1. Kiểm trạng thái code: `cd housing-backend/housing-backend; DATABASE_URL=postgresql+asyncpg://postgres:123456789@localhost:5433/housing_dev ../../.venv/Scripts/python.exe -m pytest tests/recommend/unit -q` + `uvx ruff check app tests/recommend/unit` + `wc -l app/services/recommendation/*.py` (trần 1.900). Nếu vòng sửa 6 chưa xong, giao lại db-coder (đọc mục 8.2 + mục này).
 2. Kiểm gọn bằng query-tester (`subagent_type: query-tester`): chạy lại bộ 50 kịch bản + `--extra` + hội thoại H lượt 7 và các câu "giảm xuống/giảm còn" (`scratchpad/r6_conv3.json` nếu còn); **cần Kaggle bật** (`curl $EMBEDDING_API_URL/health` = 200, nếu không nhờ người dùng chạy lại notebook và cập nhật `.env`).
 3. Main tự đóng vai khách hàng (script nhỏ gọi `RecommendationService().chat(...)` với `as_of=2026-09-22`, nhiều hội thoại mới), rồi **chốt GĐ7**.
 4. Backend chatbot (mục 7 + spec [chatbot-recommendation.md](chatbot-recommendation.md) phần A): `mode` bắt buộc, CORS, `ListingHit` thêm lat/lon/coords_reliable/position/days_left, `summary`, `RelaxOption.message`, `GET /recommend/map`, `POST /recommend/reset` (file `app/services/map.py`). Rồi ghép `housing-frontend/` với backend thật (một hội thoại 5 lượt).
@@ -145,7 +145,7 @@ Cải thiện không chặn (6 mục): "chỗ đậu ô tô" mất vì STOP_WORD
 - Đã xác nhận lúc tiếp tục: code ổn (**216 unit test passed**, ruff sạch, **1.900** dòng), Kaggle bật (health 200), DB `housing` thật vẫn 5 schema cũ.
 - **Đã giao query-tester kiểm gọn** (chạy nền): bộ 50 kịch bản (174 lượt) + `--extra` (9) + `pytest -m llm -k extraction` (44 câu) + các ca vòng 6 (6 cách nói "giảm xuống/giảm còn", H lượt 7, "chỗ đậu ô tô", "thương lượng", "đường nào", đất nền sau "1pn", "3tr8"). Kết quả sẽ nằm ở `housing-backend/housing-backend/tests/recommend/report.md` và `report_extra.md`; bản trước backup ở scratchpad `round6b/`. **Nếu phiên mới thấy report.md có kết luận mới (ngày 2026-10-10) thì đọc; nếu báo cáo chưa có hoặc dở thì chạy lại bằng query-tester theo mục 9 bước 2.**
 - Quy tắc khi kết quả về: PASS ⇒ main tự đóng vai khách hàng (script gọi `RecommendationService().chat(...)`, `as_of=2026-09-22`) rồi chốt GĐ7 ⇒ backend chatbot (mục 7, spec chatbot-recommendation.md phần A) ⇒ ghép `housing-frontend/`. FAIL ⇒ báo người dùng quyết (đã hết 6 vòng; không tự chạy thêm).
-- Cách chạy dự án hiện tại: backend `cd housing-backend/housing-backend; $env:DATABASE_URL="postgresql+asyncpg://postgres:123456789@localhost:5432/housing_dev"; ..\..\.venv\Scripts\python.exe -m uvicorn app.main:app --port 8000` (đã kiểm: /health 200, chat trả 5 tin); test `... -m pytest tests/recommend/unit -q`; giao diện `cd housing-frontend; npm install; npm run mock; npm run dev` (chỉ chạy với mock; backend chưa có `summary`/`/map`/`/reset`).
+- Cách chạy dự án hiện tại: backend `cd housing-backend/housing-backend; $env:DATABASE_URL="postgresql+asyncpg://postgres:123456789@localhost:5433/housing_dev"; ..\..\.venv\Scripts\python.exe -m uvicorn app.main:app --port 8000` (đã kiểm: /health 200, chat trả 5 tin); test `... -m pytest tests/recommend/unit -q`; giao diện `cd housing-frontend; npm install; npm run mock; npm run dev` (chỉ chạy với mock; backend chưa có `summary`/`/map`/`/reset`).
 
 ## 11. KẾT QUẢ KIỂM GỌN 10/10/2026: **PASS** (query-tester) — GĐ7 gần chốt
 

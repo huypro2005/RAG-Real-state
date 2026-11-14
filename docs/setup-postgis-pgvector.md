@@ -1,3 +1,6 @@
+> **Khuyến nghị:** dùng Postgres trong Docker ([setup-docker-postgres.md](setup-docker-postgres.md)). Cài trực tiếp
+> trên Windows có thể bị Smart App Control chặn `vector.dll` (file không có chữ ký số).
+
 # Cài PostGIS và pgvector (Windows, PostgreSQL 18)
 
 Database `housing` cần hai extension: **PostGIS** (truy vấn không gian, POI) và **pgvector** (lưu embedding cho RAG).
