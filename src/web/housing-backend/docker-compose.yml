@@ -1,12 +1,21 @@
 services:
   db:
     build: ./docker/postgres
-    image: housing-postgres:16-postgis-pgvector
+    image: housing-postgres:18-postgis-pgvector
+    container_name: housing-postgres
     env_file: .env
+    environment:
+      # Mật khẩu/DB chỉ có tác dụng ở lần khởi tạo volume đầu tiên
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?đặt POSTGRES_PASSWORD trong .env}
+      POSTGRES_DB: ${POSTGRES_DB:-housing_dev}
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      # 5433 để không đụng Postgres cài sẵn trên máy (5432); đổi bằng POSTGRES_PORT trong .env
+      - "${POSTGRES_PORT:-5433}:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql
+    shm_size: 256mb
+    restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
@@ -17,14 +26,15 @@ services:
     build: .
     env_file: .env
     environment:
-      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-housing_dev}
     depends_on:
       db:
         condition: service_healthy
-    # Migration chạy tay (alembic upgrade head / alembic stamp 0001), xem README
+    # Migration chạy tay (alembic upgrade head), xem README
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
     ports:
       - "8000:8000"
+    profiles: ["api"]   # mặc định chỉ bật db; muốn chạy backend trong Docker: docker compose --profile api up -d
 
 volumes:
   pgdata:

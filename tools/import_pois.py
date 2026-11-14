@@ -223,7 +223,7 @@ def main():
     args = parser.parse_args()
     if args.skip_spatial and args.spatial_only:
         parser.error('--skip-spatial and --spatial-only are mutually exclusive')
-    settings = dict(host=os.getenv('PGHOST', 'localhost'), port=os.getenv('PGPORT', '5432'),
+    settings = dict(host=os.getenv('PGHOST', 'localhost'), port=os.getenv('PGPORT', '5433'),
                     dbname=os.getenv('PGDATABASE', 'housing'), user=os.getenv('PGUSER', 'postgres'),
                     connect_timeout=10)
     # libpq reads PGPASSWORD / pgpass; never embed or print credentials.

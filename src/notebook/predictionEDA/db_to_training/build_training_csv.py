@@ -6,7 +6,7 @@ mặt tiền, phòng ngủ, pháp lý, tọa độ x, tọa độ y, số tầng
 Chạy trong src/notebook/predictionEDA/ (dùng .venv gốc):
 
     python db_to_training/build_training_csv.py
-    python db_to_training/build_training_csv.py --db-url postgresql://postgres:<mk>@localhost:5432/housing_dev \
+    python db_to_training/build_training_csv.py --db-url postgresql://postgres:<mk>@localhost:5433/housing_dev \
         --output data/price_training_db.csv
 
 Không ghi đè data/price_training.csv. Không đoán dữ liệu: ô thiếu giữ nguyên rỗng, tin có loại
@@ -20,7 +20,7 @@ from pathlib import Path
 import pandas as pd
 import psycopg
 
-DEFAULT_DB_URL = "postgresql://postgres:{password}@localhost:5432/housing_dev"
+DEFAULT_DB_URL = "postgresql://postgres:{password}@localhost:5433/housing_dev"
 DEFAULT_OUTPUT = Path(__file__).resolve().parents[1] / "data/price_training_db.csv"
 
 # Mã loại nhà đất của đồ án 1 (giống REAL_ESTATE_ trong notebook)

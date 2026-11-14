@@ -20,7 +20,7 @@ def run_db():
     """run_db(lambda session: coroutine) -> kết quả; mỗi lần một engine mới trên DATABASE_URL."""
     url = os.environ.get("DATABASE_URL")
     if not url:
-        pytest.skip("chưa đặt DATABASE_URL (vd. ...@localhost:5432/housing_dev)")
+        pytest.skip("chưa đặt DATABASE_URL (vd. ...@localhost:5433/housing_dev)")
 
     def run(make_coroutine):
         async def main():

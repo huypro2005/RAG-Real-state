@@ -3,8 +3,8 @@
 Chạy từ housing-backend/housing-backend, sau `alembic upgrade head` + `seed_address.py`:
 
     python scripts/migrate_legacy_data.py \
-        --source-url postgresql://user:pass@localhost:5432/housing \
-        --target-url postgresql://user:pass@localhost:5432/housing_dev
+        --source-url postgresql://user:pass@localhost:5433/housing \
+        --target-url postgresql://user:pass@localhost:5433/housing_dev
 
 Nguồn chỉ đọc (default_transaction_read_only). Đích upsert trong một transaction nên chạy lại
 nhiều lần kết quả không đổi. Hai URL có thể là cùng một DB.

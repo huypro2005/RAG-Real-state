@@ -3,7 +3,7 @@ import pandas as pd
 import psycopg
 from psycopg import sql
 
-DSN = "postgresql://postgres:123456789@localhost:5432/housing"
+DSN = "postgresql://postgres:123456789@localhost:5433/housing"
 
 
 def dem_tien_ich(df, bang_poi, ban_kinh_km, dieu_kien=None, dsn=DSN,

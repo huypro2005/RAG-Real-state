@@ -22,7 +22,7 @@ def main():
         for row in read_csv(path):
             assert row['poi_id'] not in expected
             expected[row['poi_id']] = (row, digest)
-    settings = dict(host=os.getenv('PGHOST', 'localhost'), port=os.getenv('PGPORT', '5432'),
+    settings = dict(host=os.getenv('PGHOST', 'localhost'), port=os.getenv('PGPORT', '5433'),
                     dbname=os.getenv('PGDATABASE', 'housing'), user=os.getenv('PGUSER', 'postgres'))
     with psycopg.connect(**settings) as conn:
         conn.execute('SET TRANSACTION READ ONLY')

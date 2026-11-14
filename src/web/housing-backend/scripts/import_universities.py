@@ -2,7 +2,7 @@
 
 Chạy từ thư mục housing-backend, sau `alembic upgrade head` (docs/tasks/named-places.md 2.1):
 
-    DATABASE_URL=postgresql+asyncpg://user:pass@localhost:5432/housing_dev \
+    DATABASE_URL=postgresql+asyncpg://user:pass@localhost:5433/housing_dev \
         python scripts/import_universities.py
 
 Idempotent: trường đã có (cùng tên chuẩn hoá, cách < 200 m) thì bỏ qua, nên chạy lại không thêm

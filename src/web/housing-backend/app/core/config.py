@@ -4,15 +4,14 @@ from pathlib import Path
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-# Key OpenAI / embedding nằm trong .env ở thư mục gốc dự án (dùng chung với src/pipeline);
-# .env cạnh backend (nếu có) đọc sau nên ghi đè được.
-PROJECT_ENV_FILE = Path(__file__).resolve().parents[4] / ".env"
+# Backend chỉ đọc .env của chính nó (housing-backend/.env); biến môi trường thật vẫn được ưu tiên.
+ENV_FILE = Path(__file__).resolve().parents[2] / ".env"
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=(PROJECT_ENV_FILE, ".env"), extra="ignore")
+    model_config = SettingsConfigDict(env_file=ENV_FILE, extra="ignore")
 
-    database_url: str = "postgresql+asyncpg://postgres:123456789@localhost:5432/housing"
+    database_url: str = "postgresql+asyncpg://postgres:123456789@localhost:5433/housing"
     db_echo: bool = False
     db_pool_size: int = 10
     db_max_overflow: int = 20

@@ -20,7 +20,7 @@ def test_without_key_and_without_db_returns_none_instead_of_inventing():
 def test_goong_failure_falls_back_to_district_centroid_from_listings():
     url = os.environ.get("DATABASE_URL")
     if not url:
-        pytest.skip("chưa đặt DATABASE_URL (vd. ...@localhost:5432/housing_dev)")
+        pytest.skip("chưa đặt DATABASE_URL (vd. ...@localhost:5433/housing_dev)")
 
     async def run():
         engine = create_async_engine(url)

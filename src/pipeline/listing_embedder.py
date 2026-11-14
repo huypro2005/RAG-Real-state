@@ -1,7 +1,7 @@
 """Dựng document RAG cho từng tin và lưu embedding vào pgvector (bảng listing_embeddings).
 
 Model không chạy trên máy này: vector được lấy từ API embedding chạy trên Kaggle
-(notebook src/kaggle/embedding_server.ipynb).
+(notebook src/notebook/kaggle/embedding_server.ipynb).
 """
 import hashlib
 import re
@@ -74,7 +74,7 @@ class ListingEmbedder:
             self.session.get(f'{self.api_url}/health', timeout=15).raise_for_status()
         except requests.RequestException as error:
             raise SystemExit(f'API embedding không phản hồi ({type(error).__name__}). Bật notebook '
-                             'src/kaggle/embedding_server.ipynb, cập nhật .env, hoặc bỏ cờ --embed.')
+                             'src/notebook/kaggle/embedding_server.ipynb, cập nhật src/pipeline/.env, hoặc bỏ cờ --embed.')
 
     def encode(self, texts):
         """Gọi API lấy vector đã chuẩn hóa (dùng cosine). Cũng dùng để embed câu hỏi khi truy vấn RAG."""

@@ -22,7 +22,7 @@ PREFLIGHT = {
 def service():
     """Service dùng interpreter giả; dependency được thay trong suốt test."""
     if not os.environ.get("DATABASE_URL"):
-        pytest.skip("chưa đặt DATABASE_URL (vd. ...@localhost:5432/housing_dev)")
+        pytest.skip("chưa đặt DATABASE_URL (vd. ...@localhost:5433/housing_dev)")
     fake = RecommendationService(
         interpreter=FakeInterpreter([]), embedding_client=FakeEmbeddingClient(),
         rerank_enabled=False,

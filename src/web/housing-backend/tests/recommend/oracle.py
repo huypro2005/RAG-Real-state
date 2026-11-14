@@ -14,7 +14,7 @@ from datetime import date
 
 import psycopg
 
-DEFAULT_DSN = "postgresql://postgres:123456789@localhost:5432/housing_dev"
+DEFAULT_DSN = "postgresql://postgres:123456789@localhost:5433/housing_dev"
 DEDUP_RADIUS_M = 30
 RELAX_PRICE_FACTOR = 1.2
 

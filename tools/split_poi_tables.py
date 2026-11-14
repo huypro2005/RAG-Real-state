@@ -15,7 +15,7 @@ from import_pois import ROOT
 
 def main():
     with psycopg.connect(host=os.getenv('PGHOST', 'localhost'),
-                         port=os.getenv('PGPORT', '5432'),
+                         port=os.getenv('PGPORT', '5433'),
                          dbname=os.getenv('PGDATABASE', 'housing'),
                          user=os.getenv('PGUSER', 'postgres')) as conn:
         conn.execute('SELECT pg_advisory_xact_lock(7400325)')

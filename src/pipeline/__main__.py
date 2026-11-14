@@ -11,9 +11,9 @@ Cách chạy (tại thư mục gốc dự án):
     python -m src.pipeline --input CrawlData/data.json CrawlData/data1.json   # ghép nhiều file
 
 Database: --db-url, nếu không có thì biến DATABASE_URL, nếu không có nữa thì database housing_dev
-trên localhost, user postgres (mật khẩu lấy từ PGPASSWORD, đặt trong shell hoặc .env). Pipeline
+trên localhost, user postgres (mật khẩu lấy từ PGPASSWORD, đặt trong shell hoặc src/pipeline/.env). Pipeline
 không tự chọn database `housing` thật; muốn ghi vào đó phải truyền --db-url.
-Embedding: đặt EMBEDDING_API_URL và EMBEDDING_API_KEY (notebook src/kaggle/embedding_server.ipynb) vào .env.
+Embedding: đặt EMBEDDING_API_URL và EMBEDDING_API_KEY (notebook src/notebook/kaggle/embedding_server.ipynb) vào src/pipeline/.env.
 """
 import argparse
 import os
@@ -28,7 +28,7 @@ from .listing_cleaner import ROOT, ListingCleaner
 from .listing_embedder import ListingEmbedder
 from .listing_loader import ListingLoader
 
-DEFAULT_DB = 'dbname=housing_dev host=localhost user=postgres'
+DEFAULT_DB = 'dbname=housing_dev host=localhost port=5433 user=postgres'
 
 
 class ListingPipeline:
@@ -68,8 +68,8 @@ class ListingPipeline:
         """Bước 5: embed tin mới hoặc đổi nội dung; model chạy trên Kaggle, không chạy cục bộ."""
         api_url, api_key = os.environ.get('EMBEDDING_API_URL'), os.environ.get('EMBEDDING_API_KEY')
         if not (api_url and api_key):
-            sys.exit('Thiếu EMBEDDING_API_URL hoặc EMBEDDING_API_KEY trong .env. Chạy notebook '
-                     'src/kaggle/embedding_server.ipynb để lấy hai giá trị này.')
+            sys.exit('Thiếu EMBEDDING_API_URL hoặc EMBEDDING_API_KEY trong src/pipeline/.env. Chạy notebook '
+                     'src/notebook/kaggle/embedding_server.ipynb để lấy hai giá trị này.')
         embedder = ListingEmbedder(conn, api_url, api_key)
         embedder.check_health()
         result = embedder.embed_pending()
@@ -94,7 +94,7 @@ def main():
     mode.add_argument('--embed', action='store_true', help='sau khi nạp, tạo embedding qua API Kaggle')
     mode.add_argument('--embed-only', action='store_true',
                       help='bỏ qua làm sạch + nạp, chỉ embed tin đã có trong database')
-    load_dotenv(ROOT / '.env')
+    load_dotenv(Path(__file__).resolve().parent / '.env')  # .env riêng của pipeline
     ListingPipeline(parser.parse_args()).run()
 
 

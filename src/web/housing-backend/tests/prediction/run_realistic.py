@@ -32,7 +32,7 @@ REPORT_PATH = HERE / "realistic_report.md"
 RESULTS_PATH = HERE / "realistic_results.json"
 CSV_PATH = HERE.parents[1] / "data/price_training.csv"  # scripts/train_price_model.py chép sang
 DB_URL = os.environ.get(
-    "ORACLE_DB_URL", "postgresql://postgres:123456789@localhost:5432/housing_dev"
+    "ORACLE_DB_URL", "postgresql://postgres:123456789@localhost:5433/housing_dev"
 )
 
 MIN_GROUP = 10

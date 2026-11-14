@@ -2,7 +2,7 @@
 
 Chạy từ thư mục housing-backend/housing-backend, sau `alembic upgrade head`:
 
-    DATABASE_URL=postgresql+asyncpg://user:pass@localhost:5432/housing_dev \
+    DATABASE_URL=postgresql+asyncpg://user:pass@localhost:5433/housing_dev \
         python scripts/seed_address.py
 
 Upsert theo mã nguồn (UNIQUE) nên chạy lại nhiều lần kết quả không đổi.

@@ -36,7 +36,7 @@ EXTRA_SCENARIOS_PATH = HERE / "scenarios_extra.json"
 EXTRA_REPORT_PATH = HERE / "report_extra.md"
 MISSING = "tin không ghi"
 CHAT_PATH = "/api/v1/recommend/chat"
-EVAL_DATABASE_URL = "postgresql+asyncpg://postgres:123456789@localhost:5432/housing_dev"
+EVAL_DATABASE_URL = "postgresql+asyncpg://postgres:123456789@localhost:5433/housing_dev"
 
 CATEGORY_QUOTA = {
     "progressive": 8, "refine": 7, "relax": 5, "switch_area": 4, "detail_compare": 7,
