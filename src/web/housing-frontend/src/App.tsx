@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
+import type { CSSProperties } from "react";
 import type { Mode } from "./api";
 import { ChatPanel } from "./components/ChatPanel";
 import { Dashboard } from "./components/dashboard/Dashboard";
 import { MapView } from "./components/MapView";
+import { ValuationPage } from "./components/ValuationPage";
 import { useChat } from "./useChat";
+import { useChatWidth } from "./useChatWidth";
 import { useTheme } from "./useTheme";
 
-type View = "chat" | "dashboard";
+type View = "chat" | "valuation" | "dashboard";
 
 const VIEWS: [View, string][] = [
   ["chat", "Chat"],
+  ["valuation", "Định giá"],
   ["dashboard", "Dashboard mô hình"],
 ];
 
@@ -21,6 +25,8 @@ export function App() {
   const recommend = useChat("recommendation");
   const predict = useChat("prediction");
   const chat = mode === "prediction" ? predict : recommend;
+  const { layoutRef, width, dragging, splitter } = useChatWidth();
+  const { min, max, ...handlers } = splitter;
 
   // Chat luôn được giữ trong DOM (ẩn bằng `hidden`) để không mất bản nháp/cuộn/bản đồ; Leaflet cần
   // sự kiện resize để đo lại khung khi hiện trở lại.
@@ -31,7 +37,12 @@ export function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <h1 className="topbar__brand">Trợ lý bất động sản TP.HCM</h1>
+        <h1 className="topbar__brand">
+          <span className="topbar__mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"><path d="M3 11 12 4l9 7M6 9.5V20h12V9.5M10 20v-5h4v5" /></svg>
+          </span>
+          <span>Trợ lý bất động sản <em>TP.HCM</em></span>
+        </h1>
         <nav className="tabs" aria-label="Màn hình">
           {VIEWS.map(([value, label]) => (
             <button
@@ -64,7 +75,12 @@ export function App() {
           </svg>
         </button>
       </header>
-      <main className="layout" hidden={view !== "chat"}>
+      <main
+        ref={layoutRef}
+        className={`layout${dragging ? " layout--drag" : ""}`}
+        style={{ "--chat-w": `${width}px` } as CSSProperties}
+        hidden={view !== "chat"}
+      >
         <ChatPanel
           mode={mode}
           onMode={setMode}
@@ -76,12 +92,27 @@ export function App() {
           onReset={chat.reset}
           onSelect={recommend.select}
         />
+        <div
+          className={`splitter${dragging ? " splitter--drag" : ""}`}
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Đổi bề rộng khung chat (kéo, hoặc phím mũi tên; nhấp đúp để về mặc định)"
+          aria-valuenow={width}
+          aria-valuemin={min}
+          aria-valuemax={max}
+          tabIndex={0}
+          title="Kéo để đổi bề rộng khung chat · nhấp đúp để về mặc định"
+          {...handlers}
+        />
         <MapView
           listings={recommend.listings}
           pois={recommend.pois}
           selected={recommend.selected}
           onSelect={recommend.setSelected}
         />
+      </main>
+      <main className="page page--valuation" hidden={view !== "valuation"}>
+        <ValuationPage active={view === "valuation"} />
       </main>
       <main className="page" hidden={view !== "dashboard"}>
         <Dashboard active={view === "dashboard"} />

@@ -33,7 +33,7 @@ AREA_SQL = text(
 class Location(BaseModel):
     latitude: float
     longitude: float
-    source: Literal["goong", "district_centroid"]
+    source: Literal["goong", "district_centroid", "user"]  # user: người dùng nhập/chọn
 
 
 class DistrictArea(NamedTuple):

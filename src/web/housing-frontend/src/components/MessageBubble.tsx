@@ -19,10 +19,13 @@ export function MessageBubble({ message, selected, shown, onSelect, onSend, isLa
   if (result?.status === "need_clarification" || prediction?.status === "collecting") {
     classes.push("bubble--hint");
   }
+  const suggestions = isLast ? (message.prediction?.suggestions ?? message.result?.suggestions) : undefined;
+  const relax = result?.status === "no_results" ? result.relax_options : [];
 
   return (
     <div className={`message message--${message.role}`}>
       <div className={classes.join(" ")}>
+        {message.role === "assistant" && <span className="bubble__who">{message.isError ? "Lỗi" : "Trợ lý"}</span>}
         {result?.degraded && (
           <p className="banner">
             Kết quả chưa xếp theo ngữ nghĩa (dịch vụ embedding đang tắt)
@@ -33,32 +36,33 @@ export function MessageBubble({ message, selected, shown, onSelect, onSend, isLa
       {prediction && prediction.status !== "out_of_scope" && (
         <PredictionCard turn={prediction} onSend={onSend} />
       )}
-      {result?.listings.map((hit) => (
-        <ListingCard
-          key={hit.listing_id}
-          hit={hit}
-          selected={selected === hit.listing_id && result.listings === shown}
-          onSelect={() => onSelect(hit, result.listings)}
-        />
-      ))}
-      {result?.status === "no_results" &&
-        result.relax_options.map((option) => (
-          <button
-            key={option.description}
-            type="button"
-            className="chip"
-            onClick={() => onSend(option.message)}
-          >
-            {option.description}
-          </button>
-        ))}
-      {/* Chip chỉ ở tin cuối: bấm thì gửi nguyên văn như người dùng gõ */}
-      {isLast &&
-        (message.prediction?.suggestions ?? message.result?.suggestions)?.map((text) => (
-          <button key={text} type="button" className="chip" onClick={() => onSend(text)}>
-            {text}
-          </button>
-        ))}
+      {result && result.listings.length > 0 && (
+        <div className="cards">
+          {result.listings.map((hit) => (
+            <ListingCard
+              key={hit.listing_id}
+              hit={hit}
+              selected={selected === hit.listing_id && result.listings === shown}
+              onSelect={() => onSelect(hit, result.listings)}
+            />
+          ))}
+        </div>
+      )}
+      {/* Nới điều kiện khi không có tin; chip gợi ý chỉ ở tin cuối: bấm thì gửi nguyên văn như người dùng gõ */}
+      {(relax.length > 0 || (suggestions?.length ?? 0) > 0) && (
+        <div className="chips-row">
+          {relax.map((option) => (
+            <button key={option.description} type="button" className="chip" onClick={() => onSend(option.message)}>
+              {option.description}
+            </button>
+          ))}
+          {suggestions?.map((text) => (
+            <button key={text} type="button" className="chip" onClick={() => onSend(text)}>
+              {text}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

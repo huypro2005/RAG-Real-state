@@ -241,6 +241,8 @@ export interface Bounds { lat: [number, number]; lon: [number, number] }
 
 /** Vùng đô thị chính (mặc định); "Toàn TP.HCM" dùng bounds của server. */
 export const URBAN_BOUNDS: Bounds = { lat: [10.65, 10.95], lon: [106.55, 106.85] };
+/** Khung cố định của chế độ "Toàn TP.HCM" (địa giới cũ, gồm Củ Chi, Cần Giờ). */
+export const CITY_BOUNDS: Bounds = { lat: [10.4, 11.2], lon: [106.2, 106.9] };
 
 function quantile(sorted: number[], q: number): number {
   const pos = (sorted.length - 1) * q;

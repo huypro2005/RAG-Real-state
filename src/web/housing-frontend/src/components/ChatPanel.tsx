@@ -27,13 +27,15 @@ const EXAMPLES: Record<Mode, string[]> = {
   prediction: ["Nhà riêng 60m2 Gò Vấp, 3 phòng ngủ", "Căn hộ 70m2 Quận 7, 2 phòng ngủ", "Đất 100m2 Thủ Đức, mặt tiền 5m"],
 };
 
-const COPY: Record<Mode, { intro: string; loading: string; reset: string }> = {
+const COPY: Record<Mode, { title: string; intro: string; loading: string; reset: string }> = {
   recommendation: {
+    title: "Bạn đang tìm nhà ở đâu?",
     intro: "Mô tả nhà bạn cần mua (khu vực, ngân sách, loại nhà…) hoặc thử một câu mẫu:",
     loading: "Đang tìm tin phù hợp…",
     reset: "Tìm lại từ đầu",
   },
   prediction: {
+    title: "Căn nhà của bạn đáng giá bao nhiêu?",
     intro: "Mô tả nhà cần định giá (loại nhà, quận, diện tích…) hoặc thử một câu mẫu:",
     loading: "Đang định giá…",
     reset: "Định giá căn khác",
@@ -101,12 +103,17 @@ export function ChatPanel({ mode, onMode, messages, loading, selected, shown, on
       <div className="chat__list" aria-live="polite">
         {messages.length === 0 && (
           <div className="chat__empty">
+            <h2>{copy.title}</h2>
             <p>{copy.intro}</p>
-            {EXAMPLES[mode].map((example) => (
-              <button key={example} type="button" className="chip" onClick={() => sendNow(example)}>
-                {example}
-              </button>
-            ))}
+            <ul className="examples">
+              {EXAMPLES[mode].map((example) => (
+                <li key={example}>
+                  <button type="button" className="chip chip--example" onClick={() => sendNow(example)}>
+                    {example}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
         {messages.map((message) => (
@@ -129,16 +136,18 @@ export function ChatPanel({ mode, onMode, messages, loading, selected, shown, on
         <div ref={endRef} />
       </div>
       <form className="chat__form" onSubmit={submit}>
+        <p className="chat__hint" id="chat-hint">Enter để gửi · Shift+Enter xuống dòng</p>
         <textarea
           ref={inputRef}
           aria-label="Tin nhắn"
+          aria-describedby="chat-hint"
           rows={2}
           value={draft}
-          placeholder="Nhập yêu cầu, Enter để gửi, Shift+Enter xuống dòng"
+          placeholder={mode === "prediction" ? "Mô tả căn nhà cần định giá…" : "Mô tả căn nhà bạn muốn mua…"}
           onChange={(event) => setDraft(event.target.value)}
           onKeyDown={onKeyDown}
         />
-        <button type="submit" className="btn" disabled={loading || !draft.trim()}>
+        <button type="submit" className="btn btn--send" disabled={loading || !draft.trim()}>
           Gửi
         </button>
       </form>

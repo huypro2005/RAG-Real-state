@@ -108,3 +108,36 @@ export function formatPriceRange(low: number | undefined, high: number | undefin
   const sameUnit = from.endsWith(" tỷ") && to.endsWith(" tỷ");
   return sameUnit ? `${from.replace(" tỷ", "")} – ${to}` : `${from} – ${to}`;
 }
+
+/** Giá ngắn cho ghim bản đồ: 3100 -> "3,1 tỷ", 12500 -> "12,5 tỷ", 900 -> "900 tr". */
+export function formatPriceShort(millionVnd: number): string {
+  if (millionVnd >= 1000) return `${trimNumber(millionVnd / 1000, millionVnd >= 10000 ? 1 : 2)} tỷ`;
+  return `${Math.round(millionVnd)} tr`;
+}
+
+export type PropertyKind = "apartment" | "house" | "villa" | "land";
+
+/** Nhóm hình minh họa theo loại nhà ("Căn hộ chung cư" -> apartment); không rõ thì coi là nhà. */
+export function propertyKind(propertyType: string | null): PropertyKind {
+  const text = (propertyType ?? "").toLowerCase();
+  if (text.includes("căn hộ") || text.includes("chung cư")) return "apartment";
+  if (text.includes("biệt thự") || text.includes("liền kề")) return "villa";
+  if (text.startsWith("đất") || text.includes(" đất")) return "land";
+  return "house";
+}
+
+/**
+ * Vị trí (0–100%) trên thanh so sánh giá/m² của thẻ định giá: khoảng tham khảo, giá dự đoán, trung vị quận.
+ * Trục phủ mọi giá trị có mặt, đệm 10% hai bên để mốc không dính mép; thiếu khoảng thì trả null.
+ */
+export function priceBar(
+  estimate: number, low: number | undefined, high: number | undefined, median: number | null,
+): { low: number; high: number; estimate: number; median: number | null; min: number; max: number } | null {
+  if (low === undefined || high === undefined || high <= low) return null;
+  const values = [low, high, estimate, ...(median !== null ? [median] : [])];
+  const [lo, hi] = [Math.min(...values), Math.max(...values)];
+  const pad = (hi - lo) * 0.1;
+  const [min, max] = [Math.max(0, lo - pad), hi + pad];
+  const at = (value: number) => ((value - min) / (max - min)) * 100;
+  return { low: at(low), high: at(high), estimate: at(estimate), median: median !== null ? at(median) : null, min, max };
+}

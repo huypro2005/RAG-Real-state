@@ -6,7 +6,7 @@ import { Circle, CircleMarker, MapContainer, Marker, Popup, TileLayer, Tooltip, 
 import "leaflet/dist/leaflet.css";
 import { GOONG_TILES_KEY } from "../api";
 import type { ListingHit, MapFeature, PoiType } from "../api";
-import { POI_LABELS, formatArea, formatDistance, formatPrice } from "../format";
+import { POI_LABELS, formatArea, formatDistance, formatPrice, formatPriceShort } from "../format";
 
 interface Props {
   listings: ListingHit[];
@@ -17,14 +17,15 @@ interface Props {
 
 const HCM_CENTER: L.LatLngTuple = [10.7769, 106.7009];
 const POI_COLORS: Record<PoiType, string> = {
-  truong_hoc: "#7c3aed",
-  benh_vien: "#dc2626",
-  cho: "#16a34a",
+  // Màu đất, tách khỏi màu nhấn xanh rêu của ghim tin: trường xanh đá, bệnh viện đỏ gạch, chợ vàng đất.
+  truong_hoc: "#2f5f86",
+  benh_vien: "#a3311f",
+  cho: "#9a6a12",
 };
 
 // Goong nếu có key map tiles riêng của frontend, ngược lại OpenStreetMap bản Đức (không cần key).
 // Không dùng tile.openstreetmap.org vì một số mạng VN chặn tên miền này; CARTO thì đòi API key.
-const TILES = GOONG_TILES_KEY
+export const TILES = GOONG_TILES_KEY
   ? {
       url: `https://tiles.goong.io/assets/goong_map_web/{z}/{x}/{y}.png?api_key=${GOONG_TILES_KEY}`,
       attribution: "&copy; Goong",
@@ -34,9 +35,16 @@ const TILES = GOONG_TILES_KEY
       attribution: "&copy; OpenStreetMap contributors",
     };
 
-function numberIcon(position: number, reliable: boolean, active: boolean): L.DivIcon {
+/** Ghim kiểu tin rao: số thứ tự + giá ngắn ("3,1 tỷ"), đuôi nhọn chỉ đúng tọa độ. Kích thước 0 để CSS tự co theo chữ. */
+function priceIcon(position: number, price: string, reliable: boolean, active: boolean): L.DivIcon {
   const cls = ["pin", reliable ? "" : "pin--unreliable", active ? "pin--active" : ""].filter(Boolean).join(" ");
-  return L.divIcon({ className: "", html: `<div class="${cls}">${position}</div>`, iconSize: [30, 30] });
+  return L.divIcon({
+    className: "pin-anchor",
+    html: `<div class="${cls}"><b>${position}</b><span>${price}</span></div>`,
+    iconSize: [0, 0],
+    iconAnchor: [0, 0],
+    popupAnchor: [0, -34],
+  });
 }
 
 /** Tự fitBounds khi bộ tin đổi, và bay tới marker khi người dùng bấm thẻ. */
@@ -84,7 +92,7 @@ export function MapView({ listings, pois, selected, onSelect }: Props) {
               key={`place-${place.properties.name}`}
               center={[lat, lng]}
               radius={place.properties.radius_m ?? 5000}
-              pathOptions={{ color: "#ea580c", weight: 2, fillOpacity: 0.06 }}
+              pathOptions={{ color: "#b4531c", weight: 1.5, fillOpacity: 0.05 }}
             >
               <Tooltip>
                 {place.properties.name} (bán kính {formatDistance(place.properties.radius_m ?? 5000)})
@@ -99,7 +107,7 @@ export function MapView({ listings, pois, selected, onSelect }: Props) {
               key={`place-pin-${place.properties.name}`}
               center={[lat, lng]}
               radius={9}
-              pathOptions={{ color: "#fff", weight: 2, fillColor: "#ea580c", fillOpacity: 1 }}
+              pathOptions={{ color: "#fff", weight: 2, fillColor: "#b4531c", fillOpacity: 1 }}
             >
               <Tooltip>{place.properties.name}</Tooltip>
             </CircleMarker>
@@ -126,7 +134,7 @@ export function MapView({ listings, pois, selected, onSelect }: Props) {
           <Marker
             key={hit.listing_id}
             position={[hit.latitude as number, hit.longitude as number]}
-            icon={numberIcon(hit.position, hit.coords_reliable, hit.listing_id === selected)}
+            icon={priceIcon(hit.position, formatPriceShort(hit.price), hit.coords_reliable, hit.listing_id === selected)}
             zIndexOffset={hit.listing_id === selected ? 1000 : 0}
             eventHandlers={{ click: () => onSelect(hit.listing_id) }}
             ref={(marker) => {
@@ -134,13 +142,13 @@ export function MapView({ listings, pois, selected, onSelect }: Props) {
               else markers.current.delete(hit.listing_id);
             }}
           >
-            <Popup>
-              <strong>{hit.position}. {hit.title}</strong>
-              <br />
-              {formatPrice(hit.price)} · {formatArea(hit.area)}
-              {!hit.coords_reliable && <><br /><em>Vị trí có thể không chính xác</em></>}
-              <br />
-              <a href={hit.listing_url} target="_blank" rel="noopener noreferrer">Xem tin gốc</a>
+            <Popup className="popup">
+              <span className="popup__no">Tin {hit.position}</span>
+              <strong className="popup__price">{formatPrice(hit.price)}</strong>
+              <span className="popup__facts">{formatArea(hit.area)}{hit.district_old ? ` · ${hit.district_old}` : ""}</span>
+              <span className="popup__title">{hit.title}</span>
+              {!hit.coords_reliable && <em className="popup__warn">Vị trí có thể không chính xác</em>}
+              <a href={hit.listing_url} target="_blank" rel="noopener noreferrer">Xem tin gốc →</a>
             </Popup>
           </Marker>
         ))}
@@ -160,7 +168,7 @@ export function MapView({ listings, pois, selected, onSelect }: Props) {
         ))}
         <li><span className="legend__dot legend__dot--pin" />Tin đề xuất</li>
         <li><span className="legend__dot legend__dot--unreliable" />Tọa độ chưa đáng tin</li>
-        <li><span className="legend__dot" style={{ background: "#ea580c" }} />Địa điểm bạn chọn</li>
+        <li><span className="legend__dot" style={{ background: "#b4531c" }} />Địa điểm bạn chọn</li>
       </ul>
     </section>
   );

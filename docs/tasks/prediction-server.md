@@ -13,7 +13,7 @@ Backend chatbot ──POST /api/v1/predict───────►┘  (model n�
 ## 1. Phạm vi và vị trí code
 
 - Code ở `src/prediction_server/` (package Python; chạy từ thư mục gốc dự án bằng `.venv` gốc):
-  `python -m uvicorn src.prediction_server.main:app --port 8100`.
+  `python -m uvicorn src.web.prediction_server.main:app --port 8100`.
 - **Tái dùng**, không chép: `src/pipeline` (`ListingCleaner`, `ListingLoader`), logic dựng bảng huấn luyện
   ở `src/notebook/predictionEDA/db_to_training/build_training_csv.py` (chuyển vào/ import được từ package
   mới, giữ nguyên mã loại nhà/quận/pháp lý), đếm POI ở `src/web/housing-backend/app/services/prediction/schools.py`

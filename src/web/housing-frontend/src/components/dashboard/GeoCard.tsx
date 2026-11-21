@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import type { GeoScatter } from "../../api";
-import { URBAN_BOUNDS, defaultBounds, extremes, formatNumber, gridSummary, orderedTypes, outsideCount, typeLabel, visibleGeoPoints } from "../../dashboard";
+import { CITY_BOUNDS, URBAN_BOUNDS, defaultBounds, extremes, formatNumber, gridSummary, orderedTypes, outsideCount, typeLabel, visibleGeoPoints } from "../../dashboard";
 import type { Bounds } from "../../dashboard";
 import { ChartCard } from "./ChartCard";
 import { GeoPlot } from "./GeoPlot";
@@ -12,7 +12,7 @@ export function GeoCard({ geo, pin, busy }: { geo: GeoScatter | null | undefined
   const [sizeByArea, setSizeByArea] = useState(true);
   const empty = !geo || geo.points.length === 0 ? "Phiên bản này chưa có dữ liệu vị trí (phiên bản cũ). Dựng lại biểu đồ ở Prediction Server để có bản đồ giá." : undefined;
   const urban = useMemo(() => (geo ? defaultBounds(geo.points) : URBAN_BOUNDS), [geo]);
-  const bounds: Bounds = geo && !inner ? geo.bounds : urban;
+  const bounds: Bounds = inner ? urban : CITY_BOUNDS;
   const types = useMemo(() => (geo ? orderedTypes(geo.points.map((p) => p.type)) : []), [geo]);
   const shown = geo ? visibleGeoPoints(geo.points, bounds, type) : [];
   const outside = geo ? outsideCount(geo.points, bounds, type) : 0;

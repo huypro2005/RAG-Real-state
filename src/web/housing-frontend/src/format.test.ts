@@ -87,3 +87,37 @@ describe("mode dự đoán giá", () => {
     expect(formatPriceRange(undefined, 20, 60)).toBeNull();
   });
 });
+
+describe("giao diện tin rao", () => {
+  it("formatPriceShort cho ghim bản đồ", async () => {
+    const { formatPriceShort } = await import("./format");
+    expect(formatPriceShort(3100)).toBe("3,1 tỷ");
+    expect(formatPriceShort(2650)).toBe("2,65 tỷ");
+    expect(formatPriceShort(12500)).toBe("12,5 tỷ");
+    expect(formatPriceShort(900)).toBe("900 tr");
+  });
+
+  it("propertyKind gom loại nhà thành 4 hình minh họa", async () => {
+    const { propertyKind } = await import("./format");
+    expect(propertyKind("Căn hộ chung cư")).toBe("apartment");
+    expect(propertyKind("Biệt thự, liền kề")).toBe("villa");
+    expect(propertyKind("Đất nền dự án")).toBe("land");
+    expect(propertyKind("Bán đất")).toBe("land");
+    expect(propertyKind("Nhà mặt phố")).toBe("house");
+    expect(propertyKind(null)).toBe("house");
+  });
+
+  it("priceBar đặt khoảng, giá dự đoán và trung vị trên cùng một trục", async () => {
+    const { priceBar } = await import("./format");
+    const bar = priceBar(62.5, 55, 70, 58.1);
+    expect(bar).not.toBeNull();
+    expect(bar!.min).toBeCloseTo(53.5);
+    expect(bar!.max).toBeCloseTo(71.5);
+    expect(bar!.low).toBeCloseTo(((55 - 53.5) / 18) * 100);
+    expect(bar!.estimate).toBeGreaterThan(bar!.low);
+    expect(bar!.estimate).toBeLessThan(bar!.high);
+    expect(priceBar(60, 70, 55, null)).toBeNull();
+    expect(priceBar(60, undefined, 70, null)).toBeNull();
+    expect(priceBar(60, 50, 70, null)!.median).toBeNull();
+  });
+});

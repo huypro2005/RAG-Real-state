@@ -110,6 +110,11 @@ async function errorDetail(response: Response): Promise<string> {
   try {
     const body = (await response.json()) as { detail?: unknown };
     if (typeof body.detail === "string") return body.detail;
+    // 422 của Pydantic: mảng lỗi theo từng trường
+    if (Array.isArray(body.detail)) {
+      const messages = body.detail.map((item: { msg?: unknown }) => item?.msg).filter((msg) => typeof msg === "string");
+      if (messages.length > 0) return `Dữ liệu chưa hợp lệ: ${messages.join("; ")}`;
+    }
   } catch {
     // Thân lỗi không phải JSON: dùng mã trạng thái.
   }
@@ -250,4 +255,61 @@ export async function fetchDashboardModels(): Promise<DashboardModelSummary[]> {
 export async function fetchDashboardModel(id: number | "active"): Promise<DashboardModelDetail> {
   const body = await request<DashboardModelDetail & { model?: DashboardModelSummary }>(`${DASHBOARD}/${id}`);
   return { ...body.model, ...body, charts: body.charts ?? null };
+}
+
+// ---- Định giá bằng form (backend /api/v1/price, backend gọi tiếp Prediction Server) ----
+
+export interface PriceOption { code: number; name: string }
+export interface FieldBound { min: number; max: number; label: string; unit: string }
+export type OptionalField = "bedrooms" | "frontage" | "floors";
+
+export interface PriceOptions {
+  property_types: PriceOption[];
+  districts: PriceOption[];
+  bounds: Record<"area" | OptionalField, FieldBound>;
+  fields_by_type: Record<string, OptionalField[]>; // trường tùy chọn mô hình dùng cho từng loại nhà
+  center: { lat: number; lon: number };
+  hcm_bounds: { lat: [number, number]; lon: [number, number] };
+}
+
+export interface PriceLocation {
+  latitude: number;
+  longitude: number;
+  source: "goong" | "district_centroid" | "user";
+}
+
+export interface PriceFormInput {
+  property_code: number;
+  district_code: number;
+  area: number;
+  address?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  frontage?: number | null;
+  bedrooms?: number | null;
+  floors?: number | null;
+}
+
+export interface PriceFormResult {
+  estimate: PredictionEstimate;
+  location: PriceLocation;
+  used_fields: OptionalField[];
+}
+
+const PRICE = `${API_URL}/api/v1/price`;
+
+export function fetchPriceOptions(): Promise<PriceOptions> {
+  return request<PriceOptions>(`${PRICE}/options`);
+}
+
+export function geocodeAddress(districtCode: number, address: string, propertyCode: number | null): Promise<PriceLocation> {
+  return postJson<PriceLocation>(`${PRICE}/geocode`, {
+    district_code: districtCode,
+    address,
+    ...(propertyCode !== null ? { property_code: propertyCode } : {}),
+  });
+}
+
+export function predictPrice(input: PriceFormInput): Promise<PriceFormResult> {
+  return postJson<PriceFormResult>(`${PRICE}/predict`, input);
 }

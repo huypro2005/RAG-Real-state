@@ -1,9 +1,17 @@
 """FastAPI app của Prediction Server (mỏng: dựng app, vòng đời, lỗi DB, gắn router).
 
 Chạy (tại thư mục gốc dự án, .venv gốc):
-    python -m uvicorn src.prediction_server.main:app --port 8100
+    python -m uvicorn src.web.prediction_server.main:app --port 8100
+hoặc chạy thẳng file (nút Run của VS Code): python src/web/prediction_server/main.py
 """
+import sys
 from contextlib import asynccontextmanager
+from pathlib import Path
+
+# Chạy thẳng file thì sys.path chỉ có thư mục chứa file, thiếu gốc dự án nên `import src...` lỗi.
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 import psycopg
 from fastapi import FastAPI, Request
@@ -40,3 +48,9 @@ def create_app(settings: ServerSettings | None = None) -> FastAPI:
 
 
 app = create_app()
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, port=8100)

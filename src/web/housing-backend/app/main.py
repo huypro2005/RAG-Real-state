@@ -6,6 +6,7 @@ from sqlalchemy import text
 
 from app.api.deps import SessionDep
 from app.api.v1.dashboard import router as dashboard_router
+from app.api.v1.price import router as price_router
 from app.api.v1.routes import router as v1_router
 from app.core.config import get_settings
 from app.db.session import engine
@@ -27,6 +28,7 @@ app.add_middleware(
 )
 app.include_router(v1_router, prefix="/api/v1")
 app.include_router(dashboard_router, prefix="/api/v1")
+app.include_router(price_router, prefix="/api/v1")
 
 
 @app.get("/health", tags=["system"])

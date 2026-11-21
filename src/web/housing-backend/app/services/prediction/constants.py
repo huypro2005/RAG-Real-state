@@ -36,6 +36,7 @@ FIELD_LABELS = {"property_type": "loại nhà", "district": "quận", "address":
 SOURCE_NOTES = {
     "goong": "tọa độ lấy từ địa chỉ qua Goong",
     "district_centroid": "không xác định được địa chỉ cụ thể, dùng tâm quận",
+    "user": "tọa độ do người dùng chọn",
 }
 
 # Mã quận/huyện 0-23 theo bảng trong retrain.py; tên khớp cột listings.district_old
