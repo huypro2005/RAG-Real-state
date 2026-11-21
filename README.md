@@ -56,6 +56,30 @@ Mọi lệnh viết cho **PowerShell**, chạy **tại thư mục gốc dự án
 
 ---
 
+## Chạy toàn bộ bằng Docker (một lệnh)
+
+Cách nhanh nhất, và **không bị Windows Smart App Control chặn** `scikit-learn`/`asyncpg` (mọi thứ chạy trong Linux).
+Cần Docker Desktop và 4 file `.env` (bảng ở bước 1 bên dưới; DB đã có dữ liệu như bước 2–3).
+
+```powershell
+# tại thư mục gốc dự án
+docker compose up -d --build
+```
+
+| Service | Địa chỉ | Ghi chú |
+|---|---|---|
+| Web (frontend) | http://localhost:8080 | nginx, chuyển `/api` sang backend |
+| Backend | http://localhost:8000/docs | đọc `src/web/housing-backend/.env` |
+| Prediction Server | http://localhost:8100/docs | đọc `src/web/prediction_server/.env`, mô hình ở `models/` |
+| Giao diện pipeline | http://localhost:8200 | đọc `src/pipeline/.env`, lịch sử ở `output/pipeline_runs/` |
+| PostgreSQL | `localhost:5433` | container `housing-postgres`, volume cũ giữ nguyên |
+
+- Service `migrate` chạy `alembic upgrade head` một lần rồi thoát, trước khi các service khác khởi động.
+- `DATABASE_URL` trong các `.env` vẫn để `localhost:5433`; trong Docker tự đổi thành `db:5432`.
+- Xem log: `docker compose logs -f backend`. Dừng: `docker compose down` (không mất dữ liệu; **không** thêm `-v`).
+- Sửa code thì chạy lại `docker compose up -d --build`. Thư viện Python ghim ở `docker/requirements.txt`
+  (đúng phiên bản `.venv` để nạp được file `.joblib`).
+
 ## Chạy dự án trên máy mới (từng bước)
 
 > ✅ = **bỏ qua được nếu đã làm** (có lệnh kiểm tra).

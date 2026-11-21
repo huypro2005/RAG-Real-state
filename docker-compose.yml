@@ -1,0 +1,96 @@
+# Toàn bộ hệ thống trong Docker, chạy bằng MỘT lệnh tại thư mục gốc dự án:
+#     docker compose up -d --build
+# Mở http://localhost:8080 (web). Dừng: docker compose down (dữ liệu DB nằm trong volume, không mất).
+#
+# Mỗi service đọc .env riêng của thành phần đó (giống khi chạy trên Windows); entrypoint tự đổi phần
+# host:port của DATABASE_URL thành db:5432. Cổng chỉ mở trên 127.0.0.1 (trừ DB, giữ như cũ).
+
+# Cùng tên project với src/web/housing-backend/docker-compose.yml => dùng lại đúng container
+# housing-postgres và volume housing-backend_pgdata đang có dữ liệu.
+name: housing-backend
+
+include:
+  - src/web/housing-backend/docker-compose.yml   # service "db" (PostgreSQL + PostGIS + pgvector)
+
+x-app: &app
+  build:
+    context: .
+    dockerfile: docker/app.Dockerfile
+  image: housing-app:latest
+  restart: unless-stopped
+
+services:
+  # Chạy một lần: đưa schema DB lên bản mới nhất rồi thoát (chạy lại khi đã ở head thì không đổi gì)
+  migrate:
+    <<: *app
+    restart: "no"
+    env_file: src/web/housing-backend/.env
+    working_dir: /app/src/web/housing-backend
+    command: python -m alembic upgrade head
+    depends_on:
+      db:
+        condition: service_healthy
+
+  prediction:
+    <<: *app
+    env_file: src/web/prediction_server/.env
+    command: uvicorn src.web.prediction_server.main:app --host 0.0.0.0 --port 8100
+    volumes:
+      - ./models:/app/models   # mô hình do server train/kích hoạt (giữ qua các lần chạy)
+    ports:
+      - "127.0.0.1:8100:8100"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8100/api/v1/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  backend:
+    <<: *app
+    env_file: src/web/housing-backend/.env
+    environment:
+      PREDICTION_SERVER_URL: http://prediction:8100
+    working_dir: /app/src/web/housing-backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    volumes:
+      - ./src/web/housing-backend/models:/app/src/web/housing-backend/models:ro   # mô hình dự phòng
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      prediction:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  # Giao diện kéo thả file JSON crawl -> làm sạch -> nạp DB (http://localhost:8200)
+  pipeline:
+    <<: *app
+    env_file: src/pipeline/.env
+    environment:
+      PREDICTION_SERVER_URL: http://prediction:8100
+    command: uvicorn --factory src.pipeline.server:create_app --host 0.0.0.0 --port 8200
+    volumes:
+      - ./output:/app/output   # lịch sử các lần chạy (output/pipeline_runs)
+    ports:
+      - "127.0.0.1:8200:8200"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  frontend:
+    build: src/web/housing-frontend
+    image: housing-frontend:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:80"
+    depends_on:
+      backend:
+        condition: service_healthy

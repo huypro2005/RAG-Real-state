@@ -1,0 +1,21 @@
+# Build context của docker/app.Dockerfile là gốc dự án: chỉ gửi phần code cần, bỏ dữ liệu lớn và bí mật.
+**/.env
+**/__pycache__
+**/*.pyc
+**/node_modules
+.git
+.venv
+backup
+models
+output
+data
+docs
+tools
+src/crawl
+src/notebook
+!src/notebook/predictionEDA/db_to_training
+src/pipeline/input
+src/web/housing-frontend
+src/web/housing-backend/models
+src/web/housing-backend/playground
+src/web/housing-backend/*.egg-info

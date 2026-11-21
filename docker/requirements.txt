@@ -1,0 +1,26 @@
+# Thư viện cho image Python dùng chung (backend, Prediction Server, giao diện pipeline).
+# Ghim ĐÚNG phiên bản của .venv trên máy dự án: file .joblib (mô hình giá) chỉ nạp an toàn với đúng
+# phiên bản scikit-learn/numpy/xgboost đã dùng để lưu. Nâng phiên bản thì phải train lại mô hình.
+fastapi==0.143.0
+uvicorn[standard]==0.54.0
+pydantic==2.14.0
+pydantic-settings==2.15.0
+python-multipart==0.0.32
+python-dotenv==1.2.4
+SQLAlchemy[asyncio]==2.1.4
+asyncpg==0.32.0
+psycopg[binary]==3.3.6
+psycopg-pool==3.3.3
+alembic==1.20.0
+GeoAlchemy2==0.20.0
+pgvector==0.5.0
+openai==3.41.0
+httpx==0.28.1
+requests==2.34.2
+numpy==2.5.4
+pandas==3.1.0
+scipy==1.18.1
+scikit-learn==1.9.1
+joblib==1.6.0
+xgboost==3.4.1
+lightgbm==4.7.0
