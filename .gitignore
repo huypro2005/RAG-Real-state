@@ -98,3 +98,6 @@ src/crawl/crawlProperties/raw_html/
 
 # Bản chạy thử / scratch
 test-*/
+
+# Lịch sử lần chạy của giao diện pipeline (src/pipeline/server.py)
+/output/pipeline_runs/

@@ -229,6 +229,8 @@ class ListingCleaner:
             'missing_price': price.isna(),
             'missing_area': area.isna(),
             'area_too_small': area < self.MIN_AREA,
+            # Xét sau _fix_and_flag: tọa độ ngoài khung TP.HCM đã bị đặt None nên cũng bị loại.
+            'missing_coordinates': listings['latitude'].isna() | listings['longitude'].isna(),
             'price_equals_price_per_m2': price == listings['price_per_m2'],
             'price_per_m2_out_of_range': ~(price / area).between(*self.PRICE_PER_M2_RANGE),
             # Lọc tin hết hạn: tạm tắt, chưa dùng ở giai đoạn này. Khi cần bật, đặt as_of là

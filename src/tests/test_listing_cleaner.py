@@ -67,14 +67,12 @@ class FlagTests(unittest.TestCase):
         self.assertEqual(row['quality_flags'], [])
 
     def test_out_of_range_values_become_missing(self):
-        row, reason = clean_one(floors=3335, road_width=3000, frontage=435,
-                                latitude='21.0289486097874', longitude='105.852447225903')
+        row, reason = clean_one(floors=3335, road_width=3000, frontage=435)
         self.assertIsNone(reason)
-        for field in ('floors', 'road_width', 'frontage', 'latitude', 'longitude'):
+        for field in ('floors', 'road_width', 'frontage'):
             self.assertTrue(pd.isna(row[field]), field)
         self.assertEqual(set(row['quality_flags']), {
-            'floors_out_of_range', 'road_width_out_of_range', 'frontage_out_of_range',
-            'coords_outside_hcm'})
+            'floors_out_of_range', 'road_width_out_of_range', 'frontage_out_of_range'})
 
     def test_area_thousands_separator(self):
         row, reason = clean_one(price=7500, area=1.437, price_per_m2=5.22)
@@ -86,6 +84,12 @@ class FlagTests(unittest.TestCase):
 
 
 class RejectTests(unittest.TestCase):
+    def test_coordinates_outside_hcm_are_rejected(self):
+        # Website gán tọa độ Hà Nội cho tin không có vị trí: bị đặt None rồi loại.
+        self.assertEqual(clean_one(latitude='21.0289486097874', longitude='105.852447225903')[1],
+                         'missing_coordinates')
+        self.assertEqual(clean_one(longitude=None)[1], 'missing_coordinates')
+
     def test_reject_reasons(self):
         cases = {
             'missing_price': {'price': None},
@@ -94,6 +98,7 @@ class RejectTests(unittest.TestCase):
             'price_per_m2_out_of_range': {'price': 13.9, 'price_per_m2': 115.83, 'area': 120},
             'district_outside_old_hcm': {'district_old': 'Dĩ An'},
             'missing_listing_id': {'listing_id': ''},
+            'missing_coordinates': {'latitude': None},
         }
         for expected, overrides in cases.items():
             with self.subTest(expected):

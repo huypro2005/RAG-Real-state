@@ -87,6 +87,45 @@ Không lưu bản ghi gốc, hash file hay tên file nguồn.
 Bản backup `housing_dev_20261114.dump` có 12931 tin: 12571 tin trên cộng 360 tin từ các lần nạp trước, không có
 trong hai file hiện tại (pipeline không xóa tin cũ).
 
+## Giao diện web (kéo thả file)
+
+Trang web nhỏ chạy cùng các bước trên (dùng chung `ListingPipeline`, `ListingCleaner`, `ListingLoader`,
+`ListingEmbedder`): kéo thả file → pipeline chạy nền → mỗi bước là một bánh răng xám (chờ/bỏ qua), quay (đang chạy),
+xanh (xong), đỏ (lỗi, kèm lý do) và số liệu y như dòng CLI in ra.
+
+```powershell
+$PY = (Resolve-Path .\.venv\Scripts\python.exe).Path
+& $PY -m src.pipeline.server        # tại thư mục gốc; mở http://127.0.0.1:8200
+# hoặc: & $PY -m uvicorn --factory src.pipeline.server:create_app --host 127.0.0.1 --port 8200
+```
+
+- Chỉ nghe `127.0.0.1:8200`, không có đăng nhập. Đọc `src/pipeline/.env` như CLI.
+- **DB đích**: chọn trong danh sách các DB trên cùng Postgres với `DATABASE_URL` có bảng `listings` (mặc định
+  `housing_dev`). DB `housing` bị chặn ở server (API trả 403), không có ô nhập URL.
+- **Cấu hình**: công tắc từng bước; *Chạy thử* chỉ làm sạch, không mở kết nối DB; tắt *Nạp listings* thì bước 3–6 khóa.
+  *Embedding* mặc định tắt (cần notebook Kaggle đang bật). *Retrain* mặc định tắt: gửi `POST {PREDICTION_SERVER_URL}/api/v1/retrain`
+  kèm `X-API-Key`; bánh răng xanh nghĩa là **đã gửi yêu cầu** (hiện `job_id`), retrain chạy nền ở Prediction Server,
+  xem kết quả ở `GET {PREDICTION_SERVER_URL}/api/v1/jobs/{job_id}` (cần `X-API-Key`). Server tắt hoặc thiếu cấu hình
+  thì bánh răng đỏ kèm lý do, các bước trước giữ kết quả.
+- **File**: chỉ nhận `.json`/`.jsonl` dạng JSON Lines (như `data.json` của crawler), nhiều file được gộp và bỏ trùng
+  như `--input a.json b.json`; tổng tối đa `PIPELINE_MAX_UPLOAD_MB` (mặc định 100). File rỗng, sai đuôi, không phải
+  JSON Lines hoặc quá dung lượng bị từ chối kèm thông báo.
+- **Một job mỗi lúc**: bấm chạy khi đang bận thì báo "Đang bận" (HTTP 409). Tải lại trang vẫn thấy tiến độ.
+- **Lịch sử**: `output/pipeline_runs/<run_id>/` (không commit): `run.json` (thời điểm, tên file, DB, cấu hình, trạng thái
+  + số liệu + thời lượng từng bước, lỗi), `cleaning_report.json`, `listings_rejected.jsonl` (tải được từ trang). File
+  tải lên chỉ nằm tạm trong `<run_id>/uploads/` và bị xóa khi chạy xong; `listings_clean.jsonl` cũng xóa (tin đã vào DB).
+  Server khởi động lại thì đọc lại lịch sử; lần đang chạy dở bị đánh dấu "Bị ngắt".
+
+| Cấu hình thêm (`src/pipeline/.env`) | Dùng cho |
+|---|---|
+| `PREDICTION_SERVER_URL`, `PREDICTION_SERVER_API_KEY` | Bước retrain (tùy chọn; khóa trùng của Prediction Server) |
+| `PIPELINE_MAX_UPLOAD_MB` | Giới hạn tổng dung lượng tải lên, mặc định 100 |
+| `PIPELINE_RUNS_DIR` | Đổi thư mục lịch sử (mặc định `output/pipeline_runs`) |
+
+API: `GET /api/settings`, `GET /api/runs` (mới nhất trước), `GET /api/runs/{id}`, `POST /api/runs` (multipart: `files`,
+`database`, `dry_run`, `upsert`, `link`, `spatial`, `embed`, `retrain` = `true`/`false`),
+`GET /api/runs/{id}/files/{cleaning_report.json|listings_rejected.jsonl}`.
+
 ## Test
 
 ```powershell
@@ -95,5 +134,8 @@ $env:DATABASE_URL = 'postgresql+asyncpg://postgres:<mật khẩu>@localhost:5433
 & $PY -m pytest src/tests -q     # không có DATABASE_URL thì 2 test nạp DB bị skip
 uvx ruff check src
 ```
+
+`test_pipeline_server.py` thử server giao diện (chạy thử, file lỗi, chặn `housing`, bận, lịch sử, retrain thiếu cấu hình)
+không cần Postgres, Kaggle hay Prediction Server.
 
 `test_listing_loader.py` chạy trong transaction rollback và chỉ chạy trên database tên `housing_dev`.

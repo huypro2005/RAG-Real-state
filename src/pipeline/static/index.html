@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Nạp dữ liệu tin đăng · Pipeline</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="wrap bar-inner">
+      <h1>Nạp dữ liệu tin đăng</h1>
+      <p class="bar-note">làm sạch → listings → địa chỉ → POI → embedding → retrain</p>
+    </div>
+  </header>
+
+  <main class="wrap layout">
+    <section class="panel" aria-labelledby="setup-title">
+      <h2 id="setup-title">Lần chạy mới</h2>
+
+      <label class="drop" id="drop" for="file-input">
+        <input type="file" id="file-input" class="sr-only" accept=".json,.jsonl" multiple>
+        <svg class="drop-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4m0 0-4 4m4-4 4 4M5 14v5h14v-5"/></svg>
+        <span class="drop-title">Kéo thả file crawl vào đây</span>
+        <span class="drop-hint">hoặc bấm để chọn · .json / .jsonl (JSON Lines) · nhiều file được gộp và bỏ trùng
+          · tối đa <span id="max-mb">100</span> MB tổng</span>
+      </label>
+      <ul class="files" id="file-list" aria-label="File đã chọn"></ul>
+
+      <fieldset class="config" id="config">
+        <legend>Cấu hình</legend>
+        <label class="row">
+          <input type="checkbox" class="switch" name="dry_run">
+          <span>Chạy thử <small>chỉ làm sạch, không ghi DB</small></span>
+        </label>
+        <label class="row select-row">
+          <span>DB đích</span>
+          <select name="database" id="database"><option>đang tải…</option></select>
+        </label>
+        <div class="steps-config" role="group" aria-label="Các bước ghi DB">
+          <label class="row"><input type="checkbox" class="switch" name="upsert" checked>
+            <span>Nạp listings <small>upsert theo listing_id</small></span></label>
+          <label class="row sub"><input type="checkbox" class="switch" name="link" checked>
+            <span>Gắn địa chỉ (FK)</span></label>
+          <label class="row sub"><input type="checkbox" class="switch" name="spatial" checked>
+            <span>Tiện ích quanh nhà (POI)</span></label>
+          <label class="row sub"><input type="checkbox" class="switch" name="embed">
+            <span>Embedding (Kaggle) <small id="embed-note"></small></span></label>
+          <label class="row sub"><input type="checkbox" class="switch" name="retrain">
+            <span>Retrain mô hình giá <small id="retrain-note"></small></span></label>
+        </div>
+      </fieldset>
+
+      <button type="button" class="primary" id="run-button" disabled>Chạy pipeline</button>
+      <p class="message" id="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel" aria-labelledby="flow-title">
+      <div class="flow-head">
+        <h2 id="flow-title">Tiến độ</h2>
+        <p class="run-meta" id="run-meta"></p>
+      </div>
+      <ol class="flow" id="flow" aria-live="polite"></ol>
+      <div class="downloads" id="downloads"></div>
+    </section>
+  </main>
+
+  <div class="wrap">
+    <section class="panel history" aria-labelledby="history-title">
+      <h2 id="history-title">Lịch sử</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th scope="col">Thời điểm</th><th scope="col">File</th><th scope="col">DB đích</th>
+              <th scope="col">Cấu hình</th><th scope="col">Bước</th><th scope="col">Thời lượng</th>
+              <th scope="col">Báo cáo</th><th scope="col"><span class="sr-only">Xem</span></th></tr>
+          </thead>
+          <tbody id="history"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <svg width="0" height="0" class="defs" aria-hidden="true">
+    <symbol id="gear" viewBox="0 0 48 48"><path id="gear-path" fill-rule="evenodd"/></symbol>
+  </svg>
+  <script src="/static/app.js"></script>
+</body>
+</html>

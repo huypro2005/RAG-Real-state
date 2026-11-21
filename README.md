@@ -132,6 +132,8 @@ $PY = (Resolve-Path .\.venv\Scripts\python.exe).Path
 & $PY -m src.pipeline --input src\pipeline\input\data.json src\pipeline\input\data14-11.json
 ```
 
+Hoặc dùng giao diện kéo thả file: `& $PY -m src.pipeline.server` rồi mở http://127.0.0.1:8200 (chọn DB đích, bật/tắt
+từng bước, chạy thử, lịch sử; xem [src/pipeline/README.md](src/pipeline/README.md#giao-diện-web-kéo-thả-file)).
 Luôn truyền `--input` (một hoặc nhiều file, cách nhau dấu cách). Chạy lại hoặc nạp thêm file mới **không nhân đôi
 và không xóa tin cũ**. Pipeline đọc `DATABASE_URL` trong `src\pipeline\.env`. Chi tiết, số liệu mẫu:
 [src/pipeline/README.md](src/pipeline/README.md).
