@@ -2,7 +2,7 @@
 import logging
 import threading
 import time
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 import joblib
 from app.services.prediction.schools import SchoolCounter
@@ -11,6 +11,19 @@ from src.web.prediction_server.db.runs import RunRepository
 from src.web.prediction_server.services.prediction.served_predictor import ServedPredictor
 
 logger = logging.getLogger(__name__)
+
+
+def artifact_file(models_dir: Path, artifact_path: str | None) -> Path | None:
+    """File mô hình trong MODELS_DIR, tìm theo TÊN file đã lưu trong DB.
+
+    DB lưu đường dẫn tuyệt đối của nơi đã train (đường dẫn Windows ổ D: hoặc
+    `/app/models/x.joblib` trong Docker). Chỉ lấy tên file nên cùng một DB dùng được ở cả hai nơi, và
+    đường dẫn lấy từ DB không bao giờ trỏ ra ngoài MODELS_DIR.
+    """
+    if not artifact_path:
+        return None
+    name = PureWindowsPath(artifact_path).name  # tách được cả dấu "\\" lẫn "/"
+    return models_dir / name if name.endswith(".joblib") else None
 
 
 class ModelNotFoundError(Exception):
@@ -75,8 +88,8 @@ class ModelRegistry:
     def load_bundle(self, artifact_path: str | None, run_id: int) -> dict:
         """Nội dung file .joblib. Chỉ nạp file nằm trong MODELS_DIR: joblib.load chạy được mã tùy ý
         nên không tin đường dẫn lấy từ DB một cách mù quáng."""
-        path = Path(artifact_path).resolve() if artifact_path else None
-        if path is None or not path.is_relative_to(self.models_dir) or not path.is_file():
+        path = artifact_file(self.models_dir, artifact_path)
+        if path is None or not path.is_file():
             raise ModelFileMissingError(
                 f"File mô hình của run {run_id} không còn tồn tại hoặc nằm ngoài MODELS_DIR")
         return joblib.load(path)

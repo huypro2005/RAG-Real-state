@@ -8,7 +8,7 @@ import joblib
 
 from src.web.prediction_server.core.settings import ServerSettings
 from src.web.prediction_server.db.runs import RunRepository
-from src.web.prediction_server.services.registry.registry import ModelRegistry
+from src.web.prediction_server.services.registry.registry import ModelRegistry, artifact_file
 from src.web.prediction_server.services.training.policy import RetrainPolicy
 from src.web.prediction_server.services.training.trainer import PriceModelTrainer
 
@@ -86,5 +86,6 @@ class RetrainService:
     def _prune_artifacts(self) -> None:
         """Giữ KEEP_ARTIFACTS bản gần nhất và bản đang hoạt động; xóa file còn lại."""
         for artifact_path, is_active in self.runs.artifacts()[self.settings.keep_artifacts:]:
-            if not is_active:
-                Path(artifact_path).unlink(missing_ok=True)
+            path = artifact_file(self.settings.models_dir, artifact_path)
+            if not is_active and path is not None:
+                path.unlink(missing_ok=True)

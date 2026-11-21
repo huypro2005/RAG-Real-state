@@ -43,6 +43,17 @@ def test_activate_refuses_artifact_outside_models_dir(tmp_path, trained):
         registry.activate(1)
 
 
+@pytest.mark.parametrize("stored", [
+    r"D:\my_project\models\price_run_4.joblib",   # train trên Windows, phục vụ trong Docker
+    "/app/models/price_run_4.joblib",                # train trong Docker, phục vụ trên Windows
+])
+def test_artifact_path_from_other_machine_is_found_by_file_name(tmp_path, trained, stored):
+    joblib.dump(trained, tmp_path / "price_run_4.joblib")
+    runs = RunsWithPath(tmp_path)
+    runs.succeeded = lambda run_id: {"id": run_id, "artifact_path": stored}
+    assert ModelRegistry(runs, "postgresql://unused", tmp_path).activate(4) is not None
+
+
 class FailingRetrain:
     def run(self, trigger, force=False):
         return {"status": "failed", "run_id": 1, "error": "ValueError('boom')"}
